@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pinProgressLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_32sdp"
+    app:layoutDescription="@xml/motion_pin_progress">
+
+    <!--STATIC VIEWS:-->
+
+    <!--MOTION VIEWS:-->
+    <View
+        android:id="@+id/pinViewProgress"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="match_parent"
+        android:background="@drawable/drw_pin_progress"
+        android:backgroundTint="@color/colorPrimary"
+        android:gravity="center"
+        android:text="VALUE"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_11ssp"
+        android:textStyle="bold"
+  />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    app:startDestination="@id/pinFragment">
+
+    <fragment
+        android:id="@+id/pinFragment"
+        android:name="wee.digital.fpa.payment.pin.PinFragment"
+        android:label="PinFragment" />
+    <action
+        android:id="@+id/action_global_pinFragment"
+        app:destination="@id/pinFragment" />
+</navigation>
