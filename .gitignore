@@ -1,38 +1,17 @@
-# These are some examples of commonly ignored file patterns.
-# You should customize this list as applicable to your project.
-# Learn more about .gitignore:
-#     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+local.properties
 
-# Node artifact files
+*.iml
+
+*.log
+*.DS_Store
+
 node_modules/
 dist/
 build/
 app/build/
-library/build/
-camera/build/
-finger/build/
-opencv/etc/
-local.properties
-.gradle
 .gradle/
-# Compiled Java class files
-*.class
-*.lock
-*.bin
-*.DS_Store
-# Compiled Python bytecode
-*.py[cod]
-
-# Log files
-*.log
-
-# Package files
-*.jar
-
-# Maven
 target/
 dist/
-
-# JetBrains IDE
 .idea/
+
 
