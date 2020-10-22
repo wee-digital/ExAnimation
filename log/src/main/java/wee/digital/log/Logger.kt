@@ -3,6 +3,7 @@ package wee.digital.log
 import android.util.Log
 import com.google.gson.JsonObject
 import org.json.JSONObject
+import kotlin.reflect.KClass
 
 open class Logger {
 
@@ -15,11 +16,9 @@ open class Logger {
         this.enable = enable
     }
 
-    constructor(cls: Class<*>, enable: Boolean = BuildConfig.DEBUG) : this(cls.simpleName, enable)
+    constructor(cls: KClass<*>, enable: Boolean = BuildConfig.DEBUG) : this(cls.java.simpleName, enable)
 
-    constructor(any: Any, enable: Boolean = BuildConfig.DEBUG) : this(any.javaClass, enable)
-
-    constructor(enable: Boolean = BuildConfig.DEBUG) : this("", enable)
+    constructor(any: Any, enable: Boolean = BuildConfig.DEBUG) : this(any.javaClass.simpleName, enable)
 
     fun d(s: JsonObject) {
         val json = s.toString()

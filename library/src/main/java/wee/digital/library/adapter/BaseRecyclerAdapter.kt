@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import wee.digital.library.extension.addViewClickListener
 
 abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -74,13 +71,8 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
 
         viewHolder.itemView.onBindModel(model, position, type)
 
-        viewHolder.itemView.addViewClickListener {
+        viewHolder.itemView.setOnClickListener {
             itemClick(model, position)
-        }
-
-        viewHolder.itemView.setOnLongClickListener {
-            itemLongClick(model, position)
-            return@setOnLongClickListener true
         }
     }
 
@@ -128,16 +120,10 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
     /**
      * User interfaces.
      */
-    var itemClick: (T, Int) -> Unit = { _, _ -> }
+    open var itemClick: (T, Int) -> Unit = { _, _ -> }
 
     open fun onItemClick(block: (T, Int) -> Unit) {
         itemClick = block
-    }
-
-    private var itemLongClick: (T, Int) -> Unit = { _, _ -> }
-
-    open fun onItemLongClick(block: (T, Int) -> Unit) {
-        itemLongClick = block
     }
 
     // footerLayoutResource() != 0
@@ -158,7 +144,7 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
     /**
      * Data
      */
-    var listItem: MutableList<T> = mutableListOf()
+    open var listItem: MutableList<T> = mutableListOf()
 
     open val size: Int get() = listItem.size
 
@@ -166,7 +152,7 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
 
     open val dataNotEmpty: Boolean get() = listItem.isNotEmpty()
 
-    open val lastPosition: Int get() = if (listItem.isEmpty()) -1 else (listItem.size - 1)
+    open val lastIndex: Int get() = listItem.lastIndex
 
     open fun indexInBound(position: Int): Boolean {
         return position > -1 && position < size
@@ -225,19 +211,19 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
     open fun add(collection: Collection<T>?) {
         if (collection.isNullOrEmpty()) return
         listItem.addAll(collection)
-        notifyRangeChanged()
+        notifyDataSetChanged()
     }
 
     open fun add(array: Array<T>?) {
         if (null == array || array.isEmpty()) return
         listItem.addAll(array)
-        notifyRangeChanged()
+        notifyDataSetChanged()
     }
 
     open fun add(model: T?) {
         model ?: return
         listItem.add(model)
-        notifyRangeChanged()
+        notifyDataSetChanged()
     }
 
     open fun addFirst(model: T?) {
@@ -283,23 +269,23 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
         notifyItemRangeChanged(s, size + 1)
     }
 
-    open fun bind(recyclerView: RecyclerView, block: LinearLayoutManager.() -> Unit = {}) {
-        val lm = LinearLayoutManager(recyclerView.context)
-        lm.block()
-        recyclerView.layoutManager = lm
-        recyclerView.adapter = this
-    }
+    open fun bind(
+            recyclerView: RecyclerView,
+            spanCount: Int = 1,
+            block: (androidx.recyclerview.widget.GridLayoutManager.() -> Unit)? = null
+    ) {
 
-    open fun bind(recyclerView: RecyclerView, spanCount: Int, block: GridLayoutManager.() -> Unit = {}) {
-        val lm = GridLayoutManager(recyclerView.context, spanCount)
-        lm.block()
-        lm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (dataIsEmpty || position == size) lm.spanCount
-                else 1
-            }
-        }
-        recyclerView.layoutManager = lm
+        val layoutManager =
+                androidx.recyclerview.widget.GridLayoutManager(recyclerView.context, spanCount)
+        layoutManager.spanSizeLookup =
+                object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return if (dataIsEmpty || position == size) layoutManager.spanCount
+                        else 1
+                    }
+                }
+        block?.let { layoutManager.block() }
+        recyclerView.layoutManager = layoutManager
         recyclerView.adapter = this
     }
 

@@ -4,7 +4,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.pin_key_item_icon.view.*
 import kotlinx.android.synthetic.main.pin_key_item_text.view.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseRecyclerAdapter
+import wee.digital.library.adapter.BaseRecyclerAdapter
 
 class PinKeyAdapter : BaseRecyclerAdapter<Any?>() {
 

@@ -1,4 +1,4 @@
-package wee.digital.fpa.base.view
+package wee.digital.fpa.ui.base
 
 import android.content.Context
 import android.os.Bundle
@@ -6,22 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.DialogFragment
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import wee.digital.fpa.R
-import wee.digital.fpa.base.ext.ShareVM
-import wee.digital.fpa.base.ext.activityViewModel
 import wee.digital.library.extension.ViewClickListener
+import wee.digital.log.Logger
 
-abstract class BaseDialog : DialogFragment(), BaseView {
+abstract class BaseBottomDialog : BottomSheetDialogFragment(), BaseView {
 
     /**
-     * [DialogFragment] override
+     * [BottomSheetDialogFragment] override
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,7 @@ abstract class BaseDialog : DialogFragment(), BaseView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(layoutResource(), container, false)
         view.setOnTouchListener { _, _ -> true }
+        configDialog()
         return view
     }
 
@@ -45,18 +48,8 @@ abstract class BaseDialog : DialogFragment(), BaseView {
         onLiveDataObserve()
     }
 
-    override fun onStart() {
-        super.onStart()
-        when (style()) {
-            R.style.App_Dialog_FullScreen,
-            R.style.App_Dialog_FullScreen_Transparent -> dialog?.window?.apply {
-                setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            }
-        }
-    }
-
     /**
-     * [BaseDialog] Required implements
+     * [BaseBottomDialog] Required implements
      */
     abstract fun layoutResource(): Int
 
@@ -70,9 +63,9 @@ abstract class BaseDialog : DialogFragment(), BaseView {
     override val baseActivity: BaseActivity? get() = activity as? BaseActivity
 
     /**
-     * [BaseDialog] properties
+     * [BaseBottomDialog] properties
      */
-    protected val sharedVM: ShareVM by lazy { activityViewModel(ShareVM::class) }
+    protected val log: Logger by lazy { Logger(this::class) }
 
     protected open fun style(): Int {
         return R.style.App_Dialog
@@ -131,5 +124,15 @@ abstract class BaseDialog : DialogFragment(), BaseView {
         observe(viewLifecycleOwner, Observer(block))
     }
 
+    private fun configDialog() {
+        val bottomDialog = dialog as BottomSheetDialog
+        val bottomSheet = bottomDialog.findViewById<View>(R.id.design_bottom_sheet)
+        val coordinatorLayout = bottomSheet?.parent as? CoordinatorLayout ?: return
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior.peekHeight = bottomSheet.height
+        coordinatorLayout.parent.requestLayout()
+    }
 
 }
+
+

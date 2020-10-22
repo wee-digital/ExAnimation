@@ -11,6 +11,7 @@
         android:id="@+id/paymentImageViewCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scaleType="centerCrop"
         android:src="@mipmap/img_placeholder"
         app:layout_constraintDimensionRatio="h,285:173"
         app:layout_constraintEnd_toEndOf="parent"

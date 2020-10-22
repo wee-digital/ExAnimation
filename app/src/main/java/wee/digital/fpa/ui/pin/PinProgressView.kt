@@ -1,7 +1,6 @@
 package wee.digital.fpa.ui.pin
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -26,13 +25,13 @@ class PinProgressView : FrameLayout {
         val types = context.theme.obtainStyledAttributes(attrs, R.styleable.PinProgress, 0, 0)
         try {
             LayoutInflater.from(context).inflate(R.layout.pin_progress_view, this)
-            onConfigAttributes(context, types)
+            onConfigAttributes()
         } finally {
             types.recycle()
         }
     }
 
-    private fun onConfigAttributes(context: Context, types: TypedArray) {
+    private fun onConfigAttributes() {
 
     }
 
@@ -65,7 +64,7 @@ class PinProgressView : FrameLayout {
 
     }
 
-    private fun onKeyEvent(){
+    private fun onKeyEvent() {
 
     }
 }

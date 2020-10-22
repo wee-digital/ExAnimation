@@ -1,11 +1,14 @@
 <resources>
-
-
+    <string name="app_name">ExAnimation</string>
+    <string name="logoRatio">w,480:103</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="face_title">%s</string>
 
     <string name="done_content">Xem thông tin các thiết bị đã liên kết trong phần quản lý thiết bị tại %s</string>
     <string name="done_name">Hi! %s</string>
     <string name="done_terms">Bằng việc xác nhận đăng ký, bạn đã đồng ý với %s của Facepay</string>
+
 
 </resources>

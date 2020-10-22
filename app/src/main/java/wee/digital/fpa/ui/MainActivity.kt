@@ -1,6 +1,5 @@
 package wee.digital.fpa.ui
 
-import android.os.Bundle
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseActivity
 
@@ -10,11 +9,15 @@ class MainActivity : BaseActivity() {
         return R.layout.main
     }
 
-    override fun navigationHostId(): Int? {
+    override fun navigationHostId(): Int {
         return R.id.mainFragment
     }
 
-    override fun onCreated(state: Bundle?) {
+
+    override fun onViewCreated() {
+    }
+
+    override fun onLiveDataObserve() {
     }
 
 

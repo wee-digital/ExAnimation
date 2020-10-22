@@ -1,4 +1,4 @@
-package wee.digital.fpa.base.view
+package wee.digital.fpa.ui.base
 
 import androidx.fragment.app.Fragment
 

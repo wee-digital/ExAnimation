@@ -3,8 +3,8 @@ package wee.digital.fpa.ui.card
 import wee.digital.fpa.R
 
 class CardItem constructor(
-    val image: Int,
-    val name: String
+        val image: Int,
+        val name: String
 ) {
 
     companion object {
