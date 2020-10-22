@@ -28,12 +28,14 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/dialogViewClose"
             style="@style/Dialog.TitleIcon"
+            android:src="@drawable/ic_vector"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/dialogViewBack"
             style="@style/Dialog.TitleIcon"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

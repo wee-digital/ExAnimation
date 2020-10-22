@@ -1,64 +1,32 @@
 package wee.digital.fpa.payment.card
 
-import android.view.LayoutInflater
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_item.view.*
 import wee.digital.fpa.R
+import wee.digital.fpa.payment.base.BaseRecyclerAdapter
 
-/**
- * -------------------------------------------------------------------------------------------------
- * @Project: ExAnimation
- * @Created: Huy 2020/10/22
- * @Organize: Wee Digital
- * @Description: ...
- * All Right Reserved
- * -------------------------------------------------------------------------------------------------
- */
-class CardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CardAdapter : BaseRecyclerAdapter<CardItem>() {
 
-    /**
-     * [RecyclerView.Adapter] override.
-     */
-    override fun getItemCount(): Int {
-        return currentList.size
+    override fun layoutResource(model: CardItem, position: Int): Int {
+        return R.layout.card_item
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val v =
-                LayoutInflater.from(parent.context).inflate(R.layout.card_item, parent, false)
-        return ViewHolder(v)
-    }
-
-    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        viewHolder.itemView.onBindViewHolder(currentList[position])
-    }
-
-    /**
-     * [CardAdapter] properties
-     */
-    private var currentList: List<CardItem> = listOf()
-
-    var onItemClick: (CardItem) -> Unit = { }
-
-    private fun View.onBindViewHolder(model: CardItem) {
+    override fun View.onBindModel(model: CardItem, position: Int, layout: Int) {
         paymentImageViewCard.setImageResource(model.image)
+        paymentImageViewCard.flipAnimation()
     }
 
-    fun set(collection: Collection<CardItem>?) {
-        currentList = collection?.toList() ?: listOf()
-        notifyDataSetChanged()
-    }
+    private fun View.flipAnimation(){
+        this.animate().rotationX(90f).setDuration(300).setListener(object : AnimatorListenerAdapter() {
 
-    fun bind(recyclerView: RecyclerView, spanCount: Int = 1, block: GridLayoutManager.() -> Unit = {}) {
-        val lm = GridLayoutManager(recyclerView.context, spanCount)
-        lm.block()
-        recyclerView.layoutManager = lm
-        recyclerView.adapter = this
-    }
+            override fun onAnimationEnd(animation : Animator) {
+                this@flipAnimation.rotationX = 90f;
+                this@flipAnimation.animate().rotationX(0f).setDuration(300).setListener(null);
+            }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v)
+        });
+    }
 
 }
