@@ -5,7 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.view.View
 import kotlinx.android.synthetic.main.card_item.view.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseRecyclerAdapter
+import wee.digital.library.adapter.BaseRecyclerAdapter
 
 class CardAdapter : BaseRecyclerAdapter<CardItem>() {
 
@@ -18,15 +18,15 @@ class CardAdapter : BaseRecyclerAdapter<CardItem>() {
         paymentImageViewCard.flipAnimation()
     }
 
-    private fun View.flipAnimation(){
+    private fun View.flipAnimation() {
         this.animate().rotationX(90f).setDuration(300).setListener(object : AnimatorListenerAdapter() {
 
-            override fun onAnimationEnd(animation : Animator) {
-                this@flipAnimation.rotationX = 90f;
-                this@flipAnimation.animate().rotationX(0f).setDuration(300).setListener(null);
+            override fun onAnimationEnd(animation: Animator) {
+                this@flipAnimation.rotationX = 90f
+                this@flipAnimation.animate().rotationX(0f).setDuration(300).setListener(null)
             }
 
-        });
+        })
     }
 
 }

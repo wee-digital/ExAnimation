@@ -1,14 +1,32 @@
-package wee.digital.example
+package wee.digital.fpa.app
 
+import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import wee.digital.fpa.BuildConfig
 import wee.digital.library.Library
 import wee.digital.library.extension.SECOND
+import wee.digital.log.LogBook
 import java.text.SimpleDateFormat
+
+lateinit var app: App private set
+
+class App : Application() {
+
+    /**
+     * [Application] override
+     */
+    override fun onCreate() {
+        super.onCreate()
+        app = this
+        app.onModulesInject()
+    }
+}
 
 fun App.onModulesInject() {
     Library.app = this
+    LogBook.app = this
 }
 
 val appIsDev get() = BuildConfig.FLAVOR == "dev"
