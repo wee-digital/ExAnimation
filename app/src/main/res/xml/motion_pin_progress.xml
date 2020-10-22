@@ -12,8 +12,8 @@
         <Constraint
             android:id="@id/pinViewProgress"
             android:layout_width="@dimen/_80sdp"
-            android:visibility="invisible"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="invisible">
             <Layout
                 motion:layout_constraintStart_toStartOf="parent"
                 motion:layout_constraintTop_toTopOf="parent" />

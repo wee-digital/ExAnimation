@@ -14,7 +14,9 @@ import wee.digital.fpa.R
 
 class PinProgressView : FrameLayout {
 
-    var stepCount = 3
+    var stepCount = 6
+
+    private var inputNum: MutableList<Int> = mutableListOf()
 
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs) {
         onViewInit(context, attrs)
@@ -28,34 +30,42 @@ class PinProgressView : FrameLayout {
         } finally {
             types.recycle()
         }
-
     }
 
     private fun onConfigAttributes(context: Context, types: TypedArray) {
 
     }
 
+    var stepX = 0
     fun build() {
-        val set = ConstraintSet()
-        set.clone(pinProgressLayout)
-        val rangeWidth = pinProgressLayout.measuredWidth
-        val stepWidth = rangeWidth / stepCount
-        val indicatorWidth = pinProgressLayout.measuredHeight
-        var stepX = 0
-        while (stepX <= rangeWidth) {
-            val view = View(context).also {
-                it.id = View.generateViewId()
-                it.setBackgroundResource(R.drawable.drw_pin_indicator)
-                it.layoutParams = ConstraintLayout.LayoutParams(indicatorWidth, indicatorWidth)
-
-            }
-            pinProgressLayout.addView(view)
-            set.connect(view.id, ConstraintSet.TOP, pinProgressLayout.id, ConstraintSet.TOP, stepX)
-            stepX += stepWidth
+        pinProgressLayout.post {
+            pinProgressLayout.addIndicator()
         }
 
+    }
 
-        // ... similarly add other constraints
-        set.applyTo(pinProgressLayout);
+    private fun ConstraintLayout.addIndicator() {
+        val indicatorWidth = this.measuredHeight
+        val rangeWidth = this.measuredWidth - indicatorWidth
+        val stepWidth = rangeWidth / (stepCount - 1)
+
+        if (stepX > rangeWidth) {
+            return
+        }
+
+        val v = IndicatorView(context)
+        v.id = View.generateViewId()
+        this.addView(v, this.childCount)
+        val set = ConstraintSet()
+        set.clone(this)
+        set.connect(v.id, ConstraintSet.START, this.id, ConstraintSet.START, stepX)
+        set.connect(v.id, ConstraintSet.TOP, this.id, ConstraintSet.TOP)
+        set.applyTo(this)
+        stepX += stepWidth
+
+    }
+
+    private fun onKeyEvent(){
+
     }
 }

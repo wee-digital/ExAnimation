@@ -35,17 +35,19 @@
 
         <wee.digital.fpa.payment.pin.PinProgressView
             android:id="@+id/pinRecyclerViewProgress"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/_32sdp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginStart="@dimen/_42sdp"
+            android:layout_marginEnd="@dimen/_42sdp"
+            android:layout_marginBottom="@dimen/_32sdp"
             android:orientation="horizontal"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/pinRecyclerViewKey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:itemCount="4"
-            tools:layout_editor_absoluteX="42dp"
             tools:listitem="@layout/pin_progress_view" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -62,7 +64,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:itemCount="12"
             tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/pin_key_item"
+            tools:listitem="@layout/pin_key_item_text"
             tools:spanCount="4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

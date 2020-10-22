@@ -2,6 +2,7 @@ package wee.digital.fpa.payment.base
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -10,7 +11,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import kotlin.reflect.KClass
 
-open class ShareVM : ViewModel()
+
+const val DEFAULT_ARG_KEY: String = "default_arg_key"
+
 
 fun <T : ViewModel> ViewModelStoreOwner.viewModel(cls: KClass<T>): T =
         ViewModelProvider(this).get(cls.java)
@@ -33,6 +36,21 @@ fun Fragment.navigate(directions: NavDirections, block: (NavOptions.Builder.() -
 
 fun Fragment.navigateUp() {
     findNavController().navigateUp()
+}
+
+val Fragment.className : String get() = this::class.simpleName.toString()
+
+fun <T> Fragment.navResult(key: String = DEFAULT_ARG_KEY): T? {
+    return findNavController().currentBackStackEntry?.savedStateHandle?.get<T>(key)
+}
+
+fun <T> Fragment.navResultLiveData(key: String = DEFAULT_ARG_KEY): MutableLiveData<T>? {
+    return findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<T>(key)
+}
+
+fun <T> Fragment.setNavResult(key: String?, result: T) {
+    findNavController().previousBackStackEntry?.savedStateHandle?.set(key
+            ?: DEFAULT_ARG_KEY, result)
 }
 
 fun NavOptions.Builder.setDefaultAnim(): NavOptions.Builder {

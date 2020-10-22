@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pinProgressLayout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_32sdp"
-    app:layoutDescription="@xml/motion_pin_progress">
+    android:layout_height="@dimen/indicatorSize">
 
     <!--STATIC VIEWS:-->
+    <!-- <androidx.constraintlayout.widget.ConstraintLayout
+         android:id="@+id/pinIndicatorGroup"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+
+     </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <!--MOTION VIEWS:-->
     <View
         android:id="@+id/pinViewProgress"
-        android:layout_width="@dimen/_60sdp"
+        android:layout_width="@dimen/indicatorSize"
         android:layout_height="match_parent"
         android:background="@drawable/drw_pin_progress"
         android:backgroundTint="@color/colorPrimary"
@@ -19,6 +24,8 @@
         android:text="VALUE"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/_11ssp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

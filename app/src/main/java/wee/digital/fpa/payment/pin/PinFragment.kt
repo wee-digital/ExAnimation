@@ -12,7 +12,10 @@ class PinFragment : BaseFragment() {
     }
 
     override fun onCreated(state: Bundle?) {
-        pinRecyclerViewProgress.stepCount = 6
-        pinRecyclerViewProgress.build()
+        dialogViewClose.setOnClickListener {
+            pinRecyclerViewProgress.build()
+        }
+        PinKeyAdapter().bind(pinRecyclerViewKey,4)
+
     }
 }
