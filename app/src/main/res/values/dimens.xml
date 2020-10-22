@@ -24,4 +24,7 @@
     <dimen name="font36">@dimen/_14ssp</dimen>
     <dimen name="font30">@dimen/_12ssp</dimen>
 
+    <dimen name="indicatorSize">@dimen/_10sdp</dimen>
+    <dimen name="pinKeySize">@dimen/_46sdp</dimen>
+    
 </resources>
