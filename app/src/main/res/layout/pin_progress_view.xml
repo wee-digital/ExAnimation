@@ -19,7 +19,6 @@
         android:text="VALUE"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/_11ssp"
-        android:textStyle="bold"
-  />
+        android:textStyle="bold" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -272,8 +272,7 @@ abstract class BaseRecyclerAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHo
 
     open fun bind(
             recyclerView: RecyclerView,
-            spanCount: Int,
-            includeEdge: Boolean = true,
+            spanCount: Int = 1,
             block: (androidx.recyclerview.widget.GridLayoutManager.() -> Unit)? = null
     ) {
 
