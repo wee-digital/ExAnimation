@@ -1,5 +1,7 @@
 package wee.digital.fpa.payment.card
 
+import wee.digital.fpa.R
+
 class CardItem constructor(
     val image: Int,
     val name: String
@@ -7,11 +9,11 @@ class CardItem constructor(
 
     companion object {
         val defaultList = listOf(
-            CardItem(1, "Vietcombank"),
-            CardItem(1, "DongA"),
-            CardItem(1, "SeaBank"),
-            CardItem(1, "OceanBank"),
-            CardItem(1, "TPBank")
+            CardItem(R.mipmap.img_card, "Vietcombank"),
+            CardItem(R.mipmap.img_card, "DongA"),
+            CardItem(R.mipmap.img_card, "SeaBank"),
+            CardItem(R.mipmap.img_card, "OceanBank"),
+            CardItem(R.mipmap.img_card, "TPBank")
         )
     }
 }

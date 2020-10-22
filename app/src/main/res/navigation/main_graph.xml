@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/startDestinationId"
-        android:name="wee.digital.fpa.payment.pin.PinFragment"
+        android:name="wee.digital.fpa.payment.card.CardFragment"
         android:label="DestinationId" />
 
 </navigation>
