@@ -101,6 +101,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_28sdp</item>
         <item name="android:layout_marginStart">@dimen/margin4</item>
+        <item name="android:gravity">center</item>
         <item name="android:layout_marginEnd">@dimen/margin4</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">@dimen/_10ssp</item>
@@ -139,7 +140,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:src">@mipmap/logo_facepay_white</item>
-        <item name="layout_constraintDimensionRatio">@string/logoRatio</item>
+        <item name="layout_constraintDimensionRatio">w,480:103</item>
     </style>
 
 </resources>

@@ -11,7 +11,7 @@ class PinKeyAdapter : BaseRecyclerAdapter<Any?>() {
     override var listItem: MutableList<Any?> = mutableListOf(
             "1", "2", "3", R.drawable.ic_placeholder,
             "4", "5", "6", "0",
-            "7", "8", "9",
+            "7", "8", "9"
     )
 
     override fun layoutResource(model: Any?, position: Int): Int {

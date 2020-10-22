@@ -4,7 +4,7 @@
     <!-- BASE APPLICATION THEME. -->
     <style name="App" />
 
-    <style name="App.Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="App.Theme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>

@@ -5,8 +5,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import wee.digital.fpa.app
 import wee.digital.fpa.appId
-import wee.digital.fpa.data.db.ImageDBO
 import wee.digital.fpa.roomVersion
+import wee.digital.fpa.data.db.ImageDBO
 
 val room: RoomDB by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
     Room.databaseBuilder(app.applicationContext, RoomDB::class.java, appId)

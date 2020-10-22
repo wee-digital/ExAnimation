@@ -11,7 +11,9 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import wee.digital.fpa.R
 
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -76,6 +78,13 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
         return super.dispatchTouchEvent(event)
+    }
+
+    fun navAnim(): NavOptions {
+        return NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_up)
+                .setPopExitAnim(R.anim.slide_in_down)
+                .build()
     }
 
 }

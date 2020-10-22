@@ -3,5 +3,7 @@
 
     <color name="colorBackgroundPrimary">#EFEFEF</color>
     <color name="colorTextPrimary">#2E2E2E</color>
-
+    <color name="colorGray">#B6B6B6</color>
+    <color name="colorBlue">#378AE1</color>
+    <color name="colorLightBlue">#419DF2</color>
 </resources>

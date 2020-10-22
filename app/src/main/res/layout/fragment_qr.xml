@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/frgQRGuide10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frgQRRoot"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:elevation="10dp"
+        android:background="@drawable/rounded_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frgQRGuide10">
+
+        <wee.digital.fpa.custom.TitleView
+            android:id="@+id/frgQRTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quét mã thiết bị"
+            app:action_back="false"
+            app:action_cancel="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <wee.digital.fpa.custom.LayoutScanner
+            android:id="@+id/frgQRLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:frameAspectRatioHeight="10"
+            app:frameAspectRatioWidth="10"
+            app:frameColor="@color/colorLightBlue"
+            app:frameCornersSize="50dp"
+            app:frameSize="0.75"
+            app:frameThickness="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frgQRTitle"
+            app:maskColor="@color/colorWhite" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/frgQRGuide75"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_40sdp"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="center"
+            android:text="Vui lòng đưa mã vào vùng nhận diện"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/frgQRGuide75" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/frgQRLoading"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/frgQRGuide75" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package wee.digital.example
+package wee.digital.fpa
 
 import android.app.Application
 

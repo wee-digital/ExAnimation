@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/connect_graph"
+    app:startDestination="@id/InfoDeviceFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="wee.digital.fpa.ui.screen.SplashFragment"
+        android:label="SplashFragment" />
+    <fragment
+        android:id="@+id/QRFragment"
+        android:name="wee.digital.fpa.ui.screen.QRFragment"
+        android:label="QRFragment" />
+    <fragment
+        android:id="@+id/doneFragment"
+        android:name="wee.digital.fpa.ui.screen.DoneFragment"
+        android:label="DoneFragment" />
+    <fragment
+        android:id="@+id/InfoDeviceFragment"
+        android:name="wee.digital.fpa.ui.screen.InfoDeviceFragment" />
+</navigation>
