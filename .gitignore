@@ -1,7 +1,7 @@
 local.properties
 
 *.iml
-
+*.DS_Store
 *.log
 *.DS_Store
 
