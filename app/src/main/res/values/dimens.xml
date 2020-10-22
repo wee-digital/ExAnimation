@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="defaultHeight">@dimen/_32sdp</dimen>
+    <dimen name="defaultElevation">1dp</dimen>
+    <dimen name="defaultButtonSize">@dimen/_32sdp</dimen>
+
+    <dimen name="defaultMargin.2">@dimen/_4sdp</dimen>
+    <dimen name="defaultMargin">@dimen/_8sdp</dimen>
+    <dimen name="defaultMarginX2">@dimen/_16sdp</dimen>
+    <dimen name="defaultMarginX3">@dimen/_24sdp</dimen>
+    <dimen name="defaultMarginX4">@dimen/_32sdp</dimen>
+    <dimen name="defaultMarginX6">@dimen/_48sdp</dimen>
+    <dimen name="defaultMarginX8">@dimen/_64sdp</dimen>
+
+    <dimen name="fragmentMargin">@dimen/_84sdp</dimen>
+    <dimen name="dialogTitleSize">@dimen/_46sdp</dimen>
+
+    <dimen name="dialogRadius">@dimen/_14sdp</dimen>
+    <dimen name="dialogMargin">@dimen/_96sdp</dimen>
+    <dimen name="iconSize">@dimen/_10sdp</dimen>
+
+    <dimen name="font54">@dimen/_22ssp</dimen>
+    <dimen name="font42">@dimen/_16ssp</dimen>
+    <dimen name="font36">@dimen/_14ssp</dimen>
+    <dimen name="font30">@dimen/_12ssp</dimen>
+
+</resources>

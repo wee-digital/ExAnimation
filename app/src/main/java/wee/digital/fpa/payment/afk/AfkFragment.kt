@@ -6,7 +6,7 @@ import wee.digital.fpa.payment.base.BaseFragment
 
 class AfkFragment : BaseFragment() {
     override fun layoutResource(): Int {
-        return R.layout.afk
+        return R.layout.payment_confirm
     }
 
     override fun onCreated(state: Bundle?) {

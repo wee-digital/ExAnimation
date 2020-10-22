@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     app:startDestination="@id/pinFragment">
 
     <fragment
         android:id="@+id/pinFragment"
-        android:name="wee.digital.fpa.payment.pin.PinFragment"
+        android:name="wee.digital.fpa.payment.afk.AfkFragment"
         android:label="PinFragment" />
     <action
         android:id="@+id/action_global_pinFragment"
         app:destination="@id/pinFragment" />
+
+    <dialog
+        android:id="@+id/paymentConfirm"
+        android:label="PaymentConfirm"
+        tools:layout="@layout/payment_confirm"
+        /><action android:id="@+id/action_global_paymentConfirm" app:destination="@id/paymentConfirm"/>
 </navigation>
