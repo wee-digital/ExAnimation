@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "749587705162",
+    "firebase_url": "https://facepay-dfaee.firebaseio.com",
+    "project_id": "facepay-dfaee",
+    "storage_bucket": "facepay-dfaee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749587705162:android:35a5fc68aa7e12b250e5b3",
+        "android_client_info": {
+          "package_name": "wee.digital.fpa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749587705162-lm8uogjvnjnq378d6evitkp8oqlujlqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCizq3w34zxjLF52qsUgCO5NM0UKEyoFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "749587705162-lm8uogjvnjnq378d6evitkp8oqlujlqg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749587705162:android:06e2e5749c669faf50e5b3",
+        "android_client_info": {
+          "package_name": "wee.digital.fpa.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749587705162-lm8uogjvnjnq378d6evitkp8oqlujlqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCizq3w34zxjLF52qsUgCO5NM0UKEyoFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "749587705162-lm8uogjvnjnq378d6evitkp8oqlujlqg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

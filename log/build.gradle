@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion builds.compile_sdk
+    defaultConfig {
+        minSdkVersion builds.min_sdk
+        targetSdkVersion builds.target_sdk
+        versionCode builds.version_code
+        versionName builds.version_name
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.kotlin.stdlib
+    implementation deps.android.appcompat
+    implementation deps.android.recyclerview
+    implementation deps.okhttp
+    implementation deps.google.gson
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+
+}

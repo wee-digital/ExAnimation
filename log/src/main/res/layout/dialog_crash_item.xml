@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp"
+    android:paddingStart="4dp"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp"
+        android:textColor="#000"
+        android:textSize="14sp"
+        tools:text="Item text goes here" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingTop="20dp"
+        android:text="Trace"
+        android:textColor="#D81B60"
+        android:textSize="12sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTrace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2560"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textColor="#4B4B4B"
+        android:textSize="12sp"
+        tools:text="..." />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Cause"
+        android:textColor="#D81B60"
+        android:textSize="12sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewCause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2560"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textColor="#4B4B4B"
+        android:textSize="12sp"
+        tools:text="..." />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

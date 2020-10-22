@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- BASE APPLICATION THEME. -->
+    <style name="App" />
+
+    <style name="App.Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="App.Theme.NoActionBar" parent="App.Theme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="App.Theme.LightStatusBar" parent="App.Theme">
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="App.Theme.Launcher" parent="App.Theme.NoActionBar">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="App.Theme.Transparent" parent="App.Theme.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="App.Theme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="App.Theme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="App.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
+    <style name="App.Dialog.Transparent">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="App.Dialog.FullScreen">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+    <style name="App.Dialog.FullScreen.Transparent">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="ScrollView" parent="MatchParent">
+        <item name="android:overScrollMode">never</item>
+        <item name="android:fillViewport">true</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="RecyclerView" parent="MatchWidth">
+        <item name="android:overScrollMode">never</item>
+        <item name="android:fillViewport">true</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="MatchParent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="WrapContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MatchHeight">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="MatchWidth">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="VerticalView" parent="MatchWidth">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HorizontalItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="VerticalItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="MatchConstraint">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="HorizontalGuideLine" parent="WrapContent">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="VerticalGuideLine" parent="WrapContent">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HorizontalSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
+    <style name="VerticalSeparator">
+        <item name="android:layout_width">0.5px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
+
+</resources>

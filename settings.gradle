@@ -1,3 +1,5 @@
 include ':app',
-        ':library'
+        ':library',
+        ':log',
+        ':camera'
 rootProject.name = "ExAnimation"

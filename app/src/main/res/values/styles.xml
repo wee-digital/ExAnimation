@@ -1,43 +1,30 @@
 <resources>
 
-    <!-- BASE APPLICATION THEME. -->
-
-    <!-- App Theme. -->
-    <style name="App" />
-
-    <style name="App.Theme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <!-- TEXT VIEW. -->
+    <style name="TextView" parent="WrapContent">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/textSize</item>
     </style>
 
-    <style name="App.Dialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowBackground">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowMinWidthMajor">90%</item>
-        <item name="android:windowMinWidthMinor">90%</item>
+    <style name="TextView2" parent="TextView">
+        <item name="android:textSize">@dimen/textSize2</item>
     </style>
 
-    <style name="App.Dialog.Transparent">
-        <item name="android:backgroundDimEnabled">false</item>
+    <style name="TextView3" parent="TextView">
+        <item name="android:textSize">@dimen/textSize3</item>
     </style>
 
-    <style name="App.Dialog.FullScreen">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowMinWidthMajor">100%</item>
-        <item name="android:windowMinWidthMinor">100%</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    <style name="TextView4" parent="TextView">
+        <item name="android:textSize">@dimen/textSize4</item>
     </style>
 
-    <style name="App.Dialog.FullScreen.Transparent">
-        <item name="android:backgroundDimEnabled">false</item>
+    <style name="TextView5" parent="TextView">
+        <item name="android:textSize">@dimen/textSize5</item>
     </style>
 
+    <!--DIALOG-->
     <style name="Dialog" />
 
     <style name="Dialog.BottomFragment">
@@ -52,7 +39,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Dialog title</item>
@@ -63,7 +50,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">@dimen/_10ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Thông tin</item>
@@ -75,7 +62,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/colorGray</item>
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Cửa hàng</item>
@@ -86,7 +73,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">@dimen/_20ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Cửa hàng</item>
@@ -96,7 +83,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:backgroundTint">#fff</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/colorGray</item>
         <item name="android:textSize">@dimen/_10ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Dialog sub title</item>
@@ -113,8 +100,8 @@
         <item name="android:background">@drawable/drw_gradient_blue</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_28sdp</item>
-        <item name="android:layout_marginStart">@dimen/defaultMarginX4</item>
-        <item name="android:layout_marginEnd">@dimen/defaultMarginX4</item>
+        <item name="android:layout_marginStart">@dimen/margin4</item>
+        <item name="android:layout_marginEnd">@dimen/margin4</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">@dimen/_10ssp</item>
         <item name="textAllCaps">false</item>
@@ -126,21 +113,23 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_28sdp</item>
-        <item name="android:layout_marginStart">@dimen/defaultMarginX4</item>
-        <item name="android:layout_marginEnd">@dimen/defaultMarginX4</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:layout_marginStart">@dimen/margin4</item>
+        <item name="android:layout_marginEnd">@dimen/margin4</item>
+        <item name="android:textColor">@color/colorGray</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/_10ssp</item>
         <item name="android:gravity">center</item>
     </style>
 
+    <!--PAYMENT-->
     <style name="Payment" />
+
     <style name="Payment.TextTime">
         <item name="android:text">Thời gian thanh toán: 01:00</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/defaultMarginX2</item>
+        <item name="android:layout_marginTop">@dimen/margin2</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">@dimen/_10ssp</item>
         <item name="android:gravity">center</item>

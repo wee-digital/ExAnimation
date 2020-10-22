@@ -3,41 +3,175 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion builds.compile_sdk
     defaultConfig {
         applicationId "wee.digital.fpa"
-        minSdkVersion 24
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
+        minSdkVersion builds.min_sdk
+        targetSdkVersion builds.target_sdk
+        versionCode builds.version_code
+        versionName builds.version_name
+        flavorDimensions "default"
+        multiDexEnabled true
+        ndk {
+            abiFilters  "armeabi-v7a"//, "x86","armeabi"
         }
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+
+    dexOptions {
+
+        javaMaxHeapSize "4g"
+        sourceSets {
+            main {
+                jniLibs.srcDirs = ["libs"]
+            }
+        }
+
+        packagingOptions {
+            exclude "META-INF/androidx.exifinterface_exifinterface.version"
+            exclude "META-INF/proguard/androidx-annotations.pro"
+            exclude 'META-INF/license.text'
+            exclude 'META-INF/notice.text'
+            exclude 'META-INF/ASL2.0'
+        }
+
+        dexOptions {
+            javaMaxHeapSize "4g"
+        }
+
+        aaptOptions {
+            noCompress "tflite"
+        }
+
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+
+        signingConfigs {
+            release {
+                storeFile file("keys")
+                storePassword 'weezi.biz'
+                keyAlias 'key_fpa'
+                keyPassword 'weezi.biz'
+            }
+        }
+
+        buildTypes {
+            all {
+            }
+            release {
+                signingConfig signingConfigs.release
+                debuggable false
+                minifyEnabled true
+                shrinkResources true
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+            debug {
+                debuggable true
+                minifyEnabled false
+                shrinkResources false
+            }
+        }
+
+        productFlavors {
+            all {
+                buildConfigField("int", "DB_VERSION", "1")
+            }
+            dev {
+                resValue "string", "app_name", "Example DEV"
+                applicationIdSuffix ".dev"
+            }
+            prod {
+                resValue "string", "app_name", "Example"
+                buildConfigField("String", "SERVICE_URL", "\"https://sdbservice.vietinbank.vn/\"")
+            }
+        }
+
     }
+
 }
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'com.intuit.ssp:ssp-android:1.0.6'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
+    implementation fileTree(include: ["*.jar"], dir: "libs")
+    implementation deps.kotlin.stdlib
+    implementation deps.android.appcompat
+    implementation deps.android.corektx
+    implementation deps.android.constraintlayout
+    implementation deps.android.recyclerview
+    implementation deps.android.cardview
+    implementation deps.android.exifinterface
+    implementation deps.android.vectordrawable_animated
+    implementation deps.android.legacy
+    implementation deps.android.legacy_v4
+    implementation deps.android.media
+    implementation deps.android.multidex
+    implementation deps.android.material
+
+    // FRAGMENT NAVIGATION
+    implementation deps.navigation.fragment
+    implementation deps.navigation.ui
+
+    // LIFECYCLE
+    implementation deps.lifecycle.extensions
+    kapt deps.lifecycle.compiler
+
+    // ROOM - DATABASE ORM
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+
+    // REST API LIBS
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.gson
+    implementation deps.retrofit.rxjava
+    implementation deps.okhttp
+    implementation deps.okhttp_log
+
+    // JSON CONVERTER
+    implementation deps.google.gson
+
+    // REACTIVE PROGRAMMING
+    implementation deps.reactivex.java
+    implementation deps.reactivex.kotlin
+    implementation deps.reactivex.binding
+
+    // MULTI DIMENSIONS
+    implementation deps.dimens.sdp
+    implementation deps.dimens.ssp
+
+    // CUSTOM VIEW
+    implementation deps.roundedimageview
+    implementation deps.lottie
+
+    // UTILS LIBRARY
+    implementation project(":library")
+
+    // LOG
+    implementation project(":log")
+
+    // CAMERA
+    //implementation project(":camera")
+
+    // ENCRYPT DECRYPT
+    //implementation project(":crypto")
+
+    // FINGERPRINT SCANNER PA00I MODULE
+    //implementation project(":finger")
+
+
+
 }
+
+apply plugin: "com.google.gms.google-services"

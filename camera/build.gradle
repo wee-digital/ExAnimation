@@ -1,0 +1,49 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion builds.compile_sdk
+    defaultConfig {
+        minSdkVersion builds.min_sdk
+        targetSdkVersion builds.target_sdk
+        versionCode builds.version_code
+        versionName builds.version_name
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.kotlin.stdlib
+    implementation deps.android.appcompat
+    implementation deps.android.corektx
+    implementation deps.android.constraintlayout
+
+    // REACTIVE PROGRAMMING
+    implementation deps.reactivex.java
+    implementation deps.reactivex.kotlin
+    implementation deps.reactivex.binding
+
+
+    // GOOGLE SERVICES
+    implementation "com.google.firebase:firebase-ml-model-interpreter:22.0.1"
+    implementation "com.google.firebase:firebase-ml-vision-face-model:19.0.0"
+    implementation "com.google.firebase:firebase-ml-vision-automl:18.0.3"
+    implementation "com.google.firebase:firebase-ml-vision:24.0.1"
+
+    // INTER REAL SENSE LIB
+    implementation "com.intel.realsense:librealsense:2.36.0@aar"
+
+    // MTCN DETECTOR
+    implementation 'org.tensorflow:tensorflow-android:1.13.1'
+
+}
