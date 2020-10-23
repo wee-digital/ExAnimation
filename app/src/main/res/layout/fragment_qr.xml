@@ -45,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/frgQRGuide19" />
 
-        <wee.digital.fpa.custom.LayoutScanner
+        <wee.digital.fpa.widget.LayoutScanner
             android:id="@+id/frgQRLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -61,7 +61,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:maskColor="@color/colorWhite" />
 
-        <wee.digital.fpa.custom.TitleView
+        <wee.digital.fpa.widget.TitleView
             android:id="@+id/frgQRTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

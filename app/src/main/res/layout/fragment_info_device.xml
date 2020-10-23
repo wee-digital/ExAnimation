@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frgInfoDeviceGuide10">
 
-        <wee.digital.fpa.custom.TitleView
+        <wee.digital.fpa.widget.TitleView
             android:id="@+id/frgInfoDeviceTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

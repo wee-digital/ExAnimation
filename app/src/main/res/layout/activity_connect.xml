@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <wee.digital.fpa.custom.LineView
+    <wee.digital.fpa.widget.LineView
         android:id="@+id/actConnectLine1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <wee.digital.fpa.custom.LineView
+    <wee.digital.fpa.widget.LineView
         android:id="@+id/actConnectLine2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <wee.digital.fpa.custom.LineView
+    <wee.digital.fpa.widget.LineView
         android:id="@+id/actConnectLine3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

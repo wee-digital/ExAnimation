@@ -1,4 +1,4 @@
-package wee.digital.fpa.custom
+package wee.digital.fpa.widget
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.title_view.view.*
 import wee.digital.fpa.R
-import wee.digital.library.extension.gone
 import wee.digital.library.extension.hide
 import wee.digital.library.extension.show
 

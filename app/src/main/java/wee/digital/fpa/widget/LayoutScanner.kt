@@ -1,4 +1,4 @@
-package wee.digital.fpa.custom
+package wee.digital.fpa.widget
 
 import android.content.Context
 import android.content.res.TypedArray
