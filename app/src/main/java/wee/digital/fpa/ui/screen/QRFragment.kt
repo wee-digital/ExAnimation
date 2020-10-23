@@ -1,5 +1,6 @@
 package wee.digital.fpa.ui.screen
 
+import android.app.Activity
 import android.graphics.Bitmap
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -13,6 +14,7 @@ import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.model.DeviceInfo
+import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.ui.base.BaseFragment
 
 
@@ -36,7 +38,7 @@ class QRFragment : BaseFragment(), ScanQRCode.QRCodeProcessingListener {
     override fun onLiveDataObserve() {}
 
     private fun initView() {
-        Shared.deviceInfo.postValue(DeviceInfo())
+        Shared.deviceInfo.postValue(DeviceInfoStore(context as Activity))
         frgQRTitle.actionCancelClick { findNavController().popBackStack() }
     }
 

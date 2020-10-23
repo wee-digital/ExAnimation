@@ -28,7 +28,7 @@ data class GetBankAccListDTOResp(
     @Expose
     var basicBankAccList: List<BasicBankAcc> = arrayListOf()
 ){
-    fun getBankAccList(): ArrayList<BankAccInfo>{
+    //fun getBankAccList(): ArrayList<BankAccInfo>{
         // dev lai
         /*val bankAccList = arrayListOf<BankAccInfo>()
         if (this.basicBankAccList.isNotEmpty()) {
@@ -47,5 +47,5 @@ data class GetBankAccListDTOResp(
             }
         }
         return bankAccList*/
-    }
+    //}
 }

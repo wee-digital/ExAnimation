@@ -41,7 +41,7 @@ data class DeviceInfo(
         var name : String = ""
 )
 
-class DeviceInfoStore private constructor(context: Context) {
-        var qrCode: String? = ""
-        var name: String? = ""
+class DeviceInfoStore constructor(context: Context) {
+        var qrCode: String = ""
+        var name: String = ""
 }

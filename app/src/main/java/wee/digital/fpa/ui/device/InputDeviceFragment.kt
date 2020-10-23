@@ -10,8 +10,11 @@ import wee.digital.fpa.app.toast
 import wee.digital.fpa.camera.FrameUtil
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.viewModel
 
 class InputDeviceFragment : BaseFragment(), TextWatcher {
+
+    private val inputVM: InputDeviceVM by lazy { viewModel(InputDeviceVM::class) }
 
     private var mRegister = false
 
@@ -50,6 +53,13 @@ class InputDeviceFragment : BaseFragment(), TextWatcher {
     }
 
     override fun onLiveDataObserve() {
+        inputVM.statusRegister.observe {
+            if(it){
+                toast("success register")
+            }else{
+                toast("fail register")
+            }
+        }
     }
 
     /**
@@ -100,6 +110,7 @@ class InputDeviceFragment : BaseFragment(), TextWatcher {
 
     private fun registerDevice() {
         Shared.deviceInfo.value?.name = frgInputDeviceInput.text.toString()
+        inputVM.registerDevice()
     }
 
 }
