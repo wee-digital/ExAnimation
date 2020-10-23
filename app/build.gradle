@@ -165,7 +165,7 @@ dependencies {
     //implementation project(":camera")
 
     // ENCRYPT DECRYPT
-    //implementation project(":crypto")
+    implementation project(":crypto")
 
     // FINGERPRINT SCANNER PA00I MODULE
     //implementation project(":finger")

@@ -1,12 +1,14 @@
 package wee.digital.fpa.ui
 
-import android.os.Bundle
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import com.intel.realsense.librealsense.RsContext
+import com.intel.realsense.librealsense.UsbUtilities
 import kotlinx.android.synthetic.main.activity_connect.*
 import wee.digital.fpa.R
+import wee.digital.fpa.app.App
+import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.ui.base.BaseActivity
-import wee.digital.fpa.ui.screen.QRFragment
+import wee.digital.library.extension.hideSystemUI
 
 class ConnectActivity : BaseActivity() {
 
@@ -14,6 +16,7 @@ class ConnectActivity : BaseActivity() {
 
     override fun onViewCreated() {
         viewClick()
+        startCamera()
     }
 
     override fun onLiveDataObserve() {
@@ -23,6 +26,23 @@ class ConnectActivity : BaseActivity() {
         actConnectAction.setOnClickListener {
             findNavController(R.id.actConnectHost).navigate(R.id.QRFragment, null, navAnim())
         }
+    }
+
+    private fun startCamera() {
+        RsContext.init(applicationContext)
+        UsbUtilities.grantUsbPermissionIfNeeded(applicationContext)
+        App.realSenseControl = RealSenseControl()
+        App.realSenseControl?.startStreamThread()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideSystemUI()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        App.realSenseControl?.stopStreamThread()
     }
 
 }

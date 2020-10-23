@@ -1,0 +1,6 @@
+package wee.digital.fpa.repository.utils
+
+object Key{
+    const val PREPARE_KEY = "0iza/3OySf6+T43vMjxMrdabnhtmsQm43uSwU0/zQc4="
+    const val RSA_COLLECTDATA = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4t2A1nc1hQQWNj7q90PyRP1N+gX8ucD+fmGKeqi9cNb7uwSCVvpo/jaIWNVCcK0qAa0x6uJ3mmNWbispyXiJvRlxbeuNEzEpNgHZo8+GS4lWbuaSWxg0kWKc73dlM02Mz89IfWjIQuMlToE+SX9z19nelgQInX+k6uR121x+5/Dj6Z1tuFllE2DFtD1QBwriL2LreLrIkTxewYuIDj1WsdcRPOo5zq1aFi/bMIo33hBn8tRf6QDxWyVtAbtTSxlqUHCJtZvrsdePvQ6etrbA6+KtttSIpxYDeWUwqdcgfxXmsuxHJCofzWPLUld/DbBwmmMyFmC9hsPUNeaesl2AtQIDAQAB"
+}
