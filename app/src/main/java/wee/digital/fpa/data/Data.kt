@@ -26,20 +26,19 @@ abstract class RoomDB : RoomDatabase() {
     abstract val imageDao: ImageDBO.DAO
 }
 
-private val shared: SharedPreferences by lazy {
+val shared: SharedPreferences by lazy {
     app.getSharedPreferences(appId, Context.MODE_PRIVATE)
 }
 
-fun SharedPreferences.edit(block: SharedPreferences.Editor.() -> Unit) {
-    this.edit().block()
-    commit()
+fun SharedPreferences.update(block: SharedPreferences.Editor.() -> Unit) {
+    val edit = this.edit()
+    edit.block()
+    edit.apply()
 }
 
 fun SharedPreferences.clear() {
-    this.edit().clear()
-    commit()
+    val edit = this.edit()
+    edit.clear()
+    edit.apply()
 }
 
-fun SharedPreferences.commit() {
-    this.edit().apply()
-}
