@@ -3,7 +3,7 @@ package wee.digital.fpa.ui.screen
 import androidx.core.text.HtmlCompat
 import kotlinx.android.synthetic.main.fragment_info_device.*
 import wee.digital.fpa.R
-import wee.digital.fpa.base.view.BaseFragment
+import wee.digital.fpa.ui.base.BaseFragment
 
 class InfoDeviceFragment : BaseFragment() {
 

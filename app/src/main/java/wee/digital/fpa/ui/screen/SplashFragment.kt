@@ -1,7 +1,7 @@
 package wee.digital.fpa.ui.screen
 
 import wee.digital.fpa.R
-import wee.digital.fpa.base.view.BaseFragment
+import wee.digital.fpa.ui.base.BaseFragment
 
 
 class SplashFragment : BaseFragment() {

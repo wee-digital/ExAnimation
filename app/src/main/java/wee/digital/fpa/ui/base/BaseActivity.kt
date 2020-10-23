@@ -1,13 +1,21 @@
 package wee.digital.fpa.ui.base
 
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import wee.digital.fpa.R
 import wee.digital.library.extension.ViewClickListener
+import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 
 abstract class BaseActivity : AppCompatActivity(), BaseView {
@@ -90,6 +98,23 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
                 .setEnterAnim(R.anim.slide_in_up)
                 .setPopExitAnim(R.anim.slide_in_down)
                 .build()
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            hideSystemUI()
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
 }

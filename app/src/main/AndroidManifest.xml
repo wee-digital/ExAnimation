@@ -23,12 +23,13 @@
         android:roundIcon="@drawable/ic_placeholder"
         android:supportsRtl="true"
         android:theme="@style/App.Theme">
-        <activity android:name=".ui.ConnectActivity"/>
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.ConnectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.MainActivity">
         </activity>
     </application>
 
