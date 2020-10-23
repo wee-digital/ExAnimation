@@ -5,14 +5,14 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/frgInfoDeviceGuide10"
+        android:id="@+id/frgInputDeviceGuide10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.097" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/frgInfoDeviceRoot"
+        android:id="@+id/frgInputDeviceRoot"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/rounded_top"
@@ -20,10 +20,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frgInfoDeviceGuide10">
+        app:layout_constraintTop_toBottomOf="@+id/frgInputDeviceGuide10">
 
         <wee.digital.fpa.widget.TitleView
-            android:id="@+id/frgInfoDeviceTitle"
+            android:id="@+id/frgInputDeviceTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cài đặt thiết bị"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/frgInfoDeviceName"
+            android:id="@+id/frgInputDeviceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
@@ -44,52 +44,64 @@
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_17ssp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frgInfoDeviceTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/frgInputDeviceTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/frgInfoDeviceNote"
+            android:id="@+id/frgInputDeviceNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/inter_regular"
             android:text="Bạn vui lòng nhập tên thiết bị"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintStart_toStartOf="@+id/frgInfoDeviceName"
-            app:layout_constraintTop_toBottomOf="@+id/frgInfoDeviceName" />
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="@+id/frgInputDeviceName"
+            app:layout_constraintTop_toBottomOf="@+id/frgInputDeviceName" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/frgInfoDeviceInput"
+        <wee.digital.fpa.widget.MyInputName
+            android:id="@+id/frgInputDeviceInput"
             android:hint="Tên thiết bị (Ví dụ: thiết bị số 1,...)"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:fontFamily="@font/inter_regular"
             android:background="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frgInfoDeviceNote" />
+            app:layout_constraintTop_toBottomOf="@+id/frgInputDeviceNote" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/frgInfoDeviceTerm"
+            android:id="@+id/frgInputDeviceError"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:textColor="@color/colorAlert"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frgInfoDeviceInput"
-            android:layout_marginTop="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/frgInputDeviceInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/frgInputDeviceTerm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frgInputDeviceInput"
+            android:layout_marginTop="@dimen/_40sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_10ssp"
             android:text="@string/done_terms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/frgInfoDeviceAction"
+            android:id="@+id/frgInputDeviceAction"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frgInfoDeviceTerm"
-            android:layout_marginTop="@dimen/_35sdp"
-            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintTop_toBottomOf="@+id/frgInputDeviceTerm"
+            android:layout_marginTop="@dimen/_40sdp"
             android:text="Đăng ký thiết bị"
             style="@style/Dialog.ButtonAccept"/>
 

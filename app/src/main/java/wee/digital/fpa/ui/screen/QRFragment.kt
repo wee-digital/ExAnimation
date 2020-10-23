@@ -1,14 +1,18 @@
 package wee.digital.fpa.ui.screen
 
 import android.graphics.Bitmap
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_qr.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
+import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FrameUtil
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
-import wee.digital.fpa.repository.model.DataCollect
+import wee.digital.fpa.data.repository.Shared
+import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.ui.base.BaseFragment
 
 
@@ -21,18 +25,18 @@ class QRFragment : BaseFragment(), ScanQRCode.QRCodeProcessingListener {
     override fun layoutResource(): Int = R.layout.fragment_qr
 
     override fun onViewCreated() {
+        mCheckQR = false
         mScanQR = ScanQRCode()
         mScanQR?.initListener(this)
-        viewOnClick()
+        initView()
         listenerCamera()
     }
 
 
-    override fun onLiveDataObserve() {
+    override fun onLiveDataObserve() {}
 
-    }
-
-    private fun viewOnClick() {
+    private fun initView() {
+        Shared.deviceInfo.postValue(DeviceInfo())
         frgQRTitle.actionCancelClick { findNavController().popBackStack() }
     }
 
@@ -40,7 +44,7 @@ class QRFragment : BaseFragment(), ScanQRCode.QRCodeProcessingListener {
      * listener camera
      */
     private fun listenerCamera() {
-        App.realSenseControl?.listener = object : RealSenseControl.Listener{
+        App.realSenseControl?.listener = object : RealSenseControl.Listener {
 
             override fun onCameraStarted() {}
 
@@ -68,22 +72,34 @@ class QRFragment : BaseFragment(), ScanQRCode.QRCodeProcessingListener {
     }
 
     private fun checkQRCode(text: String) {
-        /*if (text.isNotEmpty() && FrameUtil.decryptQRCode(text) != null) {
-            DeviceInfoStore.getInstance(activity()).qrCode = text
-
-            findNavController().navigate(R.id.action_scanQRFragment_to_customerFragment)
+        if (text.isNotEmpty() && FrameUtil.decryptQRCode(text) != null) {
+            Shared.deviceInfo.value?.qrCode = text
+            findNavController().navigate(R.id.action_QRFragment_to_InfoDeviceFragment)
         } else if (text.isNotEmpty()) {
-            show(frgScanQR_error)
+            frgQRStatus.error("Mã không đúng. Bạn vui lòng thử lại lần nữa")
         } else {
-            gone(frgScanQR_error)
-        }*/
-        mCheckQR = false
+            frgQRStatus.resetError("Vui lòng đưa mã vào vùng nhận diện")
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        App.realSenseControl?.listener = null
         mScanQR?.destroyScan()
+        mScanQR = null
+        App.realSenseControl?.listener = null
+
+    }
+
+    private fun AppCompatTextView.error(value: String) {
+        mCheckQR = false
+        this.text = value
+        this.setTextColor(ContextCompat.getColor(context, R.color.colorAlert))
+    }
+
+    private fun AppCompatTextView.resetError(value: String) {
+        mCheckQR = false
+        this.text = value
+        this.setTextColor(ContextCompat.getColor(context, R.color.colorBlack))
     }
 
 }

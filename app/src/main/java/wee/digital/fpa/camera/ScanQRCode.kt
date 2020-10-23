@@ -36,7 +36,7 @@ class ScanQRCode {
     }
 
     fun destroyScan(){
-        executorService.shutdownNow()
+        executorService.shutdown()
     }
 
 

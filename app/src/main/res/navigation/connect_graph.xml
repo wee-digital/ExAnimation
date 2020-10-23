@@ -12,12 +12,26 @@
     <fragment
         android:id="@+id/QRFragment"
         android:name="wee.digital.fpa.ui.screen.QRFragment"
-        android:label="QRFragment" />
+        android:label="QRFragment" >
+        <action
+            android:id="@+id/action_QRFragment_to_InfoDeviceFragment"
+            app:destination="@id/InfoDeviceFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/doneFragment"
         android:name="wee.digital.fpa.ui.screen.DoneFragment"
         android:label="DoneFragment" />
     <fragment
         android:id="@+id/InfoDeviceFragment"
-        android:name="wee.digital.fpa.ui.screen.InfoDeviceFragment" />
+        android:name="wee.digital.fpa.ui.device.InputDeviceFragment" >
+        <action
+            android:id="@+id/action_InfoDeviceFragment_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_in_down" />
+    </fragment>
 </navigation>
