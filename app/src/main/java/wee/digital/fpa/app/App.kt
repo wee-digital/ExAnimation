@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import wee.digital.fpa.BuildConfig
+import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.library.Library
 import wee.digital.library.extension.SECOND
 import wee.digital.log.LogBook
@@ -22,6 +23,11 @@ class App : Application() {
         app = this
         app.onModulesInject()
     }
+
+    companion object{
+        var realSenseControl : RealSenseControl? = null
+    }
+
 }
 
 fun App.onModulesInject() {
