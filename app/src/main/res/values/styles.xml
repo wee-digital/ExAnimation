@@ -143,4 +143,10 @@
         <item name="layout_constraintDimensionRatio">w,480:103</item>
     </style>
 
+    <!--HELP-->
+    <style name="Help" />
+
+    <style name="Help.MessageItem" parent="TextView">
+
+    </style>
 </resources>

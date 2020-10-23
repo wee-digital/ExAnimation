@@ -35,7 +35,8 @@ class PinProgressView : FrameLayout {
 
     }
 
-    var stepX = 0
+
+
     fun build() {
         pinProgressLayout.post {
             pinProgressLayout.addIndicator()
@@ -47,21 +48,26 @@ class PinProgressView : FrameLayout {
         val indicatorWidth = this.measuredHeight
         val rangeWidth = this.measuredWidth - indicatorWidth
         val stepWidth = rangeWidth / (stepCount - 1)
-
-        if (stepX > rangeWidth) {
-            return
+        var stepX = 0
+        while (stepX <= rangeWidth) {
+            addIndicator(stepX)
+            stepX += stepWidth
         }
 
+
+
+
+    }
+
+    private fun ConstraintLayout.addIndicator(x : Int){
         val v = IndicatorView(context)
         v.id = View.generateViewId()
         this.addView(v, this.childCount)
         val set = ConstraintSet()
         set.clone(this)
-        set.connect(v.id, ConstraintSet.START, this.id, ConstraintSet.START, stepX)
+        set.connect(v.id, ConstraintSet.START, this.id, ConstraintSet.START, x)
         set.connect(v.id, ConstraintSet.TOP, this.id, ConstraintSet.TOP)
         set.applyTo(this)
-        stepX += stepWidth
-
     }
 
     private fun onKeyEvent() {
