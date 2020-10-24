@@ -33,7 +33,7 @@
         android:fontFamily="@font/inter_semibold"
         android:gravity="center"
         android:text="title"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/black"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/titleViewActionCancel"

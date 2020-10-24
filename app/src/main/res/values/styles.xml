@@ -150,4 +150,11 @@
     <style name="Help.MessageItem" parent="TextView">
 
     </style>
+
+    <!--GRADIENT TEXT-->
+    <style name="GradientText" parent="TextView5">
+        <item name="android:textSize">@dimen/_18ssp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
