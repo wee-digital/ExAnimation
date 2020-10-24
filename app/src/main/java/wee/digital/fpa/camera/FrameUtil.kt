@@ -112,11 +112,11 @@ object FrameUtil {
         val copiedBitmap = bitmap.copy(Bitmap.Config.RGB_565, true)
         return try {
             Bitmap.createBitmap(
-                    copiedBitmap,
-                    rectCrop.left,
-                    rectCrop.top,
-                    rectCrop.width(),
-                    rectCrop.height()
+                copiedBitmap,
+                rectCrop.left,
+                rectCrop.top,
+                rectCrop.width(),
+                rectCrop.height()
             )
         } catch (ex: Exception) {
             copiedBitmap
@@ -154,8 +154,8 @@ object FrameUtil {
         val rectCrop = Rect(left, top, x + width, y + height)
         return try {
             val cropBitmap = Bitmap.createBitmap(
-                    bitmap,
-                    rectCrop.left, rectCrop.top, rectCrop.width(), rectCrop.height()
+                bitmap,
+                rectCrop.left, rectCrop.top, rectCrop.width(), rectCrop.height()
             )
             bitmap.recycle()
             cropBitmap
@@ -179,11 +179,11 @@ object FrameUtil {
         val copiedBitmap = bitmap.copy(Bitmap.Config.RGB_565, true)
         return try {
             Bitmap.createBitmap(
-                    copiedBitmap,
-                    left,
-                    top,
-                    width,
-                    height
+                copiedBitmap,
+                left,
+                top,
+                width,
+                height
             )
         } catch (ex: Exception) {
             null
@@ -212,18 +212,18 @@ object FrameUtil {
         val copiedBitmap = bitmap.copy(Bitmap.Config.RGB_565, true)
         try {
             val bmFace = Bitmap.createBitmap(
-                    copiedBitmap,
-                    left,
-                    top,
-                    width,
-                    height
+                copiedBitmap,
+                left,
+                top,
+                width,
+                height
             )
             val facePointData =
-                    getDataFace(
-                            box,
-                            (rect.width() * 0.5f).toInt(),
-                            (rect.height() * 0.5f).toInt()
-                    )
+                getDataFace(
+                    box,
+                    (rect.width() * 0.5f).toInt(),
+                    (rect.height() * 0.5f).toInt()
+                )
             val byteFace = BitmapUtils.bitmapToByteArray(bmFace)
             bitmap.recycle()
             bmFace?.recycle()
@@ -244,24 +244,24 @@ object FrameUtil {
         }
 
         return FacePointData(
-                face.transform2Rect(),
-                listNewPoint[1],
-                listNewPoint[0],
-                listNewPoint[2],
-                listNewPoint[4],
-                listNewPoint[3]
+            face.transform2Rect(),
+            listNewPoint[1],
+            listNewPoint[0],
+            listNewPoint[2],
+            listNewPoint[4],
+            listNewPoint[3]
         )
     }
 
     fun getDataFace(face: Box, plusW: Int, plusH: Int): FacePointData {
         val faceRect = face.transform2Rect()
         val newRect =
-                Rect(
-                        0 + plusW / 2,
-                        0 + plusH / 2,
-                        faceRect.width() + plusW / 2,
-                        faceRect.height() + plusH / 2
-                )
+            Rect(
+                0 + plusW / 2,
+                0 + plusH / 2,
+                faceRect.width() + plusW / 2,
+                faceRect.height() + plusH / 2
+            )
         val listNewPoint = arrayListOf<Point>()
         for (point in face.landmark) {
             val newP = convertPoint(point, face.transform2Rect(), plusW, plusH)
@@ -269,12 +269,12 @@ object FrameUtil {
         }
 
         return FacePointData(
-                newRect,
-                listNewPoint[1],
-                listNewPoint[0],
-                listNewPoint[2],
-                listNewPoint[4],
-                listNewPoint[3]
+            newRect,
+            listNewPoint[1],
+            listNewPoint[0],
+            listNewPoint[2],
+            listNewPoint[4],
+            listNewPoint[3]
         )
     }
 
@@ -337,7 +337,7 @@ object FrameUtil {
             val data = ByteArray(frame.dataSize)
             frame.getData(data)
             val argb = rgb8ToArgb(data, width, height)
-                    ?: return null
+                ?: return null
             val bmp = Bitmap.createBitmap(argb, width, height, Bitmap.Config.RGB_565)
             return flipBitmap(bmp)
         } catch (e: OutOfMemoryError) {
@@ -351,7 +351,7 @@ object FrameUtil {
         data ?: return null
         return try {
             val argb = rgb8ToArgb(data, width, height)
-                    ?: return null
+                ?: return null
             val bmp = Bitmap.createBitmap(argb, width, height, Bitmap.Config.RGB_565)
             return flipBitmap(bmp)
         } catch (e: OutOfMemoryError) {
@@ -361,13 +361,13 @@ object FrameUtil {
         }
     }
 
-    fun getBitmapFromByte(data: ByteArray, width: Int, height: Int): Bitmap? {
-        try {
+    fun getBitmapFromByte(data : ByteArray, width: Int, height: Int) : Bitmap?{
+        try{
             val argb = rgb8ToArgb(data, width, height)
-                    ?: return null
+                ?: return null
             val bmp = Bitmap.createBitmap(argb, width, height, Bitmap.Config.RGB_565)
             return flipBitmap(bmp)
-        } catch (e: java.lang.Exception) {
+        }catch (e : java.lang.Exception){
             return null
         }
     }
@@ -379,12 +379,12 @@ object FrameUtil {
         return data
     }
 
-    fun repairCollectData(collData: DataCollect): DataCollect? {
-        return if (!collData.isRepaired) {
+    fun repairCollectData(collData: DataCollect): DataCollect?{
+        return if(!collData.isRepaired){
             val colorData = collData.colorData
-            if (colorData != null) {
+            if(colorData!=null){
 
-                val bitmap = getBitmapFromFrame(colorData, RealSenseControl.COLOR_WIDTH, RealSenseControl.COLOR_HEIGHT)
+                val bitmap = getBitmapFromFrame(colorData,RealSenseControl.COLOR_WIDTH,RealSenseControl.COLOR_HEIGHT)
                 val byteArr = BitmapUtils.bitmapToByteArray(bitmap)
                 collData.frameColorString = Base64.encodeToString(byteArr, Base64.NO_WRAP)
 
@@ -393,12 +393,12 @@ object FrameUtil {
 
                 collData.colorData = byteArr
                 collData.isRepaired = true
-                collData.pointData = formatDataFaceHeader(collData.dataFacePoint!!.dataFace!!) ?: ""
+                collData.pointData = formatDataFaceHeader(collData.dataFacePoint!!.dataFace!!)?:""
                 collData
-            } else {
+            }else{
                 null
             }
-        } else {
+        }else{
             collData
         }
     }
@@ -432,24 +432,24 @@ object FrameUtil {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 5f
         canvas.drawPoint(
-                facePointData.LeftEye.x.toFloat(),
-                facePointData.LeftEye.y.toFloat(),
-                paint
+            facePointData.LeftEye.x.toFloat(),
+            facePointData.LeftEye.y.toFloat(),
+            paint
         )
         canvas.drawPoint(
-                facePointData.RightEye.x.toFloat(),
-                facePointData.RightEye.y.toFloat(),
-                paint
+            facePointData.RightEye.x.toFloat(),
+            facePointData.RightEye.y.toFloat(),
+            paint
         )
         canvas.drawPoint(
-                facePointData.Leftmouth.x.toFloat(),
-                facePointData.Leftmouth.y.toFloat(),
-                paint
+            facePointData.Leftmouth.x.toFloat(),
+            facePointData.Leftmouth.y.toFloat(),
+            paint
         )
         canvas.drawPoint(
-                facePointData.Rightmouth.x.toFloat(),
-                facePointData.Rightmouth.y.toFloat(),
-                paint
+            facePointData.Rightmouth.x.toFloat(),
+            facePointData.Rightmouth.y.toFloat(),
+            paint
         )
         canvas.drawPoint(facePointData.Nose.x.toFloat(), facePointData.Nose.y.toFloat(), paint)
 
@@ -483,12 +483,12 @@ object FrameUtil {
                 U = (-38 * R - 74 * G + 112 * B + 128 shr 8) + 128
                 V = (112 * R - 94 * G - 18 * B + 128 shr 8) + 128
                 yuv420sp[yIndex++] =
-                        (if (Y < 0) 0 else if (Y > 255) 255 else Y).toByte()
+                    (if (Y < 0) 0 else if (Y > 255) 255 else Y).toByte()
                 if (j % 2 == 0 && index % 2 == 0) {
                     yuv420sp[uvIndex++] =
-                            (if (V < 0) 0 else if (V > 255) 255 else V).toByte()
+                        (if (V < 0) 0 else if (V > 255) 255 else V).toByte()
                     yuv420sp[uvIndex++] =
-                            (if (U < 0) 0 else if (U > 255) 255 else U).toByte()
+                        (if (U < 0) 0 else if (U > 255) 255 else U).toByte()
                 }
                 index++
             }
@@ -526,25 +526,25 @@ object FrameUtil {
 
     fun distancePoint(a: Point, b: Point): Float {
         return sqrt(
-                (a.x.toDouble() - b.x.toDouble()).pow(2.0) + (a.y.toDouble() - b.y.toDouble()).pow(
-                        2.0
-                )
+            (a.x.toDouble() - b.x.toDouble()).pow(2.0) + (a.y.toDouble() - b.y.toDouble()).pow(
+                2.0
+            )
         ).toFloat()
     }
 
     fun getFaceDegreeY(facePointData: FacePointData): Float {
         return getNumberToFaceDegreeY(
-                facePointData.LeftEye, facePointData.RightEye,
-                facePointData.Nose, facePointData.Leftmouth, facePointData.Rightmouth
+            facePointData.LeftEye, facePointData.RightEye,
+            facePointData.Nose, facePointData.Leftmouth, facePointData.Rightmouth
         )
     }
 
     fun getNumberToFaceDegreeY(
-            pointEyeLeft: Point,
-            pointEyeRight: Point,
-            pointNose: Point,
-            pointMouthLeft: Point,
-            pointMouthRight: Point
+        pointEyeLeft: Point,
+        pointEyeRight: Point,
+        pointNose: Point,
+        pointMouthLeft: Point,
+        pointMouthRight: Point
     ): Float {
         val pointCenterEye = getCenterPoint(pointEyeLeft, pointEyeRight)
         val pointCenterMouth = getCenterPoint(pointMouthLeft, pointMouthRight)
@@ -558,17 +558,17 @@ object FrameUtil {
 
     fun getFaceDegreeX(facePointData: FacePointData): Float {
         return getNumberToFaceDegreeX(
-                facePointData.LeftEye, facePointData.RightEye,
-                facePointData.Nose, facePointData.Leftmouth, facePointData.Rightmouth
+            facePointData.LeftEye, facePointData.RightEye,
+            facePointData.Nose, facePointData.Leftmouth, facePointData.Rightmouth
         )
     }
 
     fun getNumberToFaceDegreeX(
-            pointEyeLeft: Point,
-            pointEyeRight: Point,
-            pointNose: Point,
-            pointMouthLeft: Point,
-            pointMouthRight: Point
+        pointEyeLeft: Point,
+        pointEyeRight: Point,
+        pointNose: Point,
+        pointMouthLeft: Point,
+        pointMouthRight: Point
     ): Float {
         val pointCenterEyeMouthLeft = getCenterPoint(pointEyeLeft, pointMouthLeft)
         val pointCenterEyeMouthRight = getCenterPoint(pointEyeRight, pointMouthRight)

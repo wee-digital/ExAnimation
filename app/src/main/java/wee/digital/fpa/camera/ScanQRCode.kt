@@ -9,6 +9,7 @@ import com.google.zxing.common.HybridBinarizer
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.Result
 
 class ScanQRCode {
 
@@ -47,11 +48,11 @@ class ScanQRCode {
         val bmp = bitmapIn.copy(Bitmap.Config.ARGB_8888, true)
         val intArray = IntArray(bmp.width * bmp.height)
         bmp.getPixels(
-                intArray, 0, bmp.width, 0, 0, bmp.width,
-                bmp.height
+            intArray, 0, bmp.width, 0, 0, bmp.width,
+            bmp.height
         )
         val source: LuminanceSource = RGBLuminanceSource(
-                bmp.width, bmp.height, intArray
+            bmp.width, bmp.height, intArray
         )
         val bitmap = BinaryBitmap(HybridBinarizer(source))
         val reader: Reader = MultiFormatReader()

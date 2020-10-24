@@ -29,7 +29,6 @@ class ViewScanner(context: Context) : View(context) {
                 invalidate()
             }
         }
-
     @get:Px
     var frameCornersRadius = 0
         set(@Px radius) {
@@ -40,7 +39,6 @@ class ViewScanner(context: Context) : View(context) {
         }
     private var mFrameRatioWidth = 1f
     private var mFrameRatioHeight = 1f
-
     @get:FloatRange(from = 0.1, to = 1.0)
     var frameSize = 0.75f
         set(@FloatRange(from = 0.1, to = 1.0) size) {
@@ -109,7 +107,7 @@ class ViewScanner(context: Context) : View(context) {
         mFramePaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mFramePaint.style = Paint.Style.STROKE
         val path = Path()
-        path.fillType = Path.FillType.EVEN_ODD
+        path.setFillType(Path.FillType.EVEN_ODD)
         mPath = path
     }
 

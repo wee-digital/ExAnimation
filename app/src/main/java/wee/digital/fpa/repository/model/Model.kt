@@ -18,8 +18,8 @@ data class DataCollect(
         var pointData: String = "",
         var dataFacePoint: DataGetFacePoint? = null,
         var isRepaired: Boolean = false,
-        var frameColorString: String = "",
-        var frameDepthString: String = ""
+        var frameColorString : String = "",
+        var frameDepthString : String = ""
 )
 
 data class FacePointData(

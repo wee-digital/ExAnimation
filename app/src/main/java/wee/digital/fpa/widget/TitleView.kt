@@ -42,11 +42,11 @@ class TitleView : ConstraintLayout {
         titleViewTitle.text = text
     }
 
-    fun actionBackClick(block: () -> Unit) {
+    fun actionBackClick(block : () -> Unit){
         titleViewActionBack.setOnClickListener { block() }
     }
 
-    fun actionCancelClick(block: () -> Unit) {
+    fun actionCancelClick(block: () -> Unit){
         titleViewActionCancel.setOnClickListener { block() }
     }
 
