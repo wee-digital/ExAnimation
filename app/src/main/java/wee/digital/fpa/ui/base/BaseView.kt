@@ -2,6 +2,7 @@ package wee.digital.fpa.ui.base
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

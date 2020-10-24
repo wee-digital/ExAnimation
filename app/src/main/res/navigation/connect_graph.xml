@@ -8,30 +8,58 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="wee.digital.fpa.ui.screen.SplashFragment"
-        android:label="SplashFragment" />
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash"/>
     <fragment
         android:id="@+id/QRFragment"
         android:name="wee.digital.fpa.ui.screen.QRFragment"
-        android:label="QRFragment" >
+        android:label="QRFragment"
+        tools:layout="@layout/fragment_qr">
         <action
             android:id="@+id/action_QRFragment_to_InfoDeviceFragment"
             app:destination="@id/InfoDeviceFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_QRFragment_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_in_down" />
     </fragment>
     <fragment
         android:id="@+id/doneFragment"
         android:name="wee.digital.fpa.ui.screen.DoneFragment"
-        android:label="DoneFragment" />
+        android:label="DoneFragment"
+        tools:layout="@layout/fragment_done"/>
     <fragment
         android:id="@+id/InfoDeviceFragment"
-        android:name="wee.digital.fpa.ui.device.InputDeviceFragment" >
+        android:name="wee.digital.fpa.ui.device.InputDeviceFragment"
+        tools:layout="@layout/fragment_input_device">
         <action
             android:id="@+id/action_InfoDeviceFragment_to_splashFragment"
             app:destination="@id/splashFragment"
             app:enterAnim="@anim/slide_in_up"
             app:exitAnim="@anim/slide_in_down"
             app:popExitAnim="@anim/slide_in_down" />
+        <action
+            android:id="@+id/action_InfoDeviceFragment_to_doneFragment"
+            app:destination="@id/doneFragment"
+            app:enterAnim="@anim/fade_in"
+            app:popEnterAnim="@anim/fade_out"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_InfoDeviceFragment_to_failConnectFragment"
+            app:destination="@id/failConnectFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/QRFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/failConnectFragment"
+        android:name="wee.digital.fpa.ui.screen.FailConnectFragment"
+        android:label="FailConnectFragment"
+        tools:layout="@layout/fragment_fail_connect"/>
 </navigation>

@@ -1,9 +1,11 @@
 package wee.digital.fpa.ui.base
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(layoutResource())
         onViewCreated()
         onLiveDataObserve()
@@ -43,6 +46,14 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     final override val nav: NavController? get() = findNavController(navigationHostId())
 
     final override val log: Logger by lazy { Logger(this::class) }
+
+    /**
+     * implement lifeCycle
+     */
+    override fun onResume() {
+        super.onResume()
+        hideSystemUI()
+    }
 
     /**
      * [BaseActivity] properties
@@ -77,6 +88,16 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
             }
         }
         return super.dispatchTouchEvent(event)
+    }
+
+    fun startClear(cls: Class<*>) {
+        this.run {
+            val intent = Intent(this, cls)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            this.startActivity(intent)
+            this.finish()
+        }
+
     }
 
 }

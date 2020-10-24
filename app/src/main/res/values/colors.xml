@@ -6,6 +6,15 @@
     <color name="colorGray">#B6B6B6</color>
     <color name="colorBlue">#378AE1</color>
     <color name="colorLightBlue">#419DF2</color>
+
+    <color name="white">#fff</color>
+    <color name="gray_1">#EAEAEA</color>
+
+    <color name="black">#232323</color>
+    <color name="gray">#8F8F8F</color>
+
+    <color name="gradient_blue_start">#439EFB</color>
+    <color name="gradient_blue_end">#82F5FA</color>
     <color name="colorAlert">#F24141</color>
 
     <color name="colorKeyAccent">#B1B1B1</color>

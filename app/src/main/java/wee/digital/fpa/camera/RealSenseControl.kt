@@ -56,20 +56,20 @@ class RealSenseControl : DeviceListener {
     }
     val config = Config().apply {
         enableStream(
-            StreamType.COLOR,
-            0,
-            COLOR_WIDTH,
-            COLOR_HEIGHT,
-            StreamFormat.RGB8,
-            FRAME_RATE
+                StreamType.COLOR,
+                0,
+                COLOR_WIDTH,
+                COLOR_HEIGHT,
+                StreamFormat.RGB8,
+                FRAME_RATE
         )
         enableStream(
-            StreamType.DEPTH,
-            0,
-            DEPTH_WIDTH,
-            DEPTH_HEIGHT,
-            StreamFormat.Z16,
-            FRAME_RATE
+                StreamType.DEPTH,
+                0,
+                DEPTH_WIDTH,
+                DEPTH_HEIGHT,
+                StreamFormat.Z16,
+                FRAME_RATE
         )
     }
     private var isStopCamera = false
@@ -87,23 +87,23 @@ class RealSenseControl : DeviceListener {
                         isFrameProcessing = true
                         FrameReleaser().use { fr ->
                             val frames: FrameSet =
-                                mPipeline!!.waitForFrames(TIME_WAIT).releaseWith(fr)
+                                    mPipeline!!.waitForFrames(TIME_WAIT).releaseWith(fr)
                             isSleep = if (isFrameOK) {
                                 mFrameCount--
                                 when {
                                     mFrameCount > 0 -> {
                                         Log.i(TAG, "Getting Frame ....")
                                         val colorFrame: Frame =
-                                            frames.first(StreamType.COLOR).releaseWith(fr)
+                                                frames.first(StreamType.COLOR).releaseWith(fr)
                                         //if (mFrameCount % 2 != 0) {
                                         val alignProcess =
-                                            mAlign.process(frames).releaseWith(fr)
+                                                mAlign.process(frames).releaseWith(fr)
                                         val depthData = alignProcess
-                                            .first(StreamType.DEPTH).releaseWith(fr)
-                                        val depthFrame: Frame =
-                                            alignProcess.applyFilter(mColorizerOrg)
-                                                .releaseWith(fr)
                                                 .first(StreamType.DEPTH).releaseWith(fr)
+                                        val depthFrame: Frame =
+                                                alignProcess.applyFilter(mColorizerOrg)
+                                                        .releaseWith(fr)
+                                                        .first(StreamType.DEPTH).releaseWith(fr)
                                         frameProcessing(colorFrame, depthFrame, depthData)
                                         /*} else {
                                             frameProcessing(colorFrame, null, null)
@@ -185,7 +185,7 @@ class RealSenseControl : DeviceListener {
         mHandlerThread?.start()
         mHandler = Handler(mHandlerThread!!.looper)
         mHandlerThread?.uncaughtExceptionHandler =
-            Thread.UncaughtExceptionHandler { t, e -> Log.e(TAG, "${t.name} - ${e.message}") }
+                Thread.UncaughtExceptionHandler { t, e -> Log.e(TAG, "${t.name} - ${e.message}") }
 
         mProcessThread.start()
         mHandlerProcess = Handler(mProcessThread.looper)
@@ -205,11 +205,11 @@ class RealSenseControl : DeviceListener {
             }
             val depthValue = FrameUtil.getFrameData(depthValueFrame)
             collData = DataCollect(
-                unit = DEPTH_UNIT,
-                depthData = depthValue,
-                colorData = colorData,
-                device = DEVICE_CONFIG,
-                isRepaired = false
+                    unit = DEPTH_UNIT,
+                    depthData = depthValue,
+                    colorData = colorData,
+                    device = DEVICE_CONFIG,
+                    isRepaired = false
             )
         }
         val rgbBitmap = FrameUtil.getBitmapFromFrame(colorData, COLOR_WIDTH, COLOR_HEIGHT)
@@ -320,7 +320,7 @@ class RealSenseControl : DeviceListener {
                         val saturation = mColorSensor!!.getValue(Option.SATURATION)
                         Log.e(TAG, "saturation $saturation - Setting.....")
                         val backLightCompensation =
-                            mColorSensor!!.getValue(Option.BACKLIGHT_COMPENSATION)
+                                mColorSensor!!.getValue(Option.BACKLIGHT_COMPENSATION)
                         Log.e(TAG, "backLight_compensation $backLightCompensation - Setting.....")
                         val gain = mColorSensor!!.getValue(Option.GAIN)
                         Log.e(TAG, "gain $gain - Setting.....")
@@ -333,10 +333,10 @@ class RealSenseControl : DeviceListener {
                         val hue = mColorSensor!!.getValue(Option.HUE)
                         Log.e(TAG, "hue $hue - Setting.....")
                         val enableAutoExposure =
-                            mColorSensor!!.getValue(Option.ENABLE_AUTO_EXPOSURE)
+                                mColorSensor!!.getValue(Option.ENABLE_AUTO_EXPOSURE)
                         Log.e(TAG, "enable_auto_exposure $enableAutoExposure - Setting.....")
                         val enableAutoWhiteBalance =
-                            mColorSensor!!.getValue(Option.ENABLE_AUTO_WHITE_BALANCE)
+                                mColorSensor!!.getValue(Option.ENABLE_AUTO_WHITE_BALANCE)
                         Log.e(TAG, "auto_white_balance $enableAutoWhiteBalance - Setting.....")
 
                         colorConfig.apply {
@@ -372,24 +372,24 @@ class RealSenseControl : DeviceListener {
     }
 
     data class ColorConfig(
-        var backlight: Float = 0f,
-        var brightness: Float = 0f,
-        var contrast: Float = 0f,
-        var exposure: Float = 0f,
-        var gain: Float = 0f,
-        var gamma: Float = 0f,
-        var hue: Float = 0f,
-        var saturation: Float = 0f,
-        var sharpness: Float = 0f,
-        var autoExposure: Float = 0f,
-        var autoWhiteBalance: Float = 0f
+            var backlight: Float = 0f,
+            var brightness: Float = 0f,
+            var contrast: Float = 0f,
+            var exposure: Float = 0f,
+            var gain: Float = 0f,
+            var gamma: Float = 0f,
+            var hue: Float = 0f,
+            var saturation: Float = 0f,
+            var sharpness: Float = 0f,
+            var autoExposure: Float = 0f,
+            var autoWhiteBalance: Float = 0f
     )
 
     data class DeviceConfig(
-        var name: String = "",
-        var serial: String = "",
-        var id: String = "",
-        var firmware: String = ""
+            var name: String = "",
+            var serial: String = "",
+            var id: String = "",
+            var firmware: String = ""
     )
 
     override fun onDeviceAttach() {

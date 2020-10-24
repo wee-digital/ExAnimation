@@ -7,6 +7,7 @@ import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
 import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.repository.network.Api
+import wee.digital.fpa.repository.utils.FailType
 
 class InputDeviceVM : ViewModel(){
 
@@ -25,6 +26,10 @@ class InputDeviceVM : ViewModel(){
             }
 
             override fun onFailed(code: Int, message: String) {
+                when(code){
+                    in 1..6, 500 -> Shared.statusFailConnect.postValue(FailType.QR_FAIL)
+                    else -> Shared.statusFailConnect.postValue(FailType.QR_FAIL)
+                }
                 BaseData.ins.resetDeviceInfo()
                 statusRegister.postValue(false)
             }

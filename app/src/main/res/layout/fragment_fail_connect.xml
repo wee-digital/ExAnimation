@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/frgDoneGuide10"
+        android:id="@+id/frgFailConnectGuide10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.097" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/frgDoneRoot"
+        android:id="@+id/frgFailConnectRoot"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/rounded_top"
@@ -21,35 +21,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frgDoneGuide10">
+        app:layout_constraintTop_toBottomOf="@+id/frgFailConnectGuide10">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/frgDoneIcon"
+            android:id="@+id/frgFailConnectIcon"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"
             android:layout_marginTop="@dimen/_40sdp"
-            android:src="@mipmap/done"
+            android:src="@mipmap/fail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/frgDoneTitle"
+            android:id="@+id/frgFailConnectTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/inter_regular"
             android:gravity="center"
-            android:text="Đăng ký thiết bị thành công"
+            android:text="Đăng ký thiết bị không thành công"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_20ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frgDoneIcon" />
+            app:layout_constraintTop_toBottomOf="@+id/frgFailConnectIcon" />
 
         <TextView
-            android:id="@+id/frgDoneContent"
+            android:id="@+id/frgFailConnectContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
@@ -57,21 +57,22 @@
             android:textSize="@dimen/_11ssp"
             android:gravity="center"
             android:fontFamily="@font/inter_regular"
-            android:text="@string/done_content"
+            android:text="Có lỗi phát sinh, bạn vui lòng\nthử lại lần nữa"
             android:layout_marginTop="@dimen/_23sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frgDoneTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/frgFailConnectTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/frgDoneAction"
+            android:id="@+id/frgFailConnectAction"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/_15sdp"
-            android:text="Hoàn tất"
+            android:text="Quét lại mã QR"
             style="@style/Dialog.ButtonAccept"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

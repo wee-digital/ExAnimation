@@ -66,9 +66,9 @@ class Api {
                     override fun onSuccess(response: Response<ResponseBody>) {
                         Log.e("dataApi", "$response")
 
-                        val timeCall = System.currentTimeMillis() - timeIn
-
-                        Log.e("timeCallApi", "$url - [${System.currentTimeMillis() - timeIn}]")
+                        /*val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
+                        val timeSend = response.raw().sentRequestAtMillis().toDouble()
+                        val time = timeReceiver - timeSend*/
 
                         when (response.code()) {
 

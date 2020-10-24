@@ -1,9 +1,11 @@
 package wee.digital.fpa.util
 
+import android.content.Context
 import android.provider.Settings
 import android.util.Log
 import wee.digital.fpa.app.app
 import wee.digital.fpa.camera.FacePointData
+import java.io.File
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -52,5 +54,32 @@ object Utils{
         return "$id$timeSub"
     }
 
+    /**
+     * delete cache [deleteCache]
+     */
+    fun deleteCache(context: Context) {
+        try {
+            val dir = context.cacheDir
+            deleteDir(dir)
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    private fun deleteDir(dir: File?): Boolean {
+        return if (dir != null && dir.isDirectory) {
+            val children = dir.list()
+            for (i in children.indices) {
+                val success = deleteDir(File(dir, children[i]))
+                if (!success) {
+                    return false
+                }
+            }
+            dir.delete()
+        } else if (dir != null && dir.isFile) {
+            dir.delete()
+        } else {
+            false
+        }
+    }
 
 }
