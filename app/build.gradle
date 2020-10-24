@@ -181,6 +181,10 @@ dependencies {
     //ScanQR
     implementation 'com.budiyev.android:code-scanner:2.1.0'
 
+    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
+
 }
 
 apply plugin: "com.google.gms.google-services"

@@ -1,6 +1,7 @@
 package wee.digital.fpa.ui.base
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -109,6 +110,21 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     fun <T> LiveData<T>.observe(block: (T) -> Unit) {
         observe(viewLifecycleOwner, Observer(block))
+    }
+
+    open fun activity(): BaseActivity {
+        if (activity !is BaseActivity) throw ClassCastException("BaseFragment must be owned in BaseActivity")
+        return activity as BaseActivity
+    }
+
+    fun startClear(cls: Class<*>) {
+        activity().run {
+            val intent = Intent(this, cls)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            this.startActivity(intent)
+            this.finish()
+        }
+
     }
 
 }

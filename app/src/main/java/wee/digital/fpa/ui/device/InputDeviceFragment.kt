@@ -14,7 +14,7 @@ import wee.digital.fpa.ui.base.viewModel
 
 class InputDeviceFragment : BaseFragment(), TextWatcher {
 
-    private val inputVM: InputDeviceVM by lazy { viewModel(InputDeviceVM::class) }
+    private lateinit var inputVM: InputDeviceVM
 
     private var mRegister = false
 
@@ -25,6 +25,7 @@ class InputDeviceFragment : BaseFragment(), TextWatcher {
     override fun layoutResource(): Int = R.layout.fragment_input_device
 
     override fun onViewCreated() {
+        inputVM = viewModel(InputDeviceVM::class)
         initUI()
     }
 
@@ -41,8 +42,14 @@ class InputDeviceFragment : BaseFragment(), TextWatcher {
         val textColor = getString(R.string.done_name, "<b><font color='#1279DA'>$fullName</font></b>")
         frgInputDeviceName?.text = HtmlCompat.fromHtml(textColor, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
-        frgInputDeviceTitle?.actionBackClick { findNavController().popBackStack() }
-        frgInputDeviceTitle?.actionCancelClick { findNavController().navigate(R.id.action_InfoDeviceFragment_to_splashFragment) }
+        frgInputDeviceTitle?.actionBackClick {
+            if (mRegister) return@actionBackClick
+            findNavController().popBackStack()
+        }
+        frgInputDeviceTitle?.actionCancelClick {
+            if (mRegister) return@actionCancelClick
+            findNavController().navigate(R.id.action_InfoDeviceFragment_to_splashFragment)
+        }
 
         frgInputDeviceAction?.setOnClickListener {
             if (!checkDeviceName()) return@setOnClickListener
@@ -52,12 +59,17 @@ class InputDeviceFragment : BaseFragment(), TextWatcher {
         }
     }
 
+    private fun registerDevice() {
+        Shared.deviceInfo.value?.name = frgInputDeviceInput.text.toString()
+        inputVM.registerDevice()
+    }
+
     override fun onLiveDataObserve() {
         inputVM.statusRegister.observe {
-            if(it){
-                toast("success register")
-            }else{
-                toast("fail register")
+           if (it) {
+                findNavController().navigate(R.id.action_InfoDeviceFragment_to_doneFragment)
+            } else {
+                findNavController().navigate(R.id.action_InfoDeviceFragment_to_failConnectFragment)
             }
         }
     }
@@ -108,9 +120,9 @@ class InputDeviceFragment : BaseFragment(), TextWatcher {
         return true
     }
 
-    private fun registerDevice() {
-        Shared.deviceInfo.value?.name = frgInputDeviceInput.text.toString()
-        inputVM.registerDevice()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModelStore.clear()
     }
 
 }

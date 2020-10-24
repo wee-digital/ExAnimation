@@ -109,4 +109,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/connect_graph" />
 
+    <View
+        android:id="@+id/actConnectActionQuit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -127,3 +127,7 @@ object SystemUrl {
 
     const val BASE_URL_LOG = "http://logs.wee.vn:3100/loki/api/v1/"
 }
+
+enum class FailType{
+    CONNECT_FAIL, QR_FAIL
+}

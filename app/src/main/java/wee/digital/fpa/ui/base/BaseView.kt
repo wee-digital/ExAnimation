@@ -1,5 +1,6 @@
 package wee.digital.fpa.ui.base
 
+import android.content.Intent
 import androidx.fragment.app.Fragment
 
 /**

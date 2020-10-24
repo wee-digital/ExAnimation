@@ -31,4 +31,8 @@
         <attr format="float" name="frameSize"/>
     </declare-styleable>
 
+    <declare-styleable name="ButtonView">
+        <attr name="android:text" format="string"/>
+    </declare-styleable>
+
 </resources>

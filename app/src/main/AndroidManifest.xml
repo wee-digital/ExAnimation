@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="wee.digital.fpa">
 
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,13 +22,15 @@
         android:roundIcon="@drawable/ic_placeholder"
         android:supportsRtl="true"
         android:theme="@style/App.Theme">
-        <activity android:name=".ui.ConnectActivity">
+        <activity android:name=".ui.activity.HomeActivity"></activity>
+        <activity android:name=".ui.activity.ConnectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.MainActivity" />
     </application>
 
 </manifest>

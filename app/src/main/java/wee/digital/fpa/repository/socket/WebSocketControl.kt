@@ -1,0 +1,137 @@
+package wee.digital.fpa.repository.socket
+
+import android.util.Log
+import okhttp3.*
+import okio.ByteString
+import wee.digital.fpa.repository.utils.SystemUrl
+import java.util.concurrent.TimeUnit
+
+class WebSocketControl : WebSocketListener() {
+
+    companion object {
+        const val TAG = "WebSocketMonitorV2"
+        const val NORMAL_CLOSURE_STATUS = 1000
+    }
+
+    private var mClient = OkHttpClient()
+    private var mWS: WebSocket? = null
+    private var mRequest: Request? = null
+    private var mURLConnecting = ""
+    private var mURLConnected = ""
+    //---
+    private var isOpen = false
+    private var mTimeIn = 0L
+    private var mToken : String? = null
+    //---
+    private var mWebSocketMonitorListener: WebSocketMonitorListener? = null
+    private var mWebSocketMonitorCloseListener: WebSocketMonitorCloseListener? = null
+    //---
+
+    override fun onOpen(webSocket: WebSocket, response: Response) {
+        super.onOpen(webSocket, response)
+        Log.e(TAG, "onOpen - $response")
+        mURLConnected = mURLConnecting
+        mWebSocketMonitorListener?.onConnected(response.message)
+        isOpen = true
+    }
+
+    override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+        super.onFailure(webSocket, t, response)
+        Log.e(TAG, "onFailure - $t - $response")
+        isOpen = false
+        mWebSocketMonitorListener?.onError("onFailure - $t - $response")
+        mWebSocketMonitorCloseListener?.onClosed()
+    }
+
+    override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+        super.onClosing(webSocket, code, reason)
+        isOpen = false
+        Log.e(TAG, "onClosing - $code - $reason")
+        if(code==3012){
+            mWebSocketMonitorListener?.onClosing(reason)
+            mWebSocketMonitorCloseListener?.onClosed()
+        }
+        if(code == 1000){
+            mWebSocketMonitorListener?.unKnownError(reason)
+            mWebSocketMonitorCloseListener?.onClosed()
+        }
+    }
+
+    override fun onMessage(webSocket: WebSocket, text: String) {
+        super.onMessage(webSocket, text)
+        mWebSocketMonitorListener?.onResult(text)
+    }
+
+    override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+        super.onMessage(webSocket, bytes)
+        Log.e(TAG, "onMessage bytes - $bytes")
+    }
+
+    override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+        super.onClosed(webSocket, code, reason)
+        Log.e(TAG, "onClosed - [${System.currentTimeMillis() - mTimeIn}] - $code - $reason")
+        isOpen = false
+        if(code != 3012 && code !=1000) {
+            mWebSocketMonitorListener?.onDisconnected("onClosed - [${System.currentTimeMillis() - mTimeIn}] - $code - $reason")
+            mWebSocketMonitorCloseListener?.onClosed()
+        }
+    }
+
+    fun sendData(data: String) {
+        if (isOpen) {
+            mWS!!.send(data)
+            Log.e("sendData", "Sent - $data")
+        } else {
+            Log.e("sendData", "WebSocket not Open")
+        }
+    }
+
+    fun closeConnect(webSocketMonitorCloseListener: WebSocketMonitorCloseListener?) {
+        mWebSocketMonitorCloseListener = webSocketMonitorCloseListener
+        if (isOpen) {
+            mTimeIn = System.currentTimeMillis()
+            mWS!!.close(NORMAL_CLOSURE_STATUS, "Usb: $mToken - Say Goodbye !")
+        } else {
+            mWebSocketMonitorCloseListener?.onClosed()
+        }
+    }
+
+    fun openConnect(token: String) {
+        if(isOpen) return
+        val url = "${SystemUrl.SOCKET_URL}$token"
+        mToken = token
+        mTimeIn = System.currentTimeMillis()
+        Log.e("Open Connect", "Connecting")
+        //val newUrl = url.replace("http", "ws")
+        mURLConnecting = url
+        mClient = OkHttpClient
+            .Builder()
+            .pingInterval(1000, TimeUnit.MILLISECONDS)
+            .build()
+        Log.e(TAG, "Connecting to $mURLConnecting")
+        mRequest = Request.Builder()
+            .url(mURLConnecting)
+            .build()
+        mWS = mClient.newWebSocket(mRequest!!, this)
+        mClient.dispatcher.executorService.shutdown()
+    }
+
+    fun addWebSocketListener(webSocketMonitorListener: WebSocketMonitorListener) {
+        mWebSocketMonitorListener = webSocketMonitorListener
+    }
+
+    interface WebSocketMonitorListener {
+        fun onResult(message: String)
+        fun onError(message: String)
+        fun onConnected(message: String)
+        fun onDisconnected(message: String)
+        fun onClosing(message: String)
+        fun unKnownError(message: String)
+    }
+
+    interface WebSocketMonitorCloseListener {
+        fun onClosed()
+    }
+
+
+}

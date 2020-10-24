@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-
-    <base-config cleartextTrafficPermitted="false" />
-
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">192.168.1.108</domain>
+        <domain includeSubdomains="true">dev.facepay.vn</domain>
+        <domain includeSubdomains="true">qc.facepay.vn</domain>
+        <domain includeSubdomains="true">beta.facepay.vn</domain>
+        <domain includeSubdomains="true">logs.wee.vn</domain>
+        <domain includeSubdomains="true">weezi.biz</domain>
     </domain-config>
-
 </network-security-config>

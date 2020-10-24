@@ -1,9 +1,6 @@
 package wee.digital.fpa.ui.screen
 
-import android.app.Activity
 import android.graphics.Bitmap
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_qr.*
 import wee.digital.fpa.R
@@ -13,9 +10,10 @@ import wee.digital.fpa.camera.FrameUtil
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.data.repository.Shared
-import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.util.errorQR
+import wee.digital.fpa.util.resetErrorQR
 
 
 class QRFragment : BaseFragment(), ScanQRCode.QRCodeProcessingListener {
@@ -24,12 +22,11 @@ class QRFragment : BaseFragment(), ScanQRCode.QRCodeProcessingListener {
 
     private var mCheckQR = false
 
+    private var time = System.currentTimeMillis()
+
     override fun layoutResource(): Int = R.layout.fragment_qr
 
     override fun onViewCreated() {
-        mCheckQR = false
-        mScanQR = ScanQRCode()
-        mScanQR?.initListener(this)
         initView()
         listenerCamera()
     }
@@ -38,8 +35,17 @@ class QRFragment : BaseFragment(), ScanQRCode.QRCodeProcessingListener {
     override fun onLiveDataObserve() {}
 
     private fun initView() {
-        Shared.deviceInfo.postValue(DeviceInfoStore(context as Activity))
-        frgQRTitle.actionCancelClick { findNavController().popBackStack() }
+        App.realSenseControl?.startStreamThread()
+
+        mCheckQR = false
+        mScanQR = ScanQRCode()
+        mScanQR?.initListener(this)
+
+        Shared.deviceInfo.postValue(DeviceInfoStore(activity()))
+        frgQRTitle.actionCancelClick {
+            if(System.currentTimeMillis() - time < 1500) return@actionCancelClick
+            findNavController().navigate(R.id.action_QRFragment_to_splashFragment)
+        }
     }
 
     /**
@@ -78,30 +84,16 @@ class QRFragment : BaseFragment(), ScanQRCode.QRCodeProcessingListener {
             Shared.deviceInfo.value?.qrCode = text
             findNavController().navigate(R.id.action_QRFragment_to_InfoDeviceFragment)
         } else if (text.isNotEmpty()) {
-            frgQRStatus.error("Mã không đúng. Bạn vui lòng thử lại lần nữa")
+            frgQRStatus.errorQR("Mã không đúng. Bạn vui lòng thử lại lần nữa") { mCheckQR = false }
         } else {
-            frgQRStatus.resetError("Vui lòng đưa mã vào vùng nhận diện")
+            frgQRStatus.resetErrorQR("Vui lòng đưa mã vào vùng nhận diện") { mCheckQR = false }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mScanQR?.destroyScan()
-        mScanQR = null
+        App.realSenseControl?.stopStreamThread()
         App.realSenseControl?.listener = null
-
-    }
-
-    private fun AppCompatTextView.error(value: String) {
-        mCheckQR = false
-        this.text = value
-        this.setTextColor(ContextCompat.getColor(context, R.color.colorAlert))
-    }
-
-    private fun AppCompatTextView.resetError(value: String) {
-        mCheckQR = false
-        this.text = value
-        this.setTextColor(ContextCompat.getColor(context, R.color.colorBlack))
     }
 
 }

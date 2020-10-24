@@ -1,5 +1,5 @@
 <resources>
-<!--    <string name="app_name">ExAnimation</string>-->
+    <!--    <string name="app_name">ExAnimation</string>-->
     <string name="logoRatio">w,480:103</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -10,5 +10,6 @@
     <string name="done_name">Hi! %s</string>
     <string name="done_terms">Bằng việc xác nhận đăng ký, bạn đã đồng ý với %s của Facepay</string>
 
+    <string name="fail_content"><![CDATA[Bạn vui lòng thử lại mã khác. Trường hợp<br/>vẫn còn phát sinh lỗi xin vui lòng liên hệ đến<br/> %s]]></string>
 
 </resources>
