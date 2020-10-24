@@ -37,10 +37,6 @@ class ConnectActivity : BaseActivity() {
             App.realSenseControl?.stopStreamThread()
             exitProcess(0)
         }
-        actConnectActionA.setOnClickListener {
-            actConnectActionA.showLoading()
-            post(2000) { actConnectActionA.hideLoading() }
-        }
     }
 
     private fun startCamera() {
