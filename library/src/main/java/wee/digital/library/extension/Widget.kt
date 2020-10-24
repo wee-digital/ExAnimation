@@ -3,6 +3,7 @@ package wee.digital.library.extension
 import android.app.Activity
 import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.content.res.ColorStateList
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
@@ -122,14 +123,13 @@ fun gone(vararg views: View?) {
     for (v in views) v?.gone()
 }
 
-fun View.backgroundTint(@ColorRes res: Int) {
-    val color = ContextCompat.getColor(context, res)
-    this.post {
+fun View.backgroundTint(color: Int) {
+    post {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            background?.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+            background?.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_OVER)
         } else {
             @Suppress("DEPRECATION")
-            background?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+            background.setTint(color)
         }
     }
 }

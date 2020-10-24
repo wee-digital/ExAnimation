@@ -9,6 +9,7 @@ import android.graphics.YuvImage;
 import android.media.Image;
 import android.os.Build;
 import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -262,9 +263,9 @@ public class BitmapUtils {
              */
             if (Build.VERSION.SDK_INT >= 5) {
                 Class<?> exifClass = Class.forName("android.media.ExifInterface");
-                Constructor<?> exifConstructor = exifClass.getConstructor(new Class[]{String.class});
-                Object exifInstance = exifConstructor.newInstance(new Object[]{src});
-                Method getAttributeInt = exifClass.getMethod("getAttributeInt", new Class[]{String.class, int.class});
+                Constructor<?> exifConstructor = exifClass.getConstructor(String.class);
+                Object exifInstance = exifConstructor.newInstance(src);
+                Method getAttributeInt = exifClass.getMethod("getAttributeInt", String.class, int.class);
                 Field tagOrientationField = exifClass.getField("TAG_ORIENTATION");
                 String tagOrientation = (String) tagOrientationField.get(null);
                 orientation = (Integer) getAttributeInt.invoke(exifInstance, new Object[]{tagOrientation, 1});
@@ -460,8 +461,8 @@ public class BitmapUtils {
     public static Bitmap rotateBitmapFlip(Bitmap bitmap, Float degree, Boolean isFlip) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
-        if(isFlip) matrix.postScale(-1f, 1f, bitmap.getWidth()/2f, bitmap.getHeight()/2f);
-        Bitmap flipBitmap =  Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        if (isFlip) matrix.postScale(-1f, 1f, bitmap.getWidth() / 2f, bitmap.getHeight() / 2f);
+        Bitmap flipBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         bitmap.recycle();
         return flipBitmap;
     }

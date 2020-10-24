@@ -1,6 +1,0 @@
-<View xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/pinViewIndicator1"
-    android:layout_width="@dimen/indicatorSize"
-    android:layout_height="@dimen/indicatorSize"
-    android:background="@drawable/drw_pin_progress"
-    android:backgroundTint="@color/colorPrimary" />

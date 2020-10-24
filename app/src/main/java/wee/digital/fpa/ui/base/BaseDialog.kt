@@ -96,7 +96,7 @@ abstract class BaseDialog : DialogFragment(), BaseView {
     private val onBackCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if (onBackPressed()) {
-                popBackStack()
+                dismiss()
             }
         }
     }

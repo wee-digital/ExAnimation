@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_500sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -48,12 +48,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:itemCount="4"
-            tools:listitem="@layout/pin_progress_view" />
+            tools:listitem="@layout/pin_progress" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pinRecyclerViewKey"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_200sdp"
             android:layout_marginTop="@dimen/_32sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_32sdp"

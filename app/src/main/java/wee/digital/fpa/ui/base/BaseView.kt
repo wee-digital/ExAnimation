@@ -42,8 +42,5 @@ interface BaseView {
         baseActivity?.remove(cls)
     }
 
-    fun popBackStack() {
-        baseActivity?.supportFragmentManager?.popBackStack()
-    }
 
 }

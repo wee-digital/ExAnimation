@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import wee.digital.fpa.BuildConfig
-import wee.digital.fpa.data.shared
 import wee.digital.library.Library
 import wee.digital.library.extension.SECOND
 import wee.digital.log.LogBook

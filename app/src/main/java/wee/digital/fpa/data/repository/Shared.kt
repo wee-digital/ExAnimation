@@ -9,5 +9,4 @@ package wee.digital.fpa.data.repository
  * All Right Reserved
  * -------------------------------------------------------------------------------------------------
  */
-object Shared {
-}
+object Shared
