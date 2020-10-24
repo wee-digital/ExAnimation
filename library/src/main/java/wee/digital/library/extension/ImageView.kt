@@ -2,6 +2,7 @@ package wee.digital.library.extension
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.annotation.GlideModule
@@ -60,7 +61,7 @@ fun ImageView?.load(res: Int) {
             .into(this)
 }
 
-fun ImageView.tint(@ColorRes res: Int) {
-    this.post { this.setColorFilter(ContextCompat.getColor(context, res)) }
+fun ImageView.tint(@ColorInt color: Int) {
+    this.post { this.setColorFilter(color) }
 }
 

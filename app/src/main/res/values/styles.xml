@@ -34,15 +34,16 @@
         <item name="android:background">@drawable/drw_dialog_bottom</item>
     </style>
 
-    <style name="Dialog.Title">
+    <style name="Dialog.Title" parent="TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
         <item name="android:textColor">@color/colorBlack</item>
-        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Dialog title</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Dialog.Title.Small">
@@ -93,7 +94,8 @@
         <item name="android:layout_width">@dimen/_40sdp</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:src">@drawable/ic_placeholder</item>
-        <item name="android:padding">@dimen/_10sdp</item>
+        <item name="android:tint">#A0A0A0</item>
+        <item name="android:padding">@dimen/_14sdp</item>
     </style>
 
     <style name="Dialog.ButtonAccept">

@@ -8,23 +8,18 @@ import wee.digital.library.adapter.BaseRecyclerAdapter
 
 class PinKeyAdapter : BaseRecyclerAdapter<Any?>() {
 
-    override var listItem: MutableList<Any?> = mutableListOf(
-            "1", "2", "3", R.drawable.ic_placeholder,
-            "4", "5", "6", "0",
-            "7", "8", "9"
-    )
-
     override fun layoutResource(model: Any?, position: Int): Int {
         return when (model) {
             is Int -> R.layout.pin_key_item_icon
-            else -> R.layout.pin_key_item_text
+            is String -> R.layout.pin_key_item_text
+            else -> 0
         }
     }
 
     override fun View.onBindModel(model: Any?, position: Int, layout: Int) {
         when (model) {
             is Int -> pinImageViewKey.setImageResource(model)
-            else -> pinTextViewKey.text = model?.toString()
+            is String -> pinTextViewKey.text = model.toString()
         }
     }
 

@@ -18,29 +18,9 @@ import kotlin.reflect.KClass
 fun <T : ViewModel> ViewModelStoreOwner.viewModel(cls: KClass<T>): T =
         ViewModelProvider(this).get(cls.java)
 
-fun <T : ViewModel> ViewModelStoreOwner.newViewModel(cls: KClass<T>): T =
-        ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[cls.java]
-
-fun <T : ViewModel> Fragment.activityViewModel(cls: KClass<T>): T =
-        ViewModelProvider(requireActivity()).get(cls.java)
-
-fun <T : ViewModel> AppCompatActivity.activityViewModel(cls: KClass<T>): T =
-        ViewModelProvider(this).get(cls.java)
 
 const val DEFAULT_ARG_KEY: String = "default_arg_key"
 
-fun Fragment.navigate(directions: NavDirections, block: (NavOptions.Builder.() -> Unit) = {}) {
-    val option = NavOptions.Builder()
-            .setVerticalAnim()
-    option.block()
-    findNavController().navigate(directions, option.build())
-}
-
-fun Fragment.navigateUp() {
-    findNavController().navigateUp()
-}
-
-val Fragment.className: String get() = this::class.simpleName.toString()
 
 fun <T> Fragment.navResult(key: String = DEFAULT_ARG_KEY): T? {
     return findNavController().currentBackStackEntry?.savedStateHandle?.get<T>(key)

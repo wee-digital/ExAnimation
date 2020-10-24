@@ -9,11 +9,6 @@ class MainActivity : BaseActivity() {
         return R.layout.main
     }
 
-    override fun navigationHostId(): Int {
-        return R.id.mainFragment
-    }
-
-
     override fun onViewCreated() {
     }
 

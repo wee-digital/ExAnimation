@@ -1,24 +1,39 @@
 package wee.digital.fpa.ui.pin
 
+import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.BaseDialog
 
-class PinFragment : BaseFragment() {
+class PinFragment : BaseDialog() {
+
+    private val vm: PinVM by lazy { viewModel(PinVM::class) }
+
+    private val v: PinView by lazy { PinView(this) }
 
     override fun layoutResource(): Int {
         return R.layout.pin
     }
 
     override fun onViewCreated() {
-        dialogViewClose.setOnClickListener {
-            pinRecyclerViewProgress.build()
+        v.onViewInit()
+        pinProgressLayout.onItemFilled = {
+            vm.onPinFilled(it)
         }
-        PinKeyAdapter().bind(pinRecyclerViewKey, 4)
-
     }
 
     override fun onLiveDataObserve() {
+        vm.errorLiveData.observe {
+            v.onBindErrorText(it)
+        }
+    }
+
+    override fun onViewClick(v: View?) {
+        when (v) {
+            dialogViewClose -> {
+                dismiss()
+            }
+        }
     }
 
 }

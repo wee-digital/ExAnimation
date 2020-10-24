@@ -19,11 +19,11 @@
     <dimen name="margin5">@dimen/_40sdp</dimen>
     <dimen name="margin6">@dimen/_48sdp</dimen>
 
-    <dimen name="textSize">@dimen/_9ssp</dimen>
-    <dimen name="textSize2">@dimen/_10ssp</dimen>
-    <dimen name="textSize3">@dimen/_11ssp</dimen>
+    <dimen name="textSize">@dimen/_8ssp</dimen>
+    <dimen name="textSize2">@dimen/_9ssp</dimen>
+    <dimen name="textSize3">@dimen/_10ssp</dimen>
     <dimen name="textSize4">@dimen/_12ssp</dimen>
-    <dimen name="textSize5">@dimen/_13ssp</dimen>
+    <dimen name="textSize5">@dimen/_15ssp</dimen>
 
     <dimen name="radius">@dimen/_6sdp</dimen>
     <dimen name="radius2">@dimen/_9sdp</dimen>

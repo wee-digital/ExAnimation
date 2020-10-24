@@ -1,49 +1,69 @@
 package wee.digital.fpa.ui.base
 
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import wee.digital.fpa.R
+import wee.digital.library.extension.ViewClickListener
+import wee.digital.log.Logger
+import kotlin.reflect.KClass
 
-/**
- * -------------------------------------------------------------------------------------------------
- * @Project: Kotlin
- * @Created: Huy QV 2017/10/14
- * @Description: ...
- * None Right Reserved
- * -------------------------------------------------------------------------------------------------
- */
 interface BaseView {
 
-    val baseActivity: BaseActivity?
+    val className: String get() = this::class.simpleName.toString()
 
-    fun showProgress() {
-        baseActivity?.showProgress()
+    val log: Logger
+
+    fun addClickListener(vararg views: View?) {
+        val listener = object : ViewClickListener() {
+            override fun onClicks(v: View?) {
+                onViewClick(v)
+            }
+        }
+        views.forEach {
+            it?.setOnClickListener(listener)
+        }
     }
 
-    fun hideProgress() {
-        baseActivity?.hideProgress()
+    fun onViewClick(v: View?) {}
+
+    val nav: NavController?
+
+    fun navigate(directions: NavDirections, block: (NavOptions.Builder.() -> Unit) = {}) {
+        val option = NavOptions.Builder()
+                .setDefaultAnim()
+        option.block()
+        nav?.navigate(directions, option.build())
     }
 
-    fun alert(message: String?) {
-        baseActivity?.alert(message)
+    fun navigateUp() {
+        nav?.navigateUp()
     }
 
-    fun alert(message: String?, block: () -> Unit) {
-        baseActivity?.alert(message, block)
+    fun NavOptions.Builder.setDefaultAnim(): NavOptions.Builder {
+        setEnterAnim(R.anim.vertical_enter)
+        setPopEnterAnim(R.anim.vertical_pop_enter)
+        setExitAnim(R.anim.vertical_exit)
+        setPopExitAnim(R.anim.vertical_pop_exit)
+        return this
     }
 
-    fun add(fragment: Fragment, stack: Boolean = true) {
-        baseActivity?.add(fragment, stack)
-    }
+    fun <T : ViewModel> ViewModelStoreOwner.viewModel(cls: KClass<T>): T =
+            ViewModelProvider(this).get(cls.java)
 
-    fun replace(fragment: Fragment, stack: Boolean = true) {
-        baseActivity?.replace(fragment, stack)
-    }
+    fun <T : ViewModel> ViewModelStoreOwner.newViewModel(cls: KClass<T>): T =
+            ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[cls.java]
 
-    fun <T : Fragment> remove(cls: Class<T>) {
-        baseActivity?.remove(cls)
-    }
+    fun <T : ViewModel> Fragment.activityViewModel(cls: KClass<T>): T =
+            ViewModelProvider(requireActivity()).get(cls.java)
 
-    fun popBackStack() {
-        baseActivity?.supportFragmentManager?.popBackStack()
-    }
+    fun <T : ViewModel> AppCompatActivity.activityViewModel(cls: KClass<T>): T =
+            ViewModelProvider(this).get(cls.java)
 
 }

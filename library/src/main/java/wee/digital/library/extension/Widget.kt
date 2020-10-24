@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.text.Html
@@ -17,6 +18,7 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
@@ -59,6 +61,11 @@ fun NestedScrollView.scrollToCenter(view: View) {
 
 fun TextView.color(@ColorRes colorRes: Int) {
     setTextColor(ContextCompat.getColor(context, colorRes))
+}
+
+fun TextView.color(colorStr: String) {
+    val s = if (colorStr.firstOrNull() != '#') "#$colorStr" else colorStr
+    setTextColor(Color.parseColor(s))
 }
 
 fun TextView.setHyperText(s: String?) {
@@ -122,12 +129,12 @@ fun gone(vararg views: View?) {
     for (v in views) v?.gone()
 }
 
-fun View.backgroundTint(@ColorRes res: Int) {
-    val color = ContextCompat.getColor(context, res)
-    this.post {
+fun View.backgroundTint(@ColorInt color: Int) {
+    post {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             background?.colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
         } else {
+            background?.colorFilter = null
             @Suppress("DEPRECATION")
             background?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
         }
