@@ -121,14 +121,14 @@
     </style>
 
     <style name="HorizontalSeparator">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1px</item>
+        <item name="android:layout_width">0.5px</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">@android:color/darker_gray</item>
     </style>
 
     <style name="VerticalSeparator">
-        <item name="android:layout_width">0.5px</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
         <item name="android:background">@android:color/darker_gray</item>
     </style>
 

@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/drw_afk_bg">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewContent"
+    style="@style/MatchParent">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/bg_pattern" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/paymentTextViewRemaining"
-        style="@style/Payment.TextTime"
-        android:visibility="invisible"
+        android:id="@+id/splashViewBackground"
+        style="@style/MatchParent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_spash"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/splashTextViewRemaining"
+        style="@style/TextView3"
+        android:layout_marginTop="@dimen/margin4"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Time remaining: 00:30" />
+
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/paymentImageViewLogo"
-        style="@style/Payment.Logo"
+        android:id="@+id/splashImageViewLogo"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:src="@mipmap/img_logo"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="@string/logoRatio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

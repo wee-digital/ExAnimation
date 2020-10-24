@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/actConnectGuide50"
-        app:layout_constraintGuide_percent="0.5"
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@mipmap/device"
         app:layout_constraintBottom_toBottomOf="@+id/actConnectGuide50"
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/actConnectLogo"
@@ -33,69 +33,69 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/actConnectLabelDevice"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:textSize="@dimen/_22ssp"
-        android:text="Payment Terminal"
-        android:fontFamily="@font/inter_semibold"
-        android:textColor="@color/colorBlack"
-        app:layout_constraintTop_toTopOf="@id/actConnectGuide50"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Payment Terminal"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_22ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/actConnectGuide50" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/actConnectLabelConnect"
-        android:textSize="@dimen/_20ssp"
-        android:textColor="@color/colorBlack"
-        android:text="Hướng dẫn kết nối"
-        android:fontFamily="@font/inter_regular"
-        app:layout_constraintStart_toStartOf="@+id/actConnectLabelDevice"
-        app:layout_constraintTop_toBottomOf="@+id/actConnectLabelDevice"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:text="Hướng dẫn kết nối"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_20ssp"
+        app:layout_constraintStart_toStartOf="@+id/actConnectLabelDevice"
+        app:layout_constraintTop_toBottomOf="@+id/actConnectLabelDevice" />
 
     <wee.digital.fpa.widget.LineView
         android:id="@+id/actConnectLine1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actConnectLabelConnect"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:title="1"
-        android:text="Đăng nhập tài khoản của đối tác tại pos.facepay.vn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="Đăng nhập tài khoản của đối tác tại pos.facepay.vn"
+        android:title="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actConnectLabelConnect" />
 
     <wee.digital.fpa.widget.LineView
         android:id="@+id/actConnectLine2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actConnectLine1"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:title="2"
-        android:text="Trên màn hình chính chọn “Thiết bị”, rồi chọn “Thêm thiết bị”. Mã kết nối thiết bị sẽ được hiển thị."
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Trên màn hình chính chọn “Thiết bị”, rồi chọn “Thêm thiết bị”. Mã kết nối thiết bị sẽ được hiển thị."
+        android:title="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actConnectLine1" />
 
     <wee.digital.fpa.widget.LineView
         android:id="@+id/actConnectLine3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actConnectLine2"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:title="3"
-        android:text="Dùng thiết bị này quét mã kết nối thiết bị"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Dùng thiết bị này quét mã kết nối thiết bị"
+        android:title="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actConnectLine2" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/actConnectAction"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/_15sdp"
+        style="@style/Button.Primary"
+        android:layout_margin="@dimen/margin2"
         android:text="Quét mã QR"
-        style="@style/Dialog.ButtonAccept"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <fragment
         android:id="@+id/actConnectHost"
@@ -111,9 +111,9 @@
 
     <View
         android:id="@+id/actConnectActionQuit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"/>
+        android:layout_height="@dimen/_60sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

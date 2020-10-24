@@ -69,11 +69,13 @@ fun TextView.color(colorStr: String) {
 }
 
 fun TextView.setHyperText(s: String?) {
-    text = when {
-        s.isNullOrEmpty() -> null
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(s, 1)
-        else -> @Suppress("DEPRECATION")
-        Html.fromHtml(s)
+    post {
+        text = when {
+            s.isNullOrEmpty() -> null
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(s, 1)
+            else -> @Suppress("DEPRECATION")
+            Html.fromHtml(s)
+        }
     }
 }
 

@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/startDestinationId">
+    app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/startDestinationId"
+        android:id="@+id/splashFragment"
+        android:name="wee.digital.fpa.ui.plash.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/splash" />
+    <action
+        android:id="@+id/action_global_splashFragment"
+        app:destination="@id/splashFragment" />
+
+    <dialog
+        android:id="@+id/paymentFragment"
+        android:name="wee.digital.fpa.ui.payment.PaymentFragment"
+        android:label="PaymentFragment"
+        tools:layout="@layout/payment" />
+
+    <action
+        android:id="@+id/action_global_paymentFragment"
+        app:destination="@id/paymentFragment" />
+
+
+    <dialog
+        android:id="@+id/pinFragment"
         android:name="wee.digital.fpa.ui.pin.PinFragment"
-        android:label="DestinationId" />
+        android:label="PinFragment"
+        tools:layout="@layout/pin" /><action android:id="@+id/action_global_pinFragment" app:destination="@id/pinFragment"/>
+
 
 </navigation>

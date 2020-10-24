@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.AnticipateInterpolator
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +22,6 @@ import wee.digital.library.extension.tint
 import wee.digital.library.widget.AppCustomView
 
 class PinProgressLayout : ConstraintLayout {
-
 
     /**
      * [AppCustomView] override
@@ -51,7 +49,7 @@ class PinProgressLayout : ConstraintLayout {
     private lateinit var progressView: View
 
     private val progressTransition = ChangeBounds().apply {
-        interpolator = AnticipateInterpolator(1.0f)
+        //interpolator = AnticipateInterpolator(1.0f)
         duration = 300
     }
 

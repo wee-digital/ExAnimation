@@ -1,8 +1,8 @@
-package wee.digital.fpa.ui.payment
+package wee.digital.fpa.ui.payment.progress
 
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
-import com.bumptech.glide.Glide
+
 import kotlinx.android.synthetic.main.payment_progress_fragment.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment

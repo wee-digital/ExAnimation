@@ -3,9 +3,10 @@ package wee.digital.fpa.ui.pin
 import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
+import wee.digital.fpa.ui.base.BaseBottomDialog
 import wee.digital.fpa.ui.base.BaseDialog
 
-class PinFragment : BaseDialog() {
+class PinFragment : BaseBottomDialog() {
 
     private val vm: PinVM by lazy { viewModel(PinVM::class) }
 
@@ -23,7 +24,7 @@ class PinFragment : BaseDialog() {
     }
 
     override fun onLiveDataObserve() {
-        vm.errorLiveData.observe {
+        vm.errorMessage.observe {
             v.onBindErrorText(it)
         }
     }

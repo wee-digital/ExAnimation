@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
-import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.R
@@ -18,9 +17,16 @@ import kotlin.reflect.KClass
 fun <T : ViewModel> ViewModelStoreOwner.viewModel(cls: KClass<T>): T =
         ViewModelProvider(this).get(cls.java)
 
+fun <T : ViewModel> ViewModelStoreOwner.newVM(cls: KClass<T>): T =
+        ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[cls.java]
+
+fun <T : ViewModel> Fragment.activityVM(cls: KClass<T>): T =
+        ViewModelProvider(requireActivity()).get(cls.java)
+
+fun <T : ViewModel> AppCompatActivity.activityVM(cls: KClass<T>): T =
+        ViewModelProvider(this).get(cls.java)
 
 const val DEFAULT_ARG_KEY: String = "default_arg_key"
-
 
 fun <T> Fragment.navResult(key: String = DEFAULT_ARG_KEY): T? {
     return findNavController().currentBackStackEntry?.savedStateHandle?.get<T>(key)
@@ -69,24 +75,9 @@ fun <R, T : LiveData<R>> T.single(): T {
     return result as T
 }
 
-@Suppress("UNCHECKED_CAST")
-fun <R, T : LiveData<R>> T.noneNull(): T {
-    val result = NonNullLiveData<R>()
-    result.addSource(this) {
-        result.value = it as R
-    }
-    return result as T
-}
-
 inline fun <T> LiveData<T?>.observe(owner: LifecycleOwner, crossinline block: (t: T?) -> Unit) {
     this.observe(owner, Observer {
         block(it)
-    })
-}
-
-fun <T> NonNullLiveData<T>.observe(owner: LifecycleOwner, observer: (t: T) -> Unit) {
-    this.observe(owner, Observer {
-        it?.let(observer)
     })
 }
 
@@ -245,8 +236,3 @@ open class SingleLiveData<T> : MediatorLiveData<T>() {
     }
 
 }
-
-/**
- * Live data only trigger when data change if value none null
- */
-class NonNullLiveData<T> : MediatorLiveData<T>()

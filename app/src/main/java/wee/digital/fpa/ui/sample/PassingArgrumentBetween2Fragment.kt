@@ -12,7 +12,7 @@ class Fragment1 : BaseFragment() {
     override fun onViewCreated() {
         view?.setOnClickListener {
             // Passing argument before navigate
-            activityViewModel(Fragment2VM::class).argLiveData.value = Fragment2Arg(
+            activityVM(Fragment2VM::class).argLiveData.value = Fragment2Arg(
                     key = className,
                     data = "Foo"
             )
@@ -37,7 +37,7 @@ class Fragment2VM : ViewModel() {
 
 class Fragment2 : BaseFragment() {
 
-    private val vm: Fragment2VM by lazy { activityViewModel(Fragment2VM::class) }
+    private val vm: Fragment2VM by lazy { activityVM(Fragment2VM::class) }
 
     override fun layoutResource(): Int = 0
 

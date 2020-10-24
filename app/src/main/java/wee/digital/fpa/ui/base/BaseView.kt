@@ -58,13 +58,13 @@ interface BaseView {
     fun <T : ViewModel> ViewModelStoreOwner.viewModel(cls: KClass<T>): T =
             ViewModelProvider(this).get(cls.java)
 
-    fun <T : ViewModel> ViewModelStoreOwner.newViewModel(cls: KClass<T>): T =
+    fun <T : ViewModel> ViewModelStoreOwner.newVM(cls: KClass<T>): T =
             ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[cls.java]
 
-    fun <T : ViewModel> Fragment.activityViewModel(cls: KClass<T>): T =
+    fun <T : ViewModel> Fragment.activityVM(cls: KClass<T>): T =
             ViewModelProvider(requireActivity()).get(cls.java)
 
-    fun <T : ViewModel> AppCompatActivity.activityViewModel(cls: KClass<T>): T =
+    fun <T : ViewModel> AppCompatActivity.activityVM(cls: KClass<T>): T =
             ViewModelProvider(this).get(cls.java)
 
 }

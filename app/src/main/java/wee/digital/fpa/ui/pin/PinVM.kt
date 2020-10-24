@@ -7,11 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : ViewModel() {
 
-    companion object;
-
     private var failureCount = AtomicInteger(5)
 
-    val errorLiveData = EventLiveData<String?>()
+    val errorMessage = EventLiveData<String?>()
 
     private fun onPinVerifySuccess() {
 
@@ -29,7 +27,7 @@ class PinVM : ViewModel() {
                 message ?: "Lỗi"
             }
         }
-        errorLiveData.postValue(s)
+        errorMessage.postValue(s)
     }
 
     fun onPinFilled(s: String) {

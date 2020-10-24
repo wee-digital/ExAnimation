@@ -14,8 +14,8 @@
             <stroke
                 android:width="1dip"
                 android:color="@android:color/darker_gray"
-                android:dashWidth="10px"
-                android:dashGap="10px" />
+                android:dashWidth="@dimen/_3sdp"
+                android:dashGap="@dimen/_3sdp" />
         </shape>
     </item>
 </layer-list>

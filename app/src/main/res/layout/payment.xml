@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/MatchParent"
     tools:background="@android:color/transparent">
 
     <androidx.constraintlayout.widget.Guideline
@@ -11,137 +11,139 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintGuide_percent="0.26" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
+        android:padding="@dimen/margin3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/dialogViewBack"
-            style="@style/Dialog.TitleIcon"
-            android:src="@mipmap/logo_shop"
-            android:layout_marginStart="@dimen/margin2"
+            android:id="@+id/paymentImageViewStation"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_58sdp"
+            android:src="@mipmap/img_placeholder"
+            app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/uselessView"
-            app:layout_constraintTop_toBottomOf="@id/dialogViewBack"
+            style="@style/VerticalSeparator"
+            android:layout_marginTop="@dimen/margin2"
             android:background="@drawable/drw_dash"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginStart="@dimen/margin4"
-            android:layout_marginEnd="@dimen/margin4"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/paymentImageViewStation" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentConfirmTitleInfo"
-            app:layout_constraintTop_toBottomOf="@id/uselessView"
+            style="@style/Payment.Title"
+            android:layout_marginTop="@dimen/margin2"
+            android:text="Thông tin"
             app:layout_constraintStart_toStartOf="@id/uselessView"
-            android:layout_marginTop="@dimen/margin"
-            style="@style/Dialog.Title.Small"/>
+            app:layout_constraintTop_toBottomOf="@id/uselessView" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/paymentConfirmTitleStore"
-            style="@style/Dialog.Text"
+            android:id="@+id/paymentTextView1"
+            style="@style/Payment.Property"
             android:layout_marginTop="@dimen/margin"
             android:text="Cửa hàng"
             app:layout_constraintStart_toStartOf="@+id/paymentConfirmTitleInfo"
             app:layout_constraintTop_toBottomOf="@+id/paymentConfirmTitleInfo" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/paymentConfirmTitleCode"
-            style="@style/Dialog.Text"
+            android:id="@+id/paymentTextView2"
+            style="@style/Payment.Property"
             android:layout_marginTop="@dimen/margin"
             android:text="Mã giao dịch"
-            app:layout_constraintStart_toStartOf="@+id/paymentConfirmTitleStore"
-            app:layout_constraintTop_toBottomOf="@+id/paymentConfirmTitleStore" />
+            app:layout_constraintStart_toStartOf="@+id/paymentTextView1"
+            app:layout_constraintTop_toBottomOf="@+id/paymentTextView1" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Dialog.Text"
-            android:textColor="@color/colorBlack"
-            android:id="@+id/paymentConfirmTextStore"
+            android:id="@+id/paymentTextViewStation2"
+            style="@style/Payment.Property"
             android:text="GS25"
-            app:layout_constraintEnd_toEndOf="@+id/uselessView"
-            app:layout_constraintTop_toTopOf="@+id/paymentConfirmTitleStore" />
+            android:textColor="@color/colorBlack"
+            app:layout_constraintBaseline_toBaselineOf="@+id/paymentTextView1"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Dialog.Text"
-            android:id="@+id/paymentConfirmTextCode"
-            android:layout_marginTop="@dimen/margin"
+            android:id="@+id/paymentTextViewCode"
+            style="@style/Payment.Property"
             android:text="#GS232590"
             android:textColor="@color/colorBlack"
-            app:layout_constraintEnd_toEndOf="@+id/paymentConfirmTextStore"
-            app:layout_constraintTop_toBottomOf="@+id/paymentConfirmTextStore" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/paymentTextView2"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <View
             android:id="@+id/uselessView1"
-            app:layout_constraintTop_toBottomOf="@id/paymentConfirmTitleCode"
-            android:background="@drawable/drw_dash"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/margin3"
-            android:layout_marginStart="@dimen/margin4"
-            android:layout_marginEnd="@dimen/margin4"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:text="Số tiền"
-            android:id="@+id/paymentConfirmTitleMoney"
-            app:layout_constraintTop_toBottomOf="@id/uselessView1"
-            app:layout_constraintStart_toStartOf="@id/uselessView1"
-            android:layout_marginTop="@dimen/margin"
-            style="@style/Dialog.Title.Small"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/paymentConfirmTextMoney"
-            style="@style/Dialog.Text.Money"
+            style="@style/VerticalSeparator"
             android:layout_marginTop="@dimen/margin2"
-            android:layout_marginEnd="@dimen/margin2"
+            android:background="@drawable/drw_dash"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paymentTextView2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/paymentTextView3"
+            style="@style/Payment.Title"
+            android:layout_marginTop="@dimen/margin2"
+            android:text="Số tiền"
+            app:layout_constraintStart_toStartOf="@id/uselessView1"
+            app:layout_constraintTop_toBottomOf="@id/uselessView1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/paymentTextViewAmount"
+            style="@style/TextView"
             android:text="365,000"
-            app:layout_constraintEnd_toEndOf="@id/uselessView1"
-            app:layout_constraintTop_toBottomOf="@+id/uselessView1" />
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_20ssp"
+            app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
+            app:layout_constraintTop_toTopOf="@+id/paymentTextView3" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView"
-            android:layout_width="@dimen/_14sdp"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_18sdp"
-            android:padding="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_2sdp"
-            app:layout_constraintTop_toTopOf="@id/paymentConfirmTextMoney"
-            app:layout_constraintStart_toEndOf="@id/paymentConfirmTextMoney"
+            android:padding="@dimen/_4sdp"
+            android:scaleType="centerCrop"
             android:src="@mipmap/dong"
-            />
+            app:layout_constraintDimensionRatio="w,19:31"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/paymentTextView3" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView"
-            style="@style/Dialog.Title"
-            android:layout_margin="@dimen/margin2"
-            android:text="GS25"
-            app:layout_constraintStart_toEndOf="@+id/dialogViewBack"
-            app:layout_constraintTop_toTopOf="@+id/dialogViewBack" />
+            android:id="@+id/paymentTextViewStation"
+            style="@style/TextView3"
+            android:layout_marginStart="@dimen/margin2"
+            app:layout_constraintBottom_toTopOf="@+id/paymentTextViewDate"
+            app:layout_constraintStart_toEndOf="@+id/paymentImageViewStation"
+            app:layout_constraintTop_toTopOf="@+id/paymentImageViewStation"
+            tools:text="GS25" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView3"
-            style="@style/Dialog.SubTitle"
-            android:layout_marginTop="@dimen/margin"
-            android:text="20 tháng 10 2020"
-            app:layout_constraintStart_toStartOf="@+id/appCompatTextView"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
+            android:id="@+id/paymentTextViewDate"
+            style="@style/Payment.Property"
+            app:layout_constraintBottom_toBottomOf="@+id/paymentImageViewStation"
+            app:layout_constraintStart_toStartOf="@+id/paymentTextViewStation"
+            app:layout_constraintTop_toBottomOf="@+id/paymentTextViewStation"
+            tools:text="@tools:sample/date/mmddyy" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentViewAccept"
-            style="@style/Dialog.ButtonAccept"
-            android:layout_marginBottom="@dimen/margin"
+            style="@style/Button.Primary"
+            android:layout_marginBottom="@dimen/margin2"
+            android:text="Xác nhận"
             app:layout_constraintBottom_toTopOf="@+id/paymentViewDeny"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentViewDeny"
-            style="@style/Dialog.ButtonDeny"
-            android:layout_marginBottom="@dimen/margin"
+            style="@style/Button"
+            android:text="Hủy bỏ"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
