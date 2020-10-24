@@ -41,9 +41,8 @@ class SplashFragment : BaseFragment() {
                 v.animateStopRemaining()
             }
             else -> {
-                v.animateStartRemaining {
-                    navigate(MainDirections.actionGlobalPaymentFragment())
-                }
+                navigate(MainDirections.actionGlobalPaymentFragment())
+                v.animateStartRemaining()
                 v.startPaymentRemaining {
                     vm.paymentInfo.value = null
                 }

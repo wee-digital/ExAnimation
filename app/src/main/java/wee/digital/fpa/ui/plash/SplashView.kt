@@ -1,6 +1,5 @@
 package wee.digital.fpa.ui.plash
 
-import android.view.animation.AnticipateInterpolator
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
 import androidx.transition.Transition
@@ -20,8 +19,7 @@ class SplashView(private val v: SplashFragment) {
     private val paymentInterval: Int = 10 // second
 
     private val viewTransition = ChangeBounds().apply {
-        interpolator = AnticipateInterpolator(1.2f)
-        duration = 600
+        duration = 400
     }
 
     private var disposable: Disposable? = null
@@ -31,7 +29,7 @@ class SplashView(private val v: SplashFragment) {
         v.splashTextViewRemaining.setHyperText(text)
     }
 
-    fun animateStartRemaining(onAnimEnd: () -> Unit) {
+    fun animateStartRemaining(onAnimEnd: () -> Unit = {}) {
         onBindRemainingText(paymentInterval)
         viewTransition.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
@@ -42,7 +40,9 @@ class SplashView(private val v: SplashFragment) {
         val logoId = v.splashImageViewLogo.id
         onViewAnimate {
             constrainHeight(logoId, v.splashImageViewLogo.height / 2)
-            setVerticalBias(logoId, 0.1f)
+            connect(logoId, ConstraintSet.TOP, v.splashTextViewRemaining.id, ConstraintSet.BOTTOM)
+            connect(logoId, ConstraintSet.BOTTOM, v.splashGuideline.id, ConstraintSet.BOTTOM)
+            setVerticalBias(logoId,0.55f)
         }
     }
 
@@ -50,7 +50,9 @@ class SplashView(private val v: SplashFragment) {
         val logoId = v.splashImageViewLogo.id
         onViewAnimate {
             constrainHeight(logoId, v.splashImageViewLogo.height * 2)
-            setVerticalBias(logoId, 0.5f)
+            connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
+            connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
+            setVerticalBias(logoId,0.5f)
         }
     }
 

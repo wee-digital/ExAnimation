@@ -36,6 +36,16 @@ abstract class BaseDialog : DialogFragment(), BaseView {
                 })
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        dialog?.window?.attributes?.windowAnimations = R.style.App_DialogAnim
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        dialog?.window?.attributes?.windowAnimations = 0
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(layoutResource(), container, false)
         view.setOnTouchListener { _, _ -> true }

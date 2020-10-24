@@ -83,6 +83,8 @@
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
 
+<!--SPLASH-->
+    <style name="Splash" />
 
     <!--PAYMENT-->
     <style name="Payment" />

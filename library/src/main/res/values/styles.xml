@@ -42,6 +42,11 @@
         <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
+    <style name="App.DialogAnim">
+        <item name="android:windowEnterAnimation">@anim/vertical_enter</item>
+        <item name="android:windowExitAnimation">@anim/vertical_exit</item>
+    </style>
+
     <style name="App.Dialog.Transparent">
         <item name="android:backgroundDimEnabled">false</item>
     </style>
