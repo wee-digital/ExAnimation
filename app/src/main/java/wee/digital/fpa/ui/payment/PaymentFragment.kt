@@ -1,6 +1,7 @@
 package wee.digital.fpa.ui.payment
 
 import android.view.View
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.toast
@@ -27,15 +28,9 @@ class PaymentFragment : BaseDialog() {
         v.onViewInit()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        splashVM.paymentInfo.value = null
-    }
-
     override fun onLiveDataObserve() {
         splashVM.paymentInfo.observe {
-            it ?: return@observe
-            v.bindPaymentInfo(it)
+            onPaymentData(it)
         }
     }
 
@@ -45,10 +40,20 @@ class PaymentFragment : BaseDialog() {
                 toast("onViewClick.paymentViewAccept")
             }
             paymentViewDeny -> {
-                dismiss()
+                splashVM.paymentInfo.value = null
             }
         }
     }
 
+    private fun onPaymentData(obj: JsonObject?) {
+        when (obj) {
+            null -> {
+                dismiss()
+            }
+            else -> {
+                v.bindPaymentInfo(obj)
+            }
+        }
+    }
 
 }

@@ -4,7 +4,6 @@ import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseBottomDialog
-import wee.digital.fpa.ui.base.BaseDialog
 
 class PinFragment : BaseBottomDialog() {
 

@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class SplashView(private val v: SplashFragment) {
 
-    private val paymentInterval: Int = 90 // second
+    private val paymentInterval: Int = 10 // second
 
     private val viewTransition = ChangeBounds().apply {
         interpolator = AnticipateInterpolator(1.2f)
@@ -35,8 +35,8 @@ class SplashView(private val v: SplashFragment) {
         onBindRemainingText(paymentInterval)
         viewTransition.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
-                viewTransition.removeListener(this)
                 onAnimEnd()
+                viewTransition.removeListener(this)
             }
         })
         val logoId = v.splashImageViewLogo.id

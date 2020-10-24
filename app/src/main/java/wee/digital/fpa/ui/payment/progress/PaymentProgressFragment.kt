@@ -7,10 +7,10 @@ import kotlinx.android.synthetic.main.payment_progress_fragment.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment
 
-class PaymentProgressFragment: BaseFragment() {
+class PaymentProgressFragment : BaseFragment() {
 
-    private var drawable: Drawable?= null
-    private var progressVM: PaymentProgressViewModel?= null
+    private var drawable: Drawable? = null
+    private var progressVM: PaymentProgressViewModel? = null
     override fun layoutResource(): Int {
         return R.layout.payment_progress_fragment
     }

@@ -11,7 +11,7 @@ class SplashFragment : BaseFragment() {
 
     private val v: SplashView by lazy { SplashView(this) }
 
-    private val test: SplashTest by lazy { SplashTest(this, v, vm) }
+    private val test: SplashTest by lazy { SplashTest(this, vm) }
 
     /**
      * [BaseFragment] override
