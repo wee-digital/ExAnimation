@@ -5,15 +5,12 @@ import android.graphics.Bitmap
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
-import com.airbnb.lottie.utils.Utils
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.automl.FirebaseAutoMLLocalModel
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler
 import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabelerOptions
-import wee.digital.fpa.repository.model.DataCollect
-import wee.digital.fpa.repository.model.FacePointData
 
 class Detection(context: Context) {
 
@@ -193,11 +190,11 @@ class Detection(context: Context) {
     }
 
     private fun checkLabels(
-        labels: List<FirebaseVisionImageLabel>?,
-        face: ByteArray,
-        fullFace: ByteArray,
-        faceData: FacePointData,
-        dataCollect: DataCollect
+            labels: List<FirebaseVisionImageLabel>?,
+            face: ByteArray,
+            fullFace: ByteArray,
+            faceData: FacePointData,
+            dataCollect: DataCollect
     ) {
         if (labels.isNullOrEmpty()) {
             checkFaceFakeNull()
@@ -262,10 +259,10 @@ class Detection(context: Context) {
         fun faceNull()
         fun hasFace()
         fun faceEligible(
-            bm: ByteArray,
-            frameFullFace: ByteArray,
-            faceData: FacePointData,
-            dataCollect: DataCollect
+                bm: ByteArray,
+                frameFullFace: ByteArray,
+                faceData: FacePointData,
+                dataCollect: DataCollect
         )
     }
 }

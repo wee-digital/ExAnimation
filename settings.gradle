@@ -1,3 +1,4 @@
+include ':crypto'
 include ':app',
         ':library',
         ':log',

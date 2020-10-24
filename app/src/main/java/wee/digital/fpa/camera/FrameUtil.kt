@@ -4,11 +4,13 @@ import android.graphics.*
 import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.intel.realsense.librealsense.Frame
-import wee.digital.fpa.repository.model.DataCollect
-import wee.digital.fpa.repository.model.DataGetFacePoint
-import wee.digital.fpa.repository.model.FacePointData
+import crypto.Crypto
+import wee.digital.fpa.repository.utils.Key
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.math.*
 
 object FrameUtil {
@@ -611,6 +613,38 @@ object FrameUtil {
         val y = (top + bot) * 0.5f
         Log.e("checkZoneFaceasdsadas", "$x")
         return x in Detection.zoneFaceX && y in Detection.zoneFaceY
+    }
+
+    /**
+     * QR code [decryptQRCode]
+     */
+    fun decryptQRCode(token: String): JsonObject? {
+        try {
+            val pattern2 =
+                    Pattern.compile("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?\$") //  check string is Base64
+            val m2 = pattern2.matcher(token)
+            if (m2.matches()) {
+                val qr = Base64.decode(token, Base64.NO_PADDING)
+                val value: String
+                if (qr.size % 16 == 0) {
+                    val prepareKey = Base64.decode(Key.PREPARE_KEY, Base64.NO_PADDING)
+                    val objectData = Crypto.aesDecryptCBC(prepareKey, qr)
+                    value = String(objectData)
+                    Log.e("decryptQRCode", value)
+                } else {
+                    return null
+                }
+                return try {
+                    Gson().fromJson(value, JsonObject::class.java)
+                } catch (e: Exception) {
+                    null
+                }
+            } else {
+                return null
+            }
+        } catch (e: java.lang.Exception) {
+            return null
+        }
     }
 
 }

@@ -35,6 +35,10 @@ class ScanQRCode {
         }
     }
 
+    fun destroyScan(){
+        executorService.shutdown()
+    }
+
 
     private fun decodeQRCodeAsync(bitmap: Bitmap): Task<String> {
         return Tasks.call(executorService, Callable<String> { decode(bitmap) })

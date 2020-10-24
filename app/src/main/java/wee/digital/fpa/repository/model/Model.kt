@@ -1,37 +1,57 @@
 package wee.digital.fpa.repository.model
 
-import android.graphics.Point
-import android.graphics.Rect
-import androidx.room.Ignore
-import wee.digital.fpa.camera.RealSenseControl
+import android.os.Bundle
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import wee.digital.fpa.repository.dto.PaymentDTOResp
+import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
+import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
 
-data class DataCollect(
-        var unit: Float = 0f,
-        @Ignore
-        var depthData: ByteArray? = null,
-        @Ignore
-        var colorData: ByteArray? = null,
-        val width: Int = RealSenseControl.COLOR_WIDTH,
-        val height: Int = RealSenseControl.COLOR_HEIGHT,
-        var device: RealSenseControl.DeviceConfig = RealSenseControl.DeviceConfig(),
-        var userInfo: FaceInfo? = null,
-        var pointData: String = "",
-        var dataFacePoint: DataGetFacePoint? = null,
-        var isRepaired: Boolean = false,
-        var frameColorString : String = "",
-        var frameDepthString : String = ""
+/**
+ * [wee.dev.faceposv2.repository.network.EncryptData]
+ */
+data class EncryptResult(val headers: HashMap<String, Any>, val body: ByteArray)
+
+data class EncryptResultCollect(val headers: HashMap<String, Any>, val body: String)
+
+data class EncryptResultCheckDevice(val headers: HashMap<String, Any>, val body: ByteArray, val privateKey : ByteArray)
+
+data class ObjectDefault(var uid: String)
+
+data class DataRegisterDevice(val name: String = "", val status: Int = 0)
+
+/**
+ * [wee.dev.faceposv2.ui.payment.PaymentViewModel.verifyFace]
+ */
+data class PaymentVerifyFace(val dataResp: VerifyFaceDTOResp, val bundle: Bundle)
+
+/**
+ * [wee.dev.faceposv2.ui.payment.PaymentViewModel.verifyPin]
+ */
+data class PaymentVerifyPin(val dataResp: VerifyPINCodeDTOResp, val bundle: Bundle)
+
+/**
+ * [wee.dev.faceposv2.ui.payment.PaymentViewModel.payment]
+ */
+data class PaymentFacePay(val dataResp: PaymentDTOResp, val bundle: Bundle)
+
+/**
+ * [wee.dev.faceposv2.ui.payment.PaymentViewModel.getListBank]
+ */
+data class PaymentListBank(val bankAccList: ArrayList<BankAccInfo>, val bundle: Bundle)
+
+/**
+ * [wee.dev.faceposv2.utils.Utils]
+ */
+data class LogStreams(
+    @SerializedName("streams")
+    @Expose
+    var streams: List<MyStream>? = null
 )
 
-data class FacePointData(
-        var faceRect: Rect,
-        var RightEye: Point,
-        var LeftEye: Point,
-        var Nose: Point,
-        var Rightmouth: Point,
-        var Leftmouth: Point
+class MyStream(
+    var stream: HashMap<String, String>,
+    var values: Array<Array<String>>
 )
 
-data class DataGetFacePoint(
-        val dataFace: FacePointData?,
-        val face: ByteArray?
-)
+data class DataPermission(val permission: Boolean, val bundle: Bundle?)

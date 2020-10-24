@@ -196,6 +196,13 @@ fun JsonObject?.decimal(key: String, default: BigDecimal = BigDecimal.ZERO): Big
     }
 }
 
+fun JsonObject?.bool(key: String, default: Boolean = false): Boolean {
+    this ?: return default
+    if (!has(key)) return default
+    if (get(key).isJsonNull) return default
+    return get(key)?.asBoolean ?: default
+}
+
 fun JsonObject?.float(key: String, default: Float = 0f): Float {
     try {
         this ?: return default

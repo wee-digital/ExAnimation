@@ -1,5 +1,8 @@
 package wee.digital.fpa.data.repository
 
+import androidx.lifecycle.MutableLiveData
+import wee.digital.fpa.repository.model.DeviceInfoStore
+
 /**
  * -------------------------------------------------------------------------------------------------
  * @Project: ExAnimation
@@ -10,4 +13,7 @@ package wee.digital.fpa.data.repository
  * -------------------------------------------------------------------------------------------------
  */
 object Shared {
+
+    val deviceInfo = MutableLiveData<DeviceInfoStore>()
+
 }

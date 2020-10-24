@@ -30,18 +30,18 @@
             app:layout_constraintGuide_percent="0.19" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/frgQRGuide70"
+            android:id="@+id/frgQRGuide71"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.7" />
+            app:layout_constraintGuide_percent="0.71" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/frgQRFrame"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/frgQRGuide70"
+            app:layout_constraintBottom_toBottomOf="@+id/frgQRGuide71"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/frgQRGuide19" />
 
@@ -73,6 +73,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/frgQRStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_40sdp"
@@ -84,7 +85,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/frgQRGuide70" />
+            app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/frgQRLoading"
@@ -94,7 +95,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/frgQRGuide70" />
+            app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
 import com.intel.realsense.librealsense.*
-import wee.digital.fpa.repository.model.DataCollect
 
 class RealSenseControl : DeviceListener {
 

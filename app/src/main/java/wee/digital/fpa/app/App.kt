@@ -5,7 +5,9 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import wee.digital.fpa.BuildConfig
+import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.data.shared
+import wee.digital.fpa.repository.base.BaseSharedPref
 import wee.digital.library.Library
 import wee.digital.library.extension.SECOND
 import wee.digital.log.LogBook
@@ -22,7 +24,17 @@ class App : Application() {
         super.onCreate()
         app = this
         app.onModulesInject()
+
+        baseSharedPref = BaseSharedPref()
+        baseSharedPref!!.init(this)
     }
+
+    companion object{
+        var realSenseControl : RealSenseControl? = null
+
+        var baseSharedPref: BaseSharedPref? = null
+    }
+
 }
 
 fun App.onModulesInject() {
