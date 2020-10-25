@@ -37,6 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/_40sdp"
         android:src="@mipmap/img_logo"
+        android:tint="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="@string/logoRatio"
         app:layout_constraintEnd_toEndOf="parent"

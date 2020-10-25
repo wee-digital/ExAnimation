@@ -3,57 +3,68 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Dialog.BottomFragment"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    style="@style/MatchParent"
+    tools:background="@color/colorBlack">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/dialogTextViewTitle"
-        style="@style/Dialog.Title"
-        android:layout_marginBottom="@dimen/_32sdp"
-        android:text="Vui lòng nhập PIN code thanh toán"
-        app:layout_constraintBottom_toTopOf="@+id/pinProgressLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.43" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/dialogViewClose"
-        style="@style/Dialog.TitleIcon"
-        android:src="@drawable/ic_arrow_down"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <wee.digital.fpa.ui.pin.PinProgressLayout
-        android:id="@+id/pinProgressLayout"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/indicatorSize"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/margin3"
-        android:layout_marginEnd="@dimen/margin3"
-        android:layout_marginBottom="@dimen/_32sdp"
-        android:background="@drawable/bg_rounded_full"
-        android:backgroundTint="#6AFBFBFB"
-        app:layout_constraintBottom_toTopOf="@+id/pinRecyclerViewKey"
-        app:layout_constraintEnd_toEndOf="@+id/pinRecyclerViewKey"
-        app:layout_constraintStart_toStartOf="@+id/pinRecyclerViewKey" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pinRecyclerViewKey"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/_32sdp"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginBottom="@dimen/_32sdp"
-        android:overScrollMode="never"
-        android:scrollbars="none"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:itemCount="12"
-        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/pin_key_item_text"
-        tools:spanCount="4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dialogTextViewTitle"
+            style="@style/Dialog.Title"
+            android:text="Vui lòng nhập PIN code thanh toán"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/dialogViewClose"
+            style="@style/Dialog.TitleIcon"
+            android:src="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <wee.digital.fpa.ui.pin.PinProgressLayout
+            android:id="@+id/pinProgressLayout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/indicatorSize"
+            android:layout_marginStart="@dimen/margin3"
+            android:layout_marginTop="@dimen/margin3"
+            android:layout_marginEnd="@dimen/margin3"
+            android:background="@drawable/bg_rounded_full"
+            android:backgroundTint="#6AFBFBFB"
+            app:layout_constraintEnd_toEndOf="@+id/pinRecyclerViewKey"
+            app:layout_constraintStart_toStartOf="@+id/pinRecyclerViewKey"
+            app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pinRecyclerViewKey"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin3"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin3"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pinProgressLayout"
+            tools:itemCount="12"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/pin_key_item_text"
+            tools:spanCount="4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

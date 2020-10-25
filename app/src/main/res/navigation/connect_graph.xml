@@ -32,7 +32,7 @@
         android:id="@+id/doneFragment"
         android:name="wee.digital.fpa.ui.screen.DoneFragment"
         android:label="DoneFragment"
-        tools:layout="@layout/fragment_done"/>
+        tools:layout="@layout/message"/>
     <fragment
         android:id="@+id/InfoDeviceFragment"
         android:name="wee.digital.fpa.ui.device.InputDeviceFragment"
@@ -61,5 +61,5 @@
         android:id="@+id/failConnectFragment"
         android:name="wee.digital.fpa.ui.screen.FailConnectFragment"
         android:label="FailConnectFragment"
-        tools:layout="@layout/fragment_fail_connect"/>
+        tools:layout="@layout/confirm"/>
 </navigation>

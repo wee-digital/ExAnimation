@@ -24,12 +24,25 @@
         android:id="@+id/action_global_paymentFragment"
         app:destination="@id/paymentFragment" />
 
-
     <dialog
         android:id="@+id/pinFragment"
         android:name="wee.digital.fpa.ui.pin.PinFragment"
         android:label="PinFragment"
-        tools:layout="@layout/pin" /><action android:id="@+id/action_global_pinFragment" app:destination="@id/pinFragment"/>
+        tools:layout="@layout/pin" />
+
+    <action
+        android:id="@+id/action_global_pinFragment"
+        app:destination="@id/pinFragment" />
+
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="wee.digital.fpa.ui.card.CardFragment"
+        android:label="CardFragment"
+        tools:layout="@layout/card" />
+
+    <action
+        android:id="@+id/action_global_cardFragment"
+        app:destination="@id/cardFragment" />
 
 
 </navigation>

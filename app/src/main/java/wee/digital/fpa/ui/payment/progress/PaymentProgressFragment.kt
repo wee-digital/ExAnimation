@@ -12,7 +12,7 @@ class PaymentProgressFragment : BaseFragment() {
     private var drawable: Drawable? = null
     private var progressVM: PaymentProgressViewModel? = null
     override fun layoutResource(): Int {
-        return R.layout.payment_progress_fragment
+        return R.layout.progress_pay
     }
 
     override fun onViewCreated() {

@@ -79,7 +79,7 @@
         <item name="android:layout_width">@dimen/_40sdp</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:src">@drawable/ic_placeholder</item>
-        <item name="android:tint">#A0A0A0</item>
+        <item name="android:tint">@color/colorGray</item>
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
 
