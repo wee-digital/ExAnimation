@@ -42,7 +42,7 @@ class SplashView(private val v: SplashFragment) {
             constrainHeight(logoId, v.splashImageViewLogo.height / 2)
             connect(logoId, ConstraintSet.TOP, v.splashTextViewRemaining.id, ConstraintSet.BOTTOM)
             connect(logoId, ConstraintSet.BOTTOM, v.splashGuideline.id, ConstraintSet.BOTTOM)
-            setVerticalBias(logoId,0.55f)
+            setVerticalBias(logoId, 0.55f)
         }
     }
 
@@ -52,7 +52,7 @@ class SplashView(private val v: SplashFragment) {
             constrainHeight(logoId, v.splashImageViewLogo.height * 2)
             connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
             connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-            setVerticalBias(logoId,0.5f)
+            setVerticalBias(logoId, 0.5f)
         }
     }
 

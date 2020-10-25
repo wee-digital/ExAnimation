@@ -4,7 +4,7 @@
     <style name="TextView" parent="WrapContent">
         <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
         <item name="android:textSize">@dimen/textSize</item>
     </style>
 
@@ -83,13 +83,42 @@
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
 
-<!--SPLASH-->
+    <!--MESSAGE-->
+    <style name="Message" />
+
+    <style name="Message.Icon">
+        <item name="android:layout_width">@dimen/_70sdp</item>
+        <item name="android:layout_height">@dimen/_70sdp</item>
+        <item name="android:layout_marginBottom">@dimen/margin2</item>
+    </style>
+
+    <style name="Message.Title" parent="TextView4">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_marginTop">@dimen/margin4</item>
+        <item name="android:layout_marginBottom">@dimen/margin2</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Message.Text" parent="TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin4</item>
+        <item name="android:layout_marginBottom">@dimen/margin5</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/_11ssp</item>
+    </style>
+
+    <!--SPLASH-->
     <style name="Splash" />
 
     <!--PAYMENT-->
     <style name="Payment" />
 
-    <style name="Payment.Title" parent="TextView2">
+    <style name="Payment.Title" parent="TextView4">
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textStyle">bold</item>

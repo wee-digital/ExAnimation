@@ -9,11 +9,11 @@ class CardItem constructor(
 
     companion object {
         val defaultList = listOf(
-            CardItem(R.mipmap.img_placeholder, "Vietcombank"),
-            CardItem(R.mipmap.img_placeholder, "DongA"),
-            CardItem(R.mipmap.img_placeholder, "SeaBank"),
-            CardItem(R.mipmap.img_placeholder, "OceanBank"),
-            CardItem(R.mipmap.img_placeholder, "TPBank")
+                CardItem(R.mipmap.img_placeholder, "Vietcombank"),
+                CardItem(R.mipmap.img_placeholder, "DongA"),
+                CardItem(R.mipmap.img_placeholder, "SeaBank"),
+                CardItem(R.mipmap.img_placeholder, "OceanBank"),
+                CardItem(R.mipmap.img_placeholder, "TPBank")
         )
     }
 }

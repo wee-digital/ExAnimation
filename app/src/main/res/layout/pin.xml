@@ -43,6 +43,7 @@
             android:layout_marginEnd="@dimen/margin3"
             android:background="@drawable/bg_rounded_full"
             android:backgroundTint="#6AFBFBFB"
+            tools:backgroundTint="#E7F1FB"
             app:layout_constraintEnd_toEndOf="@+id/pinRecyclerViewKey"
             app:layout_constraintStart_toStartOf="@+id/pinRecyclerViewKey"
             app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle" />

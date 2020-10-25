@@ -19,7 +19,6 @@
         android:name="wee.digital.fpa.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
         tools:layout="@layout/payment" />
-
     <action
         android:id="@+id/action_global_paymentFragment"
         app:destination="@id/paymentFragment" />
@@ -29,20 +28,62 @@
         android:name="wee.digital.fpa.ui.pin.PinFragment"
         android:label="PinFragment"
         tools:layout="@layout/pin" />
-
     <action
         android:id="@+id/action_global_pinFragment"
         app:destination="@id/pinFragment" />
 
-    <fragment
+    <dialog
         android:id="@+id/cardFragment"
         android:name="wee.digital.fpa.ui.card.CardFragment"
         android:label="CardFragment"
         tools:layout="@layout/card" />
-
     <action
         android:id="@+id/action_global_cardFragment"
         app:destination="@id/cardFragment" />
+
+    <dialog
+        android:id="@+id/confirmFragment"
+        android:name="wee.digital.fpa.ui.confirm.ConfirmFragment"
+        android:label="ConfirmFragment"
+        tools:layout="@layout/confirm" />
+    <action
+        android:id="@+id/action_global_confirmFragment"
+        app:destination="@id/confirmFragment" />
+
+    <dialog
+        android:id="@+id/messageFragment"
+        android:name="wee.digital.fpa.ui.message.MessageFragment"
+        android:label="MessageFragment"
+        tools:layout="@layout/message" />
+    <action
+        android:id="@+id/action_global_messageFragment"
+        app:destination="@id/messageFragment" />
+
+    <fragment
+        android:id="@+id/progressNapasFragment"
+        android:name="wee.digital.fpa.ui.progress.napas.ProgressNapasFragment"
+        android:label="ProgressNapasFragment"
+        tools:layout="@layout/progress_napas" />
+    <action
+        android:id="@+id/action_global_progressNapasFragment"
+        app:destination="@id/progressNapasFragment" />
+
+    <fragment
+        android:id="@+id/progressPayFragment"
+        android:name="wee.digital.fpa.ui.progress.pay.ProgressPayFragment"
+        android:label="ProgressPayFragment"
+        tools:layout="@layout/progress_pay" />
+    <action
+        android:id="@+id/action_global_progressPayFragment"
+        app:destination="@id/progressPayFragment" />
+    <fragment
+        android:id="@+id/advFragment"
+        android:name="wee.digital.fpa.ui.adv.AdvFragment"
+        android:label="AdvFragment"
+        tools:layout="@layout/adv" />
+    <action
+        android:id="@+id/action_global_advFragment"
+        app:destination="@id/advFragment" />
 
 
 </navigation>

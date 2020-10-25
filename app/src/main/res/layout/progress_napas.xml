@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_64sdp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/img_placeholder"
+            android:src="@mipmap/img_progress"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toEndOf="parent"
