@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewContent"
     style="@style/MatchParent"
-    tools:background="@color/colorBlack">
+    tools:background="@color/colorDialogTools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
         android:padding="@dimen/margin2"
         app:layout_constraintBottom_toBottomOf="parent"

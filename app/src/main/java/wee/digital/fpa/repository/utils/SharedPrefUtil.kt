@@ -12,6 +12,7 @@ object SharedPrefUtil {
     private const val POS_LOGIN_STATUS_KEY = "POS_LOGIN_STATUS_KEY"
     private const val POS_URL_KEY = "POS_URL_KEY"
     private const val POS_ADV_KEY = "POS_ADV_KEY"
+
     //======
     fun clearAllData() {
         App.baseSharedPref?.removeValue(POS_DEVICE_INFO_KEY)
@@ -21,51 +22,51 @@ object SharedPrefUtil {
     }
 
     //Device Info
-    fun saveDeviceInfo(data: String, pubkey: String){
+    fun saveDeviceInfo(data: String, pubkey: String) {
         App.baseSharedPref?.saveStringValue(POS_DEVICE_INFO_KEY, data)
         App.baseSharedPref?.saveBooleanValue(POS_LOGIN_STATUS_KEY, true)
         //---
         this.savePubKey(BaseSecurity.ins.base64Decode(pubkey))
     }
 
-    fun getDeviceInfo(): String{
+    fun getDeviceInfo(): String {
         val dataJson = App.baseSharedPref?.getStringValue(POS_DEVICE_INFO_KEY, Gson().toJson(DeviceInfo()))
-        return if(!dataJson.isNullOrEmpty()){
+        return if (!dataJson.isNullOrEmpty()) {
             dataJson
         } else {
             ""
         }
     }
 
-    fun resetDeviceInfo(){
+    fun resetDeviceInfo() {
         App.baseSharedPref?.saveStringValue(POS_DEVICE_INFO_KEY, "")
         App.baseSharedPref?.saveBooleanValue(POS_LOGIN_STATUS_KEY, false)
     }
 
     //Private Key
-    fun savePriKey(priKey: ByteArray){
+    fun savePriKey(priKey: ByteArray) {
         App.baseSharedPref?.saveStringValue(POS_PRIVATE_KEY, BaseSecurity.ins.base64Encode(priKey))
     }
 
-    fun getPriKey():ByteArray?{
+    fun getPriKey(): ByteArray? {
         return App.baseSharedPref?.getStringValue(POS_PRIVATE_KEY, "")?.let {
             BaseSecurity.ins.base64Decode(it)
         }
     }
 
     //Public Key
-    private fun savePubKey(pubKey: ByteArray){
+    private fun savePubKey(pubKey: ByteArray) {
         App.baseSharedPref?.saveStringValue(POS_PUBLIC_KEY, BaseSecurity.ins.base64Encode(pubKey))
     }
 
-    fun getPubKey():ByteArray?{
+    fun getPubKey(): ByteArray? {
         return App.baseSharedPref?.getStringValue(POS_PUBLIC_KEY, "")?.let {
             BaseSecurity.ins.base64Decode(it)
         }
     }
 
     //Login Status
-    fun saveLoginStatus(loginStatus: Boolean){
+    fun saveLoginStatus(loginStatus: Boolean) {
         App.baseSharedPref?.saveBooleanValue(POS_LOGIN_STATUS_KEY, loginStatus)
     }
 
@@ -74,20 +75,20 @@ object SharedPrefUtil {
     }
 
     //URL Type
-    fun saveURLType(urlType: String){
+    fun saveURLType(urlType: String) {
         App.baseSharedPref?.saveStringValue(POS_URL_KEY, urlType)
     }
 
-    fun getURLType(): String{
-        return App.baseSharedPref?.getStringValue(POS_URL_KEY, "")?:""
+    fun getURLType(): String {
+        return App.baseSharedPref?.getStringValue(POS_URL_KEY, "") ?: ""
     }
 
     //ADV Type
-    fun saveADVType(advType: String){
+    fun saveADVType(advType: String) {
         App.baseSharedPref?.saveStringValue(POS_ADV_KEY, advType)
     }
 
-    fun getADVType(): String{
-        return App.baseSharedPref?.getStringValue(POS_ADV_KEY, "")?:""
+    fun getADVType(): String {
+        return App.baseSharedPref?.getStringValue(POS_ADV_KEY, "") ?: ""
     }
 }

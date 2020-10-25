@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.R
 import wee.digital.log.Logger
@@ -80,9 +79,9 @@ abstract class BaseDialog : DialogFragment(), BaseView {
     /**
      * [BaseView] implement
      */
-    final override val nav: NavController get() = findNavController()
+    final override val nav get() = findNavController()
 
-    final override val log: Logger by lazy { Logger(this::class) }
+    final override val log by lazy { Logger(this::class) }
 
     /**
      * [BaseDialog] properties

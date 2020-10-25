@@ -16,7 +16,6 @@ import wee.digital.fpa.repository.utils.ErrCode
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.repository.utils.SocketEvent
 import wee.digital.fpa.ui.base.BaseActivity
-import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.util.Utils
 import java.util.concurrent.TimeUnit
 
@@ -40,7 +39,7 @@ class HomeActivity : BaseActivity() {
                 ErrCode.DEVICE_DELETE -> {
                     toast("device not exist")
                     mHomeViewModel.resetDeviceData()
-                    startClear(ConnectActivity::class.java)
+                    //startClear(ConnectActivity::class.java)
                 }
             }
         }
@@ -125,7 +124,7 @@ class HomeActivity : BaseActivity() {
             SocketEvent.EVENT_DELETE -> {
                 toast("device not exist")
                 mHomeViewModel.resetDeviceData()
-                startClear(ConnectActivity::class.java)
+                //startClear(ConnectActivity::class.java)
             }
         }
     }
@@ -141,12 +140,12 @@ class HomeActivity : BaseActivity() {
         }
         mHomeViewModel.updateCancelPayment(code)
 
-        if(paying){
+        if (paying) {
             val paymentID = Shared.paymentID.value ?: ""
             mHomeViewModel.updateStatusPayment(paymentID, PaymentStatusCode.CANCEL_PAYMENT)
         }
 
-        if(paying && calledFacePay) return
+        if (paying && calledFacePay) return
         toast("go home")
     }
 

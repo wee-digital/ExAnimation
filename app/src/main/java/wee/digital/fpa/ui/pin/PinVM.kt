@@ -1,11 +1,11 @@
 package wee.digital.fpa.ui.pin
 
-import androidx.lifecycle.ViewModel
 import wee.digital.fpa.app.toast
+import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import java.util.concurrent.atomic.AtomicInteger
 
-class PinVM : ViewModel() {
+class PinVM : BaseViewModel() {
 
     private var failureCount = AtomicInteger(5)
 

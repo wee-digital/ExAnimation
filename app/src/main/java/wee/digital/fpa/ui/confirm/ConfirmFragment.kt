@@ -3,12 +3,11 @@ package wee.digital.fpa.ui.confirm
 import android.view.View
 import kotlinx.android.synthetic.main.confirm.*
 import wee.digital.fpa.R
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.BaseDialog
-import wee.digital.fpa.ui.base.BaseFragment
 
 class ConfirmFragment : BaseDialog() {
 
-    private val vm: ConfirmVM by lazy { activityVM(ConfirmVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.confirm
@@ -19,7 +18,7 @@ class ConfirmFragment : BaseDialog() {
     }
 
     override fun onLiveDataObserve() {
-        vm.argLiveData.observe {
+        Main.confirmArg.observe {
             onBindArg(it)
         }
     }
@@ -27,7 +26,7 @@ class ConfirmFragment : BaseDialog() {
     override fun onViewClick(v: View?) {
         navigateUp()
         when (v) {
-            dialogViewAccept -> vm.argLiveData.value?.also {
+            dialogViewAccept -> Main.confirmArg.value?.also {
                 it.onAccept()
             }
         }

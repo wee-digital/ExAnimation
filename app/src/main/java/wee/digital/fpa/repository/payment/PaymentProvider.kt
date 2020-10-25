@@ -18,30 +18,30 @@ import wee.digital.fpa.repository.utils.SystemUrl
 import wee.digital.library.extension.bool
 import wee.digital.library.extension.parse
 
-class PaymentProvider: IBase.Payment{
+class PaymentProvider : IBase.Payment {
 
     override fun getClientId(listener: Api.ClientListener<ClientIDResp>) {
         val restApi =
-            RestUrl(SystemUrl.BASE_URL_CLIENT_ID).getClient().create(MyApiService::class.java)
+                RestUrl(SystemUrl.BASE_URL_CLIENT_ID).getClient().create(MyApiService::class.java)
         restApi.getClientId()
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe(object : SingleObserver<JsonObject> {
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(object : SingleObserver<JsonObject> {
 
-                override fun onSubscribe(d: Disposable) {}
+                    override fun onSubscribe(d: Disposable) {}
 
-                override fun onError(e: Throwable) {
-                    Log.e("getClientId", "fail : ${e.message}")
-                    listener.onFailed(code = ErrCode.API_FAIL, message = e.message.toString())
-                }
+                    override fun onError(e: Throwable) {
+                        Log.e("getClientId", "fail : ${e.message}")
+                        listener.onFailed(code = ErrCode.API_FAIL, message = e.message.toString())
+                    }
 
-                override fun onSuccess(t: JsonObject) {
-                    Log.e("getClientId", "success : $t")
-                    val data = Gson().fromJson(t, ClientIDResp::class.java)
-                    listener.onSuccess(data)
-                }
+                    override fun onSuccess(t: JsonObject) {
+                        Log.e("getClientId", "success : $t")
+                        val data = Gson().fromJson(t, ClientIDResp::class.java)
+                        listener.onSuccess(data)
+                    }
 
-            })
+                })
     }
 
     override fun requestPayment(
@@ -68,25 +68,25 @@ class PaymentProvider: IBase.Payment{
             listener: Api.ClientListener<VerifyFaceDTOResp>
     ) {
         Api.instance.postApi(
-            url = "verifyFace",
-            data = dataReq,
-            header = facePointData,
-            listener = object : Api.ApiCallBack {
+                url = "verifyFace",
+                data = dataReq,
+                header = facePointData,
+                listener = object : Api.ApiCallBack {
 
-                override fun onSuccess(data: JsonObject) {
-                    Log.e("verifyFace", "$data")
-                    val resp = data.parse(VerifyFaceDTOResp::class.java)!!
-                    resp.code = ErrCode.SUCCESS
+                    override fun onSuccess(data: JsonObject) {
+                        Log.e("verifyFace", "$data")
+                        val resp = data.parse(VerifyFaceDTOResp::class.java)!!
+                        resp.code = ErrCode.SUCCESS
 
-                    listener.onSuccess(resp)
-                }
+                        listener.onSuccess(resp)
+                    }
 
-                override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                    Log.e("verifyFace", "$code - $mess - $data")
-                    val errCode = verifyFaceFailed(code, mess, data)
-                    listener.onFailed(code = errCode, message =  mess)
-                }
-            })
+                    override fun onFail(code: Int, mess: String, data: JsonObject?) {
+                        Log.e("verifyFace", "$code - $mess - $data")
+                        val errCode = verifyFaceFailed(code, mess, data)
+                        listener.onFailed(code = errCode, message = mess)
+                    }
+                })
     }
 
     override fun verifyPINCode(
@@ -105,7 +105,7 @@ class PaymentProvider: IBase.Payment{
             override fun onFail(code: Int, mess: String, data: JsonObject?) {
                 Log.e("verifyPINCode", "$code - $mess - $data")
                 val errCode = verifyPINCodeFailed(code, mess, data)
-                listener.onFailed(code=errCode, message = mess)
+                listener.onFailed(code = errCode, message = mess)
             }
 
         })
@@ -131,8 +131,8 @@ class PaymentProvider: IBase.Payment{
     }
 
     override fun getBankAccList(
-        dataReq: GetBankAccListDTOReq,
-        listener: Api.ClientListener<GetBankAccListDTOResp>
+            dataReq: GetBankAccListDTOReq,
+            listener: Api.ClientListener<GetBankAccListDTOResp>
     ) {
         Api.instance.postApi(url = "get-bank-accounts", data = dataReq, listener = object : Api.ApiCallBack {
 
@@ -162,17 +162,17 @@ class PaymentProvider: IBase.Payment{
 
     override fun updateCancelPayment(dataReq: UpdateCancelPaymentDTOReq) {
         Api.instance.postApi(
-            url = "device/update-cancel-payment",
-            data = dataReq,
-            listener = object : Api.ApiCallBack {
-                override fun onSuccess(data: JsonObject) {
-                    Log.e("updateCancelPayment", "$data")
-                }
+                url = "device/update-cancel-payment",
+                data = dataReq,
+                listener = object : Api.ApiCallBack {
+                    override fun onSuccess(data: JsonObject) {
+                        Log.e("updateCancelPayment", "$data")
+                    }
 
-                override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                    Log.e("updateCancelPayment", "$code - $mess - $data")
-                }
-            })
+                    override fun onFail(code: Int, mess: String, data: JsonObject?) {
+                        Log.e("updateCancelPayment", "$code - $mess - $data")
+                    }
+                })
     }
 
     //---
@@ -192,7 +192,7 @@ class PaymentProvider: IBase.Payment{
         }
     }
 
-    private fun verifyPINCodeFailed(code: Int, mess: String, data: JsonObject?): Int{
+    private fun verifyPINCodeFailed(code: Int, mess: String, data: JsonObject?): Int {
         Log.e("verifyPin", "$code - $mess - $data")
 
         return when (code) {
@@ -201,7 +201,7 @@ class PaymentProvider: IBase.Payment{
         }
     }
 
-    private fun paymentFailed(code: Int, mess: String, data: JsonObject?): PaymentDTOResp{
+    private fun paymentFailed(code: Int, mess: String, data: JsonObject?): PaymentDTOResp {
         Log.e("payment", "$code - $mess - $data")
 
         val resp = PaymentDTOResp()

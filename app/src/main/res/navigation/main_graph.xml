@@ -4,34 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     app:startDestination="@id/splashFragment">
-
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="wee.digital.fpa.ui.plash.SplashFragment"
-        android:label="SplashFragment"
-        tools:layout="@layout/splash" />
-    <action
-        android:id="@+id/action_global_splashFragment"
-        app:destination="@id/splashFragment" />
-
-    <dialog
-        android:id="@+id/paymentFragment"
-        android:name="wee.digital.fpa.ui.payment.PaymentFragment"
-        android:label="PaymentFragment"
-        tools:layout="@layout/payment" />
-    <action
-        android:id="@+id/action_global_paymentFragment"
-        app:destination="@id/paymentFragment" />
-
-    <dialog
-        android:id="@+id/pinFragment"
-        android:name="wee.digital.fpa.ui.pin.PinFragment"
-        android:label="PinFragment"
-        tools:layout="@layout/pin" />
-    <action
-        android:id="@+id/action_global_pinFragment"
-        app:destination="@id/pinFragment" />
-
     <dialog
         android:id="@+id/cardFragment"
         android:name="wee.digital.fpa.ui.card.CardFragment"
@@ -40,16 +12,30 @@
     <action
         android:id="@+id/action_global_cardFragment"
         app:destination="@id/cardFragment" />
-
     <dialog
-        android:id="@+id/confirmFragment"
-        android:name="wee.digital.fpa.ui.confirm.ConfirmFragment"
-        android:label="ConfirmFragment"
-        tools:layout="@layout/confirm" />
+        android:id="@+id/progressNapasFragment"
+        android:name="wee.digital.fpa.ui.progress.napas.ProgressNapasFragment"
+        android:label="ProgressNapasFragment"
+        tools:layout="@layout/progress_napas" />
     <action
-        android:id="@+id/action_global_confirmFragment"
-        app:destination="@id/confirmFragment" />
-
+        android:id="@+id/action_global_progressNapasFragment"
+        app:destination="@id/progressNapasFragment" />
+    <dialog
+        android:id="@+id/paymentFragment"
+        android:name="wee.digital.fpa.ui.payment.PaymentFragment"
+        android:label="PaymentFragment"
+        tools:layout="@layout/payment" />
+    <action
+        android:id="@+id/action_global_paymentFragment"
+        app:destination="@id/paymentFragment" />
+    <fragment
+        android:id="@+id/connectFragment"
+        android:name="wee.digital.fpa.ui.connect.ConnectFragment"
+        android:label="ConnectFragment"
+        tools:layout="@layout/connect" />
+    <action
+        android:id="@+id/action_global_connectFragment"
+        app:destination="@id/connectFragment" />
     <dialog
         android:id="@+id/messageFragment"
         android:name="wee.digital.fpa.ui.message.MessageFragment"
@@ -58,17 +44,31 @@
     <action
         android:id="@+id/action_global_messageFragment"
         app:destination="@id/messageFragment" />
-
     <fragment
-        android:id="@+id/progressNapasFragment"
-        android:name="wee.digital.fpa.ui.progress.napas.ProgressNapasFragment"
-        android:label="ProgressNapasFragment"
-        tools:layout="@layout/progress_napas" />
+        android:id="@+id/advFragment"
+        android:name="wee.digital.fpa.ui.adv.AdvFragment"
+        android:label="AdvFragment"
+        tools:layout="@layout/adv" />
     <action
-        android:id="@+id/action_global_progressNapasFragment"
-        app:destination="@id/progressNapasFragment" />
-
+        android:id="@+id/action_global_advFragment3"
+        app:destination="@id/advFragment" />
     <fragment
+        android:id="@+id/splashFragment"
+        android:name="wee.digital.fpa.ui.plash.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/splash" />
+    <action
+        android:id="@+id/action_global_splashFragment"
+        app:destination="@id/splashFragment" />
+    <dialog
+        android:id="@+id/confirmFragment"
+        android:name="wee.digital.fpa.ui.confirm.ConfirmFragment"
+        android:label="ConfirmFragment"
+        tools:layout="@layout/confirm" />
+    <action
+        android:id="@+id/action_global_confirmFragment"
+        app:destination="@id/confirmFragment" />
+    <dialog
         android:id="@+id/progressPayFragment"
         android:name="wee.digital.fpa.ui.progress.pay.ProgressPayFragment"
         android:label="ProgressPayFragment"
@@ -76,14 +76,30 @@
     <action
         android:id="@+id/action_global_progressPayFragment"
         app:destination="@id/progressPayFragment" />
-    <fragment
-        android:id="@+id/advFragment"
-        android:name="wee.digital.fpa.ui.adv.AdvFragment"
-        android:label="AdvFragment"
-        tools:layout="@layout/adv" />
+    <dialog
+        android:id="@+id/pinFragment"
+        android:name="wee.digital.fpa.ui.pin.PinFragment"
+        android:label="PinFragment"
+        tools:layout="@layout/pin" />
     <action
-        android:id="@+id/action_global_advFragment"
-        app:destination="@id/advFragment" />
+        android:id="@+id/action_global_pinFragment"
+        app:destination="@id/pinFragment" />
+    <dialog
+        android:id="@+id/qrFragment"
+        android:name="wee.digital.fpa.ui.qr.QrFragment"
+        android:label="QrFragment"
+        tools:layout="@layout/qr" />
+    <action
+        android:id="@+id/action_global_qrFragment"
+        app:destination="@id/qrFragment" />
+    <dialog
+        android:id="@+id/deviceFragment"
+        android:name="wee.digital.fpa.ui.device.DeviceFragment"
+        android:label="DeviceFragment"
+        tools:layout="@layout/device"/>
+    <action
+        android:id="@+id/action_global_deviceFragment"
+        app:destination="@id/deviceFragment" />
 
 
 </navigation>

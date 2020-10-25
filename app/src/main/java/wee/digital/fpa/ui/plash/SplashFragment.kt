@@ -7,11 +7,11 @@ import wee.digital.fpa.ui.base.BaseFragment
 
 class SplashFragment : BaseFragment() {
 
-    private val vm: SplashVM by lazy { activityVM(SplashVM::class) }
+    private val vm by lazy { activityVM(SplashVM::class) }
 
-    private val v: SplashView by lazy { SplashView(this) }
+    private val v by lazy { SplashView(this) }
 
-    private val test: SplashTest by lazy { SplashTest(this, vm) }
+    private val test by lazy { SplashTest(this, vm) }
 
     /**
      * [BaseFragment] override

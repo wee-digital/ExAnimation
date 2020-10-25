@@ -1,9 +1,9 @@
 package wee.digital.fpa.ui.progress.napas
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import wee.digital.fpa.ui.base.BaseViewModel
 
-class ProgressNapasVM : ViewModel() {
+class ProgressNapasVM : BaseViewModel() {
 
     val isShowProgress = MutableLiveData<Boolean>()
 

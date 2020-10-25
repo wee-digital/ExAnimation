@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.R
 import wee.digital.library.extension.ViewClickListener
 import wee.digital.log.Logger
@@ -33,17 +34,17 @@ interface BaseView {
 
     fun onViewClick(v: View?) {}
 
-    val nav: NavController?
+    val nav: NavController
 
     fun navigate(directions: NavDirections, block: (NavOptions.Builder.() -> Unit) = {}) {
         val option = NavOptions.Builder()
                 .setDefaultAnim()
         option.block()
-        nav?.navigate(directions, option.build())
+        nav.navigate(directions, option.build())
     }
 
     fun navigateUp() {
-        nav?.navigateUp()
+        nav.navigateUp()
     }
 
     fun NavOptions.Builder.setDefaultAnim(): NavOptions.Builder {
@@ -51,6 +52,11 @@ interface BaseView {
         setPopEnterAnim(R.anim.vertical_pop_enter)
         setExitAnim(R.anim.vertical_exit)
         setPopExitAnim(R.anim.vertical_pop_exit)
+        return this
+    }
+
+    fun NavOptions.Builder.setInclusive(inclusive: Boolean): NavOptions.Builder {
+        setPopUpTo(nav.graph.id, inclusive)
         return this
     }
 

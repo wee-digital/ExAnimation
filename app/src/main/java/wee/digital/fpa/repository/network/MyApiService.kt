@@ -15,16 +15,16 @@ interface MyApiService {
 
     @POST
     fun postApi(
-        @Url url: String,
-        @HeaderMap headers: Map<String, Any>,
-        @Body body: RequestBody
+            @Url url: String,
+            @HeaderMap headers: Map<String, Any>,
+            @Body body: RequestBody
     ): Single<Response<ResponseBody>>
 
     @POST
     fun postVideo(
-        @Url url: String,
-        @HeaderMap headers: Map<String, Any>,
-        @Body body: VideoRecordReq
+            @Url url: String,
+            @HeaderMap headers: Map<String, Any>,
+            @Body body: VideoRecordReq
     ): Single<Response<ResponseBody>>
 
     @Headers("Content-Type: application/json")
@@ -39,8 +39,8 @@ interface MyApiService {
 
     @POST("depth/upload")
     fun postCollData(
-        @HeaderMap headers: Map<String, Any>,
-        @Body data: String
+            @HeaderMap headers: Map<String, Any>,
+            @Body data: String
     ): Single<Response<ResponseBody>>
 
 }

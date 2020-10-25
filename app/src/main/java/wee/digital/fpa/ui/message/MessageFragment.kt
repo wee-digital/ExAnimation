@@ -3,12 +3,10 @@ package wee.digital.fpa.ui.message
 import android.view.View
 import kotlinx.android.synthetic.main.message.*
 import wee.digital.fpa.R
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.BaseDialog
-import wee.digital.fpa.ui.base.BaseFragment
 
 class MessageFragment : BaseDialog() {
-
-    private val vm: MessageVM by lazy { activityVM(MessageVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.message
@@ -19,7 +17,7 @@ class MessageFragment : BaseDialog() {
     }
 
     override fun onLiveDataObserve() {
-        vm.argLiveData.observe {
+        Main.messageArg.observe {
             onBindArg(it)
         }
     }

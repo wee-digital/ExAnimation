@@ -3,7 +3,6 @@ package wee.digital.fpa.ui.activity
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
 import wee.digital.fpa.repository.dto.GetTokenDTOResp
@@ -15,8 +14,9 @@ import wee.digital.fpa.repository.model.DataPaymentRequest
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.repository.utils.ErrCode
+import wee.digital.fpa.ui.base.BaseViewModel
 
-class HomeVM : ViewModel(){
+class HomeVM : BaseViewModel() {
 
     /**
      * checkDevice
@@ -25,11 +25,11 @@ class HomeVM : ViewModel(){
 
     @SuppressLint("CheckResult")
     fun checkDeviceStatus() {
-        DeviceSystemRepository.ins.checkDeviceStatus(object : Api.ClientListener<Int>{
+        DeviceSystemRepository.ins.checkDeviceStatus(object : Api.ClientListener<Int> {
 
             override fun onSuccess(data: Int) {
                 Log.e("checkDeviceStatus", "success : $data")
-                _checkDeviceStatusCallBack?.postValue(data)
+                _checkDeviceStatusCallBack.postValue(data)
             }
 
             override fun onFailed(code: Int, message: String) {
@@ -46,7 +46,7 @@ class HomeVM : ViewModel(){
     var _getTokenDTOCallBack = MutableLiveData<GetTokenDTOResp>()
 
     fun getToken() {
-        DeviceSystemRepository.ins.getToken(object : Api.ClientListener<GetTokenDTOResp>{
+        DeviceSystemRepository.ins.getToken(object : Api.ClientListener<GetTokenDTOResp> {
 
             override fun onSuccess(data: GetTokenDTOResp) {
                 Log.e("getToken", "success : $data")
@@ -73,7 +73,7 @@ class HomeVM : ViewModel(){
     /**
      * updateCancelPayment
      */
-    fun updateCancelPayment(type : Int){
+    fun updateCancelPayment(type: Int) {
         val dataReq = UpdateCancelPaymentDTOReq(type = type)
         PaymentRepository.ins.updateCancelPayment(dataReq)
     }
@@ -106,7 +106,7 @@ class HomeVM : ViewModel(){
     /**
      * resetData when device delete
      */
-    fun resetDeviceData(){
+    fun resetDeviceData() {
         BaseData.ins.resetDeviceInfo()
     }
 

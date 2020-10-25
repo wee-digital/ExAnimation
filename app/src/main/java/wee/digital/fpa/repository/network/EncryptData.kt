@@ -32,26 +32,26 @@ class EncryptData {
      */
     @SuppressLint("CheckResult")
     fun encryptRegister(
-        dataReq: DeviceInfoStore
+            dataReq: DeviceInfoStore
     ): Single<EncryptResult> {
         return Single.create { singleEmitter ->
             try {
-                val decryptQR = FrameUtil.decryptQRCode(dataReq.qrCode!!)
+                val decryptQR = FrameUtil.decryptQRCode(dataReq.qrCode)
                 val sessionId = decryptQR!!.get("SessionID").asString
                 val rsaKey = Crypto.rsaGenerateKey()
                 SharedPrefUtil.savePriKey(rsaKey.privateKey)
                 val androidId = Utils.getIdDevice()
                 val bodyJson = Gson().toJson(
-                    RegisterDTOReq(
-                        uid = androidId,
-                        pubKey = Base64.encodeToString(rsaKey.publicKey, Base64.NO_WRAP),
-                        name = dataReq.name,
-                        modelDevice = Build.MODEL
-                    )
+                        RegisterDTOReq(
+                                uid = androidId,
+                                pubKey = Base64.encodeToString(rsaKey.publicKey, Base64.NO_WRAP),
+                                name = dataReq.name,
+                                modelDevice = Build.MODEL
+                        )
                 )
                 val bodyEncrypted = Crypto.aesEncryptCBC(
-                    Base64.decode(Key.PREPARE_KEY, Base64.NO_WRAP),
-                    bodyJson.toByteArray()
+                        Base64.decode(Key.PREPARE_KEY, Base64.NO_WRAP),
+                        bodyJson.toByteArray()
                 )
                 val headers = HashMap<String, Any>()
                 headers["sessionId"] = sessionId
@@ -71,9 +71,9 @@ class EncryptData {
                 val aesKey = Crypto.aesGenerate256Key()
                 val dataFaceStr = Utils.formatDataFaceHeader(dataPoint)
                 val headers = createHeader(
-                    aesKey = aesKey,
-                    pubKey = SharedPrefUtil.getPubKey(),
-                    headerFace = dataFaceStr
+                        aesKey = aesKey,
+                        pubKey = SharedPrefUtil.getPubKey(),
+                        headerFace = dataFaceStr
                 )
                 val body = data?.toByteArray()
                 val bodyEncrypted = createEncryptBody(aesKey, body)
@@ -92,14 +92,14 @@ class EncryptData {
             try {
                 val rsaKey = Crypto.rsaGenerateKey()
                 val bodyJson = Gson().toJson(
-                    CheckDeviceStatusDTOReq(
-                        posID = BaseData.deviceInfo.uid,
-                        pubKey = Base64.encodeToString(rsaKey.publicKey, Base64.NO_WRAP)
-                    )
+                        CheckDeviceStatusDTOReq(
+                                posID = BaseData.deviceInfo.uid,
+                                pubKey = Base64.encodeToString(rsaKey.publicKey, Base64.NO_WRAP)
+                        )
                 )
                 val bodyEncrypted = Crypto.aesEncryptCBC(
-                    Base64.decode(Key.PREPARE_KEY, Base64.NO_WRAP),
-                    bodyJson?.toByteArray()
+                        Base64.decode(Key.PREPARE_KEY, Base64.NO_WRAP),
+                        bodyJson?.toByteArray()
                 )
                 val headers = HashMap<String, Any>()
                 singleEmitter.onSuccess(EncryptResultCheckDevice(headers, bodyEncrypted!!, rsaKey.privateKey))
@@ -116,29 +116,29 @@ class EncryptData {
         return Single.create { singleEmitter ->
             try {
                 val data =
-                    Gson().toJson(FrameUtil.repairCollectData(dataCollect)).toByteArray()
+                        Gson().toJson(FrameUtil.repairCollectData(dataCollect)).toByteArray()
                 val aesKey = Crypto.aesGenerate256Key()
                 val bodyEncrypt = Crypto.aesEncryptCBC(aesKey, data)
                 val weeKey = Crypto.rsaEncryptOAEP(
-                    Base64.decode(Key.RSA_COLLECTDATA, Base64.NO_WRAP),
-                    aesKey
+                        Base64.decode(Key.RSA_COLLECTDATA, Base64.NO_WRAP),
+                        aesKey
                 )
                 val headers = HashMap<String, Any>()
                 headers["weekey"] = Base64.encodeToString(weeKey, Base64.NO_WRAP)
                 singleEmitter.onSuccess(
-                    EncryptResultCollect(headers, Base64.encodeToString(bodyEncrypt, Base64.NO_WRAP))
+                        EncryptResultCollect(headers, Base64.encodeToString(bodyEncrypt, Base64.NO_WRAP))
                 )
             } catch (e: java.lang.Exception) {
-                Log.e("TestKey","${e.message}")
+                Log.e("TestKey", "${e.message}")
                 singleEmitter.onError(e)
             }
         }
     }
 
     private fun createHeader(
-        aesKey: ByteArray,
-        pubKey: ByteArray?,
-        headerFace: String? = null
+            aesKey: ByteArray,
+            pubKey: ByteArray?,
+            headerFace: String? = null
     ): HashMap<String, Any> {
         val enAesKey = Crypto.rsaEncryptOAEP(pubKey, aesKey)
         val header = HashMap<String, Any>()
@@ -153,8 +153,8 @@ class EncryptData {
 
     private fun createEncryptBody(aesKey: ByteArray, body: ByteArray?): ByteArray? {
         val dataBody =
-            body ?: Gson().toJson(ObjectDefault(uid = BaseData.deviceInfo.uid))
-                .toByteArray()
+                body ?: Gson().toJson(ObjectDefault(uid = BaseData.deviceInfo.uid))
+                        .toByteArray()
         return try {
             Crypto.aesEncryptCBC(aesKey, dataBody)
         } catch (e: java.lang.Exception) {
@@ -178,7 +178,7 @@ class EncryptData {
         }
     }
 
-    fun decryptResponseCheckDevice(response: Response<ResponseBody>, privateKey : ByteArray): JsonObject? {
+    fun decryptResponseCheckDevice(response: Response<ResponseBody>, privateKey: ByteArray): JsonObject? {
         return try {
             val weekeyHeader = response.headers()["weekey"]
             val weekey = Base64.decode(weekeyHeader, Base64.NO_WRAP)
@@ -193,7 +193,7 @@ class EncryptData {
         }
     }
 
-    fun decryptResponseBadRequest(response: Response<ResponseBody>) : JsonObject?{
+    fun decryptResponseBadRequest(response: Response<ResponseBody>): JsonObject? {
         return try {
             val body = response.errorBody()!!.bytes()
             val keyDecrypt = Base64.decode(Key.PREPARE_KEY, Base64.NO_WRAP)

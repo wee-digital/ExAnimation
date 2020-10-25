@@ -9,7 +9,7 @@ import java.io.File
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
-object Utils{
+object Utils {
 
     /**
      * format string [formatMoney], [formatSpace], [formatDataFaceHeader]

@@ -17,16 +17,6 @@ import java.io.InputStreamReader
 
 private val app: Application get() = Library.app
 
-val appVersion: String
-    get() {
-        return try {
-            app.packageManager.getPackageInfo(app.packageName, 0)
-                    .versionName
-        } catch (e: PackageManager.NameNotFoundException) {
-            return "v1.0"
-        }
-    }
-
 val packageName: String get() = app.applicationContext.packageName
 
 fun open(file: File) {

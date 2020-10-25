@@ -78,7 +78,6 @@
     <style name="Dialog.TitleIcon">
         <item name="android:layout_width">@dimen/_40sdp</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
-        <item name="android:src">@drawable/ic_placeholder</item>
         <item name="android:tint">@color/colorGray</item>
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
@@ -159,5 +158,23 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--GUIDELINE-->
+    <style name="Guideline">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
+    <style name="Guideline.ConnectHeader">
+        <item name="android:orientation">horizontal</item>
+        <item name="layout_constraintGuide_percent">0.1</item>
+    </style>
+
+    <style name="Guideline.MessageDialog">
+        <item name="android:orientation">horizontal</item>
+        <item name="layout_constraintGuide_percent">0.4</item>
+    </style>
+    <style name="Guideline.SplashLogo">
+        <item name="android:orientation">horizontal</item>
+        <item name="layout_constraintGuide_percent">0.24</item>
+    </style>
 </resources>

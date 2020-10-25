@@ -7,9 +7,9 @@ import wee.digital.fpa.ui.base.BaseDialog
 
 class PinFragment : BaseDialog() {
 
-    private val vm: PinVM by lazy { viewModel(PinVM::class) }
+    private val vm by lazy { viewModel(PinVM::class) }
 
-    private val v: PinView by lazy { PinView(this) }
+    private val v by lazy { PinView(this) }
 
     override fun layoutResource(): Int {
         return R.layout.pin

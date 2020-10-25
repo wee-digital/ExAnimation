@@ -1,7 +1,7 @@
 package wee.digital.fpa.repository.utils
 
 
-object ErrCode{
+object ErrCode {
     /*code server*/
     const val UNKNOWN = -1
     const val INVALID_BODY_DATA = 1
@@ -72,18 +72,18 @@ object ErrCode{
     const val CONVERT_DATA_FAIL = -1007
 }
 
-object Key{
+object Key {
     const val PREPARE_KEY = "0iza/3OySf6+T43vMjxMrdabnhtmsQm43uSwU0/zQc4="
     const val RSA_COLLECTDATA = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4t2A1nc1hQQWNj7q90PyRP1N+gX8ucD+fmGKeqi9cNb7uwSCVvpo/jaIWNVCcK0qAa0x6uJ3mmNWbispyXiJvRlxbeuNEzEpNgHZo8+GS4lWbuaSWxg0kWKc73dlM02Mz89IfWjIQuMlToE+SX9z19nelgQInX+k6uR121x+5/Dj6Z1tuFllE2DFtD1QBwriL2LreLrIkTxewYuIDj1WsdcRPOo5zq1aFi/bMIo33hBn8tRf6QDxWyVtAbtTSxlqUHCJtZvrsdePvQ6etrbA6+KtttSIpxYDeWUwqdcgfxXmsuxHJCofzWPLUld/DbBwmmMyFmC9hsPUNeaesl2AtQIDAQAB"
 }
 
-object URLType{
+object URLType {
     const val DEV = "URL_DEV"
     const val QC = "URL_QC"
     const val BETA = "URL_BETA"
 }
 
-object ADVType{
+object ADVType {
     const val WEE = "ADV_WEE"
     const val TCH = "ADV_TCH"
     const val GS25 = "ADV_GS25"
@@ -92,7 +92,7 @@ object ADVType{
     const val FIREBASE = "ADV_FIREBASE"
 }
 
-object PaymentStatusCode{
+object PaymentStatusCode {
     const val USER_REJECTED = 7
     const val OVER_LIMIT = 9
     const val DEVICE_PROCESSING = 15
@@ -100,13 +100,13 @@ object PaymentStatusCode{
     const val CANCEL_PAYMENT_PAUSE_ACTIVITY = 17
 }
 
-object CancelPaymentCode{
+object CancelPaymentCode {
     const val SCREEN_PAYING = 2
     const val SCREEN_WAITING = 1
     const val CANCEL_SUCCESS = 0
 }
 
-object SocketEvent{
+object SocketEvent {
     const val EVENT_PAYMENT = "POSPR"
     const val EVENT_CANCEL = "POSCR"
     const val EVENT_DELETE = "POSD"
@@ -126,8 +126,4 @@ object SystemUrl {
     var URL_GET_BANKS = "https://dev.facepay.vn/v1/resources/"
 
     const val BASE_URL_LOG = "http://logs.wee.vn:3100/loki/api/v1/"
-}
-
-enum class FailType{
-    CONNECT_FAIL, QR_FAIL
 }

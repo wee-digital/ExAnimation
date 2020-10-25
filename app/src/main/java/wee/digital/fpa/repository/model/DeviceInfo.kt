@@ -1,6 +1,5 @@
 package wee.digital.fpa.repository.model
 
-import android.content.Context
 import androidx.room.Ignore
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -35,13 +34,13 @@ data class DeviceInfo(
         var pubKey: String = "",
 
         @Ignore
-        var qrCode : String = "",
+        var qrCode: String = "",
 
         @Ignore
-        var name : String = ""
+        var name: String = ""
 )
 
-class DeviceInfoStore constructor(context: Context) {
-        var qrCode: String = ""
-        var name: String = ""
+class DeviceInfoStore {
+    var qrCode: String = ""
+    var name: String = ""
 }

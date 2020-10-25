@@ -8,10 +8,7 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/splashGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        style="@style/Guideline.SplashLogo" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/splashViewBackground"

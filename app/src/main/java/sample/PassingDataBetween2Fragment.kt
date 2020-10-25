@@ -1,4 +1,4 @@
-package wee.digital.fpa.ui.sample
+package sample
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.navResultLiveData
 import wee.digital.fpa.ui.base.setNavResult
 
-class Fragment1 : BaseFragment() {
+private class PassingDataBetween2Fragment : BaseFragment() {
 
     override fun layoutResource(): Int = 0
 

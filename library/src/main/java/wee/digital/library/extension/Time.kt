@@ -5,14 +5,6 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * -------------------------------------------------------------------------------------------------
- * @Project: Kotlin
- * @Created: Huy QV 2018/08/07
- * @Description: ...
- * None Right Reserved
- * -------------------------------------------------------------------------------------------------
- */
 const val SECOND: Long = 1000
 
 const val MIN: Long = 60 * SECOND

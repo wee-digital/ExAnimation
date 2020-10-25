@@ -55,14 +55,14 @@ class Detection(context: Context) {
             mtcnn = MTCNN(ct.assets)
 
             val localModelDepthCheck =
-                FirebaseAutoMLLocalModel.Builder().setAssetFilePath("camera/manifest.json").build()
+                    FirebaseAutoMLLocalModel.Builder().setAssetFilePath("camera/manifest.json").build()
             val labelerDepthCheckOptions =
-                FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder(localModelDepthCheck)
-                    .setConfidenceThreshold(0.5f)
-                    .build()
+                    FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder(localModelDepthCheck)
+                            .setConfidenceThreshold(0.5f)
+                            .build()
 
             mDepthLabeler =
-                FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(labelerDepthCheckOptions)
+                    FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(labelerDepthCheckOptions)
         } catch (e: Exception) {
             Log.e("initNTCNN", "Error: ${e.message}")
         }
@@ -83,26 +83,26 @@ class Detection(context: Context) {
 
         mtcnn?.detectFacesAsync(bitmapColor, sizeFace)
 
-            ?.addOnSuccessListener {
-                handlerDetection?.post {
-                    val face = FrameUtil.getLargestFace(it)
-                    if (face != null) {
-                        detectFace(face, bitmapColor, frameDepth, dataCollect)
-                    } else {
-                        checkingFaceNull()
+                ?.addOnSuccessListener {
+                    handlerDetection?.post {
+                        val face = FrameUtil.getLargestFace(it)
+                        if (face != null) {
+                            detectFace(face, bitmapColor, frameDepth, dataCollect)
+                        } else {
+                            checkingFaceNull()
+                        }
                     }
                 }
-            }
-            ?.addOnFailureListener {
-                listener?.faceNull()
-            }
+                ?.addOnFailureListener {
+                    listener?.faceNull()
+                }
     }
 
     private fun detectFace(
-        box: Box,
-        bmColor: Bitmap,
-        frameDepth: ByteArray,
-        dataCollect: DataCollect
+            box: Box,
+            bmColor: Bitmap,
+            frameDepth: ByteArray,
+            dataCollect: DataCollect
     ) {
         handlerDetection?.post {
             if (box.score > 0.99 && FrameUtil.checkZoneFace(box)) {
@@ -111,26 +111,26 @@ class Detection(context: Context) {
                 val byteFullFace = BitmapUtils.bitmapToByteArray(bmColor)
 
                 val bitmapDepth = FrameUtil.getBitmapFromByte(
-                    frameDepth,
-                    RealSenseControl.COLOR_WIDTH,
-                    RealSenseControl.COLOR_HEIGHT
+                        frameDepth,
+                        RealSenseControl.COLOR_WIDTH,
+                        RealSenseControl.COLOR_HEIGHT
                 )
 
                 val rectDepthFace = FrameUtil.getRectDepthFace(box.transform2Rect())
 
                 val cropDepthBitmap =
-                    FrameUtil.cropBitmapWithRect(bitmapDepth, rectDepthFace)
+                        FrameUtil.cropBitmapWithRect(bitmapDepth, rectDepthFace)
 
                 val data = FrameUtil.getDataFaceAndFace(bmColor, box)
 
                 if (cropDepthBitmap != null && data.face != null && byteFullFace != null && data.dataFace != null) {
                     dataCollect.dataFacePoint = data
                     checkFaceFake(
-                        cropDepthBitmap,
-                        data.face,
-                        byteFullFace,
-                        data.dataFace,
-                        dataCollect
+                            cropDepthBitmap,
+                            data.face,
+                            byteFullFace,
+                            data.dataFace,
+                            dataCollect
                     )
                 } else {
                     checkingFaceNull()
@@ -174,14 +174,14 @@ class Detection(context: Context) {
                 val image = FirebaseVisionImage.fromBitmap(faceCheck)
 
                 mDepthLabeler?.processImage(image)
-                    ?.addOnSuccessListener { labels ->
-                        faceCheck.recycle()
-                        checkLabels(labels, faceCrop, frameFullFace, faceData, dataCollect)
-                    }
-                    ?.addOnFailureListener {
-                        faceCheck.recycle()
-                        checkFaceFakeNull()
-                    }
+                        ?.addOnSuccessListener { labels ->
+                            faceCheck.recycle()
+                            checkLabels(labels, faceCrop, frameFullFace, faceData, dataCollect)
+                        }
+                        ?.addOnFailureListener {
+                            faceCheck.recycle()
+                            checkFaceFakeNull()
+                        }
             } else {
                 faceCheck.recycle()
                 checkFaceFakeNull()

@@ -69,11 +69,12 @@ class HttpsTrustManager : X509TrustManager {
                             .socketFactory
             )
         }
+
         fun allowAllSSL() {
             HttpsURLConnection.setDefaultHostnameVerifier { arg0, arg1 -> true }
             if (trustManagers == null) {
                 trustManagers = arrayOf(
-                    HttpsTrustManager()
+                        HttpsTrustManager()
                 )
             }
             try {
@@ -86,8 +87,8 @@ class HttpsTrustManager : X509TrustManager {
                 e.printStackTrace()
             }
             HttpsURLConnection.setDefaultSSLSocketFactory(
-                sslContext!!
-                    .socketFactory
+                    sslContext!!
+                            .socketFactory
             )
         }
     }

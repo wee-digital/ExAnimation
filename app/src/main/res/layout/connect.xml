@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/MatchParent">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView2"
@@ -15,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/actConnectLogo"
+        android:id="@+id/connectViewLogo"
         android:layout_width="0dp"
         android:layout_height="@dimen/_20sdp"
         android:layout_margin="@dimen/margin2"
@@ -25,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/actConnectLabelDevice"
+        android:id="@+id/connectTextViewTitle"
         style="@style/TextView5"
         android:layout_marginStart="@dimen/margin2"
         android:layout_marginTop="@dimen/margin2"
@@ -35,18 +34,18 @@
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView2" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/actConnectLabelConnect"
+        android:id="@+id/connectTextViewHint"
         style="@style/TextView5"
         android:text="Hướng dẫn kết nối"
-        app:layout_constraintStart_toStartOf="@+id/actConnectLabelDevice"
-        app:layout_constraintTop_toBottomOf="@+id/actConnectLabelDevice" />
+        app:layout_constraintStart_toStartOf="@+id/connectTextViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/connectTextViewTitle" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/imageViewHelp1"
         style="@style/Connect.HelpIcon"
         android:text="1"
-        app:layout_constraintStart_toStartOf="@+id/actConnectLabelConnect"
-        app:layout_constraintTop_toBottomOf="@+id/actConnectLabelConnect" />
+        app:layout_constraintStart_toStartOf="@+id/connectTextViewHint"
+        app:layout_constraintTop_toBottomOf="@+id/connectTextViewHint" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewHelp1"
@@ -61,7 +60,7 @@
         android:id="@+id/imageViewHelp2"
         style="@style/Connect.HelpIcon"
         android:text="2"
-        app:layout_constraintStart_toStartOf="@+id/actConnectLabelConnect"
+        app:layout_constraintStart_toStartOf="@+id/connectTextViewHint"
         app:layout_constraintTop_toBottomOf="@+id/textViewHelp1" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -87,9 +86,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewHelp3"
         app:layout_constraintTop_toTopOf="@+id/imageViewHelp3" />
-    
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/actConnectAction"
+        android:id="@+id/connectViewScanQR"
         style="@style/Button.Primary"
         android:layout_margin="@dimen/margin2"
         android:text="Quét mã QR"

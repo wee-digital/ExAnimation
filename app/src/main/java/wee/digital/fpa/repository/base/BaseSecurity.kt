@@ -27,7 +27,7 @@ class BaseSecurity {
     private var curSign: ByteArray? = null
 
     companion object {
-        val ins: BaseSecurity by lazy(LazyThreadSafetyMode.SYNCHRONIZED){
+        val ins: BaseSecurity by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
             BaseSecurity()
         }
         const val PASS_ALIAS = "WeeDigital@123"
@@ -38,6 +38,7 @@ class BaseSecurity {
         const val RSA_TRANSFORMATION = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding"
         const val SIGN_ALGORITHM = "SHA512withECDSA"
     }
+
     //---
     fun base64Encode(str: ByteArray?): String {
         return Base64.encodeToString(str, Base64.DEFAULT)
@@ -137,12 +138,12 @@ class BaseSecurity {
             return if (encodeParam == null) {
                 encodeParam = AlgorithmParameters.getInstance(KeyProperties.KEY_ALGORITHM_AES)
                 encodeParam!!.init(
-                    base64Decode(
-                            App.baseSharedPref!!.getStringValue(
-                            "ENCODE_PARAMS",
-                            ""
+                        base64Decode(
+                                App.baseSharedPref!!.getStringValue(
+                                        "ENCODE_PARAMS",
+                                        ""
+                                )
                         )
-                    )
                 )
                 cipher.init(Cipher.DECRYPT_MODE, key, encodeParam, random)
                 cipher.doFinal(cipherText)
@@ -164,14 +165,14 @@ class BaseSecurity {
             try {
                 createNewKeyStoreRSA(ALIAS_RSA)
                 val privateKeyEntry =
-                    keyStore.getEntry(ALIAS_RSA, protectParam) as KeyStore.PrivateKeyEntry
+                        keyStore.getEntry(ALIAS_RSA, protectParam) as KeyStore.PrivateKeyEntry
                 val cipher = Cipher.getInstance(RSA_TRANSFORMATION)
                 val iv = ByteArray(16)
                 val random = SecureRandom()
                 random.nextBytes(iv)
-                cipher.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey,random)
+                cipher.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey, random)
                 val data = base64Decode(base64Str)
-                Log.e("rsaDecrypt","Decrypt data size: ${data.size}")
+                Log.e("rsaDecrypt", "Decrypt data size: ${data.size}")
                 cipher.doFinal(data)
             } catch (e: Throwable) {
                 Log.e("rsaDecrypt", "${e.message}")
@@ -187,13 +188,13 @@ class BaseSecurity {
         return try {
             createNewKeyStoreRSA(ALIAS_RSA)
             val privateKeyEntry =
-                keyStore.getEntry(ALIAS_RSA, protectParam) as KeyStore.PrivateKeyEntry
+                    keyStore.getEntry(ALIAS_RSA, protectParam) as KeyStore.PrivateKeyEntry
             val publicKey = privateKeyEntry.certificate.publicKey
             val inCipher = Cipher.getInstance(RSA_TRANSFORMATION)
             val iv = ByteArray(16)
             val random = SecureRandom()
             random.nextBytes(iv)
-            inCipher.init(Cipher.ENCRYPT_MODE, publicKey,random)
+            inCipher.init(Cipher.ENCRYPT_MODE, publicKey, random)
             val inputEncrypt = inCipher.doFinal(input)
             //---
             base64Encode(inputEncrypt)
@@ -237,14 +238,14 @@ class BaseSecurity {
     private fun createNewKeyStoreRSA(alias: String) {
         if (!keyStore.containsAlias(alias)) {
             val keyPairGenerator =
-                KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore")
+                    KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore")
             keyPairGenerator.initialize(
-                KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-                    .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
-                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_ECB)
-                    .setKeySize(4096)
-                    .build()
+                    KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                            .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
+                            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
+                            .setBlockModes(KeyProperties.BLOCK_MODE_ECB)
+                            .setKeySize(4096)
+                            .build()
             )
             Log.e("Security", "createNewKeyStoreRSA")
             keyPairGenerator.generateKeyPair()
@@ -274,26 +275,26 @@ class BaseSecurity {
     private fun createNewKeyStoreAES(alias: String) {
         if (!keyStore.containsAlias(alias)) {
             val spec =
-                KeyGenParameterSpec.Builder(
-                    alias,
-                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-                ).apply {
-                    setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                    setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
-                    setDigests(KeyProperties.DIGEST_SHA512)
-                    /*setUserAuthenticationRequired(true)
-                    setUserAuthenticationValidityDurationSeconds(15)*/
-                    setRandomizedEncryptionRequired(true)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && hasStrongBox(app)) {
-                        Log.e("Security", "addStrongBoxBacked")
-                        setIsStrongBoxBacked(true)
-                        setUnlockedDeviceRequired(true)
-                    }
-                    setKeySize(256)
+                    KeyGenParameterSpec.Builder(
+                            alias,
+                            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                    ).apply {
+                        setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                        setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                        setDigests(KeyProperties.DIGEST_SHA512)
+                        /*setUserAuthenticationRequired(true)
+                        setUserAuthenticationValidityDurationSeconds(15)*/
+                        setRandomizedEncryptionRequired(true)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && hasStrongBox(app)) {
+                            Log.e("Security", "addStrongBoxBacked")
+                            setIsStrongBoxBacked(true)
+                            setUnlockedDeviceRequired(true)
+                        }
+                        setKeySize(256)
 
-                }.build()
+                    }.build()
             val generator: KeyGenerator = KeyGenerator.getInstance(
-                KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore"
+                    KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore"
             )
             generator.init(spec)
             generator.generateKey()
@@ -304,8 +305,8 @@ class BaseSecurity {
     private fun createNewKeyStoreSign(alias: String) {
         if (!keyStore.containsAlias(alias)) {
             val spec = KeyGenParameterSpec.Builder(
-                alias,
-                KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY
+                    alias,
+                    KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY
             ).apply {
                 setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
                 setKeySize(521)
@@ -317,7 +318,7 @@ class BaseSecurity {
             }.build()
 
             val generator: KeyPairGenerator = KeyPairGenerator.getInstance(
-                KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore"
+                    KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore"
             )
             generator.initialize(spec)
             generator.generateKeyPair()
@@ -328,13 +329,13 @@ class BaseSecurity {
     private fun isInSecureHardware(key: KeyStore.SecretKeyEntry, alias: String): Boolean {
         try {
             val factory: KeyFactory =
-                KeyFactory.getInstance(key.secretKey.algorithm, alias)
+                    KeyFactory.getInstance(key.secretKey.algorithm, alias)
             val keyInfo: KeyInfo = factory.getKeySpec(key.secretKey, KeyInfo::class.java)
             return keyInfo.isInsideSecureHardware
         } catch (e: GeneralSecurityException) {
             Log.e(
-                "Security",
-                "Could not determine if private key is in secure hardware or not"
+                    "Security",
+                    "Could not determine if private key is in secure hardware or not"
             )
         }
         return false
@@ -343,7 +344,7 @@ class BaseSecurity {
     private fun hasStrongBox(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             context.packageManager
-                .hasSystemFeature(PackageManager.FEATURE_STRONGBOX_KEYSTORE)
+                    .hasSystemFeature(PackageManager.FEATURE_STRONGBOX_KEYSTORE)
         } else {
             false
         }

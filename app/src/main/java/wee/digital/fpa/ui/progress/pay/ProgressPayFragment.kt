@@ -5,7 +5,7 @@ import wee.digital.fpa.ui.base.BaseFragment
 
 class ProgressPayFragment : BaseFragment() {
 
-    private val vm: ProgressPayVM by lazy { activityVM(ProgressPayVM::class) }
+    private val vm by lazy { activityVM(ProgressPayVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.progress_pay

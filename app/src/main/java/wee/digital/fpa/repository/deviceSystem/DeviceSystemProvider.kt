@@ -11,7 +11,7 @@ import wee.digital.fpa.repository.utils.ErrCode
 import wee.digital.library.extension.bool
 import wee.digital.library.extension.parse
 
-class DeviceSystemProvider: IBase.DeviceSystem{
+class DeviceSystemProvider : IBase.DeviceSystem {
 
     override fun register(data: DeviceInfoStore, listener: Api.ClientListener<Any>) {
         Api.instance.postLogin("register", data, object : Api.ApiCallBack {
@@ -21,7 +21,7 @@ class DeviceSystemProvider: IBase.DeviceSystem{
                 listener.onSuccess(data)
             }
 
-            override fun onFail(code: Int, mess: String, data : JsonObject?) {
+            override fun onFail(code: Int, mess: String, data: JsonObject?) {
                 listener.onFailed(code, mess)
             }
         })

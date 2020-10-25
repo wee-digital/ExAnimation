@@ -22,20 +22,20 @@ class RestUrl(url: String) {
         if (retrofit == null) initOkHttp()
 
         retrofit = Retrofit.Builder()
-            .baseUrl(mUrl)
-            .client(okHttpClient)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+                .baseUrl(mUrl)
+                .client(okHttpClient)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         return retrofit as Retrofit
     }
 
     private fun initOkHttp() {
 
         val httpClient = OkHttpClient().newBuilder()
-            .connectTimeout(timeOut, TimeUnit.SECONDS)
-            .readTimeout(timeOut, TimeUnit.SECONDS)
-            .writeTimeout(timeOut, TimeUnit.SECONDS)
+                .connectTimeout(timeOut, TimeUnit.SECONDS)
+                .readTimeout(timeOut, TimeUnit.SECONDS)
+                .writeTimeout(timeOut, TimeUnit.SECONDS)
 
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -43,8 +43,8 @@ class RestUrl(url: String) {
         httpClient.addInterceptor { chain ->
             val original = chain.request()
             val requestBuilder = original.newBuilder()
-                .addHeader("Accept", "application/json")
-                .addHeader("Content-Type", "application/json")
+                    .addHeader("Accept", "application/json")
+                    .addHeader("Content-Type", "application/json")
             val request = requestBuilder.build()
             chain.proceed(request)
         }

@@ -4,8 +4,8 @@ import android.util.Log
 
 class Socket {
 
-    companion object{
-        val action: Socket by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {Socket()}
+    companion object {
+        val action: Socket by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { Socket() }
     }
 
     var webSocketControlMonitorV2: WebSocketControl? = null

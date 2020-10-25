@@ -11,7 +11,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import wee.digital.fpa.R
@@ -43,9 +42,9 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     /**
      * [BaseView] implement
      */
-    final override val nav: NavController? get() = findNavController(navigationHostId())
+    final override val nav get() = findNavController(navigationHostId())
 
-    final override val log: Logger by lazy { Logger(this::class) }
+    final override val log by lazy { Logger(this::class) }
 
     /**
      * implement lifeCycle

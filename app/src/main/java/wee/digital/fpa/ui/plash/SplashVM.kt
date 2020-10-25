@@ -1,10 +1,10 @@
 package wee.digital.fpa.ui.plash
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
+import wee.digital.fpa.ui.base.BaseViewModel
 
-class SplashVM : ViewModel() {
+class SplashVM : BaseViewModel() {
 
     val paymentInfo = MutableLiveData<JsonObject?>()
 

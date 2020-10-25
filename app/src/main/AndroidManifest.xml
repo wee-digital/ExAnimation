@@ -27,9 +27,6 @@
         <activity android:name=".ui.activity.HomeActivity">
 
         </activity>
-        <activity android:name=".ui.activity.ConnectActivity">
-
-        </activity>
 
         <activity android:name=".ui.MainActivity">
             <intent-filter>

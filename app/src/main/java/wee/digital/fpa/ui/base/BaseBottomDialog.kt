@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -64,7 +63,7 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment(), BaseView {
     /**
      * [BaseView] implement
      */
-    final override val nav: NavController get() = findNavController()
+    final override val nav get() = findNavController()
 
     final override val log: Logger by lazy { Logger(this::class) }
 

@@ -10,11 +10,11 @@ import wee.digital.fpa.ui.plash.SplashVM
 
 class PaymentFragment : BaseDialog() {
 
-    private val splashVM: SplashVM by lazy { activityVM(SplashVM::class) }
+    private val splashVM by lazy { activityVM(SplashVM::class) }
 
-    private val vm: PaymentVM by lazy { activityVM(PaymentVM::class) }
+    private val vm by lazy { activityVM(PaymentVM::class) }
 
-    private val v: PaymentView by lazy { PaymentView(this) }
+    private val v by lazy { PaymentView(this) }
 
     override fun style(): Int {
         return R.style.App_Dialog_FullScreen_Transparent

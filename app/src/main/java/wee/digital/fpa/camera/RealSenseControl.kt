@@ -199,7 +199,7 @@ class RealSenseControl : DeviceListener {
             depthColor = FrameUtil.getFrameData(depthColorFrame)
         }
         if (depthValueFrame != null) {
-            if(DEPTH_UNIT==0f){
+            if (DEPTH_UNIT == 0f) {
                 val depth = depthValueFrame.`as`<DepthFrame>(Extension.DEPTH_FRAME)
                 DEPTH_UNIT = depth.units
             }

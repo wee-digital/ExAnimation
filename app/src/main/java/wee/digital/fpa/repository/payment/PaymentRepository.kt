@@ -6,11 +6,11 @@ import wee.digital.fpa.repository.dto.*
 import wee.digital.fpa.repository.model.ClientIDResp
 import wee.digital.fpa.repository.network.Api
 
-class PaymentRepository: IBase.Payment{
+class PaymentRepository : IBase.Payment {
     private val mPaymentProvider = PaymentProvider()
 
     companion object {
-        val ins: PaymentRepository by lazy(LazyThreadSafetyMode.SYNCHRONIZED){
+        val ins: PaymentRepository by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
             PaymentRepository()
         }
     }
@@ -46,8 +46,8 @@ class PaymentRepository: IBase.Payment{
     }
 
     override fun getBankAccList(
-        dataReq: GetBankAccListDTOReq,
-        listener: Api.ClientListener<GetBankAccListDTOResp>
+            dataReq: GetBankAccListDTOReq,
+            listener: Api.ClientListener<GetBankAccListDTOResp>
     ) {
         mPaymentProvider.getBankAccList(dataReq, listener)
     }

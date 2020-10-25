@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewContent"
     style="@style/MatchParent"
-    tools:background="@color/colorBlack">
+    tools:background="@color/colorDialogTools">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -12,7 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.43" />
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
@@ -43,10 +43,10 @@
             android:layout_marginEnd="@dimen/margin3"
             android:background="@drawable/bg_rounded_full"
             android:backgroundTint="#6AFBFBFB"
-            tools:backgroundTint="#E7F1FB"
             app:layout_constraintEnd_toEndOf="@+id/pinRecyclerViewKey"
             app:layout_constraintStart_toStartOf="@+id/pinRecyclerViewKey"
-            app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle"
+            tools:backgroundTint="#E7F1FB" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pinRecyclerViewKey"

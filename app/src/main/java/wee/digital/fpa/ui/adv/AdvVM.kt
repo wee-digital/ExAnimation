@@ -1,8 +1,5 @@
 package wee.digital.fpa.ui.adv
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import wee.digital.fpa.ui.base.BaseViewModel
 
-class AdvVM : ViewModel() {
-
-}
+class AdvVM : BaseViewModel()

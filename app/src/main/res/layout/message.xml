@@ -3,8 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewContent"
     style="@style/MatchParent"
-    tools:background="@color/colorBlack">
+    tools:background="@color/colorDialogTools">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        style="@style/Guideline.ConnectHeader" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        style="@style/Guideline.MessageDialog" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
@@ -33,6 +42,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dialogTextViewMessage"
             style="@style/Message.Text"
+            android:maxLines="6"
             app:layout_constraintBottom_toTopOf="@+id/dialogViewClose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

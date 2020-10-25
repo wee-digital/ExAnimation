@@ -18,10 +18,12 @@ class WebSocketControl : WebSocketListener() {
     private var mRequest: Request? = null
     private var mURLConnecting = ""
     private var mURLConnected = ""
+
     //---
     private var isOpen = false
     private var mTimeIn = 0L
-    private var mToken : String? = null
+    private var mToken: String? = null
+
     //---
     private var mWebSocketMonitorListener: WebSocketMonitorListener? = null
     private var mWebSocketMonitorCloseListener: WebSocketMonitorCloseListener? = null
@@ -47,11 +49,11 @@ class WebSocketControl : WebSocketListener() {
         super.onClosing(webSocket, code, reason)
         isOpen = false
         Log.e(TAG, "onClosing - $code - $reason")
-        if(code==3012){
+        if (code == 3012) {
             mWebSocketMonitorListener?.onClosing(reason)
             mWebSocketMonitorCloseListener?.onClosed()
         }
-        if(code == 1000){
+        if (code == 1000) {
             mWebSocketMonitorListener?.unKnownError(reason)
             mWebSocketMonitorCloseListener?.onClosed()
         }
@@ -71,7 +73,7 @@ class WebSocketControl : WebSocketListener() {
         super.onClosed(webSocket, code, reason)
         Log.e(TAG, "onClosed - [${System.currentTimeMillis() - mTimeIn}] - $code - $reason")
         isOpen = false
-        if(code != 3012 && code !=1000) {
+        if (code != 3012 && code != 1000) {
             mWebSocketMonitorListener?.onDisconnected("onClosed - [${System.currentTimeMillis() - mTimeIn}] - $code - $reason")
             mWebSocketMonitorCloseListener?.onClosed()
         }
@@ -97,7 +99,7 @@ class WebSocketControl : WebSocketListener() {
     }
 
     fun openConnect(token: String) {
-        if(isOpen) return
+        if (isOpen) return
         val url = "${SystemUrl.SOCKET_URL}$token"
         mToken = token
         mTimeIn = System.currentTimeMillis()
@@ -105,13 +107,13 @@ class WebSocketControl : WebSocketListener() {
         //val newUrl = url.replace("http", "ws")
         mURLConnecting = url
         mClient = OkHttpClient
-            .Builder()
-            .pingInterval(1000, TimeUnit.MILLISECONDS)
-            .build()
+                .Builder()
+                .pingInterval(1000, TimeUnit.MILLISECONDS)
+                .build()
         Log.e(TAG, "Connecting to $mURLConnecting")
         mRequest = Request.Builder()
-            .url(mURLConnecting)
-            .build()
+                .url(mURLConnecting)
+                .build()
         mWS = mClient.newWebSocket(mRequest!!, this)
         mClient.dispatcher.executorService.shutdown()
     }

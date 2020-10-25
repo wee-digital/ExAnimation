@@ -153,7 +153,7 @@ class LayoutScanner : ViewGroup {
                         defStyleAttr,
                         defStyleRes
                 )
-                maskColor = a!!.getColor(R.styleable.CodeScannerView_maskColor,
+                maskColor = a.getColor(R.styleable.CodeScannerView_maskColor,
                         DEFAULT_MASK_COLOR
                 )
                 frameColor = a.getColor(R.styleable.CodeScannerView_frameColor,

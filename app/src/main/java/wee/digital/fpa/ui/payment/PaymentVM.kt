@@ -1,5 +1,5 @@
 package wee.digital.fpa.ui.payment
 
-import androidx.lifecycle.ViewModel
+import wee.digital.fpa.ui.base.BaseViewModel
 
-class PaymentVM : ViewModel()
+class PaymentVM : BaseViewModel()

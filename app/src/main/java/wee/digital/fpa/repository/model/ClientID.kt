@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 import wee.digital.fpa.repository.dto.SocketResultResp
 
 data class ClientIDResp(
-    @SerializedName("IP")
-    @Expose
-    var ip: String = ""
+        @SerializedName("IP")
+        @Expose
+        var ip: String = ""
 )
 
 data class DataPaymentRequest(
-    val clientIp : String,
-    val socket : SocketResultResp
+        val clientIp: String,
+        val socket: SocketResultResp
 )
