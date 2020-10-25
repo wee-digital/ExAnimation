@@ -87,21 +87,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewHelp3"
         app:layout_constraintTop_toTopOf="@+id/imageViewHelp3" />
-
-    <fragment
-        android:id="@+id/actConnectHost"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:navGraph="@navigation/connect_graph" />
-
+    
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/actConnectAction"
         style="@style/Button.Primary"
