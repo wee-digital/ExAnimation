@@ -1,6 +1,7 @@
 package wee.digital.fpa.util
 
 import android.content.Context
+import android.content.res.Resources
 import android.provider.Settings
 import android.util.Log
 import wee.digital.fpa.app.app
@@ -80,6 +81,10 @@ object Utils {
         } else {
             false
         }
+    }
+
+    fun getScreenHeight(): Int {
+        return Resources.getSystem().displayMetrics.heightPixels
     }
 
 }

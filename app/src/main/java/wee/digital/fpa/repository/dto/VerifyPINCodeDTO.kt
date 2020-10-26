@@ -7,7 +7,7 @@ data class VerifyPINCodeDTOReq(
 
         @SerializedName("UID")
         @Expose
-        var uid: String,
+        var uid: ArrayList<String> = arrayListOf(),
 
         @SerializedName("PaymentID")
         @Expose

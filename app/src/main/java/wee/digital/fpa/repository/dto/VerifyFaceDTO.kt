@@ -31,7 +31,7 @@ data class VerifyFaceDTOResp(
 
         @SerializedName("UserID")
         @Expose
-        var userID: String? = "",
+        var userID: ArrayList<String> = arrayListOf(),
 
         @SerializedName("FullName")
         @Expose

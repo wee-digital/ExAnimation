@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class FaceInfo(
         @SerializedName("UserID")
         @Expose
-        var userID: String? = "",
+        var userID: ArrayList<String> = arrayListOf(),
 
         @SerializedName("FullName")
         @Expose
