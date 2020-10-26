@@ -1,8 +1,6 @@
 package wee.digital.fpa.ui.base
 
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -10,10 +8,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.confirm.ConfirmArg
-import wee.digital.fpa.ui.confirm.ConfirmVM
-import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.library.extension.ViewClickListener
 import wee.digital.log.Logger
 import kotlin.reflect.KClass

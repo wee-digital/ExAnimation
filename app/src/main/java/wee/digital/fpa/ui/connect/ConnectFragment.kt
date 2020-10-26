@@ -6,8 +6,6 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.device.DeviceVM
-import wee.digital.fpa.ui.message.MessageVM
 
 class ConnectFragment : BaseFragment() {
 
@@ -24,17 +22,7 @@ class ConnectFragment : BaseFragment() {
     }
 
     override fun onLiveDataObserve() {
-        vm.arg.observe {
-            when {
-                it?.qr != null -> {
-                    navigate(MainDirections.actionGlobalDeviceFragment())
-                }
-                it?.message != null -> {
-                    activityVM(MessageVM::class).arg.value = it.message
-                    navigate(MainDirections.actionGlobalMessageFragment())
-                }
-            }
-        }
+
     }
 
     override fun onViewClick(v: View?) {

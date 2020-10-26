@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewTitle"
+            android:id="@+id/confirmTextViewTitle"
             style="@style/Dialog.Title"
             android:text="Chọn thẻ thanh toán"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle"
+            app:layout_constraintTop_toBottomOf="@+id/confirmTextViewTitle"
             tools:itemCount="5"
             tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/card_item"

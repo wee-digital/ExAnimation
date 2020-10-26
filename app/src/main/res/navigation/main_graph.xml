@@ -50,7 +50,7 @@
         android:label="AdvFragment"
         tools:layout="@layout/adv" />
     <action
-        android:id="@+id/action_global_advFragment3"
+        android:id="@+id/action_global_advFragment"
         app:destination="@id/advFragment" />
     <fragment
         android:id="@+id/splashFragment"

@@ -8,10 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.confirm.ConfirmArg
-import wee.digital.fpa.ui.confirm.ConfirmVM
-import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.fpa.ui.message.MessageVM
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
@@ -29,18 +25,6 @@ fun <T : ViewModel> Fragment.activityVM(cls: KClass<T>): T =
 
 fun <T : ViewModel> AppCompatActivity.activityVM(cls: KClass<T>): T =
         ViewModelProvider(this).get(cls.java)
-
-var Fragment.messageArg: MessageArg?
-    get() = activityVM(MessageVM::class).arg.value
-    set(value) {
-        activityVM(MessageVM::class).arg.value = value
-    }
-
-var Fragment.confirmArg: ConfirmArg?
-    get() = activityVM(ConfirmVM::class).arg.value
-    set(value) {
-        activityVM(ConfirmVM::class).arg.value = value
-    }
 
 const val DEFAULT_ARG_KEY: String = "default_arg_key"
 

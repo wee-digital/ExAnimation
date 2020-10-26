@@ -54,11 +54,11 @@ class PinView(private val v: PinFragment) {
 
     fun onBindErrorText(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.dialogTextViewTitle.color("232323")
-            v.dialogTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
+            v.confirmTextViewTitle.color("232323")
+            v.confirmTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
         } else {
-            v.dialogTextViewTitle.color("F24141")
-            v.dialogTextViewTitle.text = s
+            v.confirmTextViewTitle.color("F24141")
+            v.confirmTextViewTitle.text = s
         }
     }
 }

@@ -5,5 +5,5 @@ import wee.digital.fpa.ui.base.BaseViewModel
 
 class MessageVM : BaseViewModel() {
 
-    val arg = MutableLiveData<MessageArg>()
+    val arg = MutableLiveData<MessageArg?>()
 }

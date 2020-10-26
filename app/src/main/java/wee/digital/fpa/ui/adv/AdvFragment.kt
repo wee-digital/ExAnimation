@@ -3,9 +3,10 @@ package wee.digital.fpa.ui.adv
 import android.view.View
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseDialog
+import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
 
-class AdvFragment : BaseDialog() {
+class AdvFragment : BaseFragment() {
 
     private val vm by lazy { activityVM(AdvVM::class) }
 
@@ -14,7 +15,7 @@ class AdvFragment : BaseDialog() {
     }
 
     override fun onViewCreated() {
-
+        println("")
     }
 
     override fun onLiveDataObserve() {

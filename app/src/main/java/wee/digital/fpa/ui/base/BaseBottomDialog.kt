@@ -1,11 +1,9 @@
 package wee.digital.fpa.ui.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -25,18 +23,6 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment(), BaseView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, style())
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-                object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        if (onBackPressed()) {
-                            requireActivity().supportFragmentManager.popBackStack()
-                        }
-                    }
-                })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,8 +55,6 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment(), BaseView {
     /**
      * [BaseView] implement
      */
-    final override val nav get() = findNavController()
-
     final override val log: Logger by lazy { Logger(this::class) }
 
     /**
@@ -78,10 +62,6 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment(), BaseView {
      */
     protected open fun style(): Int {
         return R.style.App_Dialog
-    }
-
-    protected open fun onBackPressed(): Boolean {
-        return true
     }
 
     private fun configDialog() {

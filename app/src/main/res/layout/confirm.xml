@@ -7,7 +7,16 @@
     style="@style/MatchParent"
     android:background="@color/colorDialogBackground">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineConnect"
+        style="@style/Guideline.Connect" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineFace"
+        style="@style/Guideline.Face" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/confirmDialogContent"
         style="@style/Dialog.BottomFragment"
         android:padding="@dimen/margin2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,41 +24,42 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/dialogTextViewIcon"
+            android:id="@+id/confirmImageViewIcon"
             style="@style/Message.Icon"
             android:src="@mipmap/img_x_mark_flat"
-            app:layout_constraintBottom_toTopOf="@+id/dialogTextViewTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewTitle"
+            android:id="@+id/confirmTextViewTitle"
             style="@style/Message.Title"
-            app:layout_constraintBottom_toTopOf="@+id/dialogTextViewMessage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmImageViewIcon"
             tools:text="@tools:sample/lorem" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewMessage"
+            android:id="@+id/confirmTextViewMessage"
             style="@style/Message.Text"
             android:maxLines="8"
-            app:layout_constraintBottom_toTopOf="@+id/dialogViewAccept"
+            app:layout_constraintBottom_toTopOf="@+id/confirmViewAccept"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmTextViewTitle"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="@tools:sample/lorem/random" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogViewAccept"
+            android:id="@+id/confirmViewAccept"
             style="@style/Button.Primary"
             android:layout_marginBottom="@dimen/margin2"
-            app:layout_constraintBottom_toTopOf="@+id/dialogViewDeny"
+            app:layout_constraintBottom_toTopOf="@+id/confirmViewDeny"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogViewDeny"
+            android:id="@+id/confirmViewDeny"
             style="@style/Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

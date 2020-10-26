@@ -2,19 +2,15 @@ package wee.digital.fpa.ui.device
 
 import android.view.View
 import kotlinx.android.synthetic.main.device.*
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.connect.ConnectArg
-import wee.digital.fpa.ui.connect.ConnectVM
 import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.library.extension.bold
-import wee.digital.library.extension.color
-import wee.digital.library.extension.string
+import wee.digital.fpa.ui.message.MessageVM
+import wee.digital.library.extension.trimText
 
 class DeviceFragment : BaseDialog() {
-
-    private val connectVM by lazy { activityVM(ConnectVM::class) }
 
     private val vm by lazy { viewModel(DeviceVM::class) }
 
@@ -22,7 +18,12 @@ class DeviceFragment : BaseDialog() {
 
     private val test by lazy { DeviceTest(this, vm) }
 
-    override fun layoutResource(): Int = R.layout.device
+    /**
+     * [BaseDialog] override
+     */
+    override fun layoutResource(): Int {
+        return R.layout.device
+    }
 
     override fun onViewCreated() {
         v.onViewInit()
@@ -30,18 +31,20 @@ class DeviceFragment : BaseDialog() {
     }
 
     override fun onLiveDataObserve() {
-        connectVM.arg.observe {
+        vm.objQRCode.observe {
             v.onBindStation(it)
         }
         vm.nameError.observe {
             v.onNameError(it)
         }
         vm.registerError.observe {
-            if (it.isNullOrEmpty()) {
-                onRegisterSuccess()
-            } else {
-                onRegisterError(it)
-            }
+            onRegisterError(it)
+        }
+        vm.registerSuccess.observe {
+            onRegisterSuccess(it)
+        }
+        vm.progressVisible.observe {
+            v.onProgressChanged(it)
         }
     }
 
@@ -56,36 +59,25 @@ class DeviceFragment : BaseDialog() {
         }
     }
 
+    /**
+     * [DeviceFragment] properties
+     */
     private fun onRegisterDevice() {
         deviceTextViewError.text = null
-        val s = deviceEditTextName.text.toString().trimEnd()
-        deviceEditTextName?.setText(s)
-        deviceEditTextName?.setSelection(s.length)
-        val qr = connectVM.arg.value?.qr?.toString() ?: return
-        vm.validateOnRegisterDevice(qr, deviceEditTextName.text?.toString())
+        val s = deviceEditTextName.trimText
+        vm.registerDevice(s)
     }
 
-    private fun onRegisterSuccess() {
+    private fun onRegisterSuccess(arg: MessageArg) {
         dismiss()
-        connectVM.arg.value = ConnectArg(message = MessageArg(
-                icon = R.mipmap.img_checked_flat,
-                title = "Đăng ký thiết bị thành công",
-                button = "Hoàn tất",
-                message = string(R.string.register_success).format("pos.facepay.vn".bold().color("#378AE1")),
-                onClose = {
-
-                }
-        ))
+        activityVM(MessageVM::class).arg.value = arg
+        navigate(MainDirections.actionGlobalMessageFragment())
     }
 
-    private fun onRegisterError(s: String?) {
+    private fun onRegisterError(arg: MessageArg) {
         dismiss()
-        connectVM.arg.value = ConnectArg(message = MessageArg(
-                icon = R.mipmap.img_x_mark_flat,
-                title = "Đăng ký thiết bị không thành công",
-                button = "Hoàn tất",
-                message = s
-        ))
+        activityVM(MessageVM::class).arg.value = arg
+        navigate(MainDirections.actionGlobalMessageFragment())
     }
 
 }

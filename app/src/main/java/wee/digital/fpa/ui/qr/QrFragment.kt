@@ -2,16 +2,14 @@ package wee.digital.fpa.ui.qr
 
 import android.view.View
 import kotlinx.android.synthetic.main.qr.*
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.connect.ConnectArg
-import wee.digital.fpa.ui.connect.ConnectVM
+import wee.digital.fpa.ui.device.DeviceVM
 
 class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
-
-    private val connectVM by lazy { activityVM(ConnectVM::class) }
 
     private val vm by lazy { viewModel(QrVM::class) }
 
@@ -34,7 +32,8 @@ class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
         }
         vm.qrCode.observe {
             dismiss()
-            connectVM.arg.value = ConnectArg(qr = it)
+            activityVM(DeviceVM::class).objQRCode.value = it
+            navigate(MainDirections.actionGlobalDeviceFragment())
         }
     }
 

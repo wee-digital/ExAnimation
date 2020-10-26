@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/frgOtpGuideHeader"
-        style="@style/Guideline.ConnectHeader" />
+        style="@style/Guideline.Connect" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frgOtpRoot"

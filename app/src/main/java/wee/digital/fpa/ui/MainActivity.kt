@@ -1,11 +1,7 @@
 package wee.digital.fpa.ui
 
-import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseActivity
-import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.confirm.ConfirmVM
-import wee.digital.fpa.ui.message.MessageVM
 
 class MainActivity : BaseActivity() {
 
@@ -15,11 +11,16 @@ class MainActivity : BaseActivity() {
         return R.layout.main
     }
 
+    override fun navigationHostId(): Int {
+        return R.id.mainFragment
+    }
+
     override fun onViewCreated() {
+
     }
 
     override fun onLiveDataObserve() {
-        Main.direction.observe {
+        Main.rootDirection.observe {
             navigate(it) {
                 setLaunchSingleTop(true)
                 setInclusive(false)

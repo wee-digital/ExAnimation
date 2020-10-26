@@ -3,6 +3,7 @@ package wee.digital.fpa.ui.plash
 import com.google.gson.JsonObject
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
 
@@ -56,12 +57,8 @@ class SplashFragment : BaseFragment() {
     }
 
     private fun onHasDevice(hasDevice: Boolean) {
-        if (!hasDevice) {
-            navigate(MainDirections.actionGlobalConnectFragment()) {
-                setLaunchSingleTop(true)
-                setInclusive(false)
-            }
-        }
+        if (hasDevice) return
+        Main.rootDirection.value = MainDirections.actionGlobalConnectFragment()
     }
 
 }

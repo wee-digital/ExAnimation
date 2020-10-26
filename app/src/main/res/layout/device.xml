@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
-        style="@style/Guideline.ConnectHeader" />
+        style="@style/Guideline.Connect" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +45,7 @@
             android:id="@+id/deviceTextViewStation"
             style="@style/TextView5"
             android:layout_margin="@dimen/margin2"
-            android:textStyle="bold"
+            android:fontFamily="@font/inter_semibold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deviceTextViewTitle"
             tools:text="@tools:sample/lorem" />
@@ -108,6 +108,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deviceTextViewTerm" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/deviceViewProgress"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_24sdp"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="@+id/deviceViewRegister"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/deviceViewRegister"
+            tools:src="@mipmap/img_placeholder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

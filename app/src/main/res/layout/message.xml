@@ -8,14 +8,15 @@
     android:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        style="@style/Guideline.ConnectHeader" />
+        android:id="@+id/guidelineConnect"
+        style="@style/Guideline.Connect" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        style="@style/Guideline.MessageDialog" />
+        android:id="@+id/guidelineFace"
+        style="@style/Guideline.Face" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/messageDialogContent"
         style="@style/Dialog.BottomFragment"
         android:padding="@dimen/margin2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,33 +24,34 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/dialogTextViewIcon"
+            android:id="@+id/messageImageViewIcon"
             style="@style/Message.Icon"
             android:src="@mipmap/img_checked_flat"
-            app:layout_constraintBottom_toTopOf="@+id/dialogTextViewTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewTitle"
+            android:id="@+id/messageTextViewTitle"
             style="@style/Message.Title"
-            app:layout_constraintBottom_toTopOf="@+id/dialogTextViewMessage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/messageImageViewIcon"
             tools:text="@tools:sample/lorem" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewMessage"
+            android:id="@+id/messageTextViewMessage"
             style="@style/Message.Text"
             android:maxLines="8"
-            app:layout_constraintBottom_toTopOf="@+id/dialogViewClose"
+            app:layout_constraintBottom_toTopOf="@+id/messageViewClose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/messageTextViewTitle"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="@tools:sample/lorem/random" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogViewClose"
+            android:id="@+id/messageViewClose"
             style="@style/Button.Primary"
             android:layout_marginBottom="@dimen/margin2"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -2,11 +2,9 @@ package wee.digital.fpa.ui.device
 
 import android.text.Editable
 import android.view.inputmethod.EditorInfo
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.messageArg
-import wee.digital.fpa.ui.connect.ConnectArg
-import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.util.SimpleTextWatcher
 import wee.digital.library.extension.*
 
@@ -56,9 +54,8 @@ class DeviceView(private val v: DeviceFragment) {
         v.deviceTextViewTerm.setHyperText(sTerm)
     }
 
-    fun onBindStation(arg: ConnectArg?) {
-        arg ?: return
-        val s = arg.qr.str("FullName")
+    fun onBindStation(obj: JsonObject) {
+        val s = obj.str("FullName")
         val text = string(R.string.device_hi).format(s.bold())
         v.deviceTextViewStation.setHyperText(text)
     }
@@ -68,12 +65,21 @@ class DeviceView(private val v: DeviceFragment) {
     }
 
 
-
     fun onViewInit() {
         configDeviceNameText()
         configTermText()
         v.addClickListener(v.deviceViewBack, v.deviceViewClose, v.deviceViewRegister)
 
+    }
+
+    fun onProgressChanged(isVisibility: Boolean) {
+        if (isVisibility) {
+            v.deviceViewRegister.gone()
+            v.deviceViewProgress.load(R.mipmap.img_progress)
+        } else {
+            v.deviceViewRegister.show()
+            v.deviceViewProgress.clear()
+        }
     }
 
 }

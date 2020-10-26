@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
-        style="@style/Guideline.SplashLogo" />
+        style="@style/Guideline.Splash" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"

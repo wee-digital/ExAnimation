@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/splashGuideline"
-        style="@style/Guideline.SplashLogo" />
+        style="@style/Guideline.Splash" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/splashViewBackground"

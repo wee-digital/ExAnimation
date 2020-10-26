@@ -1,6 +1,8 @@
-package wee.digital.fpa.ui.device
+package wee.digital.fpa
 
 import kotlinx.android.synthetic.main.device.*
+import wee.digital.fpa.ui.device.DeviceFragment
+import wee.digital.fpa.ui.device.DeviceVM
 
 class DeviceTest(private val v: DeviceFragment,
                  private val vm: DeviceVM) {
