@@ -7,11 +7,6 @@ import wee.digital.fpa.repository.model.DeviceInfoStore
 object Shared {
 
     /**
-     * data for flow connect device
-     */
-    val deviceInfo = MutableLiveData<DeviceInfoStore>()
-
-    /**
      * data for flow payment FacePay
      */
     val paymentID = MutableLiveData<String>()

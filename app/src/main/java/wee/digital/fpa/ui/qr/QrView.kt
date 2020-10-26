@@ -9,6 +9,8 @@ import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.util.SimpleLifecycleObserver
 import wee.digital.library.extension.color
+import wee.digital.library.extension.hide
+import wee.digital.library.extension.show
 
 class QrView(private val v: QrFragment) {
 
@@ -52,6 +54,7 @@ class QrView(private val v: QrFragment) {
     }
 
     fun onViewInit() {
+        v.addClickListener(v.dialogViewClose)
         onLifecycleObserve()
         App.realSenseControl?.startStreamThread()
         scanQRCode.initListener(v)
@@ -64,6 +67,16 @@ class QrView(private val v: QrFragment) {
         } else {
             v.qrTextViewHint.color(R.color.colorAlert)
             v.qrTextViewHint.text = s
+        }
+    }
+
+    fun onBindProgress(isShow: Boolean) {
+        if (isShow) {
+            v.qrTextViewHint.hide()
+            v.qrViewProgress.show()
+        } else {
+            v.qrTextViewHint.show()
+            v.qrViewProgress.hide()
         }
     }
 

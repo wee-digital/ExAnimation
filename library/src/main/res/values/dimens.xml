@@ -26,6 +26,6 @@
     <dimen name="textSize5">@dimen/_18ssp</dimen>
 
     <dimen name="radius">@dimen/_6sdp</dimen>
-    <dimen name="radius2">@dimen/_9sdp</dimen>
+    <dimen name="radius2">@dimen/_10sdp</dimen>
 
 </resources>

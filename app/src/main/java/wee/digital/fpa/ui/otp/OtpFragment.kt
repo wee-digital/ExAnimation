@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.fragment_otp.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.app.toast
-import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.messageArg
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.util.Utils
 import wee.digital.library.extension.gone
@@ -119,7 +119,7 @@ class OtpFragment : BaseFragment() {
             "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> toast("qua han muc giao dich")
             "CANCEL" -> {
 
-                Main.messageArg.value = MessageArg(
+                messageArg = MessageArg(
                         icon = R.mipmap.img_x_mark_flat,
                         title = "Sample title",
                         message = "huy bo giao dich"

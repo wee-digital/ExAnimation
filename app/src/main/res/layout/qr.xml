@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewContent"
     style="@style/MatchParent"
-    tools:background="@color/colorDialogTools">
+    android:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -17,44 +17,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline1">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/frgQRGuide19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.19" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/frgQRGuide71"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.71" />
-
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/qrImageViewCamera"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/frgQRGuide71"
+            android:layout_height="@dimen/_260sdp"
+            android:layout_marginTop="@dimen/margin"
+            android:adjustViewBounds="true"
+            app:layout_constraintDimensionRatio="w,64:48"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/frgQRGuide19"
+            app:layout_constraintTop_toBottomOf="@id/dialogTextViewTitle"
             tools:src="@color/colorBlack" />
 
         <wee.digital.fpa.widget.LayoutScanner
             android:id="@+id/frgQRLayout"
-            style="@style/MatchParent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_272sdp"
             app:frameAspectRatioHeight="10"
             app:frameAspectRatioWidth="10"
             app:frameColor="@color/colorPrimaryLight"
-            app:frameCornersSize="50dp"
-            app:frameSize="0.75"
-            app:frameThickness="5dp"
+            app:frameCornersSize="@dimen/_24sdp"
+            app:frameSize="0.9"
+            app:frameThickness="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="@id/qrImageViewCamera"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/qrImageViewCamera"
             app:maskColor="@color/colorWhite" />
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dialogTextViewTitle"
@@ -70,7 +58,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/qrTextViewHint"
             style="@style/TextView3"
@@ -80,17 +67,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
+            app:layout_constraintTop_toBottomOf="@+id/qrImageViewCamera"
+            app:layout_constraintVertical_bias="0.246" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/frgQRLoading"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/qrViewProgress"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:src="@mipmap/img_progress2"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/qrTextViewHint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
+            app:layout_constraintTop_toTopOf="@+id/qrTextViewHint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

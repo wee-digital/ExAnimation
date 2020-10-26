@@ -8,8 +8,10 @@
         android:topLeftRadius="@dimen/radius2"
         android:topRightRadius="@dimen/radius2" />
 
+<!--
     <stroke
-        android:width="0dp"
-        android:color="#F7D8D8D8" />
+        android:width="1dp"
+        android:color="#B5CCCCCC" />
+-->
 
 </shape>

@@ -4,12 +4,12 @@ import android.view.View
 import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.activityVM
 
 class DeviceFragment : BaseFragment() {
 
-    private val vm by lazy { viewModel(DeviceVM::class) }
+    private val vm by lazy { activityVM(DeviceVM::class) }
 
     private val v by lazy { DeviceView(this) }
 
@@ -20,20 +20,22 @@ class DeviceFragment : BaseFragment() {
     }
 
     override fun onLiveDataObserve() {
-        vm.syncStationName()
-        vm.stationName.observe{
+        vm.arg.observe {
             v.onBindStation(it)
         }
-        vm.errorText.observe {
-            v.onBindError(it)
+        vm.nameError.observe {
+            v.onNameError(it)
+        }
+        vm.registerError.observe {
+            v.onRegisterError(it)
         }
     }
 
     override fun onViewClick(v: View?) {
         when (v) {
-            deviceViewBack -> nav.popBackStack()
+            deviceViewBack -> navigateUp()
 
-            deviceViewClose -> nav.navigate(MainDirections.actionGlobalSplashFragment())
+            deviceViewClose -> navigate(MainDirections.actionGlobalSplashFragment())
 
             deviceViewRegister -> onRegisterDevice()
         }
@@ -44,8 +46,7 @@ class DeviceFragment : BaseFragment() {
         val s = deviceEditTextName.text.toString().trimEnd()
         deviceEditTextName?.setText(s)
         deviceEditTextName?.setSelection(s.length)
-        Shared.deviceInfo.value?.name = deviceEditTextName.text.toString()
-        vm.validateOnRegisterDevice(s)
+        vm.validateOnRegisterDevice(deviceEditTextName.text?.toString())
     }
 
 }
