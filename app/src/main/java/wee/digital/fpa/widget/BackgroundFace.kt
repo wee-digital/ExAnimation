@@ -1,10 +1,9 @@
 package wee.digital.fpa.widget
 
 import android.content.Context
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -13,6 +12,7 @@ import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.background_face.view.*
 import wee.digital.fpa.R
+import wee.digital.library.extension.GlideApp
 import wee.digital.library.extension.hide
 import wee.digital.library.extension.load
 import wee.digital.library.extension.show
@@ -44,8 +44,12 @@ class BackgroundFace : ConstraintLayout {
 
     }
 
-    fun showFrameResult(frame: Bitmap?){
-        bgFaceFrame.setImageBitmap(frame)
+    fun showFrameResult(frame: ByteArray?){
+
+        frame ?: return
+        val bitmap = BitmapFactory.decodeByteArray(frame, 0, frame.size)
+        bgFaceFrame.setImageBitmap(bitmap)
+
         bgFaceAnimGif.show()
         val animShow = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         animShow.fillAfter = true
