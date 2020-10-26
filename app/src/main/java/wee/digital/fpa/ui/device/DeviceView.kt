@@ -7,10 +7,7 @@ import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.messageArg
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.util.SimpleTextWatcher
-import wee.digital.library.extension.bold
-import wee.digital.library.extension.color
-import wee.digital.library.extension.setHyperText
-import wee.digital.library.extension.string
+import wee.digital.library.extension.*
 
 class DeviceView(private val v: DeviceFragment) {
 
@@ -58,10 +55,9 @@ class DeviceView(private val v: DeviceFragment) {
         v.deviceTextViewTerm.setHyperText(sTerm)
     }
 
-    fun onBindStation(obj: DeviceArg) {
-        val s = obj.qrObj
-                ?.get("FullName")
-                ?.asString ?: ""
+    fun onBindStation(arg: DeviceArg?) {
+        arg ?: return
+        val s = arg.qrObj.str("FullName")
         val text = string(R.string.device_hi).format(s.bold())
         v.deviceTextViewStation.setHyperText(text)
     }
@@ -72,15 +68,7 @@ class DeviceView(private val v: DeviceFragment) {
 
     fun onRegisterError(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.messageArg = MessageArg(
-                    icon = R.mipmap.img_checked_flat,
-                    title = "Đăng ký thiết bị thành công",
-                    button = "Hoàn tất",
-                    message = string(R.string.register_success).format("pos.facepay.vn".bold().color("#378AE1")),
-                    onClose = {
-
-                    }
-            )
+            onRegisterSuccess()
             return
         }
         v.messageArg = MessageArg(
@@ -89,6 +77,20 @@ class DeviceView(private val v: DeviceFragment) {
                 button = "Hoàn tất",
                 message = s
         )
+        v.navigateUp()
+    }
+
+    private fun onRegisterSuccess() {
+        v.messageArg = MessageArg(
+                icon = R.mipmap.img_checked_flat,
+                title = "Đăng ký thiết bị thành công",
+                button = "Hoàn tất",
+                message = string(R.string.register_success).format("pos.facepay.vn".bold().color("#378AE1")),
+                onClose = {
+
+                }
+        )
+        v.navigateUp()
     }
 
     fun onViewInit() {

@@ -70,17 +70,11 @@
             app:layout_constraintTop_toBottomOf="@+id/qrImageViewCamera"
             app:layout_constraintVertical_bias="0.246" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/qrViewProgress"
-            android:layout_width="@dimen/_48sdp"
-            android:layout_height="@dimen/_48sdp"
-            android:src="@mipmap/img_progress2"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/qrTextViewHint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/qrTextViewHint" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewTest"
+        style="@style/TestingWidget"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

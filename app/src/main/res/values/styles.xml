@@ -24,6 +24,28 @@
         <item name="android:textSize">@dimen/textSize5</item>
     </style>
 
+    <style name="EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/_32sdp</item>
+        <item name="android:paddingStart">@dimen/margin</item>
+        <item name="android:paddingEnd">@dimen/margin</item>
+        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColorHint">@color/colorGray</item>
+        <item name="android:drawablePadding">14dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:includeFontPadding">true</item>
+        <item name="android:textCursorDrawable">@color/colorPrimary</item>
+        <item name="android:textIsSelectable">false</item>
+        <item name="android:privateImeOptions">nm</item>
+        <item name="android:longClickable">false</item>
+    </style>
+
+
     <!--BUTTON-->
     <style name="Button" parent="TextView2">
         <item name="android:minWidth">@dimen/_100sdp</item>
@@ -156,6 +178,15 @@
     <style name="GradientText" parent="TextView5">
         <item name="android:textSize">@dimen/_18ssp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--TEST-->
+    <style name="TestingWidget">
+        <item name="android:layout_width">@dimen/_50sdp</item>
+        <item name="android:layout_height">@dimen/_50sdp</item>
+        <item name="android:background">@color/colorTransparent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
 
     <!--GUIDELINE-->

@@ -8,7 +8,7 @@ class SplashTest(private val v: SplashFragment,
                  private val vm: SplashVM) {
 
     fun onTestInit() {
-        v.splashImageViewLogo.setOnClickListener {
+        v.viewTest.setOnClickListener {
             if (vm.paymentInfo.value == null) {
                 vm.paymentInfo.value = JsonObject().apply {
                     put("name", "GS25")

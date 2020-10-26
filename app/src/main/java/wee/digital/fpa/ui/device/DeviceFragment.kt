@@ -4,19 +4,22 @@ import android.view.View
 import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
 
-class DeviceFragment : BaseFragment() {
+class DeviceFragment : BaseDialog() {
 
     private val vm by lazy { activityVM(DeviceVM::class) }
 
     private val v by lazy { DeviceView(this) }
 
+    private val test by lazy { DeviceTest(this, vm) }
+
     override fun layoutResource(): Int = R.layout.device
 
     override fun onViewCreated() {
         v.onViewInit()
+        test.onTestInit()
     }
 
     override fun onLiveDataObserve() {

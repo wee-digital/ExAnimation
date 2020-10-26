@@ -5,6 +5,8 @@ import kotlinx.android.synthetic.main.connect.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.device.DeviceVM
 
 class ConnectFragment : BaseFragment() {
 
@@ -21,7 +23,10 @@ class ConnectFragment : BaseFragment() {
     }
 
     override fun onLiveDataObserve() {
-
+        activityVM(DeviceVM::class).arg.observe {
+            it ?: return@observe
+            navigate(MainDirections.actionGlobalDeviceFragment())
+        }
     }
 
     override fun onViewClick(v: View?) {

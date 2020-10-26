@@ -60,7 +60,8 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/deviceEditTextName"
-            style="@style/TextView3"
+            style="@style/EditText"
+            android:paddingStart="0dp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_36sdp"
             android:layout_marginStart="@dimen/margin2"
@@ -109,5 +110,10 @@
             app:layout_constraintTop_toBottomOf="@+id/deviceTextViewTerm" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewTest"
+        style="@style/TestingWidget"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

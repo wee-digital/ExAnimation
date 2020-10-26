@@ -14,7 +14,7 @@ import wee.digital.library.extension.string
 
 class DeviceVM : BaseViewModel() {
 
-    val arg = MutableLiveData<DeviceArg>()
+    val arg = MutableLiveData<DeviceArg?>()
 
     val nameError = EventLiveData<String?>()
 
@@ -27,10 +27,11 @@ class DeviceVM : BaseViewModel() {
         onRegister = true
         if (sName?.length ?: 0 < 5) {
             nameError.value = "Tên thiết bị phải từ 5 đến 20 ký tự"
+            onRegister = false
             return
         }
         val info = DeviceInfoStore(
-                qrCode = "",
+                qrCode = arg.value?.qrObj.toString(),
                 name = sName!!
         )
         registerDevice(info)
@@ -43,6 +44,7 @@ class DeviceVM : BaseViewModel() {
             }
 
             override fun onFailed(code: Int, message: String) {
+                onRegister = false
                 val s = when (code) {
                     in 1..6, 500 -> {
                         string(R.string.register_failed)
@@ -54,7 +56,6 @@ class DeviceVM : BaseViewModel() {
                 }
                 registerError.postValue(s)
                 BaseData.ins.resetDeviceInfo()
-
             }
 
         })
