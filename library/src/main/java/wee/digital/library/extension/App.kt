@@ -2,7 +2,6 @@ package wee.digital.library.extension
 
 import android.app.Application
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -52,10 +51,10 @@ fun restartApp() {
     app.startActivity(intent)
 }
 
-fun navigate(packageName: String) {
+/*fun navigate(packageName: androidx.navigation.NavDirections) {
     val intent = app.packageManager.getLaunchIntentForPackage(packageName) ?: return
     app.startActivity(intent)
-}
+}*/
 
 fun anim(@AnimRes res: Int): Animation {
     return AnimationUtils.loadAnimation(app, res)

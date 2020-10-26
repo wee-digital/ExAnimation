@@ -21,7 +21,7 @@ class DeviceFragment : BaseFragment() {
 
     override fun onLiveDataObserve() {
         vm.syncStationName()
-        vm.stationName.observe {
+        vm.stationName.observe{
             v.onBindStation(it)
         }
         vm.errorText.observe {

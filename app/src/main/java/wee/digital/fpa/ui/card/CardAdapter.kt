@@ -2,10 +2,15 @@ package wee.digital.fpa.ui.card
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import kotlinx.android.synthetic.main.card_item.view.*
 import wee.digital.fpa.R
+import wee.digital.fpa.repository.utils.SystemUrl
 import wee.digital.library.adapter.BaseRecyclerAdapter
+import wee.digital.library.extension.load
+
 
 class CardAdapter : BaseRecyclerAdapter<CardItem>() {
 
@@ -14,12 +19,23 @@ class CardAdapter : BaseRecyclerAdapter<CardItem>() {
     }
 
     override fun View.onBindModel(model: CardItem, position: Int, layout: Int) {
-        paymentImageViewCard.setImageResource(model.image)
-        paymentImageViewCard.flipAnimation()
+
+        paymentViewCard.flipAnimation()
+
+        val colors = intArrayOf(Color.parseColor(model.colors[0]), Color.parseColor(model.colors[1]))
+        val gd = GradientDrawable(
+                GradientDrawable.Orientation.LEFT_RIGHT, colors)
+        gd.cornerRadius = 15f
+        paymentImageViewCard.background = gd
+
+        cardItemLogo.load("${SystemUrl.URL_BANK_LOGO_WHITE}${model.name}.png")
+
+        cardItemIcon.load("${SystemUrl.URL_BANK_IC_WHITE}${model.name}.png")
+
     }
 
     private fun View.flipAnimation() {
-        this.animate().rotationX(90f).setDuration(300).setListener(object : AnimatorListenerAdapter() {
+        this.animate().rotationX(-90f).setDuration(300).setListener(object : AnimatorListenerAdapter() {
 
             override fun onAnimationEnd(animation: Animator) {
                 this@flipAnimation.rotationX = 90f

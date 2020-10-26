@@ -214,6 +214,10 @@ fun JsonObject?.float(key: String, default: Float = 0f): Float {
     }
 }
 
+fun String?.toArray(): JsonArray? {
+    return parse(JsonArray::class.java)
+}
+
 
 
 
