@@ -1,7 +1,5 @@
 package wee.digital.fpa.ui.card
 
-import wee.digital.fpa.R
-
 data class CardItem (
         val colors : ArrayList<String>,
         val name : String
