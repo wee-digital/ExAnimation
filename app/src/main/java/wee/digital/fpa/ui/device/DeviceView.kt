@@ -5,6 +5,7 @@ import android.view.inputmethod.EditorInfo
 import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.messageArg
+import wee.digital.fpa.ui.connect.ConnectArg
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.util.SimpleTextWatcher
 import wee.digital.library.extension.*
@@ -55,9 +56,9 @@ class DeviceView(private val v: DeviceFragment) {
         v.deviceTextViewTerm.setHyperText(sTerm)
     }
 
-    fun onBindStation(arg: DeviceArg?) {
+    fun onBindStation(arg: ConnectArg?) {
         arg ?: return
-        val s = arg.qrObj.str("FullName")
+        val s = arg.qr.str("FullName")
         val text = string(R.string.device_hi).format(s.bold())
         v.deviceTextViewStation.setHyperText(text)
     }
@@ -66,32 +67,7 @@ class DeviceView(private val v: DeviceFragment) {
         v.deviceTextViewError.text = s
     }
 
-    fun onRegisterError(s: String?) {
-        if (s.isNullOrEmpty()) {
-            onRegisterSuccess()
-            return
-        }
-        v.messageArg = MessageArg(
-                icon = R.mipmap.img_x_mark_flat,
-                title = "Đăng ký thiết bị không thành công",
-                button = "Hoàn tất",
-                message = s
-        )
-        v.navigateUp()
-    }
 
-    private fun onRegisterSuccess() {
-        v.messageArg = MessageArg(
-                icon = R.mipmap.img_checked_flat,
-                title = "Đăng ký thiết bị thành công",
-                button = "Hoàn tất",
-                message = string(R.string.register_success).format("pos.facepay.vn".bold().color("#378AE1")),
-                onClose = {
-
-                }
-        )
-        v.navigateUp()
-    }
 
     fun onViewInit() {
         configDeviceNameText()

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewContent"
     style="@style/MatchParent"
-    tools:background="@color/colorDialogBackground">
+    android:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -61,7 +61,6 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/deviceEditTextName"
             style="@style/EditText"
-            android:paddingStart="0dp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_36sdp"
             android:layout_marginStart="@dimen/margin2"
@@ -69,6 +68,7 @@
             android:layout_marginEnd="@dimen/margin2"
             android:background="@null"
             android:hint="Tên thiết bị (Ví dụ: thiết bị số 1,...)"
+            android:paddingStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

@@ -7,7 +7,6 @@ import android.view.MotionEvent
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import gun0912.tedkeyboardobserver.TedRxKeyboardObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_otp.*
 import wee.digital.fpa.MainDirections
@@ -37,9 +36,9 @@ class OtpFragment : BaseFragment() {
     override fun onLiveDataObserve() {}
 
     private fun initStatusKeyboard() {
-        keyboardDisposable = TedRxKeyboardObserver(activity())
+       /* keyboardDisposable = TedRxKeyboardObserver(activity())
                 .listen()
-                .subscribe({ isShow -> checkMarginView(isShow) }, {})
+                .subscribe({ isShow -> checkMarginView(isShow) }, {})*/
     }
 
     /**

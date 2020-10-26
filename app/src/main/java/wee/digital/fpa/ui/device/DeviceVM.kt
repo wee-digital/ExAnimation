@@ -1,6 +1,5 @@
 package wee.digital.fpa.ui.device
 
-import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.R
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
@@ -14,15 +13,13 @@ import wee.digital.library.extension.string
 
 class DeviceVM : BaseViewModel() {
 
-    val arg = MutableLiveData<DeviceArg?>()
-
     val nameError = EventLiveData<String?>()
 
     var registerError = EventLiveData<String?>()
 
     private var onRegister = false
 
-    fun validateOnRegisterDevice(sName: String?) {
+    fun validateOnRegisterDevice(qr: String, sName: String?) {
         if (onRegister) return
         onRegister = true
         if (sName?.length ?: 0 < 5) {
@@ -31,7 +28,7 @@ class DeviceVM : BaseViewModel() {
             return
         }
         val info = DeviceInfoStore(
-                qrCode = arg.value?.qrObj.toString(),
+                qrCode = qr,
                 name = sName!!
         )
         registerDevice(info)

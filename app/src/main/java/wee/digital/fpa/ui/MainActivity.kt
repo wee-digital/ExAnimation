@@ -25,14 +25,6 @@ class MainActivity : BaseActivity() {
                 setInclusive(false)
             }
         }
-        activityVM(MessageVM::class).arg.observe {
-            it ?: return@observe
-            navigate(MainDirections.actionGlobalMessageFragment())
-        }
-        activityVM(ConfirmVM::class).arg.observe {
-            it ?: return@observe
-            navigate(MainDirections.actionGlobalConfirmFragment())
-        }
     }
 
 
