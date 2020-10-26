@@ -40,7 +40,7 @@ data class DeviceInfo(
         var name: String = ""
 )
 
-class DeviceInfoStore {
-    var qrCode: String? = null
-    var name: String? = null
-}
+class DeviceInfoStore(
+        val qrCode: String,
+        val name: String
+)

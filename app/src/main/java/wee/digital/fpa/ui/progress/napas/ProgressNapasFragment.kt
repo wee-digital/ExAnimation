@@ -2,6 +2,7 @@ package wee.digital.fpa.ui.progress.napas
 
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.activityVM
 
 class ProgressNapasFragment : BaseFragment() {
 

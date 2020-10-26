@@ -166,7 +166,7 @@
 
     <style name="Guideline.ConnectHeader">
         <item name="android:orientation">horizontal</item>
-        <item name="layout_constraintGuide_percent">0.1</item>
+        <item name="layout_constraintGuide_percent">0.08</item>
     </style>
 
     <style name="Guideline.MessageDialog">

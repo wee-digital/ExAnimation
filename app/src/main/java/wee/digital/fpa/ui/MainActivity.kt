@@ -3,6 +3,9 @@ package wee.digital.fpa.ui
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseActivity
+import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.confirm.ConfirmVM
+import wee.digital.fpa.ui.message.MessageVM
 
 class MainActivity : BaseActivity() {
 
@@ -22,10 +25,12 @@ class MainActivity : BaseActivity() {
                 setInclusive(false)
             }
         }
-        Main.messageArg.observe {
+        activityVM(MessageVM::class).arg.observe {
+            it ?: return@observe
             navigate(MainDirections.actionGlobalMessageFragment())
         }
-        Main.confirmArg.observe {
+        activityVM(ConfirmVM::class).arg.observe {
+            it ?: return@observe
             navigate(MainDirections.actionGlobalConfirmFragment())
         }
     }

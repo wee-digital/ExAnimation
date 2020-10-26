@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.activityVM
 
 class SplashFragment : BaseFragment() {
 

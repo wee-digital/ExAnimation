@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.toast
 import wee.digital.fpa.ui.base.BaseDialog
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.plash.SplashVM
 
 class PaymentFragment : BaseDialog() {

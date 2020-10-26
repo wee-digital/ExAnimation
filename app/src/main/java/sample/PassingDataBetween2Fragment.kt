@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import wee.digital.fpa.app.toast
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.base.navResultLiveData
 import wee.digital.fpa.ui.base.setNavResult
 
