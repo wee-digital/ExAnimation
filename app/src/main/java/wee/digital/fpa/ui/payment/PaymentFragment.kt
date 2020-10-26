@@ -16,7 +16,6 @@ class PaymentFragment : BaseDialog() {
 
     private val v by lazy { PaymentView(this) }
 
-
     override fun layoutResource(): Int {
         return R.layout.payment
     }
