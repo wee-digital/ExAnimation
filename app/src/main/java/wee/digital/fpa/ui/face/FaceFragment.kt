@@ -1,6 +1,8 @@
 package wee.digital.fpa.ui.face
 
 import android.graphics.Bitmap
+import com.intel.realsense.librealsense.RsContext
+import com.intel.realsense.librealsense.UsbUtilities
 import kotlinx.android.synthetic.main.fragment_face.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
@@ -15,8 +17,16 @@ class FaceFragment : BaseFragment() {
     override fun layoutResource(): Int = R.layout.fragment_face
 
     override fun onViewCreated() {
-        button.setOnClickListener { frgFaceBackground?.showImageResult(mFrame) }
-        button2.setOnClickListener { frgFaceBackground?.hideImageResult() }
+        button.setOnClickListener { frgFaceBackground?.showFrameResult(mFrame) }
+        button2.setOnClickListener { frgFaceBackground?.hideFrameResult() }
+        button3.setOnClickListener { frgFaceBackground?.animFrame() }
+        button4.setOnClickListener { frgFaceBackground?.resetAnimFrame() }
+
+        RsContext.init(context)
+        UsbUtilities.grantUsbPermissionIfNeeded(context)
+
+        App.realSenseControl = RealSenseControl()
+        App.realSenseControl?.startStreamThread()
     }
 
     override fun onLiveDataObserve() {}
@@ -43,6 +53,11 @@ class FaceFragment : BaseFragment() {
     override fun onPause() {
         super.onPause()
         App.realSenseControl?.listener = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        App.realSenseControl?.stopStreamThread()
     }
 
 }

@@ -2,7 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/bgFaceRoot">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bgFaceGuide10"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="-0.05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bgFaceGuide25"
@@ -46,38 +54,27 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bgFaceAnimGif"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/bgFaceRootFrame"
-        app:layout_constraintEnd_toEndOf="@+id/bgFaceRootFrame"
-        app:layout_constraintTop_toTopOf="@+id/bgFaceRootFrame"
-        app:layout_constraintBottom_toBottomOf="@+id/bgFaceRootFrame"
+        app:layout_constraintStart_toStartOf="@+id/bgFaceFrame"
+        app:layout_constraintEnd_toEndOf="@+id/bgFaceFrame"
+        app:layout_constraintTop_toTopOf="@+id/bgFaceFrame"
+        app:layout_constraintBottom_toBottomOf="@+id/bgFaceFrame"
         android:layout_width="@dimen/_310sdp"
         android:layout_height="@dimen/_310sdp"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bgFaceRootFrame"
-        android:visibility="invisible"
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/bgFaceFrame"
+        app:riv_corner_radius="@dimen/_200sdp"
+        app:riv_border_width="5dp"
+        app:riv_border_color="@color/gray_1"
+        app:riv_mutate_background="true"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
         app:layout_constraintTop_toTopOf="@+id/bgFaceGuide25"
-        app:layout_constraintBottom_toBottomOf="@+id/bgFaceGuide75">
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/bgFaceFrame"
-            app:riv_corner_radius="@dimen/_200sdp"
-            app:riv_border_width="5dp"
-            app:riv_border_color="@color/gray_1"
-            app:riv_mutate_background="true"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="@dimen/_240sdp"
-            android:layout_height="@dimen/_240sdp"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintBottom_toBottomOf="@+id/bgFaceGuide75"
+        android:layout_width="@dimen/_240sdp"
+        android:layout_height="@dimen/_240sdp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bgFaceTitle"
@@ -93,6 +90,7 @@
         android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/bgFaceContent"
         app:layout_constraintStart_toStartOf="@+id/bgFaceGuideVertical35"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bgFaceTitle"
