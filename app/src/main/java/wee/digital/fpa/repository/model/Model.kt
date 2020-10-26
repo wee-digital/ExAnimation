@@ -55,3 +55,5 @@ class MyStream(
 )
 
 data class DataPermission(val permission: Boolean, val bundle: Bundle?)
+
+data class DataContentFail(val title: String = "", val mess: String = "")

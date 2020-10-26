@@ -13,7 +13,7 @@ data class BasicBankAcc(
         var BankCode: String = ""
 )
 
-data class BankAccInfo(
+data class  BankAccInfo(
         @SerializedName("BankCode")
         @Expose
         var BankCode: String = "",
