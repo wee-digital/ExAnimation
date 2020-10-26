@@ -70,26 +70,3 @@ interface BaseView {
 
 }
 
-fun <T : ViewModel> ViewModelStoreOwner.viewModel(cls: KClass<T>): T =
-        ViewModelProvider(this).get(cls.java)
-
-fun <T : ViewModel> ViewModelStoreOwner.newVM(cls: KClass<T>): T =
-        ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[cls.java]
-
-fun <T : ViewModel> Fragment.activityVM(cls: KClass<T>): T =
-        ViewModelProvider(requireActivity()).get(cls.java)
-
-fun <T : ViewModel> AppCompatActivity.activityVM(cls: KClass<T>): T =
-        ViewModelProvider(this).get(cls.java)
-
-var Fragment.messageArg: MessageArg?
-    get() = activityVM(MessageVM::class).arg.value
-    set(value) {
-        activityVM(MessageVM::class).arg.value = value
-    }
-
-var Fragment.confirmArg: ConfirmArg?
-    get() = activityVM(ConfirmVM::class).arg.value
-    set(value) {
-        activityVM(ConfirmVM::class).arg.value = value
-    }
