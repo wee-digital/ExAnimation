@@ -17,21 +17,20 @@ class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
     }
 
     override fun onViewCreated() {
-        v.onViewInit()
-        Shared.deviceInfo.postValue(DeviceInfoStore())
+       // v.onViewInit()
     }
 
     override fun onLiveDataObserve() {
-        vm.message.observe {
+       /* vm.message.observe {
             v.onBindMessage(it)
-        }
+        }*/
     }
 
     /**
      * [ScanQRCode.QRCodeProcessingListener] implement
      */
     override fun onResult(result: String) {
-        vm.checkQRCode(result)
+        //vm.checkQRCode(result)
     }
 
 }

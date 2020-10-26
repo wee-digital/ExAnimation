@@ -43,6 +43,7 @@ abstract class BaseDialog : DialogFragment(), BaseView {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        log.d("onViewDestroy")
         dialog?.window?.attributes?.windowAnimations = 0
     }
 
@@ -54,7 +55,9 @@ abstract class BaseDialog : DialogFragment(), BaseView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        log.d("onViewCreated")
         onViewCreated()
+        log.d("onLiveDataObserve")
         onLiveDataObserve()
     }
 

@@ -44,7 +44,7 @@ class QrView(private val v: QrFragment) {
                 colorBitmap ?: return
                 App.realSenseControl?.hasFace()
                 v.requireActivity().runOnUiThread {
-                    v.qrImageViewCamera?.setImageBitmap(colorBitmap)
+                    //v.qrImageViewCamera?.setImageBitmap(colorBitmap)
                 }
                 scanQRCode.decodeQRCode(colorBitmap)
             }
@@ -55,7 +55,6 @@ class QrView(private val v: QrFragment) {
         onLifecycleObserve()
         App.realSenseControl?.startStreamThread()
         scanQRCode.initListener(v)
-
     }
 
     fun onBindMessage(s: String?) {

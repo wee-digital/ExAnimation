@@ -7,12 +7,13 @@ import android.graphics.Point
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.*
 import wee.digital.fpa.R
 import kotlin.math.roundToInt
 
-class LayoutScanner : ViewGroup {
+class LayoutScanner : FrameLayout {
 
     var viewFinderView: ViewScanner? = null
         private set
@@ -22,14 +23,14 @@ class LayoutScanner : ViewGroup {
     private var mPreviewSize: Point? = null
     private var mButtonSize: Int = 0
 
-    @get:ColorInt
+    @ColorInt
     var autoFocusButtonColor: Int = 0
         set(@ColorInt color) {
             field = color
             mAutoFocusButton!!.setColorFilter(color)
         }
 
-    @get:ColorInt
+    @ColorInt
     var flashButtonColor: Int = 0
         set(@ColorInt color) {
             field = color

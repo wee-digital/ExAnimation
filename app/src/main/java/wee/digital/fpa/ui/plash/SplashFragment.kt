@@ -56,7 +56,10 @@ class SplashFragment : BaseFragment() {
 
     private fun onHasDevice(hasDevice: Boolean) {
         if (!hasDevice) {
-            navigate(MainDirections.actionGlobalConnectFragment())
+            navigate(MainDirections.actionGlobalConnectFragment()) {
+                setLaunchSingleTop(true)
+                setInclusive(false)
+            }
         }
     }
 
