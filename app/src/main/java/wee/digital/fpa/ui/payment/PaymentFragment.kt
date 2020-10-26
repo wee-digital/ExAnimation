@@ -16,9 +16,6 @@ class PaymentFragment : BaseDialog() {
 
     private val v by lazy { PaymentView(this) }
 
-    override fun style(): Int {
-        return R.style.App_Dialog_FullScreen_Transparent
-    }
 
     override fun layoutResource(): Int {
         return R.layout.payment

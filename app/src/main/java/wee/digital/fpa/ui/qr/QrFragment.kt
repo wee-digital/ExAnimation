@@ -2,8 +2,6 @@ package wee.digital.fpa.ui.qr
 
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
-import wee.digital.fpa.data.repository.Shared
-import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.ui.base.BaseDialog
 
 class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {

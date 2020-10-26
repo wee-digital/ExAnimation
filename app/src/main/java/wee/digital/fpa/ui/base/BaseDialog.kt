@@ -96,7 +96,7 @@ abstract class BaseDialog : DialogFragment(), BaseView {
      * [BaseDialog] properties
      */
     protected open fun style(): Int {
-        return R.style.App_Dialog
+        return R.style.App_Dialog_FullScreen_Transparent
     }
 
     protected open fun onBackPressed(): Boolean {
