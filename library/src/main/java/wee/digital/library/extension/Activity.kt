@@ -6,7 +6,11 @@ import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 
 fun Activity?.hideKeyboard() {
     this ?: return
@@ -17,26 +21,20 @@ fun Activity?.hideKeyboard() {
 }
 
 fun Activity?.hideSystemUI() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) this?.window?.apply {
-        setDecorFitsSystemWindows(false)
-        return
-    }
-    @Suppress("DEPRECATION")
-    this?.window?.decorView?.systemUiVisibility = (
-            View.SYSTEM_UI_FLAG_IMMERSIVE
-                    // Set the content to appear under the system bars so that the
-                    // content doesn't resize when the system bars hide and show.
-                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    // Hide the nav bar and status bar
-                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_FULLSCREEN
-            )
+    this?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    hideKeyboard()
+    hideStatusBar()
+    hideNavigationBar()
 }
 
-fun Activity?.navigateSettings() {
-    this?.startActivityForResult(Intent(Settings.ACTION_SETTINGS), 0)
+fun Activity?.hideStatusBar() {
+    this ?: return
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        window.insetsController?.hide(WindowInsets.Type.statusBars())
+    } else {
+        @Suppress("DEPRECATION")
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
 }
 
 fun Activity?.hideNavigationBar(hasFocus: Boolean = true) {
@@ -61,6 +59,7 @@ fun Activity?.hideNavigationBar(hasFocus: Boolean = true) {
         }
     }
 }
+
 
 
 

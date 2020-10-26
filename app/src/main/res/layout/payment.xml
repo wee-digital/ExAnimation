@@ -96,7 +96,8 @@
             style="@style/TextView"
             android:text="365,000"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_20ssp"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/paymentTextView3"
             app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
             app:layout_constraintTop_toTopOf="@+id/paymentTextView3" />
 
@@ -132,7 +133,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentViewAccept"
             style="@style/Button.Primary"
-            android:layout_marginBottom="@dimen/margin2"
+            android:layout_marginBottom="@dimen/margin"
             android:text="Xác nhận"
             app:layout_constraintBottom_toTopOf="@+id/paymentViewDeny"
             app:layout_constraintEnd_toEndOf="parent"

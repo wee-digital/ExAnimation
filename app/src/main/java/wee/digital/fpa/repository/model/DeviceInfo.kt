@@ -41,6 +41,6 @@ data class DeviceInfo(
 )
 
 class DeviceInfoStore {
-    var qrCode: String = ""
-    var name: String = ""
+    var qrCode: String? = null
+    var name: String? = null
 }

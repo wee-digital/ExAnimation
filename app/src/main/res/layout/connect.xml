@@ -2,12 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/MatchParent">
+    style="@style/MatchParent"
+    android:background="@color/colorBackgroundPrimary">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/margin2"
+        android:layout_marginEnd="@dimen/margin2"
         android:src="@mipmap/device"
         app:layout_constraintDimensionRatio="h,800:672"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +28,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/connectTextViewTitle"
-        style="@style/TextView5"
+        style="@style/TextView4"
         android:layout_marginStart="@dimen/margin2"
         android:layout_marginTop="@dimen/margin2"
         android:text="Payment Terminal"
@@ -35,7 +38,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/connectTextViewHint"
-        style="@style/TextView5"
+        style="@style/TextView4"
         android:text="Hướng dẫn kết nối"
         app:layout_constraintStart_toStartOf="@+id/connectTextViewTitle"
         app:layout_constraintTop_toBottomOf="@+id/connectTextViewTitle" />

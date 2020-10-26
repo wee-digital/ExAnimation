@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.R
+import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 
 abstract class BaseDialog : DialogFragment(), BaseView {
@@ -65,6 +66,11 @@ abstract class BaseDialog : DialogFragment(), BaseView {
                 setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideSystemUI()
     }
 
     /**

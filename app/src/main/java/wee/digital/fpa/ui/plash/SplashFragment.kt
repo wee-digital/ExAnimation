@@ -26,8 +26,12 @@ class SplashFragment : BaseFragment() {
     }
 
     override fun onLiveDataObserve() {
+        vm.checkLocalDeviceInfo()
         vm.paymentInfo.observe {
             onPaymentData(it)
+        }
+        vm.hasDeviceInfo.observe {
+            onHasDevice(it)
         }
     }
 
@@ -47,6 +51,12 @@ class SplashFragment : BaseFragment() {
                     vm.paymentInfo.value = null
                 }
             }
+        }
+    }
+
+    private fun onHasDevice(hasDevice: Boolean) {
+        if (!hasDevice) {
+            navigate(MainDirections.actionGlobalConnectFragment())
         }
     }
 

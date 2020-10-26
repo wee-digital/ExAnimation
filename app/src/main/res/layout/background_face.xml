@@ -109,7 +109,7 @@
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:src="@mipmap/facepay"
+        android:src="@mipmap/img_logo"
         android:layout_marginBottom="@dimen/_15sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

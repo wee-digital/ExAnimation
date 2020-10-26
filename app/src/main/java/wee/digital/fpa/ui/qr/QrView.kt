@@ -33,23 +33,6 @@ class QrView(private val v: QrFragment) {
         })
     }
 
-    fun onViewInit() {
-        onLifecycleObserve()
-        App.realSenseControl?.startStreamThread()
-        scanQRCode.initListener(v)
-
-    }
-
-    fun onBindMessage(s: String?) {
-        if (s.isNullOrEmpty()) {
-            v.qrTextViewHint.color(R.color.colorBlack)
-            v.qrTextViewHint.text = "Vui lòng đưa mã vào vùng nhận diện"
-        } else {
-            v.qrTextViewHint.color(R.color.colorAlert)
-            v.qrTextViewHint.text = s
-        }
-    }
-
     private fun onStartCamera() {
         App.realSenseControl?.listener = object : RealSenseControl.Listener {
 
@@ -67,4 +50,23 @@ class QrView(private val v: QrFragment) {
             }
         }
     }
+
+    fun onViewInit() {
+        onLifecycleObserve()
+        App.realSenseControl?.startStreamThread()
+        scanQRCode.initListener(v)
+
+    }
+
+    fun onBindMessage(s: String?) {
+        if (s.isNullOrEmpty()) {
+            v.qrTextViewHint.color(R.color.colorBlack)
+            v.qrTextViewHint.text = "Vui lòng đưa mã vào vùng nhận diện"
+        } else {
+            v.qrTextViewHint.color(R.color.colorAlert)
+            v.qrTextViewHint.text = s
+        }
+    }
+
+
 }
