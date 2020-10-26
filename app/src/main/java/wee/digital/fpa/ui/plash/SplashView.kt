@@ -10,6 +10,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.splash.*
 import wee.digital.fpa.util.SimpleLifecycleObserver
 import wee.digital.fpa.util.SimpleTransitionListener
+import wee.digital.library.extension.bold
 import wee.digital.library.extension.setHyperText
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
@@ -25,8 +26,9 @@ class SplashView(private val v: SplashFragment) {
     private var disposable: Disposable? = null
 
     private fun onBindRemainingText(second: Int) {
-        val text = "Thời gian còn lại: <b>%02d:%02d</b>".format(second / 60, second % 60)
-        v.splashTextViewRemaining.setHyperText(text)
+        val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
+        val sRemaining = "Thời gian còn lại: %s".format(sHour)
+        v.splashTextViewRemaining.setHyperText(sRemaining)
     }
 
     fun animateStartRemaining(onAnimEnd: () -> Unit = {}) {

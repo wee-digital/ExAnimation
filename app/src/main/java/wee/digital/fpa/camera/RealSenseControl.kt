@@ -92,7 +92,7 @@ class RealSenseControl : DeviceListener {
                                 mFrameCount--
                                 when {
                                     mFrameCount > 0 -> {
-                                        Log.i(TAG, "Getting Frame ....")
+                                        //Log.i(TAG, "Getting Frame ....")
                                         val colorFrame: Frame =
                                                 frames.first(StreamType.COLOR).releaseWith(fr)
                                         //if (mFrameCount % 2 != 0) {

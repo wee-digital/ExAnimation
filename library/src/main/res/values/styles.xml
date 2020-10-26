@@ -9,9 +9,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="App.Theme.NoActionBar" parent="App.Theme">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -20,11 +19,11 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="App.Theme.Launcher" parent="App.Theme.NoActionBar">
+    <style name="App.Theme.Launcher" parent="App.Theme">
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
-    <style name="App.Theme.Transparent" parent="App.Theme.NoActionBar">
+    <style name="App.Theme.Transparent" parent="App.Theme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>

@@ -25,9 +25,9 @@
     </style>
 
     <!--BUTTON-->
-    <style name="Button" parent="TextView3">
+    <style name="Button" parent="TextView2">
         <item name="android:minWidth">@dimen/_100sdp</item>
-        <item name="android:layout_height">@dimen/_34sdp</item>
+        <item name="android:layout_height">@dimen/_32sdp</item>
         <item name="android:gravity">center</item>
         <item name="android:clickable">true</item>
         <item name="android:text">Button</item>
@@ -117,7 +117,7 @@
     <!--PAYMENT-->
     <style name="Payment" />
 
-    <style name="Payment.Title" parent="TextView4">
+    <style name="Payment.Title" parent="TextView3">
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textStyle">bold</item>
@@ -132,7 +132,6 @@
     <style name="Connect" />
 
     <style name="Connect.HelpIcon" parent="TextView">
-        <item name="android:fontFamily">@font/inter_regular</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_width">@dimen/_15sdp</item>
         <item name="android:layout_height">@dimen/_15sdp</item>
@@ -142,6 +141,7 @@
         <item name="android:textSize">@dimen/_9ssp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">@dimen/margin2</item>
+        <item name="android:paddingEnd">1dp</item>
     </style>
 
     <style name="Connect.HelpText" parent="TextView2">
@@ -149,7 +149,7 @@
         <item name="android:minWidth">100dp</item>
         <item name="android:layout_marginStart">@dimen/margin</item>
         <item name="android:layout_marginEnd">@dimen/margin2</item>
-        <item name="android:includeFontPadding">false</item>
+        <item name="android:includeFontPadding">true</item>
     </style>
 
     <!--GRADIENT TEXT-->
@@ -173,8 +173,18 @@
         <item name="android:orientation">horizontal</item>
         <item name="layout_constraintGuide_percent">0.4</item>
     </style>
+
     <style name="Guideline.SplashLogo">
         <item name="android:orientation">horizontal</item>
-        <item name="layout_constraintGuide_percent">0.24</item>
+        <item name="layout_constraintGuide_percent">0.20</item>
+    </style>
+
+    <style name="Widget.App.Theme.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.App.Theme.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 </resources>

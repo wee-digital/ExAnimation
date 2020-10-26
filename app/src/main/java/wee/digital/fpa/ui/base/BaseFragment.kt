@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 
 abstract class BaseFragment : Fragment(), BaseView {
@@ -40,6 +41,11 @@ abstract class BaseFragment : Fragment(), BaseView {
         super.onViewCreated(view, savedInstanceState)
         onViewCreated()
         onLiveDataObserve()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().hideSystemUI()
     }
 
     /**

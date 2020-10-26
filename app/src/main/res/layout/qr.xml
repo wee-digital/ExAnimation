@@ -19,33 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline1">
 
-        <wee.digital.fpa.widget.LayoutScanner
-            android:id="@+id/frgQRLayout"
-            style="@style/MatchParent"
-            app:frameAspectRatioHeight="10"
-            app:frameAspectRatioWidth="10"
-            app:frameColor="@color/colorPrimaryLight"
-            app:frameCornersSize="50dp"
-            app:frameSize="0.75"
-            app:frameThickness="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:maskColor="@color/colorWhite" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewTitle"
-            style="@style/Dialog.Title"
-            android:text="Quét mã thiết bị"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/dialogViewClose"
-            style="@style/Dialog.TitleIcon"
-            android:src="@drawable/ic_arrow_down"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/frgQRGuide19"
             android:layout_width="wrap_content"
@@ -60,18 +33,47 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.71" />
 
+
+        <!--   <wee.digital.fpa.widget.LayoutScanner
+               android:id="@+id/frgQRLayout"
+               style="@style/MatchParent"
+               app:frameAspectRatioHeight="10"
+               app:frameAspectRatioWidth="10"
+               app:frameColor="@color/colorPrimaryLight"
+               app:frameCornersSize="50dp"
+               app:frameSize="0.75"
+               app:frameThickness="5dp"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:maskColor="@color/colorWhite" />
+   -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dialogTextViewTitle"
+            style="@style/Dialog.Title"
+            android:text="Quét mã thiết bị"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/dialogViewClose"
+            style="@style/Dialog.TitleIcon"
+            android:src="@drawable/ic_arrow_down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--<androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/qrImageViewCamera"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/frgQRGuide71"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/frgQRGuide19" />
-
+            app:layout_constraintTop_toTopOf="@+id/frgQRGuide19"
+            tools:src="@color/colorBlack" />
+-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/qrTextViewHint"
-            style="@style/TextView4"
+            style="@style/TextView3"
             android:layout_margin="@dimen/margin4"
             android:gravity="center"
             android:text="Vui lòng đưa mã vào vùng nhận diện"
@@ -80,7 +82,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+      <!--  <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/frgQRLoading"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
@@ -89,7 +91,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
-
+-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

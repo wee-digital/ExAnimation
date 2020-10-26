@@ -27,10 +27,13 @@ interface SimpleObserver<T> : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
+
+
         onComplete(null, e)
     }
 
     override fun onNext(t: T) {
+
         onComplete(t, null)
     }
 

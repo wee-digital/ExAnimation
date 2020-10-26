@@ -7,7 +7,6 @@ import wee.digital.library.extension.put
 class SplashTest(private val v: SplashFragment,
                  private val vm: SplashVM) {
 
-
     fun onTestInit() {
         v.splashImageViewLogo.setOnClickListener {
             if (vm.paymentInfo.value == null) {

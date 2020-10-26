@@ -33,11 +33,28 @@ class QrView(private val v: QrFragment) {
         })
     }
 
+    private fun onStartCamera() {
+        App.realSenseControl?.listener = object : RealSenseControl.Listener {
+
+            override fun onCameraStarted() {}
+
+            override fun onCameraError(mess: String) {}
+
+            override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
+                colorBitmap ?: return
+                App.realSenseControl?.hasFace()
+                v.requireActivity().runOnUiThread {
+                    //v.qrImageViewCamera?.setImageBitmap(colorBitmap)
+                }
+                scanQRCode.decodeQRCode(colorBitmap)
+            }
+        }
+    }
+
     fun onViewInit() {
         onLifecycleObserve()
         App.realSenseControl?.startStreamThread()
         scanQRCode.initListener(v)
-
     }
 
     fun onBindMessage(s: String?) {
@@ -50,21 +67,5 @@ class QrView(private val v: QrFragment) {
         }
     }
 
-    private fun onStartCamera() {
-        App.realSenseControl?.listener = object : RealSenseControl.Listener {
 
-            override fun onCameraStarted() {}
-
-            override fun onCameraError(mess: String) {}
-
-            override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
-                colorBitmap ?: return
-                App.realSenseControl?.hasFace()
-                v.requireActivity().runOnUiThread {
-                    v.qrImageViewCamera?.setImageBitmap(colorBitmap)
-                }
-                scanQRCode.decodeQRCode(colorBitmap)
-            }
-        }
-    }
 }

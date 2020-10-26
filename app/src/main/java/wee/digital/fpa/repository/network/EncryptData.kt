@@ -34,9 +34,10 @@ class EncryptData {
     fun encryptRegister(
             dataReq: DeviceInfoStore
     ): Single<EncryptResult> {
+        val qrCode = dataReq.qrCode ?: throw NullPointerException()
         return Single.create { singleEmitter ->
             try {
-                val decryptQR = FrameUtil.decryptQRCode(dataReq.qrCode)
+                val decryptQR = FrameUtil.decryptQRCode(qrCode)
                 val sessionId = decryptQR!!.get("SessionID").asString
                 val rsaKey = Crypto.rsaGenerateKey()
                 SharedPrefUtil.savePriKey(rsaKey.privateKey)
