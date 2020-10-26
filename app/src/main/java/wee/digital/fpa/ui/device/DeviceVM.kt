@@ -1,6 +1,5 @@
 package wee.digital.fpa.ui.device
 
-import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.R
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
@@ -14,23 +13,22 @@ import wee.digital.library.extension.string
 
 class DeviceVM : BaseViewModel() {
 
-    val arg = MutableLiveData<DeviceArg>()
-
     val nameError = EventLiveData<String?>()
 
     var registerError = EventLiveData<String?>()
 
     private var onRegister = false
 
-    fun validateOnRegisterDevice(sName: String?) {
+    fun validateOnRegisterDevice(qr: String, sName: String?) {
         if (onRegister) return
         onRegister = true
         if (sName?.length ?: 0 < 5) {
             nameError.value = "Tên thiết bị phải từ 5 đến 20 ký tự"
+            onRegister = false
             return
         }
         val info = DeviceInfoStore(
-                qrCode = "",
+                qrCode = qr,
                 name = sName!!
         )
         registerDevice(info)
@@ -43,6 +41,7 @@ class DeviceVM : BaseViewModel() {
             }
 
             override fun onFailed(code: Int, message: String) {
+                onRegister = false
                 val s = when (code) {
                     in 1..6, 500 -> {
                         string(R.string.register_failed)
@@ -54,7 +53,6 @@ class DeviceVM : BaseViewModel() {
                 }
                 registerError.postValue(s)
                 BaseData.ins.resetDeviceInfo()
-
             }
 
         })

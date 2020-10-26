@@ -70,15 +70,5 @@ class QrView(private val v: QrFragment) {
         }
     }
 
-    fun onBindProgress(isShow: Boolean) {
-        if (isShow) {
-            v.qrTextViewHint.hide()
-            v.qrViewProgress.show()
-        } else {
-            v.qrTextViewHint.show()
-            v.qrViewProgress.hide()
-        }
-    }
-
 
 }
