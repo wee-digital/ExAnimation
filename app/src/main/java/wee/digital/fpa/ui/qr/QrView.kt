@@ -16,16 +16,25 @@ class QrView(private val v: QrFragment) {
 
     private fun onLifecycleObserve() {
         v.viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
+
+            override fun onResume() {
+                super.onResume()
+                onStartCamera()
+            }
+
+            override fun onPause() {
+                super.onPause()
+                App.realSenseControl?.listener = null
+            }
+
             override fun onDestroy() {
                 App.realSenseControl?.stopStreamThread()
-                App.realSenseControl?.listener = null
             }
         })
     }
 
     fun onViewInit() {
         onLifecycleObserve()
-        onStartCamera()
         App.realSenseControl?.startStreamThread()
         scanQRCode.initListener(v)
 

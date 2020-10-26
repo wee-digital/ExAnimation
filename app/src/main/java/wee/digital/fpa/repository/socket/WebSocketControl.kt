@@ -3,6 +3,7 @@ package wee.digital.fpa.repository.socket
 import android.util.Log
 import okhttp3.*
 import okio.ByteString
+import wee.digital.fpa.repository.network.LogGrafana
 import wee.digital.fpa.repository.utils.SystemUrl
 import java.util.concurrent.TimeUnit
 
@@ -32,6 +33,7 @@ class WebSocketControl : WebSocketListener() {
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
         Log.e(TAG, "onOpen - $response")
+        LogGrafana.instance.postWebSocket("WebSocket onConnected ${response.message}")
         mURLConnected = mURLConnecting
         mWebSocketMonitorListener?.onConnected(response.message)
         isOpen = true
@@ -40,6 +42,7 @@ class WebSocketControl : WebSocketListener() {
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         super.onFailure(webSocket, t, response)
         Log.e(TAG, "onFailure - $t - $response")
+        LogGrafana.instance.postWebSocket("onFailure - $t - $response")
         isOpen = false
         mWebSocketMonitorListener?.onError("onFailure - $t - $response")
         mWebSocketMonitorCloseListener?.onClosed()
@@ -49,6 +52,7 @@ class WebSocketControl : WebSocketListener() {
         super.onClosing(webSocket, code, reason)
         isOpen = false
         Log.e(TAG, "onClosing - $code - $reason")
+        LogGrafana.instance.postWebSocket("onClosing - $code - $reason")
         if (code == 3012) {
             mWebSocketMonitorListener?.onClosing(reason)
             mWebSocketMonitorCloseListener?.onClosed()
@@ -62,6 +66,7 @@ class WebSocketControl : WebSocketListener() {
     override fun onMessage(webSocket: WebSocket, text: String) {
         super.onMessage(webSocket, text)
         mWebSocketMonitorListener?.onResult(text)
+        LogGrafana.instance.postWebSocket("onResult : $text")
     }
 
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
@@ -72,6 +77,7 @@ class WebSocketControl : WebSocketListener() {
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosed(webSocket, code, reason)
         Log.e(TAG, "onClosed - [${System.currentTimeMillis() - mTimeIn}] - $code - $reason")
+        LogGrafana.instance.postWebSocket("onClosed webSocket - code : $code - reason : $reason")
         isOpen = false
         if (code != 3012 && code != 1000) {
             mWebSocketMonitorListener?.onDisconnected("onClosed - [${System.currentTimeMillis() - mTimeIn}] - $code - $reason")

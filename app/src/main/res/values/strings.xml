@@ -8,5 +8,9 @@
     <string name="device_hi">Hi! %s</string>
     <string name="device_term">Bằng việc xác nhận đăng ký, bạn đã đồng ý với %s của Facepay</string>
     <string name="device_policy">Điều khoản sử dụng</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="bg_face_title">Selfie time !%s</string>
 
 </resources>

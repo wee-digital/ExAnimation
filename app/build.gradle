@@ -175,7 +175,7 @@ dependencies {
     //Firebase Module
     implementation 'com.google.firebase:firebase-ml-vision-automl:18.0.5'
     //RealSense
-    implementation "com.intel.realsense:librealsense:2.34.0@aar"
+    implementation "com.intel.realsense:librealsense:2.38.1@aar"
     implementation "org.tensorflow:tensorflow-android:1.13.1"
     implementation "org.tensorflow:tensorflow-lite:2.1.0"
     //ScanQR

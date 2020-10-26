@@ -66,9 +66,9 @@ class Api {
                     override fun onSuccess(response: Response<ResponseBody>) {
                         Log.e("dataApi", "$response")
 
-                        /*val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
+                        val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
                         val timeSend = response.raw().sentRequestAtMillis().toDouble()
-                        val time = timeReceiver - timeSend*/
+                        val time = timeReceiver - timeSend
 
                         when (response.code()) {
 
@@ -86,7 +86,6 @@ class Api {
                                     val errorCode = parseData.str("Message") ?: ""
                                     listener.onFail(parseData.int("Code"), errorCode, parseData)
                                 }
-                                //dev lai
                                 /*LogGrafana.instance.postHttp(
                                     url,
                                     timeCall,
@@ -104,7 +103,6 @@ class Api {
                                 }
                             }
                             else -> {
-                                //dev lai
                                 /* LogGrafana.instance.postHttp(
                                      url,
                                      timeCall,
@@ -121,7 +119,6 @@ class Api {
                         Log.e("CallApiLog", "$e")
 
                         val timeCall = System.currentTimeMillis() - timeIn
-                        //dev lai
                         /*LogGrafana.instance.postHttp(url, timeCall, 404, "${e.message}")*/
 
                         listener.onFail(ErrCode.API_FAIL, e.message.toString(), null)
@@ -219,17 +216,14 @@ class Api {
                                     val errorCode = parseData.str("Message") ?: ""
                                     listener.onFail(parseData.int("Code"), errorCode, parseData)
                                 }
-                                //dev lai
                                 /*LogGrafana.instance.postHttp(
                                     url,
                                     timeCall,
                                     parseData.int("Code"),
                                     parseData.string("Message")
                                 )*/
-
                             }
                             else -> {
-                                //dev lai
                                 /*LogGrafana.instance.postHttp(
                                     url,
                                     timeCall,
@@ -246,7 +240,6 @@ class Api {
                         Log.e("CallApiLog", "$e")
 
                         val timeCall = System.currentTimeMillis() - timeIn
-                        //dev lai
                         /*LogGrafana.instance.postHttp(url, timeCall, 404, "${e.message}")*/
 
                         listener.onFail(ErrCode.API_FAIL, e.message.toString(), null)

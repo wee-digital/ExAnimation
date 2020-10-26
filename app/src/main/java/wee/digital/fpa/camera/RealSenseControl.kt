@@ -160,9 +160,12 @@ class RealSenseControl : DeviceListener {
                     mHandler?.postDelayed(this, 80)
                 }
             } else {
-                mPipeline?.stop()
-                mPipeline?.close()
-                mPipeline = null
+                try{
+                    mPipeline?.stop()
+                    mPipeline?.close()
+                    mPipeline = null
+                }catch (e : Exception){
+                }
                 mHandler?.removeCallbacks(this)
                 isFrameOK = false
                 Log.e(TAG, errorMessage)

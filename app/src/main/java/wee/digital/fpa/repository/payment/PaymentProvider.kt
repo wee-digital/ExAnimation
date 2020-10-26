@@ -11,6 +11,7 @@ import wee.digital.fpa.repository.base.IBase
 import wee.digital.fpa.repository.dto.*
 import wee.digital.fpa.repository.model.ClientIDResp
 import wee.digital.fpa.repository.network.Api
+import wee.digital.fpa.repository.network.LogGrafana
 import wee.digital.fpa.repository.network.MyApiService
 import wee.digital.fpa.repository.network.RestUrl
 import wee.digital.fpa.repository.utils.ErrCode
@@ -177,8 +178,7 @@ class PaymentProvider : IBase.Payment {
 
     //---
     private fun verifyFaceFailed(code: Int, mess: String, data: JsonObject?): Int {
-        //dev lai
-//        if (code in 11..16) LogGrafana.instance.postNoAccount("$code, $mess")
+        if (code in 11..16) LogGrafana.instance.postNoAccount("$code, $mess")
 
         return when (code) {
             in 11..16 -> {

@@ -1,6 +1,7 @@
 package wee.digital.fpa.data.repository
 
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonArray
 import wee.digital.fpa.repository.model.DeviceInfoStore
 
 object Shared {
@@ -24,6 +25,8 @@ object Shared {
     val totalTimeFacePay = MutableLiveData<Int>()
 
     val amountTransaction = MutableLiveData<String>()
+
+    val bankJson = MutableLiveData<JsonArray?>()
 
 
 }

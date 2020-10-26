@@ -102,7 +102,7 @@ class HomeActivity : BaseActivity() {
     private fun navigateUI(data: SocketResultResp, clientId: String = "") {
         when (data.event) {
             SocketEvent.EVENT_CANCEL -> {
-
+                checkCancelPayment()
             }
             SocketEvent.EVENT_PAYMENT -> {
                 toast("payment")

@@ -1,12 +1,23 @@
 package wee.digital.fpa.app
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
+import com.google.gson.JsonArray
+import io.reactivex.SingleObserver
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
 import wee.digital.fpa.BuildConfig
 import wee.digital.fpa.camera.RealSenseControl
+import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.base.BaseSharedPref
+import wee.digital.fpa.repository.network.MyApiService
+import wee.digital.fpa.repository.network.RestUrl
+import wee.digital.fpa.repository.utils.SystemUrl
 import wee.digital.library.Library
 import wee.digital.library.extension.SECOND
 import wee.digital.log.LogBook
@@ -26,12 +37,40 @@ class App : Application() {
 
         baseSharedPref = BaseSharedPref()
         baseSharedPref!!.init(this)
+
+        getBanksJson()
     }
 
     companion object {
         var realSenseControl: RealSenseControl? = null
 
         var baseSharedPref: BaseSharedPref? = null
+    }
+
+    /**
+     * get banks json when open app
+     */
+    @SuppressLint("CheckResult")
+    fun getBanksJson() {
+        val restApi = RestUrl(SystemUrl.URL_GET_BANKS).getClient().create(MyApiService::class.java)
+        restApi.getBanksJson()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(object : SingleObserver<Response<JsonArray>> {
+                    override fun onSubscribe(d: Disposable) {}
+                    override fun onSuccess(response: Response<JsonArray>) {
+                        Log.e("MyAppGetBanks", response.body().toString())
+                        if (response.code() == 200){
+                            Shared.bankJson.postValue(response.body())
+                        }else{
+                            Shared.bankJson.postValue(null)
+                        }
+                    }
+                    override fun onError(e: Throwable) {
+                        Log.e("MyAppGetBanks", e.message.toString())
+                        Shared.bankJson.postValue(null)
+                    }
+                })
     }
 
 }
