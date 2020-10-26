@@ -1,6 +1,11 @@
 package wee.digital.fpa.ui
 
+
+import com.intel.realsense.librealsense.RsContext
+import com.intel.realsense.librealsense.UsbUtilities
 import wee.digital.fpa.R
+import wee.digital.fpa.app.App
+import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.ui.base.BaseActivity
 
 class MainActivity : BaseActivity() {
@@ -16,7 +21,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onViewCreated() {
-
+        RsContext.init(applicationContext)
+        UsbUtilities.grantUsbPermissionIfNeeded(this)
+        App.realSenseControl = RealSenseControl()
     }
 
     override fun onLiveDataObserve() {
