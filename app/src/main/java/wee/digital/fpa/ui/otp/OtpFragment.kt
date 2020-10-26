@@ -3,7 +3,6 @@ package wee.digital.fpa.ui.otp
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.UrlQuerySanitizer
-import android.util.Log
 import android.view.MotionEvent
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
@@ -11,9 +10,12 @@ import android.webkit.WebViewClient
 import gun0912.tedkeyboardobserver.TedRxKeyboardObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_otp.*
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.app.toast
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.util.Utils
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
@@ -34,7 +36,7 @@ class OtpFragment : BaseFragment() {
 
     override fun onLiveDataObserve() {}
 
-    private fun initStatusKeyboard(){
+    private fun initStatusKeyboard() {
         keyboardDisposable = TedRxKeyboardObserver(activity())
                 .listen()
                 .subscribe({ isShow -> checkMarginView(isShow) }, {})
@@ -111,18 +113,27 @@ class OtpFragment : BaseFragment() {
         }
     }
 
-    private fun handlerTransactionFail(data : String){
+    private fun handlerTransactionFail(data: String) {
         when (data) {
             "INSUFFICIENT_FUNDS" -> "khong du so du thanh toan"
             "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> toast("qua han muc giao dich")
-            "CANCEL" -> toast("huy bo giao dich")
+            "CANCEL" -> {
+
+                Main.messageArg.value = MessageArg(
+                        icon = R.mipmap.img_x_mark_flat,
+                        title = "Sample title",
+                        message = "huy bo giao dich"
+                )
+                navigate(MainDirections.actionGlobalMessageFragment())
+            }
             else -> toast("null")
         }
     }
 
     private inner class JavaScriptInterface {
         @JavascriptInterface
-        fun onResultWebView() {}
+        fun onResultWebView() {
+        }
     }
 
     override fun onResume() {
