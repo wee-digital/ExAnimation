@@ -9,8 +9,6 @@ import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.util.SimpleLifecycleObserver
 import wee.digital.library.extension.color
-import wee.digital.library.extension.hide
-import wee.digital.library.extension.show
 
 class QrView(private val v: QrFragment) {
 

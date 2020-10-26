@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewContent"
+    style="@style/MatchParent"
+    android:background="@color/colorBackgroundPrimary">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineFace"
+        style="@style/Guideline.Face" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/faceGuidelineCameraTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/faceTextViewRemaining"
+        style="@style/TextView2"
+        android:layout_marginTop="@dimen/margin2"
+        android:gravity="center"
+        android:textColor="@color/colorTextSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Time remaining: 00:30" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/faceImageViewAnim"
+        android:layout_width="@dimen/_310sdp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/faceImageViewCamera"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/faceImageViewCamera"
+        app:layout_constraintStart_toStartOf="@+id/faceImageViewCamera"
+        app:layout_constraintTop_toTopOf="@+id/faceImageViewCamera"
+        tools:visibility="invisible" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/faceImageViewCamera"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_230sdp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
+        app:riv_border_color="@color/gray_1"
+        app:riv_border_width="@dimen/_4sdp"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        tools:src="@mipmap/img_placeholder" />
+
+    <!--   <wee.digital.fpa.widget.Rounded
+           android:id="@+id/bgFaceRounded"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
+
+       <wee.digital.fpa.widget.Line
+           android:id="@+id/bgFaceLine"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.0"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="@+id/faceImageViewCamera"
+           app:layout_constraintVertical_bias="1.0" />
+   -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/faceTextViewTitle1"
+        style="@style/TextView5"
+        android:fontFamily="@font/inter_semibold"
+        android:includeFontPadding="false"
+        android:text="Selfie time !"
+        app:layout_constraintBottom_toTopOf="@id/faceTextViewTitle2"
+        app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/faceTextViewTitle2"
+        style="@style/TextView5"
+        android:fontFamily="@font/inter_semibold"
+        android:includeFontPadding="false"
+        android:text="Đưa khuôn mặt"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/faceGuidelineCameraTop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/faceTextViewTitle3"
+        style="@style/TextView2"
+        android:layout_marginTop="@dimen/margin"
+        android:text="vào giữa vùng nhận diện"
+        app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2"
+        app:layout_constraintTop_toBottomOf="@+id/faceTextViewTitle2" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bgFaceLogo"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/margin2"
+        android:src="@mipmap/img_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="@string/logoRatio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/faceTitleGroup"
+        style="@style/WrapContent"
+        app:constraint_referenced_ids="faceTextViewTitle1,faceTextViewTitle2,faceTextViewTitle3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

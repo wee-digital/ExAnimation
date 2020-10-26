@@ -68,7 +68,7 @@ class DeviceVM : BaseViewModel() {
     }
 
     private fun onRegisterSuccess() {
-        val arg = MessageArg(
+        val message = MessageArg(
                 headerGuideline = R.id.guidelineConnect,
                 icon = R.mipmap.img_checked_flat,
                 title = string(R.string.device_register_success),
@@ -79,18 +79,18 @@ class DeviceVM : BaseViewModel() {
                     Main.rootDirection.value = MainDirections.actionGlobalAdvFragment()
                 }
         )
-        registerSuccess.postValue(arg)
+        registerSuccess.postValue(message)
     }
 
     private fun onRegisterError(s: String?) {
-        val arg = MessageArg(
+        val message = MessageArg(
                 headerGuideline = R.id.guidelineConnect,
                 icon = R.mipmap.img_x_mark_flat,
                 title = string(R.string.device_register_failed),
                 button = string(R.string.device_register_finish),
                 message = s
         )
-        registerError.postValue(arg)
+        registerError.postValue(message)
     }
 
 }

@@ -37,9 +37,9 @@ class OtpFragment : BaseFragment() {
     override fun onLiveDataObserve() {}
 
     private fun initStatusKeyboard() {
-       /* keyboardDisposable = TedRxKeyboardObserver(activity())
-                .listen()
-                .subscribe({ isShow -> checkMarginView(isShow) }, {})*/
+        /* keyboardDisposable = TedRxKeyboardObserver(activity())
+                 .listen()
+                 .subscribe({ isShow -> checkMarginView(isShow) }, {})*/
     }
 
     /**

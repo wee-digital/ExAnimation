@@ -2,7 +2,6 @@ package wee.digital.fpa.ui.adv
 
 import android.view.View
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
 

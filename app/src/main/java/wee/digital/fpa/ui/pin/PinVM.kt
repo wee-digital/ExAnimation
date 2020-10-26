@@ -1,7 +1,6 @@
 package wee.digital.fpa.ui.pin
 
 import wee.digital.fpa.app.toast
-import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
 import wee.digital.fpa.repository.network.Api
@@ -40,8 +39,8 @@ class PinVM : BaseViewModel() {
         toast(s)
     }
 
-    fun verifyPinCode(req : VerifyPINCodeDTOReq){
-        PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<VerifyPINCodeDTOResp>{
+    fun verifyPinCode(req: VerifyPINCodeDTOReq) {
+        PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<VerifyPINCodeDTOResp> {
 
             override fun onSuccess(data: VerifyPINCodeDTOResp) {
                 toast("verify pin success")
