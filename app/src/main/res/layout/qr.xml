@@ -12,12 +12,10 @@
         style="@style/Guideline.ConnectHeader" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/frgQRRoot"
         style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline1">
+        app:layout_constraintTop_toTopOf="@+id/guideline1">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/frgQRGuide19"
@@ -82,16 +80,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
 
-      <!--  <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/frgQRLoading"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
--->
+        <!--  <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/frgQRLoading"
+              android:layout_width="@dimen/_50sdp"
+              android:layout_height="@dimen/_50sdp"
+              android:visibility="gone"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="@+id/frgQRGuide71" />
+  -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
