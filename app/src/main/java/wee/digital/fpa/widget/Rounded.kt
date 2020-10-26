@@ -36,7 +36,7 @@ class Rounded @JvmOverloads constructor(
                 Path.Direction.CW
         )
         canvas.clipPath(path, Region.Op.DIFFERENCE)
-        canvas.drawColor(ContextCompat.getColor(context, R.color.colorWhite))
+        canvas.drawColor(ContextCompat.getColor(context, R.color.bg_face))
     }
 
 }
