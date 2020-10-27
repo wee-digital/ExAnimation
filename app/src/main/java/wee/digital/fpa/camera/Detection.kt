@@ -84,6 +84,7 @@ class Detection(context: Context) {
         mtcnn?.detectFacesAsync(bitmapColor, sizeFace)
 
                 ?.addOnSuccessListener {
+
                     handlerDetection?.post {
                         val face = FrameUtil.getLargestFace(it)
                         if (face != null) {
@@ -92,8 +93,10 @@ class Detection(context: Context) {
                             checkingFaceNull()
                         }
                     }
+                    isBitmapChecking = false
                 }
                 ?.addOnFailureListener {
+                    isBitmapChecking = false
                     listener?.faceNull()
                 }
     }
@@ -135,7 +138,7 @@ class Detection(context: Context) {
                 } else {
                     checkingFaceNull()
                 }
-                isBitmapChecking = false
+
             } else {
                 checkingFaceNull()
             }
@@ -143,7 +146,6 @@ class Detection(context: Context) {
     }
 
     private fun checkingFaceNull() {
-        isBitmapChecking = false
 
         countFaceNull++
         if (countFaceNull > 3) {

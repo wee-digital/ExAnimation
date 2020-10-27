@@ -1,9 +1,9 @@
 package wee.digital.fpa.ui.face
 
 import android.graphics.Bitmap
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
+import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import com.intel.realsense.librealsense.RsContext
 import com.intel.realsense.librealsense.UsbUtilities
@@ -15,7 +15,7 @@ import wee.digital.fpa.camera.Detection
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.util.SimpleLifecycleObserver
-import wee.digital.library.extension.clear
+import wee.digital.fpa.util.SimpleTransitionListener
 import wee.digital.library.extension.load
 
 
@@ -23,7 +23,7 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
 
     private var mDetection: Detection? = null
 
-    var hasFaceDetect = false
+    var hasFaceDetect = true
 
     private val viewTransition = ChangeBounds().apply {
         duration = 400
@@ -52,43 +52,60 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
             override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
                 colorBitmap ?: return
                 dataCollect ?: return
+
+                if (!hasFaceDetect) return
                 v.requireActivity().runOnUiThread {
                     v.faceImageViewCamera?.setImageBitmap(colorBitmap)
                 }
-                if (hasFaceDetect) return
                 mDetection?.bitmapChecking(colorBitmap, depthBitmap, dataCollect)
             }
 
         }
     }
 
-    private fun animateOnFaceCapture() {
-        /*v.bgFaceLine.numberLine = 0f
-        v.bgFaceRounded.number = 0f*/
-        v.faceImageViewAnim.load(R.mipmap.img_progress)
+    fun animateOnFaceCaptured() {
         val viewId = v.faceImageViewCamera.id
+        val height = (v.faceImageViewCamera.width / 2.23).toInt()
+        viewTransition.addListener(object : SimpleTransitionListener {
+            override fun onTransitionEnd(transition: Transition) {
+                viewTransition.removeListener(this)
+                viewTransition.duration = 600
+                onViewAnimate {
+                    setAlpha(v.faceImageViewAnim.id, 1f)
+                }
+            }
+        })
+        viewTransition.duration = 400
         onViewAnimate {
-            setVisibility(v.faceTitleGroup.id, View.INVISIBLE)
-            connect(viewId, ConstraintSet.TOP, v.faceImageViewCamera.id, ConstraintSet.TOP)
-            connect(viewId, ConstraintSet.BOTTOM, v.faceGuidelineCameraTop.id, ConstraintSet.BOTTOM)
-            constrainHeight(viewId, v.faceImageViewCamera.width / 2)
-            constrainDefaultHeight(viewId, v.faceImageViewCamera.width / 2)
+            setAlpha(v.faceTextViewTitle1.id, 0f)
+            setAlpha(v.faceTextViewTitle2.id, 0f)
+            setAlpha(v.faceTextViewTitle3.id, 0f)
+            connect(viewId, ConstraintSet.TOP, v.faceTextViewRemaining.id, ConstraintSet.BOTTOM)
+            connect(viewId, ConstraintSet.BOTTOM, v.guidelineFace.id, ConstraintSet.BOTTOM)
+            constrainHeight(viewId, height)
+            constrainDefaultHeight(viewId, height)
         }
-
     }
 
-    fun animateOnFaceDetect() {
-        /* v.bgFaceLine.numberLine = 1f
-         v.bgFaceRounded.number = 1f*/
-        v.faceImageViewAnim.clear()
+    fun animateOnStartFaceReg(onEnd: () -> Unit) {
         val viewId = v.faceImageViewCamera.id
+        val height = (v.faceImageViewCamera.width * 2.23).toInt()
+        viewTransition.addListener(object : SimpleTransitionListener {
+            override fun onTransitionEnd(transition: Transition) {
+                viewTransition.removeListener(this)
+                onEnd()
+            }
+        })
+        viewTransition.duration = 400
         onViewAnimate {
-            setVisibility(v.faceTitleGroup.id, View.VISIBLE)
+            setAlpha(v.faceImageViewAnim.id, 0f)
+            setAlpha(v.faceTextViewTitle1.id, 1f)
+            setAlpha(v.faceTextViewTitle2.id, 1f)
+            setAlpha(v.faceTextViewTitle3.id, 1f)
             clear(viewId, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
-            connect(viewId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-            constrainHeight(viewId, v.faceImageViewCamera.width * 2)
-            constrainDefaultHeight(viewId, v.faceImageViewCamera.width * 2)
+            constrainHeight(viewId, height)
+            constrainDefaultHeight(viewId, height)
         }
     }
 
@@ -109,15 +126,14 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
     override fun hasFace() {}
 
     override fun faceEligible(bm: ByteArray, frameFullFace: ByteArray, faceData: FacePointData, dataCollect: DataCollect) {
-        if (!hasFaceDetect) return
         hasFaceDetect = false
-        animateOnFaceCapture()
         onFaceEligible(bm, faceData, dataCollect)
     }
 
     var onFaceEligible: (ByteArray, FacePointData, DataCollect) -> Unit = { _, _, _ -> }
 
     fun onViewInit() {
+        v.faceImageViewAnim.load(R.mipmap.img_progress)
         onLifecycleObserve()
         onStartCamera()
     }

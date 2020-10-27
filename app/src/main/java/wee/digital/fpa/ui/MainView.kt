@@ -9,26 +9,16 @@ import wee.digital.fpa.util.SimpleLifecycleObserver
 
 class MainView(val v: MainActivity) {
 
-    private fun onLifecycleObserve() {
+    fun onViewInit() {
         v.lifecycle.addObserver(object : SimpleLifecycleObserver() {
-
             override fun onCreated() {
                 RsContext.init(app)
                 UsbUtilities.grantUsbPermissionIfNeeded(app)
                 App.realSenseControl = RealSenseControl()
             }
-
-            override fun onPause() {
-                App.realSenseControl?.listener = null
-            }
-
             override fun onDestroy() {
                 App.realSenseControl?.stopStreamThread()
             }
         })
-    }
-
-    fun onViewInit() {
-
     }
 }
