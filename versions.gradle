@@ -131,4 +131,7 @@ deps.okhttp = "com.squareup.okhttp3:okhttp:3.12.0"
 deps.okhttp_log = "com.squareup.okhttp3:logging-interceptor:4.9.0"
 deps.permissions = "com.github.tbruyelle:rxpermissions:0.10.2"
 
-
+//Slider
+deps.slider = "com.daimajia.slider:library:1.1.5@aar"
+deps.picasso ="com.squareup.picasso:picasso:2.5.2"
+deps.nineoandroid="com.nineoldandroids:library:2.4.0"
