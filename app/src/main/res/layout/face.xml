@@ -29,32 +29,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Time remaining: 00:30" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/faceImageViewAnim"
-        android:layout_width="@dimen/_310sdp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/faceImageViewCamera"
-        app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintEnd_toEndOf="@+id/faceImageViewCamera"
-        app:layout_constraintStart_toStartOf="@+id/faceImageViewCamera"
-        app:layout_constraintTop_toTopOf="@+id/faceImageViewCamera"
-        tools:visibility="invisible" />
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/faceImageViewCamera"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_230sdp"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
-        app:riv_border_color="@color/gray_1"
-        app:riv_border_width="@dimen/_4sdp"
-        app:riv_mutate_background="true"
-        app:riv_oval="true"
-        tools:src="@mipmap/img_placeholder" />
 
     <!--   <wee.digital.fpa.widget.Rounded
            android:id="@+id/bgFaceRounded"
@@ -116,9 +90,55 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/faceTitleGroup"
-        style="@style/WrapContent"
-        app:constraint_referenced_ids="faceTextViewTitle1,faceTextViewTitle2,faceTextViewTitle3" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/faceImageViewAnim"
+        android:layout_width="@dimen/_136sdp"
+        android:layout_height="0dp"
+        android:alpha="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineFace"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/faceImageViewCamera"
+        app:layout_constraintStart_toStartOf="@+id/faceImageViewCamera"
+        app:layout_constraintTop_toBottomOf="@+id/faceTextViewRemaining"
+        tools:src="@mipmap/img_progress2"
+        tools:alpha="1.0" />
 
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/faceImageViewCamera2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_103sdp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_placeholder"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineFace"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/faceTextViewRemaining"
+        app:riv_border_color="@color/gray_1"
+        app:riv_border_width="@dimen/_3sdp"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        tools:visibility="visible" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/faceImageViewCamera"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_230sdp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_placeholder"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
+        app:riv_border_color="@color/gray_1"
+        app:riv_border_width="@dimen/_3sdp"
+        app:riv_mutate_background="true"
+        app:riv_oval="true" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/viewTest"
+        style="@style/TestingWidget"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

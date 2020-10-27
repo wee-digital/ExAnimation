@@ -53,8 +53,9 @@ interface BaseView {
         return this
     }
 
-    fun NavOptions.Builder.setInclusive(inclusive: Boolean): NavOptions.Builder {
-        setPopUpTo(nav.graph.id, inclusive)
+    fun NavOptions.Builder.setLaunchSingleTop(): NavOptions.Builder {
+        setLaunchSingleTop(true)
+        setPopUpTo(nav.graph.id, false)
         return this
     }
 

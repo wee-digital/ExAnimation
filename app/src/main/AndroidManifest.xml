@@ -24,7 +24,6 @@
         android:supportsRtl="true"
         android:theme="@style/App.Theme">
 
-        <activity android:name=".ui.activity.HomeActivity"></activity>
         <activity android:name=".ui.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>

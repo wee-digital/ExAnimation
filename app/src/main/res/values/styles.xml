@@ -139,8 +139,7 @@
     <!--PAYMENT-->
     <style name="Payment" />
 
-    <style name="Payment.Title" parent="TextView3">
-        <item name="android:background">@drawable/drw_dialog_bottom</item>
+    <style name="Payment.Title" parent="TextView2">
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
     </style>
@@ -182,8 +181,8 @@
 
     <!--TEST-->
     <style name="TestingWidget">
-        <item name="android:layout_width">@dimen/_30sdp</item>
-        <item name="android:layout_height">@dimen/_30sdp</item>
+        <item name="android:layout_width">@dimen/_40sdp</item>
+        <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:background">@color/colorTransparent</item>
         <item name="layout_constraintStart_toStartOf">parent</item>
         <item name="layout_constraintTop_toTopOf">parent</item>

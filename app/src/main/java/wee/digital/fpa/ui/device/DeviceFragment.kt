@@ -16,8 +16,6 @@ class DeviceFragment : BaseDialog() {
 
     private val v by lazy { DeviceView(this) }
 
-    private val test by lazy { DeviceTest(this, vm) }
-
     /**
      * [BaseDialog] override
      */
@@ -27,7 +25,6 @@ class DeviceFragment : BaseDialog() {
 
     override fun onViewCreated() {
         v.onViewInit()
-        test.onTestInit()
     }
 
     override fun onLiveDataObserve() {

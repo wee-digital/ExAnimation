@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import wee.digital.fpa.camera.FrameUtil
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.library.extension.jsonFormat
 
 class QrVM : BaseViewModel() {
 
@@ -23,7 +24,7 @@ class QrVM : BaseViewModel() {
             return
         }
         FrameUtil.decryptQRCode(text)?.also {
-            log.d("QR object detect")
+            log.d(text.jsonFormat())
             qrCode.postValue(it)
             return
         }

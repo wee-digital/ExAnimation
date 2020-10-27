@@ -16,14 +16,11 @@ class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
 
     private val v by lazy { QrView(this) }
 
-    private val test by lazy { QrTest(this, vm) }
-
     override fun layoutResource(): Int {
         return R.layout.qr
     }
 
     override fun onViewCreated() {
-        test.onTestInit()
         v.onViewInit()
     }
 

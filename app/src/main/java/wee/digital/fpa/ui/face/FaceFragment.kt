@@ -1,5 +1,6 @@
 package wee.digital.fpa.ui.face
 
+import kotlinx.android.synthetic.main.face.viewTest
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment
@@ -15,9 +16,16 @@ class FaceFragment : BaseFragment() {
 
     override fun layoutResource(): Int = R.layout.face
 
+
     override fun onViewCreated() {
+        viewTest.setOnClickListener {
+            v.animateOnStartFaceReg{
+                v.hasFaceDetect = true
+            }
+        }
         v.onViewInit()
         v.onFaceEligible = { bitmap, pointData, dataCollect ->
+            v.animateOnFaceCaptured()
             vm.verifyFace(bitmap, pointData, dataCollect)
         }
     }
@@ -37,7 +45,9 @@ class FaceFragment : BaseFragment() {
 
     private fun onFaceVerifyError(it: ConfirmArg) {
         it.onAccept = {
-            v.hasFaceDetect = true
+            v.animateOnStartFaceReg{
+                v.hasFaceDetect = true
+            }
         }
         it.onDeny = {
             navigateUp()

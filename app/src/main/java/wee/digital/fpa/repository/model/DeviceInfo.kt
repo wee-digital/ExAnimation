@@ -41,6 +41,8 @@ data class DeviceInfo(
         var name: String = ""
 )
 
+
+
 class DeviceInfoStore(
         val qrCode: JsonObject,
         val name: String

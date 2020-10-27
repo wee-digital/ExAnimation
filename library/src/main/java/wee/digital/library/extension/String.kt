@@ -2,6 +2,7 @@ package wee.digital.library.extension
 
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import org.json.JSONObject
 import wee.digital.library.Library
 import java.text.DecimalFormat
 import java.text.Normalizer
@@ -109,6 +110,21 @@ fun String?.bold(): String {
 
 fun String?.notNullOrEmpty(): Boolean {
     return !isNullOrEmpty()
+}
+
+fun String?.jsonFormat(): String? {
+    this ?: return null
+    return try {
+        val obj = JSONObject(this)
+        obj.keys().forEach {
+            if (obj.getString(it).length > 256) {
+                obj.put(it, obj.getString(it).substring(0, 256) + "...")
+            }
+        }
+        obj.toString(2)
+    } catch (ignore: Exception) {
+        null
+    }
 }
 
 fun Long.cashToText(): String {

@@ -107,9 +107,9 @@ object CancelPaymentCode {
 }
 
 object SocketEvent {
-    const val EVENT_PAYMENT = "POSPR"
-    const val EVENT_CANCEL = "POSCR"
-    const val EVENT_DELETE = "POSD"
+    const val HAS_PAYMENT = "POSPR"
+    const val DIMISS_PAYMENT = "POSCR"
+    const val DELETE_CACHE = "POSD"
 }
 
 object SystemUrl {
