@@ -15,6 +15,7 @@ import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.repository.utils.SocketEvent
 import wee.digital.fpa.ui.base.BaseActivity
 import wee.digital.fpa.util.Utils
+import wee.digital.library.extension.post
 
 class MainActivity : BaseActivity() {
 
@@ -34,9 +35,13 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         v.onViewInit()
+        post(1000){
+            navigate(MainDirections.actionGlobalFaceFragment())
+        }
     }
 
     override fun onLiveDataObserve() {
+        return
         mainVM.checkDeviceStatus()
         mainVM.syncDeviceInfo()
         mainVM.rootDirection.observe {
