@@ -85,7 +85,15 @@ data class PaymentDTOResp(
 
         @SerializedName("ReTry")
         @Expose
-        var isRetry: Boolean = false
+        var isRetry: Boolean = false,
+
+        @SerializedName("HaveForm")
+        @Expose
+        var haveOTP: Boolean = false,
+
+        @SerializedName("Form")
+        @Expose
+        var formOtp: String = ""
 ) {
     fun getFacePayInfo(): FacePayInfo {
         return FacePayInfo(
@@ -96,6 +104,8 @@ data class PaymentDTOResp(
                 bankName = this.bankName,
                 amount = this.amount,
                 isRetry = this.isRetry
+
+
         )
     }
 }

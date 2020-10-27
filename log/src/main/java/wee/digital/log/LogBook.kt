@@ -18,7 +18,7 @@ object LogBook {
     var app: Application
         set(value) {
             mApp = value
-            crashLog = true
+            //crashLog = true
         }
         get() {
             if (null == mApp) throw NullPointerException("module not be set")

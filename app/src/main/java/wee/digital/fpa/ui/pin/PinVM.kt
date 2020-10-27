@@ -1,6 +1,10 @@
 package wee.digital.fpa.ui.pin
 
 import wee.digital.fpa.app.toast
+import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
+import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
+import wee.digital.fpa.repository.network.Api
+import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import java.util.concurrent.atomic.AtomicInteger
@@ -33,6 +37,21 @@ class PinVM : BaseViewModel() {
     fun onPinFilled(s: String) {
         failureCount.decrementAndGet()
         toast(s)
+    }
+
+    fun verifyPinCode(req: VerifyPINCodeDTOReq) {
+        PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<VerifyPINCodeDTOResp> {
+
+            override fun onSuccess(data: VerifyPINCodeDTOResp) {
+                toast("verify pin success")
+            }
+
+            override fun onFailed(code: Int, message: String) {
+                super.onFailed(code, message)
+                toast("fail")
+            }
+
+        })
     }
 
 }

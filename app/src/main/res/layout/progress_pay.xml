@@ -8,17 +8,14 @@
     tools:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
+        android:id="@+id/guidelineFace"
+        style="@style/Guideline.Face" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline">
+        app:layout_constraintTop_toTopOf="@+id/guidelineFace">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/progressImageViewPay"

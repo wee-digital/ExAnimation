@@ -20,6 +20,7 @@ import wee.digital.fpa.repository.model.*
 import wee.digital.fpa.repository.utils.Key
 import wee.digital.fpa.repository.utils.SharedPrefUtil
 import wee.digital.fpa.util.Utils
+import wee.digital.library.extension.str
 
 class EncryptData {
 
@@ -34,11 +35,9 @@ class EncryptData {
     fun encryptRegister(
             dataReq: DeviceInfoStore
     ): Single<EncryptResult> {
-        val qrCode = dataReq.qrCode ?: throw NullPointerException()
         return Single.create { singleEmitter ->
             try {
-                val decryptQR = FrameUtil.decryptQRCode(qrCode)
-                val sessionId = decryptQR!!.get("SessionID").asString
+                val sessionId = dataReq.qrCode.str("SessionID").toString()
                 val rsaKey = Crypto.rsaGenerateKey()
                 SharedPrefUtil.savePriKey(rsaKey.privateKey)
                 val androidId = Utils.getIdDevice()

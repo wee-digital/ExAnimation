@@ -122,7 +122,8 @@ object SystemUrl {
     var AVATAR_URL = "${BASE_URL}get/thumbnail?id="
     var LOGO_SHOP = "https://dev.facepay.vn/v1/shop/avatar?id="
 
-    var IMAGE_BANK_NEW = "https://dev.facepay.vn/v1/images/bank_iconic_color/3.0x/"
+    var URL_BANK_LOGO_WHITE = "https://dev.facepay.vn/v1/images/bank_logo_white/3.0x/"
+    var URL_BANK_IC_WHITE = "https://dev.facepay.vn/v1/images/bank_iconic_white/"
     var URL_GET_BANKS = "https://dev.facepay.vn/v1/resources/"
 
     const val BASE_URL_LOG = "http://logs.wee.vn:3100/loki/api/v1/"

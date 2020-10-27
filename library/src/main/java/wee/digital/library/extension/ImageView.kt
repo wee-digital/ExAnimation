@@ -1,5 +1,6 @@
 package wee.digital.library.extension
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.ColorInt
@@ -47,7 +48,7 @@ fun ImageView?.loadImage(url: String, onCompleted: (Drawable?) -> Unit) {
             .into(this)
 }
 
-fun ImageView?.load(url: String) {
+fun ImageView?.load(url: String?) {
     this ?: return
     GlideApp.with(context)
             .load(url)
@@ -58,6 +59,14 @@ fun ImageView?.load(res: Int) {
     this ?: return
     GlideApp.with(context)
             .load(res)
+            .into(this)
+}
+
+fun ImageView?.clear() {
+    this ?: return
+    val bitmap : Bitmap? = null
+    GlideApp.with(context)
+            .load(bitmap)
             .into(this)
 }
 

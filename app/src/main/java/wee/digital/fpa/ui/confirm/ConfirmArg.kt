@@ -6,6 +6,7 @@ class ConfirmArg(
         var buttonAccept: String? = null,
         var buttonDeny: String? = null,
         var message: String? = null,
+        var headerGuideline: Int = 0,
         var onAccept: () -> Unit = {},
         var onDeny: () -> Unit = {}
 )

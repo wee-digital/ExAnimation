@@ -5,9 +5,9 @@ import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
+import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.device.DeviceArg
 import wee.digital.fpa.ui.device.DeviceVM
 
 class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
@@ -16,11 +16,14 @@ class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
 
     private val v by lazy { QrView(this) }
 
+    private val test by lazy { QrTest(this, vm) }
+
     override fun layoutResource(): Int {
         return R.layout.qr
     }
 
     override fun onViewCreated() {
+        test.onTestInit()
         v.onViewInit()
     }
 
@@ -28,12 +31,9 @@ class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
         vm.message.observe {
             v.onBindMessage(it)
         }
-        vm.progress.observe {
-            v.onBindProgress(it)
-        }
         vm.qrCode.observe {
             dismiss()
-            activityVM(DeviceVM::class).arg.value = DeviceArg(it)
+            Shared.qrCode.value = it
             navigate(MainDirections.actionGlobalDeviceFragment())
         }
     }
@@ -41,7 +41,7 @@ class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
     override fun onViewClick(v: View?) {
         when (v) {
             dialogViewClose -> {
-                dismiss()
+                navigateUp()
             }
         }
     }

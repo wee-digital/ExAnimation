@@ -12,6 +12,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="bg_face_title">Selfie time !%s</string>
+    <string name="device_register_success">Đăng ký thiết bị thành công</string>
+    <string name="device_register_failed">Đăng ký thiết bị không thành công</string>
+    <string name="device_register_finish">Hoàn tất</string>
+    <string name="device_register_fail">Quét lại mã QR</string>
+
 
 
 </resources>

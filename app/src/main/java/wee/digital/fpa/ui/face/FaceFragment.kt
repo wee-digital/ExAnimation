@@ -1,63 +1,50 @@
 package wee.digital.fpa.ui.face
 
-import android.graphics.Bitmap
-import com.intel.realsense.librealsense.RsContext
-import com.intel.realsense.librealsense.UsbUtilities
-import kotlinx.android.synthetic.main.fragment_face.*
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.app.App
-import wee.digital.fpa.camera.DataCollect
-import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.confirm.ConfirmArg
+import wee.digital.fpa.ui.confirm.ConfirmVM
 
 class FaceFragment : BaseFragment() {
 
-    private var mFrame : Bitmap? = null
+    private val vm: FaceVM by lazy { activityVM(FaceVM::class) }
 
-    override fun layoutResource(): Int = R.layout.fragment_face
+    private val v: FaceView by lazy { FaceView(this) }
+
+    override fun layoutResource(): Int = R.layout.face
 
     override fun onViewCreated() {
-        button.setOnClickListener { frgFaceBackground?.showFrameResult(mFrame) }
-        button2.setOnClickListener { frgFaceBackground?.hideFrameResult() }
-        button3.setOnClickListener { frgFaceBackground?.animFrame() }
-        button4.setOnClickListener { frgFaceBackground?.resetAnimFrame() }
-
-        RsContext.init(context)
-        UsbUtilities.grantUsbPermissionIfNeeded(context)
-
-        App.realSenseControl = RealSenseControl()
-        App.realSenseControl?.startStreamThread()
-    }
-
-    override fun onLiveDataObserve() {}
-
-    private fun initListenerCamera(){
-        App.realSenseControl?.listener = object : RealSenseControl.Listener{
-            override fun onCameraStarted() {}
-            override fun onCameraError(mess: String) {}
-            override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
-                colorBitmap ?: return
-                mFrame = colorBitmap
-                activity?.runOnUiThread {
-                    frgFaceFrame?.setImageBitmap(colorBitmap)
-                }
-            }
+        v.onViewInit()
+        v.onFaceEligible = { bitmap, pointData, dataCollect ->
+            vm.verifyFace(bitmap, pointData, dataCollect)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        initListenerCamera()
+    override fun onLiveDataObserve() {
+        vm.verifyError.observe {
+            onFaceVerifyError(it)
+        }
+        vm.verifySuccess.observe {
+            onFaceVerifySuccess()
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
-        App.realSenseControl?.listener = null
+    private fun onFaceVerifySuccess() {
+
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        App.realSenseControl?.stopStreamThread()
+    private fun onFaceVerifyError(it: ConfirmArg) {
+        it.onAccept = {
+            v.hasFaceDetect = true
+        }
+        it.onDeny = {
+            navigateUp()
+        }
+        activityVM(ConfirmVM::class).arg.value = it
+        navigate(MainDirections.actionGlobalMessageFragment())
     }
+
 
 }

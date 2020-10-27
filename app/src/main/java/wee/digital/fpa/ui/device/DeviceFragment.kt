@@ -4,49 +4,80 @@ import android.view.View
 import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.message.MessageArg
+import wee.digital.fpa.ui.message.MessageVM
+import wee.digital.library.extension.trimText
 
-class DeviceFragment : BaseFragment() {
+class DeviceFragment : BaseDialog() {
 
-    private val vm by lazy { activityVM(DeviceVM::class) }
+    private val vm by lazy { viewModel(DeviceVM::class) }
 
     private val v by lazy { DeviceView(this) }
 
-    override fun layoutResource(): Int = R.layout.device
+    private val test by lazy { DeviceTest(this, vm) }
+
+    /**
+     * [BaseDialog] override
+     */
+    override fun layoutResource(): Int {
+        return R.layout.device
+    }
 
     override fun onViewCreated() {
         v.onViewInit()
+        test.onTestInit()
     }
 
     override fun onLiveDataObserve() {
-        vm.arg.observe {
+        vm.objQRCode.observe {
             v.onBindStation(it)
         }
         vm.nameError.observe {
             v.onNameError(it)
         }
         vm.registerError.observe {
-            v.onRegisterError(it)
+            onRegisterError(it)
+        }
+        vm.registerSuccess.observe {
+            onRegisterSuccess(it)
+        }
+        vm.progressVisible.observe {
+            v.onProgressChanged(it)
         }
     }
 
     override fun onViewClick(v: View?) {
         when (v) {
-            deviceViewBack -> navigateUp()
-
-            deviceViewClose -> navigate(MainDirections.actionGlobalSplashFragment())
-
-            deviceViewRegister -> onRegisterDevice()
+            deviceViewBack, deviceViewClose -> {
+                dismiss()
+            }
+            deviceViewRegister -> {
+                onRegisterDevice()
+            }
         }
     }
 
+    /**
+     * [DeviceFragment] properties
+     */
     private fun onRegisterDevice() {
         deviceTextViewError.text = null
-        val s = deviceEditTextName.text.toString().trimEnd()
-        deviceEditTextName?.setText(s)
-        deviceEditTextName?.setSelection(s.length)
-        vm.validateOnRegisterDevice(deviceEditTextName.text?.toString())
+        val s = deviceEditTextName.trimText
+        vm.registerDevice(s)
+    }
+
+    private fun onRegisterSuccess(arg: MessageArg) {
+        dismiss()
+        activityVM(MessageVM::class).arg.value = arg
+        navigate(MainDirections.actionGlobalMessageFragment())
+    }
+
+    private fun onRegisterError(arg: MessageArg) {
+        dismiss()
+        activityVM(MessageVM::class).arg.value = arg
+        navigate(MainDirections.actionGlobalMessageFragment())
     }
 
 }

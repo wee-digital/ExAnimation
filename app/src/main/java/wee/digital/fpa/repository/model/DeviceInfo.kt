@@ -1,6 +1,7 @@
 package wee.digital.fpa.repository.model
 
 import androidx.room.Ignore
+import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -41,6 +42,6 @@ data class DeviceInfo(
 )
 
 class DeviceInfoStore(
-        val qrCode: String,
+        val qrCode: JsonObject,
         val name: String
 )

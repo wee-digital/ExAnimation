@@ -8,27 +8,24 @@
     tools:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.37" />
+        android:id="@+id/guidelineFace"
+        style="@style/Guideline.Face" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline">
+        app:layout_constraintTop_toTopOf="@+id/guidelineFace">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewTitle"
+            android:id="@+id/cardTextViewTitle"
             style="@style/Dialog.Title"
             android:text="Chọn thẻ thanh toán"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/dialogViewClose"
+            android:id="@+id/cardViewClose"
             style="@style/Dialog.TitleIcon"
             android:src="@drawable/ic_arrow_down"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,10 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
+            android:paddingStart="@dimen/margin4"
+            android:paddingEnd="@dimen/margin4"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle"
+            app:layout_constraintTop_toBottomOf="@+id/cardTextViewTitle"
             tools:itemCount="5"
             tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/card_item"

@@ -5,10 +5,11 @@ import kotlinx.android.synthetic.main.connect.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.activityVM
 
 class ConnectFragment : BaseFragment() {
 
-    private val vm by lazy { viewModel(ConnectVM::class) }
+    private val vm by lazy { activityVM(ConnectVM::class) }
 
     private val v by lazy { ConnectView(this) }
 

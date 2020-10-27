@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline1">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewTitle"
+            android:id="@+id/confirmTextViewTitle"
             style="@style/Dialog.Title"
             android:text="@string/app_name"
             app:layout_constraintStart_toStartOf="parent"

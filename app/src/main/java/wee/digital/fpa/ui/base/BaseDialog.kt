@@ -1,11 +1,9 @@
 package wee.digital.fpa.ui.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -22,18 +20,6 @@ abstract class BaseDialog : DialogFragment(), BaseView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, style())
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-                object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        if (onBackPressed()) {
-                            requireActivity().supportFragmentManager.popBackStack()
-                        }
-                    }
-                })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -97,10 +83,6 @@ abstract class BaseDialog : DialogFragment(), BaseView {
      */
     protected open fun style(): Int {
         return R.style.App_Dialog_FullScreen_Transparent
-    }
-
-    protected open fun onBackPressed(): Boolean {
-        return true
     }
 
     fun <T> LiveData<T>.observe(block: (T) -> Unit) {

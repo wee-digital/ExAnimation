@@ -5,5 +5,6 @@ data class MessageArg(
         var title: String? = null,
         var button: String? = null,
         var message: String? = null,
+        var headerGuideline: Int = 0,
         var onClose: () -> Unit = {}
 )

@@ -3,10 +3,11 @@ package wee.digital.fpa.ui.payment
 import android.view.View
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.payment.*
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.app.toast
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.plash.SplashVM
 
 class PaymentFragment : BaseDialog() {
@@ -34,7 +35,9 @@ class PaymentFragment : BaseDialog() {
     override fun onViewClick(v: View?) {
         when (v) {
             paymentViewAccept -> {
-                toast("onViewClick.paymentViewAccept")
+                dismiss()
+                activityVM(FaceVM::class).paymentInfo.value = splashVM.paymentInfo.value
+                navigate(MainDirections.actionGlobalFaceFragment())
             }
             paymentViewDeny -> {
                 splashVM.paymentInfo.value = null

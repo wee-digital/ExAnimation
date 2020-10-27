@@ -50,6 +50,36 @@ fun EditText.addEditorActionListener(actionId: Int, block: (String?) -> Unit) {
     })
 }
 
+/**
+ * Ex: "Kotlin   Language   Extension"
+ * @return: "KotlinLanguageExtension"
+ */
+val EditText?.trimIndentText: String?
+    get() {
+        this ?: return null
+        var s = text?.toString()
+        if (s.isNullOrEmpty()) return null
+        s = s.replace("\\s+", " ").trim()
+        setText(s)
+        setSelection(s.length)
+        return s
+    }
+
+/**
+ * Ex: "Kotlin   Language   Extension"
+ * @return: "Kotlin Language Extension"
+ */
+val EditText?.trimText: String?
+    get() {
+        this ?: return null
+        var s = text?.toString()
+        if (s.isNullOrEmpty()) return null
+        s = s.replace("\\s+", " ").trim()
+        setText(s)
+        setSelection(s.length)
+        return s
+    }
+
 fun NestedScrollView.scrollToCenter(view: View) {
     post {
         val top = view.top

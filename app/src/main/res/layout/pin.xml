@@ -8,20 +8,17 @@
     tools:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.43" />
+        android:id="@+id/guidelineFace"
+        style="@style/Guideline.Face" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline">
+        app:layout_constraintTop_toTopOf="@+id/guidelineFace">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewTitle"
+            android:id="@+id/confirmTextViewTitle"
             style="@style/Dialog.Title"
             android:text="Vui lòng nhập PIN code thanh toán"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +42,7 @@
             android:backgroundTint="#6AFBFBFB"
             app:layout_constraintEnd_toEndOf="@+id/pinRecyclerViewKey"
             app:layout_constraintStart_toStartOf="@+id/pinRecyclerViewKey"
-            app:layout_constraintTop_toBottomOf="@+id/dialogTextViewTitle"
+            app:layout_constraintTop_toBottomOf="@+id/confirmTextViewTitle"
             tools:backgroundTint="#E7F1FB" />
 
         <androidx.recyclerview.widget.RecyclerView

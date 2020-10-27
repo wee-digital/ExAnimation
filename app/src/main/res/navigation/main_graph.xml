@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     app:startDestination="@id/splashFragment">
+
+    <fragment android:id="@+id/placeholder" />
+    <action
+        android:id="@+id/action_global_placeholder"
+        app:destination="@id/placeholder" />
+
     <dialog
         android:id="@+id/cardFragment"
         android:name="wee.digital.fpa.ui.card.CardFragment"
@@ -50,7 +56,7 @@
         android:label="AdvFragment"
         tools:layout="@layout/adv" />
     <action
-        android:id="@+id/action_global_advFragment3"
+        android:id="@+id/action_global_advFragment"
         app:destination="@id/advFragment" />
     <fragment
         android:id="@+id/splashFragment"
@@ -96,10 +102,19 @@
         android:id="@+id/deviceFragment"
         android:name="wee.digital.fpa.ui.device.DeviceFragment"
         android:label="DeviceFragment"
-        tools:layout="@layout/device"/>
+        tools:layout="@layout/device" />
     <action
         android:id="@+id/action_global_deviceFragment"
         app:destination="@id/deviceFragment" />
+    <fragment
+        android:id="@+id/faceFragment"
+        android:name="wee.digital.fpa.ui.face.FaceFragment"
+        android:label="FaceFragment"
+        tools:layout="@layout/face" />
+    <action
+        android:id="@+id/action_global_faceFragment"
+        app:destination="@id/faceFragment" />
+
 
 
 </navigation>

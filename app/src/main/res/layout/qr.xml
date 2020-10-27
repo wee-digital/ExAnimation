@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
-        style="@style/Guideline.ConnectHeader" />
+        style="@style/Guideline.Connect" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
@@ -26,7 +26,7 @@
             app:layout_constraintDimensionRatio="w,64:48"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dialogTextViewTitle"
+            app:layout_constraintTop_toBottomOf="@id/confirmTextViewTitle"
             tools:src="@color/colorBlack" />
 
         <wee.digital.fpa.widget.LayoutScanner
@@ -45,7 +45,7 @@
             app:maskColor="@color/colorWhite" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dialogTextViewTitle"
+            android:id="@+id/confirmTextViewTitle"
             style="@style/Dialog.Title"
             android:text="Quét mã thiết bị"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,17 +70,11 @@
             app:layout_constraintTop_toBottomOf="@+id/qrImageViewCamera"
             app:layout_constraintVertical_bias="0.246" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/qrViewProgress"
-            android:layout_width="@dimen/_48sdp"
-            android:layout_height="@dimen/_48sdp"
-            android:src="@mipmap/img_progress2"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/qrTextViewHint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/qrTextViewHint" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewTest"
+        style="@style/TestingWidget"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
