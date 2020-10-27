@@ -50,7 +50,7 @@ class PinProgressLayout : ConstraintLayout {
 
     private val progressTransition = ChangeBounds().apply {
         //interpolator = AnticipateInterpolator(1.0f)
-        duration = 300
+        duration = 200
     }
 
     private var isTransition = false

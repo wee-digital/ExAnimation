@@ -20,8 +20,8 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewRemaining"
-        style="@style/TextView2"
-        android:layout_marginTop="@dimen/margin2"
+        style="@style/TextView"
+        android:layout_marginTop="@dimen/margin"
         android:gravity="center"
         android:textColor="@color/colorTextSecondary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,9 +50,49 @@
            app:layout_constraintTop_toTopOf="@+id/faceImageViewCamera"
            app:layout_constraintVertical_bias="1.0" />
    -->
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bgFaceLogo"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/margin2"
+        android:src="@mipmap/img_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="@string/logoRatio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/faceImageViewAnim"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_310sdp"
+        android:alpha="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/faceImageViewCamera"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/faceImageViewCamera"
+        app:layout_constraintStart_toStartOf="@+id/faceImageViewCamera"
+        app:layout_constraintTop_toTopOf="@+id/faceImageViewCamera"
+        tools:alpha="1.0"
+        tools:src="@mipmap/img_progress2" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/faceImageViewCamera"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_230sdp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
+        app:riv_border_color="@color/gray_1"
+        app:riv_border_width="@dimen/_1sdp"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        tools:src="@mipmap/img_placeholder" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle1"
-        style="@style/TextView5"
+        style="@style/TextView4"
         android:fontFamily="@font/inter_semibold"
         android:includeFontPadding="false"
         android:text="Selfie time !"
@@ -61,7 +101,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle2"
-        style="@style/TextView5"
+        style="@style/TextView4"
         android:fontFamily="@font/inter_semibold"
         android:includeFontPadding="false"
         android:text="Đưa khuôn mặt"
@@ -78,63 +118,6 @@
         android:text="vào giữa vùng nhận diện"
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2"
         app:layout_constraintTop_toBottomOf="@+id/faceTextViewTitle2" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/bgFaceLogo"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/margin2"
-        android:src="@mipmap/img_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="@string/logoRatio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/faceImageViewAnim"
-        android:layout_width="@dimen/_136sdp"
-        android:layout_height="0dp"
-        android:alpha="0.0"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineFace"
-        app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintEnd_toEndOf="@+id/faceImageViewCamera"
-        app:layout_constraintStart_toStartOf="@+id/faceImageViewCamera"
-        app:layout_constraintTop_toBottomOf="@+id/faceTextViewRemaining"
-        tools:src="@mipmap/img_progress2"
-        tools:alpha="1.0" />
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/faceImageViewCamera2"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_103sdp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/img_placeholder"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineFace"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/faceTextViewRemaining"
-        app:riv_border_color="@color/gray_1"
-        app:riv_border_width="@dimen/_3sdp"
-        app:riv_mutate_background="true"
-        app:riv_oval="true"
-        tools:visibility="visible" />
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/faceImageViewCamera"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_230sdp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/img_placeholder"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
-        app:riv_border_color="@color/gray_1"
-        app:riv_border_width="@dimen/_3sdp"
-        app:riv_mutate_background="true"
-        app:riv_oval="true" />
 
 
     <androidx.appcompat.widget.AppCompatImageView

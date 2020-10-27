@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class SplashView(private val v: SplashFragment) {
 
-    private val paymentInterval: Int = 60 // second
+    private val remainingInterval: Int = 60 // second
 
     private val viewTransition = ChangeBounds().apply {
         duration = 400
@@ -32,7 +32,7 @@ class SplashView(private val v: SplashFragment) {
     }
 
     fun animateStartRemaining(onAnimEnd: () -> Unit = {}) {
-        onBindRemainingText(paymentInterval)
+        onBindRemainingText(remainingInterval)
         viewTransition.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
                 onAnimEnd()
@@ -75,8 +75,8 @@ class SplashView(private val v: SplashFragment) {
         })
     }
 
-    fun startPaymentRemaining(onRemainingEnd: () -> Unit) {
-        val waitingCounter = AtomicInteger(paymentInterval)
+    fun startRemaining(onEnd: () -> Unit) {
+        val waitingCounter = AtomicInteger(remainingInterval)
         disposable?.dispose()
         disposable = Observable
                 .interval(1, 1, TimeUnit.SECONDS)
@@ -89,7 +89,7 @@ class SplashView(private val v: SplashFragment) {
                         onBindRemainingText(it)
                     } else {
                         disposable?.dispose()
-                        onRemainingEnd()
+                        onEnd()
                     }
                 }, {})
 

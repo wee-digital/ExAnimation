@@ -37,7 +37,9 @@ class PaymentFragment : BaseDialog() {
         when (v) {
             paymentViewAccept -> {
                 dismiss()
-                navigate(MainDirections.actionGlobalFaceFragment())
+                navigate(MainDirections.actionGlobalFaceFragment()){
+                    setLaunchSingleTop()
+                }
             }
             paymentViewDeny -> {
                 mainVM.paymentArg.value = null

@@ -108,7 +108,7 @@ class Detection(context: Context) {
             dataCollect: DataCollect
     ) {
         handlerDetection?.post {
-            if (box.score > 0.99 && FrameUtil.checkZoneFace(box)) {
+            if (box.score > 0.99) {
                 listener?.hasFace()
 
                 val byteFullFace = BitmapUtils.bitmapToByteArray(bmColor)
@@ -118,19 +118,21 @@ class Detection(context: Context) {
                         RealSenseControl.COLOR_WIDTH,
                         RealSenseControl.COLOR_HEIGHT
                 )
-
+                val portrait = box.transform2Rect().cropPortrait(bmColor)
                 val rectDepthFace = FrameUtil.getRectDepthFace(box.transform2Rect())
 
                 val cropDepthBitmap =
                         FrameUtil.cropBitmapWithRect(bitmapDepth, rectDepthFace)
 
+
                 val data = FrameUtil.getDataFaceAndFace(bmColor, box)
 
-                if (cropDepthBitmap != null && data.face != null && byteFullFace != null && data.dataFace != null) {
+                if (cropDepthBitmap != null && data.face != null && portrait != null && byteFullFace != null && data.dataFace != null) {
                     dataCollect.dataFacePoint = data
                     checkFaceFake(
                             cropDepthBitmap,
                             data.face,
+                            portrait!!,
                             byteFullFace,
                             data.dataFace,
                             dataCollect
@@ -158,6 +160,7 @@ class Detection(context: Context) {
     private fun checkFaceFake(
             faceCheck: Bitmap,
             faceCrop: ByteArray,
+            portrait: Bitmap,
             frameFullFace: ByteArray,
             faceData: FacePointData,
             dataCollect: DataCollect
@@ -178,7 +181,7 @@ class Detection(context: Context) {
                 mDepthLabeler?.processImage(image)
                         ?.addOnSuccessListener { labels ->
                             faceCheck.recycle()
-                            checkLabels(labels, faceCrop, frameFullFace, faceData, dataCollect)
+                            checkLabels(labels, faceCrop, portrait, frameFullFace, faceData, dataCollect)
                         }
                         ?.addOnFailureListener {
                             faceCheck.recycle()
@@ -194,6 +197,7 @@ class Detection(context: Context) {
     private fun checkLabels(
             labels: List<FirebaseVisionImageLabel>?,
             face: ByteArray,
+            portrait: Bitmap,
             fullFace: ByteArray,
             faceData: FacePointData,
             dataCollect: DataCollect
@@ -208,8 +212,7 @@ class Detection(context: Context) {
             Log.e("Detection", "get face ok")
             countFaceOk++
             if (countFaceOk > 2) {
-                listener?.faceEligible(face, fullFace, faceData, dataCollect)
-
+                listener?.faceEligible(face, portrait, fullFace, faceData, dataCollect)
                 countFaceOk = 0
                 countFaceNull = 0
             }
@@ -262,6 +265,7 @@ class Detection(context: Context) {
         fun hasFace()
         fun faceEligible(
                 bm: ByteArray,
+                portrait: Bitmap,
                 frameFullFace: ByteArray,
                 faceData: FacePointData,
                 dataCollect: DataCollect

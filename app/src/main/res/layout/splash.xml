@@ -20,10 +20,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/splashTextViewRemaining"
-        style="@style/TextView2"
-        android:layout_marginTop="@dimen/margin2"
+        style="@style/TextView"
+        android:layout_marginTop="@dimen/margin"
         android:gravity="center"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorTextSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -35,9 +35,6 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         v.onViewInit()
-        post(1000){
-            navigate(MainDirections.actionGlobalFaceFragment())
-        }
     }
 
     override fun onLiveDataObserve() {

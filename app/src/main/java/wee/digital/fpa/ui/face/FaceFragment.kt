@@ -1,6 +1,5 @@
 package wee.digital.fpa.ui.face
 
-import kotlinx.android.synthetic.main.face.viewTest
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseFragment
@@ -16,16 +15,14 @@ class FaceFragment : BaseFragment() {
 
     override fun layoutResource(): Int = R.layout.face
 
-
     override fun onViewCreated() {
-        viewTest.setOnClickListener {
-            v.animateOnStartFaceReg{
-                v.hasFaceDetect = true
+        v.onViewInit()
+        v.startRemaining {
+            navigate(MainDirections.actionGlobalSplashFragment()) {
+                setLaunchSingleTop()
             }
         }
-        v.onViewInit()
         v.onFaceEligible = { bitmap, pointData, dataCollect ->
-            v.animateOnFaceCaptured()
             vm.verifyFace(bitmap, pointData, dataCollect)
         }
     }
@@ -40,20 +37,26 @@ class FaceFragment : BaseFragment() {
     }
 
     private fun onFaceVerifySuccess() {
-
+        v.animateOnFaceCaptured()
+        navigate(MainDirections.actionGlobalPinFragment())
     }
 
     private fun onFaceVerifyError(it: ConfirmArg) {
+        onFaceVerifySuccess()
+        return
+        v.animateOnFaceCaptured()
         it.onAccept = {
-            v.animateOnStartFaceReg{
+            v.animateOnStartFaceReg {
                 v.hasFaceDetect = true
             }
         }
         it.onDeny = {
-            navigateUp()
+            navigate(MainDirections.actionGlobalSplashFragment()) {
+                setLaunchSingleTop()
+            }
         }
         activityVM(ConfirmVM::class).arg.value = it
-        navigate(MainDirections.actionGlobalMessageFragment())
+        navigate(MainDirections.actionGlobalConfirmFragment())
     }
 
 
