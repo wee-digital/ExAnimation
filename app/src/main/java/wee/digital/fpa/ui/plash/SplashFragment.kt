@@ -1,19 +1,17 @@
 package wee.digital.fpa.ui.plash
 
-import com.google.gson.JsonObject
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.MainVM
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.payment.PaymentArg
 
 class SplashFragment : BaseFragment() {
 
-    private val vm by lazy { activityVM(SplashVM::class) }
+    private val mainVM by lazy { activityVM(MainVM::class) }
 
     private val v by lazy { SplashView(this) }
-
-    private val test by lazy { SplashTest(this, vm) }
 
     /**
      * [BaseFragment] override
@@ -24,24 +22,19 @@ class SplashFragment : BaseFragment() {
 
     override fun onViewCreated() {
         v.onViewInit()
-        test.onTestInit()
     }
 
     override fun onLiveDataObserve() {
-        vm.checkLocalDeviceInfo()
-        vm.paymentInfo.observe {
-            onPaymentData(it)
-        }
-        vm.hasDeviceInfo.observe {
-            onHasDevice(it)
+        mainVM.paymentArg.observe {
+            onPaymentArgChanged(it)
         }
     }
 
     /**
      * [SplashFragment] properties
      */
-    private fun onPaymentData(obj: JsonObject?) {
-        when (obj) {
+    private fun onPaymentArgChanged(arg: PaymentArg?) {
+        when (arg) {
             null -> {
                 v.stopPaymentRemaining()
                 v.animateStopRemaining()
@@ -50,15 +43,10 @@ class SplashFragment : BaseFragment() {
                 navigate(MainDirections.actionGlobalPaymentFragment())
                 v.animateStartRemaining()
                 v.startPaymentRemaining {
-                    vm.paymentInfo.value = null
+                    mainVM.paymentArg.value = null
                 }
             }
         }
-    }
-
-    private fun onHasDevice(hasDevice: Boolean) {
-        if (hasDevice) return
-        Main.rootDirection.value = MainDirections.actionGlobalConnectFragment()
     }
 
 }

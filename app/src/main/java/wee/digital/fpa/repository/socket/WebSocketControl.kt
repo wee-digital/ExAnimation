@@ -32,26 +32,26 @@ class WebSocketControl : WebSocketListener() {
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
-        Log.e(TAG, "onOpen - $response")
+        Log.d(TAG, "onOpen - $response")
         LogGrafana.instance.postWebSocket("WebSocket onConnected ${response.message}")
         mURLConnected = mURLConnecting
-        mWebSocketMonitorListener?.onConnected(response.message)
+        mWebSocketMonitorListener?.onConnected(webSocket,response)
         isOpen = true
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         super.onFailure(webSocket, t, response)
-        Log.e(TAG, "onFailure - $t - $response")
+        Log.d(TAG, "onFailure - $t - $response")
         LogGrafana.instance.postWebSocket("onFailure - $t - $response")
         isOpen = false
-        mWebSocketMonitorListener?.onError("onFailure - $t - $response")
+        mWebSocketMonitorListener?.onError(webSocket,t)
         mWebSocketMonitorCloseListener?.onClosed()
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosing(webSocket, code, reason)
         isOpen = false
-        Log.e(TAG, "onClosing - $code - $reason")
+        Log.d(TAG, "onClosing - $code - $reason")
         LogGrafana.instance.postWebSocket("onClosing - $code - $reason")
         if (code == 3012) {
             mWebSocketMonitorListener?.onClosing(reason)
@@ -71,12 +71,12 @@ class WebSocketControl : WebSocketListener() {
 
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
         super.onMessage(webSocket, bytes)
-        Log.e(TAG, "onMessage bytes - $bytes")
+        Log.d(TAG, "onMessage bytes - $bytes")
     }
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosed(webSocket, code, reason)
-        Log.e(TAG, "onClosed - [${System.currentTimeMillis() - mTimeIn}] - $code - $reason")
+        Log.d(TAG, "onClosed - [${System.currentTimeMillis() - mTimeIn}] - $code - $reason")
         LogGrafana.instance.postWebSocket("onClosed webSocket - code : $code - reason : $reason")
         isOpen = false
         if (code != 3012 && code != 1000) {
@@ -88,9 +88,9 @@ class WebSocketControl : WebSocketListener() {
     fun sendData(data: String) {
         if (isOpen) {
             mWS!!.send(data)
-            Log.e("sendData", "Sent - $data")
+            Log.d("sendData", "Sent - $data")
         } else {
-            Log.e("sendData", "WebSocket not Open")
+            Log.d("sendData", "WebSocket not Open")
         }
     }
 
@@ -109,14 +109,14 @@ class WebSocketControl : WebSocketListener() {
         val url = "${SystemUrl.SOCKET_URL}$token"
         mToken = token
         mTimeIn = System.currentTimeMillis()
-        Log.e("Open Connect", "Connecting")
+        Log.d("Open Connect", "Connecting")
         //val newUrl = url.replace("http", "ws")
         mURLConnecting = url
         mClient = OkHttpClient
                 .Builder()
                 .pingInterval(1000, TimeUnit.MILLISECONDS)
                 .build()
-        Log.e(TAG, "Connecting to $mURLConnecting")
+        Log.d(TAG, "Connecting to $mURLConnecting")
         mRequest = Request.Builder()
                 .url(mURLConnecting)
                 .build()
@@ -129,12 +129,12 @@ class WebSocketControl : WebSocketListener() {
     }
 
     interface WebSocketMonitorListener {
+        fun onConnected(webSocket: WebSocket, response: Response) {}
+        fun onDisconnected(message: String) {}
+        fun onClosing(message: String) {}
+        fun unKnownError(message: String) {}
         fun onResult(message: String)
-        fun onError(message: String)
-        fun onConnected(message: String)
-        fun onDisconnected(message: String)
-        fun onClosing(message: String)
-        fun unKnownError(message: String)
+        fun onError(webSocket: WebSocket, t: Throwable)
     }
 
     interface WebSocketMonitorCloseListener {

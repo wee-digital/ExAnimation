@@ -36,7 +36,7 @@ class BaseData {
         }
     }
 
-    fun getDeviceInfoPref(): DeviceInfo {
+    fun getDeviceInfoPref(): DeviceInfo? {
         try {
             val dataJson = SharedPrefUtil.getDeviceInfo()
             if (dataJson.isEmpty()) {
@@ -45,7 +45,7 @@ class BaseData {
             //---
             return Gson().fromJson(dataJson, DeviceInfo::class.java)
         } catch (ex: Exception) {
-            return DeviceInfo()
+            return null
         }
     }
 

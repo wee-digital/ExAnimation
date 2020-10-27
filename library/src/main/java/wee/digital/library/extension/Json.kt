@@ -7,6 +7,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import java.io.StringReader
 import java.math.BigDecimal
+import kotlin.reflect.KClass
 
 private val convertFactory: Gson = Gson()
 
@@ -51,6 +52,7 @@ fun <T> JsonArray?.parse(cls: Class<Array<T>>): List<T>? {
     this ?: return null
     return this.toString().parse(cls)
 }
+
 
 fun <T> String?.parse(cls: Class<T>): T? {
     if (isNullOrEmpty()) {

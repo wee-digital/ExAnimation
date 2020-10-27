@@ -139,8 +139,7 @@
     <!--PAYMENT-->
     <style name="Payment" />
 
-    <style name="Payment.Title" parent="TextView3">
-        <item name="android:background">@drawable/drw_dialog_bottom</item>
+    <style name="Payment.Title" parent="TextView2">
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
     </style>

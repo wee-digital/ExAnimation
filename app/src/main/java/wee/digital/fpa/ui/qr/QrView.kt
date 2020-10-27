@@ -17,13 +17,11 @@ class QrView(private val v: QrFragment) {
     private fun onLifecycleObserve() {
         v.viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
 
-            override fun onResume() {
-                super.onResume()
+            override fun onCreated() {
                 onStartCamera()
             }
 
             override fun onPause() {
-                super.onPause()
                 App.realSenseControl?.listener = null
             }
 

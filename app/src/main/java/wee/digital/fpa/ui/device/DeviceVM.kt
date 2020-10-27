@@ -77,7 +77,7 @@ class DeviceVM : BaseViewModel() {
                 message = string(R.string.register_success)
                         .format("pos.facepay.vn".bold().color("#378AE1")),
                 onClose = {
-                    Main.rootDirection.value = MainDirections.actionGlobalAdvFragment()
+                    Main.rootDirection.value = MainDirections.actionGlobalSplashFragment()
                 }
         )
         registerSuccess.postValue(message)
