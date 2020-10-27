@@ -81,6 +81,7 @@ class MediaView : ConstraintLayout, Player.EventListener,  MyMediaController{
                 val mediaSource = buildMediaSource(videoUri!!)
                 it.setMediaSource(mediaSource, true)
                 exoPlayerView.player = it
+                it.seekTo(1)
                 it.playWhenReady = true
                 it.addListener(this)
                 it.prepare()
