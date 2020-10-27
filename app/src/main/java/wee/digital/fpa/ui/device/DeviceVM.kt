@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
+import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
 import wee.digital.fpa.repository.model.DeviceInfoStore
@@ -35,22 +36,22 @@ class DeviceVM : BaseViewModel() {
             return
         }
         val info = DeviceInfoStore(
-                qrCode = objQRCode.value.toString(),
+                qrCode = Shared.qrCode.value ?: JsonObject(),
                 name = sName!!
         )
         registerDevice(info)
     }
 
     private fun registerDevice(deviceInfo: DeviceInfoStore) {
-        progressVisible.value = true
+        progressVisible.postValue(true)
         DeviceSystemRepository.ins.register(deviceInfo, object : Api.ClientListener<Any> {
             override fun onSuccess(data: Any) {
-                progressVisible.value = false
+                progressVisible.postValue(false)
                 onRegisterSuccess()
             }
 
             override fun onFailed(code: Int, message: String) {
-                progressVisible.value = false
+                progressVisible.postValue(false)
                 val s = when (code) {
                     in 1..6, 500 -> {
                         string(R.string.register_failed)
@@ -87,7 +88,7 @@ class DeviceVM : BaseViewModel() {
                 headerGuideline = R.id.guidelineConnect,
                 icon = R.mipmap.img_x_mark_flat,
                 title = string(R.string.device_register_failed),
-                button = string(R.string.device_register_finish),
+                button = string(R.string.device_register_fail),
                 message = s
         )
         registerError.postValue(message)

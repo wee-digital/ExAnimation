@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
+import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.device.DeviceVM
@@ -32,7 +33,7 @@ class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
         }
         vm.qrCode.observe {
             dismiss()
-            activityVM(DeviceVM::class).objQRCode.value = it
+            Shared.qrCode.value = it
             navigate(MainDirections.actionGlobalDeviceFragment())
         }
     }
