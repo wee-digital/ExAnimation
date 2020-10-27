@@ -5,8 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-    <androidx.viewpager2.widget.ViewPager2
+    <!--<androidx.viewpager2.widget.ViewPager2
         android:id="@+id/advertiseViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>-->
+
+    <wee.digital.fpa.widget.ImageSlideView
+        android:id="@+id/advImageSlider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

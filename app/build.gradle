@@ -199,6 +199,10 @@ dependencies {
     // GLIDE
     implementation deps.glide.glide
     implementation deps.glide.compiler
+    //Slider
+    implementation deps.slider
+    implementation deps.nineoandroid
+    implementation deps.picasso
 
 }
 
