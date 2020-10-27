@@ -1,6 +1,5 @@
 package wee.digital.fpa.util
 
-import android.content.Context
 import android.content.res.Resources
 import android.provider.Settings
 import android.util.Log
@@ -13,16 +12,6 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 
 object Utils {
-
-    /**
-     * format string [formatMoney], [formatSpace], [formatDataFaceHeader]
-     */
-    fun formatMoney(money: String): String {
-        if (money.isEmpty()) return ""
-        val formatter: NumberFormat = DecimalFormat("#,###")
-        val cash = formatter.format(money.toDouble()).replace(",", ".")
-        return cash
-    }
 
     fun formatSpace(str: String): String {
         return str.replace(" ", "")
@@ -60,9 +49,9 @@ object Utils {
     /**
      * delete cache [deleteCache]
      */
-    fun deleteCache(context: Context) {
+    fun deleteCache() {
         try {
-            val dir = context.cacheDir
+            val dir = app.cacheDir
             deleteDir(dir)
         } catch (e: java.lang.Exception) {
         }

@@ -1,8 +1,9 @@
 package wee.digital.fpa.ui.payment
 
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.payment.*
-import wee.digital.fpa.R
+import wee.digital.fpa.repository.model.DeviceInfo
+import wee.digital.fpa.repository.utils.SystemUrl
+import wee.digital.library.extension.load
 import wee.digital.library.extension.moneyFormat
 import wee.digital.library.extension.nowFormat
 
@@ -12,12 +13,21 @@ class PaymentView(private val v: PaymentFragment) {
         v.addClickListener(v.paymentViewAccept, v.paymentViewDeny)
     }
 
-    fun bindPaymentInfo(obj: JsonObject) {
-        v.paymentImageViewStation.setImageResource(R.drawable.drw_btn_primary)
-        v.paymentTextViewStation.text = "GS25"
-        v.paymentTextViewDate.text = "${nowFormat("dd - MM - yyyy")}"
-        v.paymentTextViewAmount.text = "123456789".moneyFormat()
+    fun onPaymentDataChanged(it: PaymentArg?) {
+        when (it) {
+            null -> v.dismiss()
+            else -> {
+                v.paymentTextViewDate.text = "${nowFormat("dd - MM - yyyy")}"
+                v.paymentTextViewAmount.text = it.amount.moneyFormat()
+            }
+        }
     }
 
-
+    fun onDeviceInfoChanged(it: DeviceInfo?) {
+        it?.apply {
+            v.paymentImageViewStation.load("%s%s".format(SystemUrl.LOGO_SHOP, shopID))
+            v.paymentTextViewStation.text = fullName
+            v.paymentTextViewStation2.text = fullName
+        }
+    }
 }

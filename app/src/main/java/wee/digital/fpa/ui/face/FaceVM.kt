@@ -18,8 +18,6 @@ import wee.digital.fpa.ui.confirm.ConfirmArg
 
 class FaceVM : ViewModel() {
 
-    val paymentInfo = MutableLiveData<JsonObject>()
-
     var verifyError = EventLiveData<ConfirmArg>()
 
     var verifySuccess = EventLiveData<Boolean>()

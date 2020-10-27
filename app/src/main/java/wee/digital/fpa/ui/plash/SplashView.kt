@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class SplashView(private val v: SplashFragment) {
 
-    private val paymentInterval: Int = 10 // second
+    private val paymentInterval: Int = 60 // second
 
     private val viewTransition = ChangeBounds().apply {
         duration = 400

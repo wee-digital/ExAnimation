@@ -10,7 +10,3 @@ data class ClientIDResp(
         var ip: String = ""
 )
 
-data class DataPaymentRequest(
-        val clientIp: String,
-        val socket: SocketResultResp
-)

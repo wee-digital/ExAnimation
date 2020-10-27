@@ -1,18 +1,16 @@
 package wee.digital.fpa.ui.payment
 
 import android.view.View
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
+import wee.digital.fpa.ui.MainVM
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.face.FaceVM
-import wee.digital.fpa.ui.plash.SplashVM
 
 class PaymentFragment : BaseDialog() {
 
-    private val splashVM by lazy { activityVM(SplashVM::class) }
+    private val mainVM by lazy { activityVM(MainVM::class) }
 
     private val vm by lazy { activityVM(PaymentVM::class) }
 
@@ -27,8 +25,11 @@ class PaymentFragment : BaseDialog() {
     }
 
     override fun onLiveDataObserve() {
-        splashVM.paymentInfo.observe {
-            onPaymentData(it)
+        mainVM.paymentArg.observe {
+            v.onPaymentDataChanged(it)
+        }
+        mainVM.deviceInfo.observe {
+            v.onDeviceInfoChanged(it)
         }
     }
 
@@ -36,22 +37,10 @@ class PaymentFragment : BaseDialog() {
         when (v) {
             paymentViewAccept -> {
                 dismiss()
-                activityVM(FaceVM::class).paymentInfo.value = splashVM.paymentInfo.value
                 navigate(MainDirections.actionGlobalFaceFragment())
             }
             paymentViewDeny -> {
-                splashVM.paymentInfo.value = null
-            }
-        }
-    }
-
-    private fun onPaymentData(obj: JsonObject?) {
-        when (obj) {
-            null -> {
-                dismiss()
-            }
-            else -> {
-                v.bindPaymentInfo(obj)
+                mainVM.paymentArg.value = null
             }
         }
     }
