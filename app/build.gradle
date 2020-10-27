@@ -187,6 +187,12 @@ dependencies {
     //handler keyboard show
     implementation 'gun0912.ted:tedkeyboardobserver:1.0.0-alpha2'
 
+    //exo player
+    implementation 'com.google.android.exoplayer:exoplayer:2.12.0'
+    // GLIDE
+    implementation deps.glide.glide
+    implementation deps.glide.compiler
+
 }
 
 apply plugin: "com.google.gms.google-services"
