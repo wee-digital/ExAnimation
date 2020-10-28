@@ -7,6 +7,8 @@ import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.device.DeviceVM
 
 class QrFragment : Main.Dialog(), ScanQRCode.QRCodeProcessingListener {
 
@@ -28,7 +30,7 @@ class QrFragment : Main.Dialog(), ScanQRCode.QRCodeProcessingListener {
         }
         qrVM.qrCode.observe {
             dismiss()
-            Shared.qrCode.value = it
+            activityVM(DeviceVM::class).objQRCode.value = it
             navigate(MainDirections.actionGlobalDeviceFragment())
         }
     }

@@ -60,15 +60,27 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/qrTextViewHint"
-            style="@style/TextView3"
+            style="@style/Headline2"
             android:layout_margin="@dimen/margin4"
             android:gravity="center"
-            android:text="Vui lòng đưa mã vào vùng nhận diện"
+            android:text="Vui lòng đưa mã vào\nvùng nhận diện"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/qrImageViewCamera"
-            app:layout_constraintVertical_bias="0.246" />
+            app:layout_constraintVertical_bias="0.5" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/qrViewProgress"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_24sdp"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="@+id/qrTextViewHint"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/qrTextViewHint"
+            tools:src="@mipmap/img_placeholder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

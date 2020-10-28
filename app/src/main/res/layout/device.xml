@@ -43,16 +43,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceTextViewStation"
-            style="@style/TextView5"
-            android:layout_margin="@dimen/margin2"
-            android:fontFamily="@font/inter_semibold"
+            style="@style/Headline1SemiBold"
+            android:layout_marginStart="@dimen/margin2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deviceTextViewTitle"
             tools:text="@tools:sample/lorem" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceTextViewHint"
-            style="@style/TextView3"
+            style="@style/Headline3"
             android:layout_marginTop="@dimen/margin"
             android:text="Bạn vui lòng nhập tên thiết bị"
             app:layout_constraintStart_toStartOf="@+id/deviceTextViewStation"
@@ -61,10 +60,8 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/deviceEditTextName"
             style="@style/EditText"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_36sdp"
             android:layout_marginStart="@dimen/margin2"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="@dimen/margin5"
             android:layout_marginEnd="@dimen/margin2"
             android:background="@null"
             android:hint="Tên thiết bị (Ví dụ: thiết bị số 1,...)"
@@ -76,11 +73,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceTextViewError"
-            style="@style/TextView"
+            style="@style/DescriptionRegular"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/margin2"
             android:layout_marginStart="@dimen/margin2"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin2"
             android:textColor="@color/colorAlert"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +87,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceTextViewTerm"
-            style="@style/TextView"
+            style="@style/DescriptionSemibold"
             android:layout_width="0dp"
             android:layout_marginStart="@dimen/margin2"
             android:layout_marginTop="@dimen/margin4"
@@ -102,7 +99,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceViewRegister"
-            style="@style/Button.Primary"
+            style="@style/Button.Semibold"
             android:layout_margin="@dimen/margin2"
             android:text="Đăng ký thiết bị"
             app:layout_constraintEnd_toEndOf="parent"

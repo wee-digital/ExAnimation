@@ -29,7 +29,7 @@ class QrVM : BaseViewModel() {
             return
         }
         log.d("QR is wrong")
-        message.value = "Mã không đúng. Bạn vui lòng thử lại lần nữa"
+        message.value = "Mã không đúng. Bạn vui\nlòng thử lại lần nữa"
         isQRChecked = false
     }
 

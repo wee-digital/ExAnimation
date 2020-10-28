@@ -15,7 +15,11 @@ class AdvFragment : Main.Dialog() {
             MyMediaPlayer(RawResourceDataSource.buildRawResourceUri(R.raw.video_water).toString())
     )
 
-    private val imageList = listOf(R.mipmap.img_adv1, R.mipmap.img_adv2, R.mipmap.img_adv3, R.mipmap.img_adv4)
+    private val imageList = listOf(
+            R.mipmap.img_adv1,
+            R.mipmap.img_adv2,
+            R.mipmap.img_adv3,
+            R.mipmap.img_adv4)
 
     private lateinit var adapter: MediaAdapter
 

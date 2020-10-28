@@ -56,7 +56,7 @@ class DeviceView(private val v: DeviceFragment) {
 
     fun onBindStation(obj: JsonObject) {
         val s = obj.str("FullName")
-        val text = string(R.string.device_hi).format(s.bold())
+        val text = string(R.string.device_hi).format(s.color("#1279DA").bold())
         v.deviceTextViewStation.setHyperText(text)
     }
 
@@ -69,12 +69,14 @@ class DeviceView(private val v: DeviceFragment) {
         configDeviceNameText()
         configTermText()
         v.addClickListener(v.deviceViewBack, v.deviceViewClose, v.deviceViewRegister)
+        v.deviceEditTextName.requestFocus()
+
 
     }
 
     fun onProgressChanged(isVisibility: Boolean) {
         if (isVisibility) {
-            v.deviceViewRegister.gone()
+            v.deviceViewRegister.hide()
             v.deviceViewProgress.load(R.mipmap.img_progress)
         } else {
             v.deviceViewRegister.show()

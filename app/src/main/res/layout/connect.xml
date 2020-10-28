@@ -28,17 +28,16 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/connectTextViewTitle"
-        style="@style/TextView4"
+        style="@style/Headline1SemiBold"
         android:layout_marginStart="@dimen/margin2"
-        android:layout_marginTop="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin"
         android:text="Payment Terminal"
-        android:fontFamily="@font/inter_semibold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView2" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/connectTextViewHint"
-        style="@style/TextView4"
+        style="@style/Headline1Regular"
         android:text="Hướng dẫn kết nối"
         app:layout_constraintStart_toStartOf="@+id/connectTextViewTitle"
         app:layout_constraintTop_toBottomOf="@+id/connectTextViewTitle" />
@@ -52,10 +51,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewHelp1"
-        style="@style/Connect.HelpText"
+        style="@style/BodyRegular"
+        android:layout_marginStart="@dimen/margin"
         android:text="Đăng nhập tài khoản của đối tác tại pos.facepay.vn"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewHelp1"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewHelp1"
         app:layout_constraintTop_toTopOf="@+id/imageViewHelp1" />
 
@@ -68,9 +67,9 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewHelp2"
-        style="@style/Connect.HelpText"
-        android:text="Trên màn hình chính chọn “Thiết bị”, rồi chọn “Thêm thiết bị”. Mã kết nối thiết bị sẽ được hiển thị."
-        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/BodyRegular"
+        android:layout_marginStart="@dimen/margin"
+        android:text="Trên màn hình chính chọn “Thiết bị”, rồi chọn “Thêm\nthiết bị”. Mã kết nối thiết bị sẽ được hiển thị."
         app:layout_constraintStart_toEndOf="@+id/imageViewHelp2"
         app:layout_constraintTop_toTopOf="@+id/imageViewHelp2" />
 
@@ -83,16 +82,16 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewHelp3"
-        style="@style/Connect.HelpText"
+        style="@style/BodyRegular"
+        android:layout_marginStart="@dimen/margin"
         android:text="Dùng thiết bị này quét mã kết nối thiết bị"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewHelp3"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewHelp3"
         app:layout_constraintTop_toTopOf="@+id/imageViewHelp3" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/connectViewScanQR"
-        style="@style/Button.Primary"
+        style="@style/Button.Semibold"
         android:layout_margin="@dimen/margin2"
         android:text="Quét mã QR"
         app:layout_constraintBottom_toBottomOf="parent"
