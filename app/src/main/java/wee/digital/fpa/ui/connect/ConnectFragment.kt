@@ -4,21 +4,21 @@ import android.view.View
 import kotlinx.android.synthetic.main.connect.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 
-class ConnectFragment : BaseFragment() {
+class ConnectFragment : Main.Fragment() {
 
-    private val vm by lazy { activityVM(ConnectVM::class) }
+    private val connectVM by lazy { activityVM(ConnectVM::class) }
 
-    private val v by lazy { ConnectView(this) }
+    private val connectView by lazy { ConnectView(this) }
 
     override fun layoutResource(): Int {
         return R.layout.connect
     }
 
     override fun onViewCreated() {
-        v.onViewInit()
+        connectView.onViewInit()
     }
 
     override fun onLiveDataObserve() {

@@ -20,7 +20,7 @@
         app:destination="@id/cardFragment" />
     <dialog
         android:id="@+id/progressNapasFragment"
-        android:name="wee.digital.fpa.ui.progress.napas.ProgressNapasFragment"
+        android:name="wee.digital.fpa.ui.progress.ProgressNapasFragment"
         android:label="ProgressNapasFragment"
         tools:layout="@layout/progress_napas" />
     <action
@@ -76,7 +76,7 @@
         app:destination="@id/confirmFragment" />
     <dialog
         android:id="@+id/progressPayFragment"
-        android:name="wee.digital.fpa.ui.progress.pay.ProgressPayFragment"
+        android:name="wee.digital.fpa.ui.progress.ProgressPayFragment"
         android:label="ProgressPayFragment"
         tools:layout="@layout/progress_pay" />
     <action

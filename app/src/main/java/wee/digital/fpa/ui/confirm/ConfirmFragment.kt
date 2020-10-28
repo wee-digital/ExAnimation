@@ -1,14 +1,14 @@
 package wee.digital.fpa.ui.confirm
 
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseDialog
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 
-class ConfirmFragment : BaseDialog() {
+class ConfirmFragment : Main.Dialog() {
 
-    private val vm by lazy { activityVM(ConfirmVM::class) }
+    private val confirmVM by lazy { activityVM(ConfirmVM::class) }
 
-    private val v by lazy { ConfirmView(this) }
+    private val confirmView by lazy { ConfirmView(this) }
 
     override fun layoutResource(): Int {
         return R.layout.confirm
@@ -18,9 +18,9 @@ class ConfirmFragment : BaseDialog() {
     }
 
     override fun onLiveDataObserve() {
-        vm.arg.observe {
+        confirmVM.arg.observe {
             it ?: return@observe
-            v.onBindArg(it)
+            confirmView.onBindArg(it)
         }
     }
 

@@ -4,10 +4,11 @@ import android.view.View
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import kotlinx.android.synthetic.main.adv.*
 import wee.digital.fpa.R
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
 
-class AdvFragment : BaseDialog() {
+class AdvFragment : Main.Dialog() {
 
     private val videoList = listOf(
             MyMediaPlayer(RawResourceDataSource.buildRawResourceUri(R.raw.video_tree).toString()),
@@ -18,7 +19,7 @@ class AdvFragment : BaseDialog() {
 
     private lateinit var adapter: MediaAdapter
 
-    private val vm by lazy { activityVM(AdvVM::class) }
+    private val advVM by lazy { activityVM(AdvVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.adv

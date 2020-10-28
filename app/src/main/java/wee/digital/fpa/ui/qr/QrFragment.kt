@@ -6,29 +6,27 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.data.repository.Shared
-import wee.digital.fpa.ui.base.BaseDialog
-import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.device.DeviceVM
+import wee.digital.fpa.ui.Main
 
-class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
+class QrFragment : Main.Dialog(), ScanQRCode.QRCodeProcessingListener {
 
-    private val vm by lazy { viewModel(QrVM::class) }
+    private val qrVM by lazy { viewModel(QrVM::class) }
 
-    private val v by lazy { QrView(this) }
+    private val qrView by lazy { QrView(this) }
 
     override fun layoutResource(): Int {
         return R.layout.qr
     }
 
     override fun onViewCreated() {
-        v.onViewInit()
+        qrView.onViewInit()
     }
 
     override fun onLiveDataObserve() {
-        vm.message.observe {
-            v.onBindMessage(it)
+        qrVM.message.observe {
+            qrView.onBindMessage(it)
         }
-        vm.qrCode.observe {
+        qrVM.qrCode.observe {
             dismiss()
             Shared.qrCode.value = it
             navigate(MainDirections.actionGlobalDeviceFragment())
@@ -47,7 +45,7 @@ class QrFragment : BaseDialog(), ScanQRCode.QRCodeProcessingListener {
      * [ScanQRCode.QRCodeProcessingListener] implement
      */
     override fun onResult(result: String) {
-        vm.checkQRCode(result)
+        qrVM.checkQRCode(result)
     }
 
 }

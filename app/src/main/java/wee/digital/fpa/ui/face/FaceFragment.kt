@@ -2,52 +2,52 @@ package wee.digital.fpa.ui.face
 
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.confirm.ConfirmVM
 
-class FaceFragment : BaseFragment() {
+class FaceFragment : Main.Fragment() {
 
-    private val vm: FaceVM by lazy { activityVM(FaceVM::class) }
+    private val faceVM: FaceVM by lazy { activityVM(FaceVM::class) }
 
-    private val v: FaceView by lazy { FaceView(this) }
+    private val faceView: FaceView by lazy { FaceView(this) }
 
     override fun layoutResource(): Int = R.layout.face
 
     override fun onViewCreated() {
-        v.onViewInit()
-        v.startRemaining {
+        faceView.onViewInit()
+        faceView.startRemaining {
             navigate(MainDirections.actionGlobalSplashFragment()) {
                 setLaunchSingleTop()
             }
         }
-        v.onFaceEligible = { bitmap, pointData, dataCollect ->
-            vm.verifyFace(bitmap, pointData, dataCollect)
+        faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
+            faceVM.verifyFace(bitmap, pointData, dataCollect)
         }
     }
 
     override fun onLiveDataObserve() {
-        vm.verifyError.observe {
+        faceVM.verifyError.observe {
             onFaceVerifyError(it)
         }
-        vm.verifySuccess.observe {
+        faceVM.verifySuccess.observe {
             onFaceVerifySuccess()
         }
     }
 
     private fun onFaceVerifySuccess() {
-        v.animateOnFaceCaptured()
+        faceView.animateOnFaceCaptured()
         navigate(MainDirections.actionGlobalPinFragment())
     }
 
     private fun onFaceVerifyError(it: ConfirmArg) {
         onFaceVerifySuccess()
         return
-        v.animateOnFaceCaptured()
+        faceView.animateOnFaceCaptured()
         it.onAccept = {
-            v.animateOnStartFaceReg {
-                v.hasFaceDetect = true
+            faceView.animateOnStartFaceReg {
+                faceView.hasFaceDetect = true
             }
         }
         it.onDeny = {

@@ -1,12 +1,12 @@
-package wee.digital.fpa.ui.progress.napas
+package wee.digital.fpa.ui.progress
 
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 
-class ProgressNapasFragment : BaseFragment() {
+class ProgressNapasFragment : Main.Fragment() {
 
-    private val vm by lazy { activityVM(ProgressNapasVM::class) }
+    private val progressVM by lazy { activityVM(ProgressVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.progress_napas

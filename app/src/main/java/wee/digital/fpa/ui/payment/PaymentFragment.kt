@@ -4,15 +4,16 @@ import android.view.View
 import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainVM
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
 
-class PaymentFragment : BaseDialog() {
+class PaymentFragment : Main.Dialog() {
 
     private val mainVM by lazy { activityVM(MainVM::class) }
 
-    private val vm by lazy { activityVM(PaymentVM::class) }
+    private val localVM by lazy { activityVM(PaymentVM::class) }
 
     private val v by lazy { PaymentView(this) }
 

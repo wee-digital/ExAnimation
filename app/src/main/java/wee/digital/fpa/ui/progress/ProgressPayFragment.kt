@@ -1,12 +1,11 @@
-package wee.digital.fpa.ui.progress.pay
+package wee.digital.fpa.ui.progress
 
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
+class ProgressPayFragment : Main.Fragment() {
 
-class ProgressPayFragment : BaseFragment() {
-
-    private val vm by lazy { activityVM(ProgressPayVM::class) }
+    private val progressVM by lazy { activityVM(ProgressVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.progress_pay
