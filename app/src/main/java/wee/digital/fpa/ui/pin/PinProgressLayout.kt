@@ -14,11 +14,8 @@ import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.transition.ChangeBounds
 import androidx.transition.Transition
-import androidx.transition.TransitionManager
 import wee.digital.fpa.R
-import wee.digital.fpa.util.SimpleTransitionListener
-import wee.digital.library.extension.backgroundTint
-import wee.digital.library.extension.tint
+import wee.digital.library.extension.*
 import wee.digital.library.widget.AppCustomView
 
 class PinProgressLayout : ConstraintLayout {
@@ -186,35 +183,27 @@ class PinProgressLayout : ConstraintLayout {
 
     private fun transformProgressView(isForward: Boolean) {
         val index = keyList.lastIndex
-        TransitionManager.beginDelayedTransition(this, progressTransition)
-
         val viewId = progressView.id
-        val set = ConstraintSet()
-
-        set.clone(this)
-        if (index < 0) set.also {
-            it.setVisibility(viewId, View.INVISIBLE)
-            it.applyTo(this)
-            return
-        }
-
-        val w = when (index) {
-            0 -> measuredHeight
-            else -> stepWidth + measuredHeight
-        }
-        val margin = (index - 1) * stepWidth
-
-        set.also {
-            if (isForward) {
-                getRoundedViewId(index - 2)?.also { id -> it.setVisibility(id, View.VISIBLE) }
+        createTransition(progressTransition) {
+            if (index < 0) {
+                setVisibility(viewId, View.INVISIBLE)
             } else {
-                getRoundedViewId(index)?.also { id -> it.setVisibility(id, View.INVISIBLE) }
+                val w = when (index) {
+                    0 -> measuredHeight
+                    else -> stepWidth + measuredHeight
+                }
+                val margin = (index - 1) * stepWidth
+                if (isForward) getRoundedViewId(index - 2)?.also { id ->
+                    setVisibility(id, View.VISIBLE)
+                } else getRoundedViewId(index)?.also { id ->
+                    setVisibility(id, View.INVISIBLE)
+                }
+
+                setVisibility(viewId, View.VISIBLE)
+                constrainDefaultWidth(viewId, w)
+                constrainWidth(viewId, w)
+                connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, margin)
             }
-            it.setVisibility(viewId, View.VISIBLE)
-            it.constrainDefaultWidth(viewId, w)
-            it.constrainWidth(viewId, w)
-            it.connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, margin)
-            it.applyTo(this)
         }
     }
 
@@ -240,12 +229,23 @@ class PinProgressLayout : ConstraintLayout {
     }
 
     private fun notifyInputChanged() {
-        if (keyList.size == builder.itemCount) {
-            val strings = StringBuilder()
-            keyList.iterator().forEach { strings.append(it) }
-            onItemFilled(strings.toString())
+        when (keyList.size) {
+            builder.itemCount -> {
+                val strings = StringBuilder()
+                keyList.iterator().forEach { strings.append(it) }
+                onItemFilled(strings.toString())
+            }
         }
     }
+
+    fun notifyInputRemoved() {
+        keyList.clear()
+        val viewId = progressView.id
+        createTransition(progressTransition) {
+            connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
+        }
+    }
+
 
     private fun pushKey(key: String) {
         keyEvent.add(key)

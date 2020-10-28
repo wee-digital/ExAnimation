@@ -24,8 +24,10 @@
         android:supportsRtl="true"
         android:theme="@style/App.Theme">
 
-        <activity android:name=".ui.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+        <activity
+            android:name=".ui.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

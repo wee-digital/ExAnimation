@@ -2,7 +2,7 @@ package wee.digital.fpa.ui.face
 
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.data.Timeout
+import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.confirm.ConfirmArg
@@ -21,13 +21,13 @@ class FaceFragment : Main.Fragment() {
         faceView.onViewInit()
 
         faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
-            remainingVM.stopRemaining()
+            remainingVM.stopTimeout()
             faceVM.verifyFace(bitmap, pointData, dataCollect)
         }
     }
 
     override fun onLiveDataObserve() {
-        remainingVM.startRemaining(Timeout.FACE_TIMEOUT)
+        remainingVM.startTimeout(Timeout.FACE_TIMEOUT)
         remainingVM.interval.observe {
             faceView.onBindRemainingText(it)
             if (it == 0) navigate(MainDirections.actionGlobalSplashFragment()) {
@@ -52,7 +52,7 @@ class FaceFragment : Main.Fragment() {
         onFaceVerifySuccess()
         return
         it.onAccept = {
-            remainingVM.startRemaining(Timeout.FACE_TIMEOUT)
+            remainingVM.startTimeout(Timeout.FACE_TIMEOUT)
             faceView.animateOnStartFaceReg {
                 faceView.hasFaceDetect = true
             }
@@ -63,7 +63,7 @@ class FaceFragment : Main.Fragment() {
             }
         }
         faceView.animateOnFaceCaptured()
-        remainingVM.startRemaining(Timeout.FACE_TIMEOUT)
+        remainingVM.startTimeout(Timeout.FACE_TIMEOUT)
         activityVM(ConfirmVM::class).arg.value = it
         navigate(MainDirections.actionGlobalConfirmFragment())
 
