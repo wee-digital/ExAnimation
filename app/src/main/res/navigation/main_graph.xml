@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/advFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment android:id="@+id/placeholder" />
     <action
