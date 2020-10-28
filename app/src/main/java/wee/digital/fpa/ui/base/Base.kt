@@ -42,10 +42,10 @@ fun <T> Fragment.setNavResult(key: String?, result: T) {
 }
 
 fun NavOptions.Builder.setVerticalAnim(): NavOptions.Builder {
-    setEnterAnim(R.anim.vertical_enter)
-    setPopEnterAnim(R.anim.vertical_pop_enter)
-    setExitAnim(R.anim.vertical_exit)
-    setPopExitAnim(R.anim.vertical_pop_exit)
+    setEnterAnim(R.anim.vertical_reserved_enter)
+    setPopEnterAnim(R.anim.vertical_reserved_pop_enter)
+    setExitAnim(R.anim.vertical_reserved_exit)
+    setPopExitAnim(R.anim.vertical_reserved_pop_exit)
     return this
 }
 

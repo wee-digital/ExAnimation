@@ -65,7 +65,7 @@ class WebSocketControl : WebSocketListener() {
 
     override fun onMessage(webSocket: WebSocket, text: String) {
         super.onMessage(webSocket, text)
-        mWebSocketMonitorListener?.onResult(text)
+        mWebSocketMonitorListener?.onMessage(text)
         LogGrafana.instance.postWebSocket("onResult : $text")
     }
 
@@ -133,7 +133,7 @@ class WebSocketControl : WebSocketListener() {
         fun onDisconnected(message: String) {}
         fun onClosing(message: String) {}
         fun unKnownError(message: String) {}
-        fun onResult(message: String)
+        fun onMessage(message: String)
         fun onError(webSocket: WebSocket, t: Throwable)
     }
 

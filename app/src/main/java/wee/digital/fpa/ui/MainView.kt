@@ -4,6 +4,8 @@ import com.intel.realsense.librealsense.RsContext
 import com.intel.realsense.librealsense.UsbUtilities
 import kotlinx.android.synthetic.main.main.*
 import wee.digital.fpa.BuildConfig
+import wee.digital.fpa.MainDirections
+import wee.digital.fpa.R
 import wee.digital.fpa.app.App
 import wee.digital.fpa.app.app
 import wee.digital.fpa.camera.RealSenseControl
@@ -30,6 +32,7 @@ class MainView(val v: MainActivity) {
     }
 
     fun onDeviceInfoChanged(it: DeviceInfo?){
-        v.mainTextViewDeviceInfo.text = "${it?.fullName}${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_NAME})"
+        v.mainTextViewDeviceInfo.text = "${it?.fullName}\n${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_NAME})"
     }
+
 }

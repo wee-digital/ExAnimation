@@ -2,7 +2,6 @@ package wee.digital.fpa.ui
 
 
 import androidx.navigation.NavDirections
-import okhttp3.WebSocket
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.app.toast
@@ -49,7 +48,9 @@ class MainActivity : BaseActivity() {
             onTokenResponseChanged(it)
         }
         socketVM.webSocket.observe {
-            onWebSocketChanged(it)
+            if (it == null) {
+                onCheckDeviceStatus()
+            }
         }
         socketVM.response.observe {
             onSocketResponseChanged(it)
@@ -65,18 +66,21 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun onTokenResponseChanged(it: GetTokenDTOResp) {
-        when (it.Code) {
-            0 -> it.Token?.let { token -> socketVM.connectSocket(token) }
-            else -> mainVM.checkDeviceStatusOnTimer()
+    private fun onCheckDeviceStatus() {
+        navigate(MainDirections.actionGlobalDisconnectFragment()) {
+            setEnterAnim(R.anim.vertical_enter)
+            setExitAnim(R.anim.vertical_exit)
         }
+        mainVM.checkDeviceStatusOnTimer()
     }
 
-    private fun onWebSocketChanged(it: WebSocket?) {
-        when (it) {
-            null -> {
-                navigate(MainDirections.actionGlobalDisconnectFragment())
-                mainVM.checkDeviceStatusOnTimer()
+    private fun onTokenResponseChanged(it: GetTokenDTOResp) {
+        when (it.Code) {
+            0 -> it.Token?.let { token ->
+                socketVM.connectSocket(token)
+            }
+            else -> {
+                onCheckDeviceStatus()
             }
         }
     }

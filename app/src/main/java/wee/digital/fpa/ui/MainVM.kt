@@ -58,7 +58,7 @@ class MainVM : BaseViewModel() {
 
             override fun onFailed(code: Int, message: String) {
                 log.d("checkDeviceStatus $code - $message")
-                onDeviceStatus(ErrCode.DEVICE_FAIL)
+                checkDeviceStatusOnTimer()
             }
 
         })
@@ -126,9 +126,6 @@ class MainVM : BaseViewModel() {
 
     private fun onDeviceStatus(status: Int) {
         when (status) {
-            ErrCode.DEVICE_FAIL -> {
-                checkDeviceStatusOnTimer()
-            }
             ErrCode.DEVICE_EXISTS -> {
                 getToken()
             }

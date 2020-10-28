@@ -63,13 +63,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         observe(this@BaseActivity, Observer(block))
     }
 
-    fun navAnim(): NavOptions {
-        return NavOptions.Builder()
-                .setEnterAnim(R.anim.slide_in_up)
-                .setPopExitAnim(R.anim.slide_in_down)
-                .build()
-    }
-
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             hideSystemUI()

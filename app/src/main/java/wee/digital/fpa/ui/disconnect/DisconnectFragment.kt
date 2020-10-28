@@ -2,8 +2,12 @@ package wee.digital.fpa.ui.disconnect
 
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.SocketVM
+import wee.digital.fpa.ui.base.activityVM
 
 class DisconnectFragment : Main.Dialog() {
+
+    private val socketVM by lazy { activityVM(SocketVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.disconnnect
@@ -14,6 +18,11 @@ class DisconnectFragment : Main.Dialog() {
 
 
     override fun onLiveDataObserve() {
+        socketVM.webSocket.observe {
+            if (it != null) {
+                dismiss()
+            }
+        }
     }
 
 }

@@ -42,8 +42,8 @@
     </style>
 
     <style name="App.DialogAnim">
-        <item name="android:windowEnterAnimation">@anim/vertical_enter</item>
-        <item name="android:windowExitAnimation">@anim/vertical_exit</item>
+        <item name="android:windowEnterAnimation">@anim/vertical_reserved_enter</item>
+        <item name="android:windowExitAnimation">@anim/vertical_reserved_exit</item>
     </style>
 
     <style name="App.Dialog.Transparent">

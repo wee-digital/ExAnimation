@@ -24,18 +24,18 @@ class SocketVM : BaseViewModel(), WebSocketControl.WebSocketMonitorListener {
      * [WebSocketControl.WebSocketMonitorListener] implement
      */
     override fun onConnected(socket: WebSocket, response: Response) {
-        log.d("on socket connect")
+        log.d("WebSocketMonitorListener.onConnected: ${socket.request().url}")
         webSocket.postValue(socket)
     }
 
-    override fun onResult(message: String) {
+    override fun onMessage(message: String) {
         val data = message.parse(SocketResultResp::class.java) ?: return
-        log.d("on socket response: ${message.jsonFormat()}")
+        log.d("WebSocketMonitorListener.onMessage: ${message.jsonFormat()}")
         response.postValue(data)
     }
 
     override fun onError(socket: WebSocket, t: Throwable) {
-        log.d("on socket disconnect")
+        log.d("WebSocketMonitorListener.onError: $${socket.request().url} ${t.message}")
         webSocket.postValue(null)
     }
 
