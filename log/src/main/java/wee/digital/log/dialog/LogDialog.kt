@@ -12,7 +12,7 @@ import wee.digital.log.LogBook
 import wee.digital.log.R
 import wee.digital.log.data.LogItem
 
-class LogDialog : BaseDialog<LogItem> {
+class LogDialog : BaseLogDialog<LogItem> {
 
     private val dataUpdateObserver: Observer<Long> by lazy {
         Observer<Long> {

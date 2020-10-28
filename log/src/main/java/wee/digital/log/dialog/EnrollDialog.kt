@@ -8,7 +8,7 @@ import wee.digital.log.R
 import wee.digital.log.data.EnrollItem
 import wee.digital.log.data.LogDb
 
-class EnrollDialog : BaseDialog<EnrollItem> {
+class EnrollDialog : BaseLogDialog<EnrollItem> {
 
     constructor(activity: FragmentActivity?) : super(activity)
 

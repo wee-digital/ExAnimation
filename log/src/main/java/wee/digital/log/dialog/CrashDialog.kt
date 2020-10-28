@@ -11,7 +11,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CrashDialog : BaseDialog<CrashItem> {
+class CrashDialog : BaseLogDialog<CrashItem> {
 
     private val DATE_TIME_FORMAT = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
 

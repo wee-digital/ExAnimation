@@ -15,7 +15,6 @@ import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.repository.utils.SocketEvent
 import wee.digital.fpa.ui.base.BaseActivity
 import wee.digital.fpa.util.Utils
-import wee.digital.library.extension.post
 
 class MainActivity : BaseActivity() {
 
@@ -23,7 +22,7 @@ class MainActivity : BaseActivity() {
 
     private val mainVM by lazy { viewModel(MainVM::class) }
 
-    private val v by lazy { MainView(this) }
+    private val mainView by lazy { MainView(this) }
 
     override fun layoutResource(): Int {
         return R.layout.main
@@ -34,11 +33,10 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onViewCreated() {
-        v.onViewInit()
+        mainView.onViewInit()
     }
 
     override fun onLiveDataObserve() {
-        return
         mainVM.checkDeviceStatus()
         mainVM.syncDeviceInfo()
         mainVM.rootDirection.observe {
@@ -61,7 +59,7 @@ class MainActivity : BaseActivity() {
     /**
      *
      */
-    private fun onRootDirectionChanged(it: NavDirections){
+    private fun onRootDirectionChanged(it: NavDirections) {
         navigate(it) {
             setLaunchSingleTop()
         }
@@ -76,7 +74,10 @@ class MainActivity : BaseActivity() {
 
     private fun onWebSocketChanged(it: WebSocket?) {
         when (it) {
-            null -> mainVM.checkDeviceStatusOnTimer()
+            null -> {
+                navigate(MainDirections.actionGlobalDisconnectFragment())
+                mainVM.checkDeviceStatusOnTimer()
+            }
         }
     }
 
@@ -113,6 +114,9 @@ class MainActivity : BaseActivity() {
         when {
             it?.uid.isNullOrEmpty() -> navigate(MainDirections.actionGlobalConnectFragment()) {
                 setLaunchSingleTop()
+            }
+            else -> {
+                mainView.onDeviceInfoChanged(it)
             }
         }
     }

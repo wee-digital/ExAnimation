@@ -25,7 +25,7 @@
     <dimen name="textSize4">@dimen/_15ssp</dimen>
     <dimen name="textSize5">@dimen/_18ssp</dimen>
 
-    <dimen name="radius">@dimen/_6sdp</dimen>
+    <dimen name="radius">@dimen/_5sdp</dimen>
     <dimen name="radius2">@dimen/_10sdp</dimen>
 
 </resources>

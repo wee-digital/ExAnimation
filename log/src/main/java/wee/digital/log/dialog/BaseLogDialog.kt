@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.dialog_log.view.*
 import wee.digital.log.R
 
-abstract class BaseDialog<T> {
+abstract class BaseLogDialog<T> {
 
     protected var self: AlertDialog? = null
 

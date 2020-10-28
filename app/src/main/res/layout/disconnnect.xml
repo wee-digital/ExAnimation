@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchWidth">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/WrapContent"
+        android:layout_margin="@dimen/margin2"
+        android:background="@drawable/bg_rounded"
+        android:backgroundTint="@color/colorAlert"
+        android:elevation="1dp"
+        android:paddingStart="@dimen/margin"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingEnd="@dimen/margin"
+        android:paddingBottom="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/disconnectImageViewIcon"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ic_x_mark_outline"
+            android:tint="@color/colorWhite" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/disconnectTextViewMessage"
+            style="@style/TextView"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:text="Mất kết nối với hệ thống..."
+            android:textColor="@color/colorWhite" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

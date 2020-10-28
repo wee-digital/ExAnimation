@@ -114,7 +114,14 @@
     <action
         android:id="@+id/action_global_faceFragment"
         app:destination="@id/faceFragment" />
-
+    <dialog
+        android:id="@+id/disconnectFragment"
+        android:name="wee.digital.fpa.ui.disconnect.DisconnectFragment"
+        android:label="DisconnectFragment"
+        tools:layout="@layout/disconnnect" />
+    <action
+        android:id="@+id/action_global_disconnectFragment"
+        app:destination="@id/disconnectFragment" />
 
 
 </navigation>
