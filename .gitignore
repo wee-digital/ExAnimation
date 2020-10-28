@@ -16,3 +16,5 @@ dist/
 
 
 *.properties
+*.properties
+local.properties

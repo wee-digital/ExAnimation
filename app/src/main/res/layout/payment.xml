@@ -146,7 +146,7 @@
             android:id="@+id/paymentViewDeny"
             style="@style/Button.Semibold"
             android:text="Hủy bỏ"
-             android:background="null"
+             android:background="@null"
             android:textColor="@color/color_gray_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
