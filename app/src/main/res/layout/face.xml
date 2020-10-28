@@ -20,8 +20,12 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewRemaining"
-        style="@style/Remaining.Text"
-        tools:ignore="MissingConstraints"
+        style="@style/BodyRegular"
+        android:textColor="@color/color_gray_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/margin2"
         tools:text="Time remaining: 00:30" />
 
 
@@ -87,7 +91,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle1"
-        style="@style/TextView4"
+        style="@style/Headline1SemiBold"
         android:fontFamily="@font/inter_semibold"
         android:includeFontPadding="false"
         android:text="Selfie time !"
@@ -96,7 +100,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle2"
-        style="@style/TextView4"
+        style="@style/Headline1SemiBold"
         android:fontFamily="@font/inter_semibold"
         android:includeFontPadding="false"
         android:text="Đưa khuôn mặt"
@@ -108,7 +112,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle3"
-        style="@style/TextView2"
+        style="@style/Headline3"
         android:layout_marginTop="@dimen/margin"
         android:text="vào giữa vùng nhận diện"
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2"

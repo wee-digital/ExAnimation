@@ -37,7 +37,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentConfirmTitleInfo"
-            style="@style/Payment.Title"
+            style="@style/DescriptionSemibold"
             android:layout_marginTop="@dimen/margin2"
             android:text="Thông tin"
             app:layout_constraintStart_toStartOf="@id/uselessView"
@@ -45,23 +45,25 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextView1"
-            style="@style/Payment.Property"
-            android:layout_marginTop="@dimen/margin"
+            style="@style/BodyRegular"
+            android:layout_marginTop="@dimen/margin2"
+            android:textColor="@color/color_gray_2"
             android:text="Cửa hàng"
             app:layout_constraintStart_toStartOf="@+id/paymentConfirmTitleInfo"
             app:layout_constraintTop_toBottomOf="@+id/paymentConfirmTitleInfo" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextView2"
-            style="@style/Payment.Property"
+            style="@style/BodyRegular"
             android:layout_marginTop="@dimen/margin"
             android:text="Mã giao dịch"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@+id/paymentTextView1"
             app:layout_constraintTop_toBottomOf="@+id/paymentTextView1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextViewStation2"
-            style="@style/Payment.Property"
+            style="@style/BodyRegular"
             android:text="GS25"
             android:textColor="@color/colorBlack"
             app:layout_constraintBaseline_toBaselineOf="@+id/paymentTextView1"
@@ -69,9 +71,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextViewCode"
-            style="@style/Payment.Property"
+            style="@style/BodyRegular"
             android:text="#GS232590"
             android:textColor="@color/colorBlack"
+            android:visibility="invisible"
             app:layout_constraintBaseline_toBaselineOf="@+id/paymentTextView2"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -85,7 +88,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextView3"
-            style="@style/Payment.Title"
+            style="@style/DescriptionSemibold"
             android:layout_marginTop="@dimen/margin2"
             android:text="Số tiền"
             app:layout_constraintStart_toStartOf="@id/uselessView1"
@@ -93,13 +96,12 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextViewAmount"
-            style="@style/TextView"
+            style="@style/Headline1SemiBold"
             android:text="365,000"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_18ssp"
-            app:layout_constraintBottom_toBottomOf="@+id/paymentTextView3"
             app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
-            app:layout_constraintTop_toTopOf="@+id/paymentTextView3" />
+            app:layout_constraintTop_toBottomOf="@+id/paymentTextView3" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView"
@@ -111,11 +113,11 @@
             android:src="@mipmap/dong"
             app:layout_constraintDimensionRatio="w,19:31"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/paymentTextView3" />
+            app:layout_constraintTop_toTopOf="@id/paymentTextViewAmount" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextViewStation"
-            style="@style/TextView3"
+            style="@style/Headline3"
             android:layout_marginStart="@dimen/margin2"
             app:layout_constraintBottom_toTopOf="@+id/paymentTextViewDate"
             app:layout_constraintStart_toEndOf="@+id/paymentImageViewStation"
@@ -124,7 +126,8 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextViewDate"
-            style="@style/Payment.Property"
+            style="@style/DescriptionRegular"
+            android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="@+id/paymentImageViewStation"
             app:layout_constraintStart_toStartOf="@+id/paymentTextViewStation"
             app:layout_constraintTop_toBottomOf="@+id/paymentTextViewStation"
@@ -132,7 +135,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentViewAccept"
-            style="@style/Button.Primary"
+            style="@style/Button.Semibold"
             android:layout_marginBottom="@dimen/margin"
             android:text="Xác nhận"
             app:layout_constraintBottom_toTopOf="@+id/paymentViewDeny"
@@ -141,8 +144,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentViewDeny"
-            style="@style/Button"
+            style="@style/Button.Semibold"
             android:text="Hủy bỏ"
+             android:background="null"
+            android:textColor="@color/color_gray_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

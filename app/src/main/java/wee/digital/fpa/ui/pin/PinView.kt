@@ -1,6 +1,12 @@
 package wee.digital.fpa.ui.pin
 
+import android.graphics.LinearGradient
+import android.graphics.Shader
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.pin.*
+import kotlinx.android.synthetic.main.pin.confirmTextViewTitle
+import kotlinx.android.synthetic.main.pin.dialogViewClose
+import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.R
 import wee.digital.library.extension.color
 
@@ -57,7 +63,10 @@ class PinView(private val v: PinFragment) {
             v.confirmTextViewTitle.color("232323")
             v.confirmTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
         } else {
-            v.confirmTextViewTitle.color("F24141")
+            v.confirmTextViewTitle.paint.shader = LinearGradient(0F, 0F, v.qrTextViewHint.width.toFloat(), 0F,
+                    ContextCompat.getColor(v.requireContext(), R.color.gradient_red_start),
+                    ContextCompat.getColor(v.requireContext(), R.color.gradient_red_end),
+                    Shader.TileMode.CLAMP)
             v.confirmTextViewTitle.text = s
         }
     }
