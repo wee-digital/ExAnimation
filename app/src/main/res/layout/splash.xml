@@ -20,14 +20,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/splashTextViewRemaining"
-        style="@style/TextView"
-        android:layout_marginTop="@dimen/margin"
-        android:gravity="center"
-        android:textColor="@color/colorTextSecondary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Time remaining: 00:30" />
+        style="@style/Remaining.Text"
+        android:textColor="@color/colorWhite"
+        tools:text="Time remaining: 00:30"
+        tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/splashImageViewLogo"

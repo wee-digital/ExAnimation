@@ -13,6 +13,7 @@ import wee.digital.fpa.repository.utils.CancelPaymentCode
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.repository.utils.SocketEvent
 import wee.digital.fpa.ui.base.BaseActivity
+import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.util.Utils
 
 class MainActivity : BaseActivity() {

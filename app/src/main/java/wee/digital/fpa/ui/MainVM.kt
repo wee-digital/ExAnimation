@@ -18,7 +18,8 @@ import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.repository.utils.ErrCode
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.ui.base.BaseViewModel
-import wee.digital.fpa.ui.payment.PaymentArg
+import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.arg.PaymentArg
 import java.util.concurrent.TimeUnit
 
 class MainVM : BaseViewModel() {
@@ -27,11 +28,11 @@ class MainVM : BaseViewModel() {
 
     var tokenResponse = MutableLiveData<GetTokenDTOResp>()
 
-    val paymentArg = MutableLiveData<PaymentArg?>()
-
     val deviceInfo = MutableLiveData<DeviceInfo?>()
 
     val rootDirection get() = Main.rootDirection
+
+    val paymentArg = MutableLiveData<PaymentArg?>()
 
     fun syncDeviceInfo() {
         deviceInfo.postValue(BaseData.ins.getDeviceInfoPref())

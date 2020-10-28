@@ -4,10 +4,11 @@ import android.view.View
 import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
+import wee.digital.fpa.data.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainVM
-import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.vm.RemainingVM
 
 class PaymentFragment : Main.Dialog() {
 
@@ -26,6 +27,7 @@ class PaymentFragment : Main.Dialog() {
     }
 
     override fun onLiveDataObserve() {
+        remainingVM.startRemaining(Timeout.PAYMENT_TIMEOUT)
         mainVM.paymentArg.observe {
             v.onPaymentDataChanged(it)
         }
@@ -36,16 +38,21 @@ class PaymentFragment : Main.Dialog() {
 
     override fun onViewClick(v: View?) {
         when (v) {
-            paymentViewAccept -> {
-                dismiss()
-                navigate(MainDirections.actionGlobalFaceFragment()){
-                    setLaunchSingleTop()
-                }
-            }
-            paymentViewDeny -> {
-                mainVM.paymentArg.value = null
-            }
+            paymentViewAccept -> onPaymentAccept()
+            paymentViewDeny -> onPaymentDeny()
         }
+    }
+
+    private fun onPaymentAccept() {
+        mainVM.paymentArg.value = null
+        dismiss()
+        navigate(MainDirections.actionGlobalFaceFragment()) {
+            setLaunchSingleTop()
+        }
+    }
+
+    private fun onPaymentDeny() {
+        mainVM.paymentArg.value = null
     }
 
 }

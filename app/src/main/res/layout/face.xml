@@ -20,13 +20,8 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewRemaining"
-        style="@style/TextView"
-        android:layout_marginTop="@dimen/margin"
-        android:gravity="center"
-        android:textColor="@color/colorTextSecondary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Remaining.Text"
+        tools:ignore="MissingConstraints"
         tools:text="Time remaining: 00:30" />
 
 
@@ -85,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
         app:riv_border_color="@color/gray_1"
-        app:riv_border_width="@dimen/_1sdp"
+        app:riv_border_width="1dp"
         app:riv_mutate_background="true"
         app:riv_oval="true"
         tools:src="@mipmap/img_placeholder" />
@@ -119,9 +114,4 @@
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2"
         app:layout_constraintTop_toBottomOf="@+id/faceTextViewTitle2" />
 
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/viewTest"
-        style="@style/TestingWidget"
-        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

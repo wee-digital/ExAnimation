@@ -25,8 +25,8 @@
         android:id="@+id/mainTextViewDeviceInfo"
         style="@style/TextView"
         android:textColor="@color/colorWhite"
-        android:layout_margin="@dimen/margin"
-        android:textSize="@dimen/_3ssp"
+        android:layout_margin="@dimen/_2sdp"
+        android:textSize="@dimen/_2ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="DeviceName\n1.0.0" />

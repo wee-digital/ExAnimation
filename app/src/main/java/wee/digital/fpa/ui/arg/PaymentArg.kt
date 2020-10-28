@@ -1,4 +1,4 @@
-package wee.digital.fpa.ui.payment
+package wee.digital.fpa.ui.arg
 
 
 class PaymentArg(

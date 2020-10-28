@@ -7,10 +7,8 @@ import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import com.intel.realsense.librealsense.RsContext
 import com.intel.realsense.librealsense.UsbUtilities
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.face.*
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
 import wee.digital.fpa.camera.DataCollect
@@ -22,13 +20,9 @@ import wee.digital.fpa.util.SimpleTransitionListener
 import wee.digital.library.extension.bold
 import wee.digital.library.extension.load
 import wee.digital.library.extension.setHyperText
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicInteger
 
 
 class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
-
-    private val remainingInterval: Int = 30 // second
 
     private var mDetection: Detection? = null
 
@@ -38,8 +32,6 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
 
     private val animDuration: Long = 400
 
-    private var disposable: Disposable? = null
-
     private val viewTransition = ChangeBounds().apply {
         duration = animDuration
     }
@@ -47,11 +39,11 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
     private fun onLifecycleObserve() {
         v.viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
             override fun onPause() {
+                hasFaceDetect = false
                 App.realSenseControl?.listener = null
             }
 
             override fun onDestroy() {
-                disposable?.dispose()
                 App.realSenseControl?.stopStreamThread()
             }
         })
@@ -84,10 +76,14 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         }
     }
 
-    private fun onBindRemainingText(second: Int) {
-        val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
-        val sRemaining = "Thời gian còn lại: %s".format(sHour)
-        v.faceTextViewRemaining.setHyperText(sRemaining)
+    fun onBindRemainingText(second: Int) {
+        if (second > 0) {
+            val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
+            val sRemaining = "Thời gian còn lại: %s".format(sHour)
+            v.faceTextViewRemaining.setHyperText(sRemaining)
+        } else {
+            v.faceTextViewRemaining.text = null
+        }
     }
 
     fun animateOnFaceCaptured() {
@@ -115,15 +111,16 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         viewTransition.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
                 viewTransition.removeListener(this)
+                onViewAnimate {
+                    setAlpha(v.faceTextViewTitle1.id, 1f)
+                    setAlpha(v.faceTextViewTitle2.id, 1f)
+                    setAlpha(v.faceTextViewTitle3.id, 1f)
+                }
                 onEnd()
             }
         })
         viewTransition.duration = animDuration
         onViewAnimate {
-            //setAlpha(v.faceImageViewAnim.id, 0f)
-            setAlpha(v.faceTextViewTitle1.id, 1f)
-            setAlpha(v.faceTextViewTitle2.id, 1f)
-            setAlpha(v.faceTextViewTitle3.id, 1f)
             clear(viewId, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
         }
@@ -148,26 +145,6 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
             animate().scaleX(scale).duration = animDuration
             animate().scaleY(scale).duration = animDuration
         }
-    }
-
-    fun startRemaining(onEnd: () -> Unit) {
-        val waitingCounter = AtomicInteger(remainingInterval)
-        disposable?.dispose()
-        disposable = Observable
-                .interval(1, 1, TimeUnit.SECONDS)
-                .map {
-                    waitingCounter.decrementAndGet()
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it > 0) {
-                        onBindRemainingText(it)
-                    } else {
-                        disposable?.dispose()
-                        onEnd()
-                    }
-                }, {})
-
     }
 
 
