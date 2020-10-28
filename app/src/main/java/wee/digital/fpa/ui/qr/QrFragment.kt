@@ -5,7 +5,6 @@ import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
-import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.device.DeviceVM

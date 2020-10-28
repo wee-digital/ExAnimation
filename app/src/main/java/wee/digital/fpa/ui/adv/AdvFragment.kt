@@ -5,7 +5,6 @@ import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import kotlinx.android.synthetic.main.adv.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
 
 class AdvFragment : Main.Dialog() {

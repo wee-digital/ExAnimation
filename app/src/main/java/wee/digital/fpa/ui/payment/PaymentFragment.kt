@@ -6,12 +6,8 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.MainVM
-import wee.digital.fpa.ui.base.activityVM
 
 class PaymentFragment : Main.Dialog() {
-
-    private val mainVM by lazy { activityVM(MainVM::class) }
 
     private val v by lazy { PaymentView(this) }
 
@@ -41,7 +37,6 @@ class PaymentFragment : Main.Dialog() {
     }
 
     private fun onPaymentAccept() {
-        mainVM.paymentArg.value = null
         dismiss()
         navigate(MainDirections.actionGlobalFaceFragment()) {
             setLaunchSingleTop()

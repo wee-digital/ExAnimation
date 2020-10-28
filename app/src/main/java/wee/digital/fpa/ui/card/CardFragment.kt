@@ -3,7 +3,6 @@ package wee.digital.fpa.ui.card
 import kotlinx.android.synthetic.main.card.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.BaseFragment
 
 class CardFragment : Main.Fragment() {
 

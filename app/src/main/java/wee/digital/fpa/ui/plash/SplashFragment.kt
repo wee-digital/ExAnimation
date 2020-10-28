@@ -3,14 +3,11 @@ package wee.digital.fpa.ui.plash
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.MainVM
+import wee.digital.fpa.ui.arg.PaymentArg
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.arg.PaymentArg
 
 class SplashFragment : Main.Fragment() {
-
-    private val mainVM by lazy { activityVM(MainVM::class) }
 
     private val splashVM by lazy { activityVM(SplashVM::class) }
 
@@ -42,11 +39,11 @@ class SplashFragment : Main.Fragment() {
     private fun onPaymentArgChanged(arg: PaymentArg?) {
         when (arg) {
             null -> {
-                splashView.animateStopRemaining()
+                splashView.animateOnDimissPayment()
             }
             else -> {
                 navigate(MainDirections.actionGlobalPaymentFragment())
-                splashView.animateStartRemaining()
+                splashView.animateOnHasPayment()
             }
         }
     }

@@ -11,7 +11,10 @@ import wee.digital.fpa.camera.Detection
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.util.observerCamera
-import wee.digital.library.extension.*
+import wee.digital.library.extension.beginTransition
+import wee.digital.library.extension.bold
+import wee.digital.library.extension.load
+import wee.digital.library.extension.setHyperText
 
 
 class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {

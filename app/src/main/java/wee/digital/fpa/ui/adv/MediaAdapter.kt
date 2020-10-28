@@ -54,7 +54,7 @@ class MediaAdapter : RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
         customMediaView.setVideoListener(object : MyMediaPlayListener {
             override fun onVideoStopped() {
                 viewPager?.also {
-                    it.currentItem = it.currentItem+1
+                    it.currentItem = it.currentItem + 1
                 }
             }
         })

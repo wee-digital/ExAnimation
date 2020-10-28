@@ -10,9 +10,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
-import wee.digital.fpa.R
 import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 

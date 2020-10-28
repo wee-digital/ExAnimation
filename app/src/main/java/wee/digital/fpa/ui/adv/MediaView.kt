@@ -16,7 +16,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.android.synthetic.main.view_video.view.*
 import wee.digital.fpa.R
 
-class MediaView : ConstraintLayout, Player.EventListener,  MyMediaController{
+class MediaView : ConstraintLayout, Player.EventListener, MyMediaController {
 
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
@@ -105,8 +105,7 @@ class MediaView : ConstraintLayout, Player.EventListener,  MyMediaController{
 
 }
 
-interface MyMediaController
-{
+interface MyMediaController {
     fun onPlayVideo(position: Int = -1)
     fun onStopVideo(position: Int = -1)
 }

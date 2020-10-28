@@ -35,9 +35,7 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-        post(1000){
-            navigate(MainDirections.actionGlobalPinFragment())
-        }
+      
     }
 
     override fun onLiveDataObserve() {

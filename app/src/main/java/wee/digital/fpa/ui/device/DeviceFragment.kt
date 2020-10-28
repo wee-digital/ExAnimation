@@ -6,9 +6,9 @@ import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.arg.MessageArg
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.arg.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.library.extension.addEditorActionListener
 import wee.digital.library.extension.trimText
@@ -28,7 +28,7 @@ class DeviceFragment : Main.Dialog() {
 
     override fun onViewCreated() {
         deviceView.onViewInit()
-        deviceEditTextName.addEditorActionListener(EditorInfo.IME_ACTION_DONE){
+        deviceEditTextName.addEditorActionListener(EditorInfo.IME_ACTION_DONE) {
             onRegisterDevice()
         }
     }

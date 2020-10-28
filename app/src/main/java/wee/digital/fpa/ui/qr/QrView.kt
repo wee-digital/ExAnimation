@@ -4,14 +4,12 @@ import android.graphics.Bitmap
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.device.*
 import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
-import wee.digital.fpa.util.SimpleLifecycleObserver
 import wee.digital.fpa.util.observerCamera
 import wee.digital.library.extension.*
 

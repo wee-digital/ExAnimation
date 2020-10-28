@@ -2,8 +2,8 @@ package wee.digital.fpa.ui.disconnect
 
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.vm.SocketVM
 
 class DisconnectFragment : Main.Dialog() {
 

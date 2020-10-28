@@ -19,6 +19,8 @@ class Main {
 
     abstract class Fragment : BaseFragment() {
 
+        val mainVM by lazy { activityVM(MainVM::class) }
+
         val remainingVM by lazy { activityVM(TimeoutVM::class) }
 
         override fun onAttach(context: Context) {
@@ -28,6 +30,8 @@ class Main {
     }
 
     abstract class Dialog : BaseDialog() {
+
+        val mainVM by lazy { activityVM(MainVM::class) }
 
         val remainingVM by lazy { activityVM(TimeoutVM::class) }
 

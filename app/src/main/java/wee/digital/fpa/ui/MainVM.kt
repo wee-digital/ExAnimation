@@ -17,9 +17,8 @@ import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.repository.utils.ErrCode
 import wee.digital.fpa.repository.utils.PaymentStatusCode
-import wee.digital.fpa.ui.base.BaseViewModel
-import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.arg.PaymentArg
+import wee.digital.fpa.ui.base.BaseViewModel
 import java.util.concurrent.TimeUnit
 
 class MainVM : BaseViewModel() {

@@ -11,8 +11,8 @@ import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.network.CollectionData
 import wee.digital.fpa.repository.payment.PaymentRepository
-import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.arg.ConfirmArg
+import wee.digital.fpa.ui.base.EventLiveData
 
 class FaceVM : ViewModel() {
 

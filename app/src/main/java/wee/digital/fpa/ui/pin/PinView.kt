@@ -2,7 +2,6 @@ package wee.digital.fpa.ui.pin
 
 import android.graphics.LinearGradient
 import android.graphics.Shader
-import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
 import wee.digital.library.extension.color

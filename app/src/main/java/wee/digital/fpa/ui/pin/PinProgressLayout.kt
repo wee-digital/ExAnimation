@@ -15,7 +15,10 @@ import androidx.core.graphics.red
 import androidx.transition.ChangeBounds
 import androidx.transition.Transition
 import wee.digital.fpa.R
-import wee.digital.library.extension.*
+import wee.digital.library.extension.SimpleTransitionListener
+import wee.digital.library.extension.backgroundTint
+import wee.digital.library.extension.beginTransition
+import wee.digital.library.extension.tint
 
 class PinProgressLayout : ConstraintLayout {
 
@@ -236,9 +239,9 @@ class PinProgressLayout : ConstraintLayout {
         progressTransition.beginTransition(this, {
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
             roundViewList.forEach {
-                setVisibility(it.id,View.INVISIBLE)
+                setVisibility(it.id, View.INVISIBLE)
             }
-        },{
+        }, {
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
         }, {
             constrainDefaultWidth(viewId, 1)

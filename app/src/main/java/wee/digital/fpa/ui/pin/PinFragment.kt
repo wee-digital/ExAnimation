@@ -4,7 +4,6 @@ import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.app.toast
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.library.extension.post
@@ -23,9 +22,9 @@ class PinFragment : Main.Dialog() {
         pinView.onViewInit()
         pinProgressLayout.onItemFilled = {
             remainingVM.startTimeout(Timeout.PIN_TIMEOUT)
-           post(2000){
-               pinVM.onPinFilled(it)
-           }
+            post(2000) {
+                pinVM.onPinFilled(it, mainVM.paymentArg.value)
+            }
         }
     }
 
@@ -40,6 +39,7 @@ class PinFragment : Main.Dialog() {
     override fun onViewClick(v: View?) {
         when (v) {
             pinViewClose -> {
+                mainVM.paymentArg.value = null
                 dismiss()
                 navigate(MainDirections.actionGlobalSplashFragment()) {
                     setLaunchSingleTop()

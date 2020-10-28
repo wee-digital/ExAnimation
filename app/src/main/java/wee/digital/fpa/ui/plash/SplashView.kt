@@ -2,9 +2,11 @@ package wee.digital.fpa.ui.plash
 
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
-import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.splash.*
-import wee.digital.library.extension.*
+import wee.digital.library.extension.beginTransition
+import wee.digital.library.extension.bold
+import wee.digital.library.extension.onEndTransition
+import wee.digital.library.extension.setHyperText
 
 class SplashView(private val v: SplashFragment) {
 
@@ -22,7 +24,7 @@ class SplashView(private val v: SplashFragment) {
         }
     }
 
-    fun animateStartRemaining(onAnimEnd: () -> Unit = {}) {
+    fun animateOnHasPayment(onAnimEnd: () -> Unit = {}) {
         val height = v.splashImageViewLogo.height / 2
         if (v.splashImageViewLogo.height == height) return
         viewTransition.onEndTransition {
@@ -37,7 +39,7 @@ class SplashView(private val v: SplashFragment) {
         }
     }
 
-    fun animateStopRemaining() {
+    fun animateOnDimissPayment() {
         val height = v.splashImageViewLogo.height * 2
         if (v.splashImageViewLogo.height == height) return
         val logoId = v.splashImageViewLogo.id
@@ -48,7 +50,6 @@ class SplashView(private val v: SplashFragment) {
             setVerticalBias(logoId, 0.5f)
         }
     }
-
 
 
     fun onViewInit() {
