@@ -33,7 +33,8 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageTextViewTitle"
-            style="@style/Message.Title"
+            style="@style/Headline2"
+            android:layout_marginTop="@dimen/margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageImageViewIcon"
@@ -41,18 +42,19 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageTextViewMessage"
-            style="@style/Message.Text"
+            style="@style/BodySemibold"
             android:maxLines="8"
             app:layout_constraintBottom_toTopOf="@+id/messageViewClose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageTextViewTitle"
+            android:layout_marginTop="@dimen/margin"
             app:layout_constraintVertical_bias="0.0"
             tools:text="@tools:sample/lorem/random" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageViewClose"
-            style="@style/Button.Primary"
+            style="@style/Button.Semibold"
             android:layout_marginBottom="@dimen/margin2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
