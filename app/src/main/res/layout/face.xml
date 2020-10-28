@@ -20,14 +20,9 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewRemaining"
-        style="@style/TextView"
-        android:layout_marginTop="@dimen/margin"
-        android:gravity="center"
-        android:textColor="@color/colorTextSecondary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Time remaining: 00:30" />
+        style="@style/Remaining.Text"
+        tools:text="Time remaining: 00:30"
+        tools:ignore="MissingConstraints" />
 
 
     <!--   <wee.digital.fpa.widget.Rounded
@@ -119,9 +114,4 @@
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2"
         app:layout_constraintTop_toBottomOf="@+id/faceTextViewTitle2" />
 
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/viewTest"
-        style="@style/TestingWidget"
-        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
