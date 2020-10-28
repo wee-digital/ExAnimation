@@ -21,8 +21,8 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewRemaining"
         style="@style/Remaining.Text"
-        tools:text="Time remaining: 00:30"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:text="Time remaining: 00:30" />
 
 
     <!--   <wee.digital.fpa.widget.Rounded
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
         app:riv_border_color="@color/gray_1"
-        app:riv_border_width="@dimen/_1sdp"
+        app:riv_border_width="1dp"
         app:riv_mutate_background="true"
         app:riv_oval="true"
         tools:src="@mipmap/img_placeholder" />

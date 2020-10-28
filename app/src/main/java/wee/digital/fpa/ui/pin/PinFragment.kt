@@ -4,6 +4,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
+import wee.digital.fpa.data.Timeout
 import wee.digital.fpa.ui.Main
 
 class PinFragment : Main.Dialog() {
@@ -18,12 +19,14 @@ class PinFragment : Main.Dialog() {
 
     override fun onViewCreated() {
         pinView.onViewInit()
+
         pinProgressLayout.onItemFilled = {
             pinVM.onPinFilled(it)
         }
     }
 
     override fun onLiveDataObserve() {
+        remainingVM.startRemaining(Timeout.PIN_TIMEOUT)
         pinVM.errorMessage.observe {
             pinView.onBindErrorText(it)
         }

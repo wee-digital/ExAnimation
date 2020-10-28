@@ -8,6 +8,7 @@ import androidx.transition.TransitionManager
 import com.intel.realsense.librealsense.RsContext
 import com.intel.realsense.librealsense.UsbUtilities
 import kotlinx.android.synthetic.main.face.*
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
 import wee.digital.fpa.camera.DataCollect
@@ -38,6 +39,7 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
     private fun onLifecycleObserve() {
         v.viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
             override fun onPause() {
+                hasFaceDetect = false
                 App.realSenseControl?.listener = null
             }
 
@@ -109,14 +111,16 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         viewTransition.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
                 viewTransition.removeListener(this)
+                onViewAnimate {
+                    setAlpha(v.faceTextViewTitle1.id, 1f)
+                    setAlpha(v.faceTextViewTitle2.id, 1f)
+                    setAlpha(v.faceTextViewTitle3.id, 1f)
+                }
                 onEnd()
             }
         })
         viewTransition.duration = animDuration
         onViewAnimate {
-            setAlpha(v.faceTextViewTitle1.id, 1f)
-            setAlpha(v.faceTextViewTitle2.id, 1f)
-            setAlpha(v.faceTextViewTitle3.id, 1f)
             clear(viewId, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
         }

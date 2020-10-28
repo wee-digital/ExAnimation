@@ -16,6 +16,7 @@ class RemainingVM : BaseViewModel() {
 
     fun startRemaining(intervalInSecond: Int) {
         val waitingCounter = AtomicInteger(intervalInSecond)
+        interval.value = intervalInSecond
         disposable?.dispose()
         disposable = Observable
                 .interval(1, 1, TimeUnit.SECONDS)
@@ -24,17 +25,17 @@ class RemainingVM : BaseViewModel() {
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    interval.value = it
                     if (it <= 0) {
                         disposable?.dispose()
                     }
-                    interval.value = it
                 }, {})
 
     }
 
     fun stopRemaining() {
-        interval.value = 0
         disposable?.dispose()
+        interval.value = -1
     }
 
 }

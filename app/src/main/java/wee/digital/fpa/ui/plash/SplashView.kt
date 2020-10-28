@@ -26,6 +26,8 @@ class SplashView(private val v: SplashFragment) {
     }
 
     fun animateStartRemaining(onAnimEnd: () -> Unit = {}) {
+        val height = v.splashImageViewLogo.height / 2
+        if (v.splashImageViewLogo.height == height) return
         viewTransition.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
                 onAnimEnd()
@@ -34,7 +36,7 @@ class SplashView(private val v: SplashFragment) {
         })
         val logoId = v.splashImageViewLogo.id
         onViewAnimate {
-            constrainHeight(logoId, v.splashImageViewLogo.height / 2)
+            constrainHeight(logoId, height)
             connect(logoId, ConstraintSet.TOP, v.splashTextViewRemaining.id, ConstraintSet.BOTTOM)
             connect(logoId, ConstraintSet.BOTTOM, v.splashGuideline.id, ConstraintSet.BOTTOM)
             setVerticalBias(logoId, 0.55f)
@@ -42,9 +44,11 @@ class SplashView(private val v: SplashFragment) {
     }
 
     fun animateStopRemaining() {
+        val height = v.splashImageViewLogo.height * 2
+        if (v.splashImageViewLogo.height == height) return
         val logoId = v.splashImageViewLogo.id
         onViewAnimate {
-            constrainHeight(logoId, v.splashImageViewLogo.height * 2)
+            constrainHeight(logoId, height)
             connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
             connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
             setVerticalBias(logoId, 0.5f)
