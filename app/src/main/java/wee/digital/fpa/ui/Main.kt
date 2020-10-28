@@ -12,14 +12,12 @@ class Main {
         val rootDirection by lazy {
             EventLiveData<NavDirections>()
         }
-
     }
 
     abstract class Fragment : BaseFragment() {
-
     }
 
     abstract class Dialog : BaseDialog() {
-
     }
+
 }

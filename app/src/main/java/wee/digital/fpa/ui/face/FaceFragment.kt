@@ -6,8 +6,11 @@ import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.confirm.ConfirmVM
+import wee.digital.fpa.ui.vm.RemainingVM
 
 class FaceFragment : Main.Fragment() {
+
+    private val remainingVM by lazy { activityVM(RemainingVM::class) }
 
     private val faceVM: FaceVM by lazy { activityVM(FaceVM::class) }
 
@@ -23,6 +26,7 @@ class FaceFragment : Main.Fragment() {
             }
         }
         faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
+            remainingVM.stopRemaining()
             faceVM.verifyFace(bitmap, pointData, dataCollect)
         }
     }
@@ -34,6 +38,9 @@ class FaceFragment : Main.Fragment() {
         faceVM.verifySuccess.observe {
             onFaceVerifySuccess()
         }
+        remainingVM.interval.observe {
+            faceView.onBindRemainingText(it)
+        }
     }
 
     private fun onFaceVerifySuccess() {
@@ -42,10 +49,9 @@ class FaceFragment : Main.Fragment() {
     }
 
     private fun onFaceVerifyError(it: ConfirmArg) {
-        onFaceVerifySuccess()
-        return
         faceView.animateOnFaceCaptured()
         it.onAccept = {
+            remainingVM.startRemaining(10)
             faceView.animateOnStartFaceReg {
                 faceView.hasFaceDetect = true
             }

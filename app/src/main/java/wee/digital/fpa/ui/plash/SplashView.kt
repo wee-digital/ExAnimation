@@ -4,35 +4,28 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.splash.*
-import wee.digital.fpa.util.SimpleLifecycleObserver
 import wee.digital.fpa.util.SimpleTransitionListener
 import wee.digital.library.extension.bold
 import wee.digital.library.extension.setHyperText
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicInteger
 
 class SplashView(private val v: SplashFragment) {
-
-    private val remainingInterval: Int = 60 // second
 
     private val viewTransition = ChangeBounds().apply {
         duration = 400
     }
 
-    private var disposable: Disposable? = null
-
-    private fun onBindRemainingText(second: Int) {
-        val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
-        val sRemaining = "Thời gian còn lại: %s".format(sHour)
-        v.splashTextViewRemaining.setHyperText(sRemaining)
+    fun onBindRemainingText(second: Int) {
+        if (second > 0) {
+            val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
+            val sRemaining = "Thời gian còn lại: %s".format(sHour)
+            v.splashTextViewRemaining.setHyperText(sRemaining)
+        } else {
+            v.splashTextViewRemaining.text = null
+        }
     }
 
     fun animateStartRemaining(onAnimEnd: () -> Unit = {}) {
-        onBindRemainingText(remainingInterval)
         viewTransition.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
                 onAnimEnd()
@@ -68,36 +61,8 @@ class SplashView(private val v: SplashFragment) {
     }
 
     fun onViewInit() {
-        v.viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
-            override fun onDestroy() {
-                disposable?.dispose()
-            }
-        })
-    }
-
-    fun startRemaining(onEnd: () -> Unit) {
-        val waitingCounter = AtomicInteger(remainingInterval)
-        disposable?.dispose()
-        disposable = Observable
-                .interval(1, 1, TimeUnit.SECONDS)
-                .map {
-                    waitingCounter.decrementAndGet()
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it > 0) {
-                        onBindRemainingText(it)
-                    } else {
-                        disposable?.dispose()
-                        onEnd()
-                    }
-                }, {})
 
     }
 
-    fun stopPaymentRemaining() {
-        disposable?.dispose()
-        v.splashTextViewRemaining.text = null
-    }
 
 }

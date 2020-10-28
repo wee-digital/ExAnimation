@@ -1,4 +1,4 @@
-package wee.digital.fpa.ui
+package wee.digital.fpa.ui.vm
 
 import okhttp3.Response
 import okhttp3.WebSocket
