@@ -9,8 +9,6 @@ import wee.digital.fpa.ui.base.activityVM
 
 class ConnectFragment : Main.Fragment() {
 
-    private val connectVM by lazy { activityVM(ConnectVM::class) }
-
     private val connectView by lazy { ConnectView(this) }
 
     override fun layoutResource(): Int {

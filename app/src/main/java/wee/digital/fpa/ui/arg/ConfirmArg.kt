@@ -1,4 +1,4 @@
-package wee.digital.fpa.ui.confirm
+package wee.digital.fpa.ui.arg
 
 class ConfirmArg(
         var icon: Int? = null,

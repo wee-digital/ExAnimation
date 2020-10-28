@@ -13,8 +13,6 @@ class PaymentFragment : Main.Dialog() {
 
     private val mainVM by lazy { activityVM(MainVM::class) }
 
-    private val localVM by lazy { activityVM(PaymentVM::class) }
-
     private val v by lazy { PaymentView(this) }
 
     override fun layoutResource(): Int {

@@ -1,9 +1,7 @@
 package wee.digital.fpa.ui.face
 
 import android.util.Base64
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.JsonObject
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FacePointData
@@ -14,7 +12,7 @@ import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.network.CollectionData
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.base.EventLiveData
-import wee.digital.fpa.ui.confirm.ConfirmArg
+import wee.digital.fpa.ui.arg.ConfirmArg
 
 class FaceVM : ViewModel() {
 

@@ -3,8 +3,6 @@ package wee.digital.fpa.ui.face
 import android.graphics.Bitmap
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
-import com.intel.realsense.librealsense.RsContext
-import com.intel.realsense.librealsense.UsbUtilities
 import kotlinx.android.synthetic.main.face.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
@@ -12,62 +10,59 @@ import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.Detection
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
-import wee.digital.fpa.util.SimpleLifecycleObserver
+import wee.digital.fpa.util.observerCamera
 import wee.digital.library.extension.*
 
 
 class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
 
+    companion object {
+        const val ANIM_DURATION = 400L
+    }
+
     private var mDetection: Detection? = null
 
-    var hasFaceDetect = true
+    private var hasFaceDetect = true
+
+    var onFaceEligible: (ByteArray, FacePointData, DataCollect) -> Unit = { _, _, _ -> }
 
     private var hasFace: Boolean = false
 
-    private val animDuration: Long = 400
-
     private val viewTransition = ChangeBounds().apply {
-        duration = animDuration
+        duration = ANIM_DURATION
     }
 
-    private fun onLifecycleObserve() {
-        v.viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
-            override fun onPause() {
-                hasFaceDetect = false
-                App.realSenseControl?.listener = null
-            }
-
-            override fun onDestroy() {
-                App.realSenseControl?.stopStreamThread()
-            }
-        })
-    }
-
-    private fun onStartCamera() {
-        RsContext.init(v.requireContext())
-        UsbUtilities.grantUsbPermissionIfNeeded(v.requireContext())
-        App.realSenseControl?.startStreamThread()
+    private fun onConfigFaceReg() {
         mDetection = Detection(v.requireActivity()).also {
             it.initCallBack(this)
         }
         App.realSenseControl?.listener = object : RealSenseControl.Listener {
-
-            override fun onCameraStarted() {}
-
-            override fun onCameraError(mess: String) {}
-
             override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
                 colorBitmap ?: return
                 dataCollect ?: return
-
-                if (!hasFaceDetect) return
                 v.requireActivity().runOnUiThread {
                     v.faceImageViewCamera?.setImageBitmap(colorBitmap)
                 }
+                if (!hasFaceDetect) return
                 mDetection?.bitmapChecking(colorBitmap, depthBitmap, dataCollect)
             }
 
         }
+    }
+
+    private fun animateImageScale(scale: Float) {
+        v.faceImageViewCamera.apply {
+            animate().scaleX(scale).scaleY(scale).duration = ANIM_DURATION
+        }
+        v.faceImageViewAnim.apply {
+            animate().scaleX(scale).scaleY(scale).duration = ANIM_DURATION
+        }
+    }
+
+    fun onViewInit() {
+        v.faceImageViewAnim.load(R.mipmap.img_progress)
+        v.observerCamera()
+        onConfigFaceReg()
     }
 
     fun onBindRemainingText(second: Int) {
@@ -84,10 +79,7 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         val viewId = v.faceImageViewCamera.id
         val faceHeight = (v.faceImageViewCamera.height / 2.23).toInt()
         val scale = faceHeight / v.faceImageViewCamera.height.toFloat()
-
-        viewTransition.duration = animDuration
-        v.viewContent.createTransition(viewTransition) {
-            //setAlpha(v.faceImageViewAnim.id, 1f)
+        viewTransition.beginTransition(v.viewContent) {
             setAlpha(v.faceTextViewTitle1.id, 0f)
             setAlpha(v.faceTextViewTitle2.id, 0f)
             setAlpha(v.faceTextViewTitle3.id, 0f)
@@ -97,39 +89,19 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         animateImageScale(scale)
     }
 
-    fun animateOnStartFaceReg(onAnimationEnd: () -> Unit) {
+    fun animateOnStartFaceReg() {
         val viewId = v.faceImageViewCamera.id
-        val faceHeight = (v.faceImageViewCamera.height * 2.23).toInt()
         val scale = 1f
-
-        viewTransition.onAnimationEnd {
-
-        }
-        viewTransition.duration = animDuration
-        viewTransition.onAnimationEnd {
-            v.viewContent.createTransition(viewTransition) {
-                setAlpha(v.faceTextViewTitle1.id, 1f)
-                setAlpha(v.faceTextViewTitle2.id, 1f)
-                setAlpha(v.faceTextViewTitle3.id, 1f)
-            }
-            onAnimationEnd()
-        }
-        v.viewContent.createTransition(viewTransition) {
+        viewTransition.beginTransition(v.viewContent, {
             clear(viewId, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
-        }
+        }, {
+            setAlpha(v.faceTextViewTitle1.id, 1f)
+            setAlpha(v.faceTextViewTitle2.id, 1f)
+            setAlpha(v.faceTextViewTitle3.id, 1f)
+            hasFaceDetect = true
+        })
         animateImageScale(scale)
-    }
-
-    private fun animateImageScale(scale: Float) {
-        v.faceImageViewCamera.apply {
-            animate().scaleX(scale).duration = animDuration
-            animate().scaleY(scale).duration = animDuration
-        }
-        v.faceImageViewAnim.apply {
-            animate().scaleX(scale).duration = animDuration
-            animate().scaleY(scale).duration = animDuration
-        }
     }
 
 
@@ -140,7 +112,7 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         if (hasFace) {
             hasFace = false
             v.faceImageViewAnim.post {
-                v.viewContent.createTransition(viewTransition) {
+                viewTransition.beginTransition(v.viewContent) {
                     setAlpha(v.faceImageViewAnim.id, 0f)
                 }
             }
@@ -151,7 +123,7 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         if (!hasFace) {
             hasFace = true
             v.faceImageViewAnim.post {
-                v.viewContent.createTransition(viewTransition) {
+                viewTransition.beginTransition(v.viewContent) {
                     setAlpha(v.faceImageViewAnim.id, 1f)
                 }
             }
@@ -164,11 +136,5 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         onFaceEligible(bm, faceData, dataCollect)
     }
 
-    var onFaceEligible: (ByteArray, FacePointData, DataCollect) -> Unit = { _, _, _ -> }
 
-    fun onViewInit() {
-        v.faceImageViewAnim.load(R.mipmap.img_progress)
-        onLifecycleObserve()
-        onStartCamera()
-    }
 }

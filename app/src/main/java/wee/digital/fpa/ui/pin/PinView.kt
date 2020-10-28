@@ -4,9 +4,6 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.pin.*
-import kotlinx.android.synthetic.main.pin.confirmTextViewTitle
-import kotlinx.android.synthetic.main.pin.dialogViewClose
-import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.R
 import wee.digital.library.extension.color
 
@@ -53,21 +50,21 @@ class PinView(private val v: PinFragment) {
     }
 
     fun onViewInit() {
-        v.addClickListener(v.dialogViewClose)
+        v.addClickListener(v.pinViewClose)
         configNumPadKeyView()
         configPinProgressView()
     }
 
     fun onBindErrorText(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.confirmTextViewTitle.color("232323")
-            v.confirmTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
+            v.pinTextViewTitle.color("232323")
+            v.pinTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
         } else {
-            v.confirmTextViewTitle.paint.shader = LinearGradient(0F, 0F, v.qrTextViewHint.width.toFloat(), 0F,
-                    ContextCompat.getColor(v.requireContext(), R.color.gradient_red_start),
-                    ContextCompat.getColor(v.requireContext(), R.color.gradient_red_end),
+            v.pinTextViewTitle.paint.shader = LinearGradient(0F, 0F, v.pinTextViewTitle.width.toFloat(), 0F,
+                    color(R.color.gradient_red_start),
+                    color(R.color.gradient_red_end),
                     Shader.TileMode.CLAMP)
-            v.confirmTextViewTitle.text = s
+            v.pinTextViewTitle.text = s
         }
     }
 }

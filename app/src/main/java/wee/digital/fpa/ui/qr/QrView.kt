@@ -12,36 +12,15 @@ import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.util.SimpleLifecycleObserver
+import wee.digital.fpa.util.observerCamera
 import wee.digital.library.extension.*
 
 class QrView(private val v: QrFragment) {
 
     private var scanQRCode = ScanQRCode()
 
-    private fun onLifecycleObserve() {
-        v.viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
-
-            override fun onCreated() {
-                onStartCamera()
-            }
-
-            override fun onPause() {
-                App.realSenseControl?.listener = null
-            }
-
-            override fun onDestroy() {
-                App.realSenseControl?.stopStreamThread()
-            }
-        })
-    }
-
     private fun onStartCamera() {
         App.realSenseControl?.listener = object : RealSenseControl.Listener {
-
-            override fun onCameraStarted() {}
-
-            override fun onCameraError(mess: String) {}
-
             override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
                 colorBitmap ?: return
                 App.realSenseControl?.hasFace()
@@ -55,8 +34,8 @@ class QrView(private val v: QrFragment) {
 
     fun onViewInit() {
         v.addClickListener(v.dialogViewClose)
-        onLifecycleObserve()
-        App.realSenseControl?.startStreamThread()
+        v.observerCamera()
+        onStartCamera()
         scanQRCode.initListener(v)
     }
 

@@ -4,9 +4,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.splash.*
-import wee.digital.library.extension.bold
-import wee.digital.library.extension.onAnimationEnd
-import wee.digital.library.extension.setHyperText
+import wee.digital.library.extension.*
 
 class SplashView(private val v: SplashFragment) {
 
@@ -27,11 +25,11 @@ class SplashView(private val v: SplashFragment) {
     fun animateStartRemaining(onAnimEnd: () -> Unit = {}) {
         val height = v.splashImageViewLogo.height / 2
         if (v.splashImageViewLogo.height == height) return
-        viewTransition.onAnimationEnd {
+        viewTransition.onEndTransition {
             onAnimEnd()
         }
         val logoId = v.splashImageViewLogo.id
-        onViewAnimate {
+        viewTransition.beginTransition(v.viewContent) {
             constrainHeight(logoId, height)
             connect(logoId, ConstraintSet.TOP, v.splashTextViewRemaining.id, ConstraintSet.BOTTOM)
             connect(logoId, ConstraintSet.BOTTOM, v.splashGuideline.id, ConstraintSet.BOTTOM)
@@ -43,7 +41,7 @@ class SplashView(private val v: SplashFragment) {
         val height = v.splashImageViewLogo.height * 2
         if (v.splashImageViewLogo.height == height) return
         val logoId = v.splashImageViewLogo.id
-        onViewAnimate {
+        viewTransition.beginTransition(v.viewContent) {
             constrainHeight(logoId, height)
             connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
             connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
@@ -51,14 +49,7 @@ class SplashView(private val v: SplashFragment) {
         }
     }
 
-    private fun onViewAnimate(block: ConstraintSet.() -> Unit) {
-        TransitionManager.beginDelayedTransition(v.viewContent, viewTransition)
-        ConstraintSet().also {
-            it.clone(v.viewContent)
-            it.block()
-            it.applyTo(v.viewContent)
-        }
-    }
+
 
     fun onViewInit() {
 

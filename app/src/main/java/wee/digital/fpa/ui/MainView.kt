@@ -17,8 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class MainView(val v: MainActivity) {
 
-
-
     fun onViewInit() {
         v.lifecycle.addObserver(object : SimpleLifecycleObserver() {
             override fun onCreated() {

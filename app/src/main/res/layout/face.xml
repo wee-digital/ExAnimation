@@ -83,8 +83,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
-        app:riv_border_color="@color/gray_1"
-        app:riv_border_width="1dp"
+        app:riv_border_color="#FFFFFF"
+        app:riv_border_width="0dp"
         app:riv_mutate_background="true"
         app:riv_oval="true"
         tools:src="@mipmap/img_placeholder" />

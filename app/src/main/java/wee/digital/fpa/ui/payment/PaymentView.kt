@@ -18,7 +18,7 @@ class PaymentView(private val v: PaymentFragment) {
         when (it) {
             null -> v.dismiss()
             else -> {
-                v.paymentTextViewDate.text = "${nowFormat("dd - MM - yyyy")}"
+                v.paymentTextViewDate.text = "${nowFormat("dd")} tháng ${nowFormat("MM yyyy")}"
                 v.paymentTextViewAmount.text = it.amount.moneyFormat()
             }
         }

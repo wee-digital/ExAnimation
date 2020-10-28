@@ -70,23 +70,6 @@ fun ObjectAnimator.onAnimatorEnd(onEnd: () -> Unit): ObjectAnimator {
     return this
 }
 
-fun Transition.onAnimationEnd(onEnd: () -> Unit) {
-    addListener(object : SimpleTransitionListener {
-        override fun onTransitionEnd(transition: Transition) {
-            onEnd()
-            this@onAnimationEnd.removeListener(this)
-        }
-    })
-}
-
-fun ConstraintLayout.createTransition(transition: Transition, block: ConstraintSet.() -> Unit) {
-    TransitionManager.beginDelayedTransition(this, transition)
-    val set = ConstraintSet()
-    set.clone(this)
-    set.block()
-    set.applyTo(this)
-}
-
 interface SimpleAnimationListener : Animation.AnimationListener {
     override fun onAnimationRepeat(animation: Animation?) {
     }
@@ -110,6 +93,45 @@ interface SimpleAnimatorListener : Animator.AnimatorListener {
 
     override fun onAnimationStart(animator: Animator?) {
     }
+}
+
+fun Transition.beginTransition(layout: ConstraintLayout, vararg blocks: ConstraintSet.() -> Unit): Transition {
+    if (blocks.isEmpty()) return this
+    val set = ConstraintSet()
+    set.clone(layout)
+    for (i in 0 until blocks.lastIndex) {
+        this.addListener(object : SimpleTransitionListener {
+            override fun onTransitionEnd(transition: Transition) {
+                this@beginTransition.removeListener(this)
+                TransitionManager.beginDelayedTransition(layout, this@beginTransition)
+                blocks[i + 1](set)
+                set.applyTo(layout)
+            }
+        })
+    }
+    TransitionManager.beginDelayedTransition(layout, this@beginTransition)
+    blocks[0](set)
+    set.applyTo(layout)
+    return this
+}
+
+fun Transition.beginTransition(layout: ConstraintLayout, block: ConstraintSet.() -> Unit): Transition {
+    TransitionManager.beginDelayedTransition(layout, this@beginTransition)
+    val set = ConstraintSet()
+    set.clone(layout)
+    set.block()
+    set.applyTo(layout)
+    return this
+}
+
+fun Transition.onEndTransition(block: () -> Unit): Transition {
+    addListener(object : SimpleTransitionListener {
+        override fun onTransitionEnd(transition: Transition) {
+            this@onEndTransition.removeListener(this)
+            block()
+        }
+    })
+    return this
 }
 
 interface SimpleTransitionListener : Transition.TransitionListener {

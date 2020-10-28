@@ -160,11 +160,11 @@ class RealSenseControl : DeviceListener {
                     mHandler?.postDelayed(this, 80)
                 }
             } else {
-                try{
+                try {
                     mPipeline?.stop()
                     mPipeline?.close()
                     mPipeline = null
-                }catch (e : Exception){
+                } catch (e: Exception) {
                 }
                 mHandler?.removeCallbacks(this)
                 isFrameOK = false
@@ -364,9 +364,9 @@ class RealSenseControl : DeviceListener {
     }
 
     interface Listener {
-        fun onCameraStarted()
+        fun onCameraStarted() {}
+        fun onCameraError(mess: String) {}
         fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?)
-        fun onCameraError(mess: String)
     }
 
     interface StartListener {

@@ -16,26 +16,20 @@ import androidx.transition.ChangeBounds
 import androidx.transition.Transition
 import wee.digital.fpa.R
 import wee.digital.library.extension.*
-import wee.digital.library.widget.AppCustomView
 
 class PinProgressLayout : ConstraintLayout {
 
-    /**
-     * [AppCustomView] override
-     */
+    companion object {
+        private val DEL = "DEL"
+    }
+
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
-
-    /**
-     * [PinProgressLayout] properties
-     */
-
-    private val KEY_DEL = "DEL"
 
     private var builder = Builder()
 
     private val lastItemIndex: Int get() = builder.itemCount - 1
 
-    private val roundList = mutableListOf<View>()
+    private val roundViewList = mutableListOf<View>()
 
     private val keyList = mutableListOf<String>()
 
@@ -46,7 +40,6 @@ class PinProgressLayout : ConstraintLayout {
     private lateinit var progressView: View
 
     private val progressTransition = ChangeBounds().apply {
-        //interpolator = AnticipateInterpolator(1.0f)
         duration = 200
     }
 
@@ -54,8 +47,8 @@ class PinProgressLayout : ConstraintLayout {
 
     private val extraKeyCount: Int
         get() {
-            val addKey = keyEvent.filter { it != KEY_DEL }.size
-            val delKey = keyEvent.filter { it == KEY_DEL }.size
+            val addKey = keyEvent.filter { it != DEL }.size
+            val delKey = keyEvent.filter { it == DEL }.size
             return keyList.size + addKey - delKey
         }
 
@@ -73,7 +66,7 @@ class PinProgressLayout : ConstraintLayout {
 
     fun delKey() {
         if (extraKeyCount == 0) return
-        pushKey(KEY_DEL)
+        pushKey(DEL)
     }
 
     private fun build() {
@@ -157,7 +150,7 @@ class PinProgressLayout : ConstraintLayout {
             it.connect(roundId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, step * stepWidth)
             it.applyTo(this)
         }
-        roundList.add(roundedView)
+        roundViewList.add(roundedView)
     }
 
     private fun addProgressView() {
@@ -184,7 +177,7 @@ class PinProgressLayout : ConstraintLayout {
     private fun transformProgressView(isForward: Boolean) {
         val index = keyList.lastIndex
         val viewId = progressView.id
-        createTransition(progressTransition) {
+        progressTransition.beginTransition(this) {
             if (index < 0) {
                 setVisibility(viewId, View.INVISIBLE)
             } else {
@@ -198,7 +191,6 @@ class PinProgressLayout : ConstraintLayout {
                 } else getRoundedViewId(index)?.also { id ->
                     setVisibility(id, View.INVISIBLE)
                 }
-
                 setVisibility(viewId, View.VISIBLE)
                 constrainDefaultWidth(viewId, w)
                 constrainWidth(viewId, w)
@@ -208,14 +200,14 @@ class PinProgressLayout : ConstraintLayout {
     }
 
     private fun getRoundedViewId(index: Int): Int? {
-        if (index !in 0..roundList.lastIndex) return null
-        return roundList[index].id
+        if (index !in 0..roundViewList.lastIndex) return null
+        return roundViewList[index].id
     }
 
     private fun updateKeyEvent() {
         if (keyEvent.isEmpty()) return
         when (val key = keyEvent[0]) {
-            KEY_DEL -> {
+            DEL -> {
                 keyList.removeAt(keyList.lastIndex)
                 transformProgressView(false)
             }
@@ -241,11 +233,20 @@ class PinProgressLayout : ConstraintLayout {
     fun notifyInputRemoved() {
         keyList.clear()
         val viewId = progressView.id
-        createTransition(progressTransition) {
+        progressTransition.beginTransition(this, {
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
-        }
+            roundViewList.forEach {
+                setVisibility(it.id,View.INVISIBLE)
+            }
+        },{
+            connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
+        }, {
+            constrainDefaultWidth(viewId, 1)
+            constrainWidth(viewId, 1)
+        }, {
+            setVisibility(viewId, View.INVISIBLE)
+        })
     }
-
 
     private fun pushKey(key: String) {
         keyEvent.add(key)

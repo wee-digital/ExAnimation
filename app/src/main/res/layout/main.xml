@@ -3,9 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black"
+    style="@style/MatchParent"
+    android:background="@color/colorPrimary"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
@@ -24,8 +23,8 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/mainTextViewDeviceInfo"
         style="@style/TextView"
-        android:textColor="@color/colorWhite"
         android:layout_margin="@dimen/_2sdp"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/_2ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

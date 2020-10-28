@@ -1,4 +1,4 @@
-package wee.digital.fpa.ui.message
+package wee.digital.fpa.ui.arg
 
 data class MessageArg(
         var icon: Int? = null,

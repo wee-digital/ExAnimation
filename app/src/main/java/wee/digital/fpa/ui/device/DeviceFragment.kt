@@ -8,7 +8,7 @@ import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.message.MessageArg
+import wee.digital.fpa.ui.arg.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.library.extension.addEditorActionListener
 import wee.digital.library.extension.trimText
