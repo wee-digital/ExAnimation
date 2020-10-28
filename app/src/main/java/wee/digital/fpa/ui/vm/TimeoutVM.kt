@@ -8,13 +8,13 @@ import wee.digital.fpa.ui.base.BaseViewModel
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
-class RemainingVM : BaseViewModel() {
+class TimeoutVM : BaseViewModel() {
 
     private var disposable: Disposable? = null
 
     val interval = MutableLiveData<Int>()
 
-    fun startRemaining(intervalInSecond: Int) {
+    fun startTimeout(intervalInSecond: Int) {
         val waitingCounter = AtomicInteger(intervalInSecond)
         interval.value = intervalInSecond
         disposable?.dispose()
@@ -33,7 +33,7 @@ class RemainingVM : BaseViewModel() {
 
     }
 
-    fun stopRemaining() {
+    fun stopTimeout() {
         disposable?.dispose()
         interval.value = -1
     }

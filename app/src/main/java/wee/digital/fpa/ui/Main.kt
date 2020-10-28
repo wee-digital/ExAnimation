@@ -6,7 +6,7 @@ import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.vm.RemainingVM
+import wee.digital.fpa.ui.vm.TimeoutVM
 
 
 class Main {
@@ -19,20 +19,20 @@ class Main {
 
     abstract class Fragment : BaseFragment() {
 
-        val remainingVM by lazy { activityVM(RemainingVM::class) }
+        val remainingVM by lazy { activityVM(TimeoutVM::class) }
 
         override fun onAttach(context: Context) {
-            remainingVM.stopRemaining()
+            remainingVM.stopTimeout()
             super.onAttach(context)
         }
     }
 
     abstract class Dialog : BaseDialog() {
 
-        val remainingVM by lazy { activityVM(RemainingVM::class) }
+        val remainingVM by lazy { activityVM(TimeoutVM::class) }
 
         override fun onAttach(context: Context) {
-            remainingVM.stopRemaining()
+            remainingVM.stopTimeout()
             super.onAttach(context)
         }
     }

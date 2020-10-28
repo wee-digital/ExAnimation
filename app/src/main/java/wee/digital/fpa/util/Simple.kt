@@ -100,23 +100,6 @@ interface SimplePageChangeListener : ViewPager.OnPageChangeListener {
     }
 }
 
-interface SimpleTransitionListener : Transition.TransitionListener {
-    override fun onTransitionStart(transition: Transition) {
-    }
-
-    override fun onTransitionEnd(transition: Transition) {
-    }
-
-    override fun onTransitionCancel(transition: Transition) {
-    }
-
-    override fun onTransitionPause(transition: Transition) {
-    }
-
-    override fun onTransitionResume(transition: Transition) {
-    }
-
-}
 
 interface SimpleMotionTransitionListener : MotionLayout.TransitionListener {
     override fun onTransitionChange(layout: MotionLayout?, startId: Int, endId: Int, progress: Float) {

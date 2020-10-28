@@ -3,12 +3,9 @@ package wee.digital.fpa.ui.face
 import android.graphics.Bitmap
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
 import com.intel.realsense.librealsense.RsContext
 import com.intel.realsense.librealsense.UsbUtilities
 import kotlinx.android.synthetic.main.face.*
-import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
 import wee.digital.fpa.camera.DataCollect
@@ -16,10 +13,7 @@ import wee.digital.fpa.camera.Detection
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.util.SimpleLifecycleObserver
-import wee.digital.fpa.util.SimpleTransitionListener
-import wee.digital.library.extension.bold
-import wee.digital.library.extension.load
-import wee.digital.library.extension.setHyperText
+import wee.digital.library.extension.*
 
 
 class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
@@ -92,7 +86,7 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         val scale = faceHeight / v.faceImageViewCamera.height.toFloat()
 
         viewTransition.duration = animDuration
-        onViewAnimate {
+        v.viewContent.createTransition(viewTransition) {
             //setAlpha(v.faceImageViewAnim.id, 1f)
             setAlpha(v.faceTextViewTitle1.id, 0f)
             setAlpha(v.faceTextViewTitle2.id, 0f)
@@ -103,37 +97,28 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         animateImageScale(scale)
     }
 
-    fun animateOnStartFaceReg(onEnd: () -> Unit) {
+    fun animateOnStartFaceReg(onAnimationEnd: () -> Unit) {
         val viewId = v.faceImageViewCamera.id
         val faceHeight = (v.faceImageViewCamera.height * 2.23).toInt()
         val scale = 1f
 
-        viewTransition.addListener(object : SimpleTransitionListener {
-            override fun onTransitionEnd(transition: Transition) {
-                viewTransition.removeListener(this)
-                onViewAnimate {
-                    setAlpha(v.faceTextViewTitle1.id, 1f)
-                    setAlpha(v.faceTextViewTitle2.id, 1f)
-                    setAlpha(v.faceTextViewTitle3.id, 1f)
-                }
-                onEnd()
-            }
-        })
+        viewTransition.onAnimationEnd {
+
+        }
         viewTransition.duration = animDuration
-        onViewAnimate {
+        viewTransition.onAnimationEnd {
+            v.viewContent.createTransition(viewTransition) {
+                setAlpha(v.faceTextViewTitle1.id, 1f)
+                setAlpha(v.faceTextViewTitle2.id, 1f)
+                setAlpha(v.faceTextViewTitle3.id, 1f)
+            }
+            onAnimationEnd()
+        }
+        v.viewContent.createTransition(viewTransition) {
             clear(viewId, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
         }
         animateImageScale(scale)
-    }
-
-    private fun onViewAnimate(block: ConstraintSet.() -> Unit) {
-        TransitionManager.beginDelayedTransition(v.viewContent, viewTransition)
-        ConstraintSet().also {
-            it.clone(v.viewContent)
-            it.block()
-            it.applyTo(v.viewContent)
-        }
     }
 
     private fun animateImageScale(scale: Float) {
@@ -155,7 +140,7 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         if (hasFace) {
             hasFace = false
             v.faceImageViewAnim.post {
-                onViewAnimate {
+                v.viewContent.createTransition(viewTransition) {
                     setAlpha(v.faceImageViewAnim.id, 0f)
                 }
             }
@@ -166,7 +151,7 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
         if (!hasFace) {
             hasFace = true
             v.faceImageViewAnim.post {
-                onViewAnimate {
+                v.viewContent.createTransition(viewTransition) {
                     setAlpha(v.faceImageViewAnim.id, 1f)
                 }
             }

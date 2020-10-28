@@ -7,6 +7,10 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
 
 fun View.animRotateAxisY(block: ObjectAnimator.() -> Unit): ObjectAnimator {
     return ObjectAnimator.ofFloat(this, "rotationY", 0.0f, 360f).also {
@@ -66,6 +70,23 @@ fun ObjectAnimator.onAnimatorEnd(onEnd: () -> Unit): ObjectAnimator {
     return this
 }
 
+fun Transition.onAnimationEnd(onEnd: () -> Unit) {
+    addListener(object : SimpleTransitionListener {
+        override fun onTransitionEnd(transition: Transition) {
+            onEnd()
+            this@onAnimationEnd.removeListener(this)
+        }
+    })
+}
+
+fun ConstraintLayout.createTransition(transition: Transition, block: ConstraintSet.() -> Unit) {
+    TransitionManager.beginDelayedTransition(this, transition)
+    val set = ConstraintSet()
+    set.clone(this)
+    set.block()
+    set.applyTo(this)
+}
+
 interface SimpleAnimationListener : Animation.AnimationListener {
     override fun onAnimationRepeat(animation: Animation?) {
     }
@@ -89,4 +110,22 @@ interface SimpleAnimatorListener : Animator.AnimatorListener {
 
     override fun onAnimationStart(animator: Animator?) {
     }
+}
+
+interface SimpleTransitionListener : Transition.TransitionListener {
+    override fun onTransitionStart(transition: Transition) {
+    }
+
+    override fun onTransitionEnd(transition: Transition) {
+    }
+
+    override fun onTransitionCancel(transition: Transition) {
+    }
+
+    override fun onTransitionPause(transition: Transition) {
+    }
+
+    override fun onTransitionResume(transition: Transition) {
+    }
+
 }

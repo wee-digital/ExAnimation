@@ -7,7 +7,6 @@ import wee.digital.fpa.ui.MainVM
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.arg.PaymentArg
-import wee.digital.fpa.ui.vm.RemainingVM
 
 class SplashFragment : Main.Fragment() {
 

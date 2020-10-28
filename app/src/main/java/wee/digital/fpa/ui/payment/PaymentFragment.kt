@@ -4,11 +4,10 @@ import android.view.View
 import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.data.Timeout
+import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainVM
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.vm.RemainingVM
 
 class PaymentFragment : Main.Dialog() {
 
@@ -27,7 +26,7 @@ class PaymentFragment : Main.Dialog() {
     }
 
     override fun onLiveDataObserve() {
-        remainingVM.startRemaining(Timeout.PAYMENT_TIMEOUT)
+        remainingVM.startTimeout(Timeout.PAYMENT_TIMEOUT)
         mainVM.paymentArg.observe {
             v.onPaymentDataChanged(it)
         }
