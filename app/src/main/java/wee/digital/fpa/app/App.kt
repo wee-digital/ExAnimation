@@ -13,6 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import wee.digital.fpa.BuildConfig
 import wee.digital.fpa.camera.RealSenseControl
+import wee.digital.fpa.data.local.Event
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.base.BaseSharedPref
 import wee.digital.fpa.repository.network.MyApiService
@@ -34,10 +35,9 @@ class App : Application() {
         super.onCreate()
         app = this
         app.onModulesInject()
-
+        Event.initConsumer()
         baseSharedPref = BaseSharedPref()
         baseSharedPref!!.init(this)
-
         getBanksJson()
     }
 
@@ -60,12 +60,13 @@ class App : Application() {
                     override fun onSubscribe(d: Disposable) {}
                     override fun onSuccess(response: Response<JsonArray>) {
                         Log.e("MyAppGetBanks", response.body().toString())
-                        if (response.code() == 200){
+                        if (response.code() == 200) {
                             Shared.bankJson.postValue(response.body())
-                        }else{
+                        } else {
                             Shared.bankJson.postValue(null)
                         }
                     }
+
                     override fun onError(e: Throwable) {
                         Log.e("MyAppGetBanks", e.message.toString())
                         Shared.bankJson.postValue(null)

@@ -7,6 +7,4 @@ import wee.digital.log.Logger
 abstract class BaseViewModel : ViewModel() {
 
     val log by lazy { Logger(this::class) }
-
-    val deviceInfo get() = BaseData.ins.getDeviceInfoPref()
 }

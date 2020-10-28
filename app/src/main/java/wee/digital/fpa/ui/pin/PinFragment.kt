@@ -6,7 +6,6 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
-import wee.digital.library.extension.post
 
 class PinFragment : Main.Dialog() {
 
@@ -21,11 +20,17 @@ class PinFragment : Main.Dialog() {
     override fun onViewCreated() {
         pinView.onViewInit()
         pinProgressLayout.onItemFilled = {
-            remainingVM.startTimeout(Timeout.PIN_TIMEOUT)
-            post(2000) {
-                pinVM.onPinFilled(it, mainVM.paymentArg.value)
-            }
+            onPinCodeFilled(it)
         }
+    }
+
+    private fun onPinCodeFilled(pinCode: String) {
+        remainingVM.startTimeout(Timeout.PIN_TIMEOUT)
+        pinVM.onPinFilled(
+                pinCode = pinCode,
+                paymentArg = mainVM.paymentArg.value,
+                deviceInfo = mainVM.deviceInfo.value
+        )
     }
 
     override fun onLiveDataObserve() {

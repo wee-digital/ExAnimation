@@ -1,7 +1,9 @@
 package wee.digital.fpa.ui.pin
 
+import wee.digital.fpa.data.local.Event
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
+import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.arg.PaymentArg
@@ -15,14 +17,14 @@ class PinVM : BaseViewModel() {
 
     val errorMessage = EventLiveData<String?>()
 
-    fun onPinFilled(s: String, payment: PaymentArg?) {
-        val uid = deviceInfo?.uid ?: return
-        payment ?: return
+    fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, deviceInfo: DeviceInfo?) {
+        paymentArg ?: throw Event.paymentArgError
+        deviceInfo ?: throw Event.deviceInfoError
         verifyPinCode(VerifyPINCodeDTOReq(
-                uid = arrayListOf(uid),
-                paymentID = payment.paymentId,
-                pinCode = s,
-                clientID = payment.clientIp
+                uid = arrayListOf(deviceInfo.uid),
+                paymentID = paymentArg.paymentId,
+                pinCode = pinCode,
+                clientID = paymentArg.clientIp
         ))
     }
 

@@ -35,7 +35,7 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-      
+
     }
 
     override fun onLiveDataObserve() {
