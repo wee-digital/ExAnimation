@@ -35,11 +35,6 @@ fun EditText.addEditorActionListener(actionId: Int, block: (String?) -> Unit) {
     setOnEditorActionListener(object : TextView.OnEditorActionListener {
         override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
             if (actionId == actionId) {
-                (context as? Activity)?.currentFocus?.windowToken.run {
-                    val imm =
-                            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow((context as Activity).currentFocus?.windowToken, 0)
-                }
                 isSelected = false
                 block(text.toString())
                 clearFocus()
