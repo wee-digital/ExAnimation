@@ -1,13 +1,11 @@
 package wee.digital.fpa.ui
 
-import android.content.Context
 import androidx.navigation.NavDirections
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.vm.TimeoutVM
-
 
 class Main {
 
@@ -22,11 +20,6 @@ class Main {
         val mainVM by lazy { activityVM(MainVM::class) }
 
         val timeoutVM by lazy { activityVM(TimeoutVM::class) }
-
-        override fun onAttach(context: Context) {
-            timeoutVM.stopTimeout()
-            super.onAttach(context)
-        }
     }
 
     abstract class Dialog : BaseDialog() {
@@ -34,12 +27,6 @@ class Main {
         val mainVM by lazy { activityVM(MainVM::class) }
 
         val timeoutVM by lazy { activityVM(TimeoutVM::class) }
-
-        override fun onAttach(context: Context) {
-            timeoutVM.stopTimeout()
-            super.onAttach(context)
-        }
-
     }
 
 }
