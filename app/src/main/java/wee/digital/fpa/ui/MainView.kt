@@ -9,6 +9,7 @@ import wee.digital.fpa.app.app
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.util.SimpleLifecycleObserver
+import wee.digital.library.extension.addFastClickListener
 
 class MainView(val v: MainActivity) {
 
@@ -24,6 +25,9 @@ class MainView(val v: MainActivity) {
                 App.realSenseControl?.stopStreamThread()
             }
         })
+        v.mainViewExit.addFastClickListener(7) {
+            v.finish()
+        }
     }
 
     fun onBindDeviceInfo(it: DeviceInfo?) {

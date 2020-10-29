@@ -1,11 +1,21 @@
 package wee.digital.fpa.ui.progress
 
+import androidx.navigation.NavDirections
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 
 data class ProgressArg(
-        val image: Int = R.mipmap.img_progress,
+        val direction : NavDirections = MainDirections.actionGlobalProgressFragment(),
+        val image: Int,
         val title: String,
-        val sound: Int = 0,
-        val soundDelayed: Long = 0,
         val message: String
-)
+) {
+    companion object {
+
+        val payment = ProgressArg(
+                image = R.mipmap.img_progress,
+                title = "CHÚNG TÔI ĐANG XỬ LÝ THANH TOÁN",
+                message = "BẠN CHỜ MỘT CHÚT NHÉ"
+        )
+    }
+}

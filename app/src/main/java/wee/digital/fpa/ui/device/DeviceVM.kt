@@ -66,14 +66,13 @@ class DeviceVM : BaseViewModel() {
 
     private fun onRegisterSuccess() {
         val message = MessageArg(
-                headerGuideline = R.id.guidelineConnect,
                 icon = R.mipmap.img_checked_flat,
                 title = string(R.string.device_register_success),
                 button = string(R.string.device_register_finish),
                 message = string(R.string.register_success)
                         .format("pos.facepay.vn".bold().color("#378AE1")),
                 onClose = {
-                    Main.rootDirection.value = MainDirections.actionGlobalSplashFragment()
+                    Main.rootDirection.value = MainDirections.actionGlobalAdvFragment()
                 }
         )
         registerSuccess.postValue(message)

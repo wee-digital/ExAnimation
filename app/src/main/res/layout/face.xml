@@ -28,28 +28,6 @@
         android:layout_marginTop="@dimen/margin"
         tools:text="Time remaining: 00:30" />
 
-
-    <!--   <wee.digital.fpa.widget.Rounded
-           android:id="@+id/bgFaceRounded"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent" />
-
-       <wee.digital.fpa.widget.Line
-           android:id="@+id/bgFaceLine"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.0"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="@+id/faceImageViewCamera"
-           app:layout_constraintVertical_bias="1.0" />
-   -->
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bgFaceLogo"
         android:layout_width="0dp"
@@ -72,7 +50,7 @@
         app:layout_constraintStart_toStartOf="@+id/faceImageViewCamera"
         app:layout_constraintTop_toTopOf="@+id/faceImageViewCamera"
         tools:alpha="1.0"
-        tools:src="@mipmap/img_progress2" />
+        tools:src="@mipmap/img_progress_placeholder" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/faceImageViewCamera"

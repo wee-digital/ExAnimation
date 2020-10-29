@@ -2,7 +2,7 @@
 
     <!-- TEXT VIEW. -->
     <style name="TextView" parent="WrapContent">
-        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textColor">@color/colorBlack</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/textSize</item>
         <item name="android:fontFamily">@font/inter_regular</item>
@@ -271,5 +271,14 @@
         <item name="layout_constraintStart_toStartOf">parent</item>
         <item name="layout_constraintTop_toTopOf">parent</item>
         <item name="android:textColor">@color/colorTextSecondary</item>
+    </style>
+
+    <style name="ImageView" />
+
+    <style name="ImageView.Progress">
+        <item name="android:layout_width">@dimen/_32sdp</item>
+        <item name="android:layout_height">@dimen/_32sdp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:visibility">invisible</item>
     </style>
 </resources>

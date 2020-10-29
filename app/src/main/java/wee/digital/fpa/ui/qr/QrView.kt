@@ -36,6 +36,7 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
     private var scanQRCode = ScanQRCode()
 
     fun onViewInit() {
+        v.qrViewProgress.load(R.mipmap.img_progress)
         v.addClickListener(v.dialogViewClose)
         v.observerCameraListener(this)
         scanQRCode.initListener(v)

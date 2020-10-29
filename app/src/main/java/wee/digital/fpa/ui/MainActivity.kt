@@ -39,13 +39,7 @@ class MainActivity : BaseActivity() {
     override fun onViewCreated() {
         mainView.onViewInit()
         post(1000) {
-            activityVM(ProgressVM::class).arg.value = ProgressArg(
-                    image = R.mipmap.img_progress,
-                    sound = R.raw.facepay_sound,
-                    soundDelayed = 2000,
-                    title = "CHÚNG TÔI ĐANG XỬ LÝ THANH TOÁN,",
-                    message = "BẠN CHỜ MỘT CHÚT NHÉ"
-            )
+            progressVM.arg.value = ProgressArg.payment
             navigate(MainDirections.actionGlobalOtpFragment())
         }
     }
@@ -70,10 +64,14 @@ class MainActivity : BaseActivity() {
         socketVM.response.observe {
             onSocketResponseChanged(it)
         }
-        paymentVM.paymentArg.observe {
+        paymentVM.arg.observe {
             onPaymentArgChanged(it)
         }
+        progressVM.arg.observe {
+            onProgressArgChanged(it)
+        }
     }
+
 
     /**
      * [MainActivity] properties
@@ -81,6 +79,12 @@ class MainActivity : BaseActivity() {
     private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     private val socketVM by lazy { viewModel(SocketVM::class) }
+
+    private val progressVM by lazy { viewModel(ProgressVM::class) }
+
+    private val faceVM by lazy { activityVM(FaceVM::class) }
+
+    private val pinVM by lazy { activityVM(PinVM::class) }
 
     private val mainVM by lazy { viewModel(MainVM::class) }
 
@@ -127,7 +131,7 @@ class MainActivity : BaseActivity() {
                 }
                 paymentVM.requestCancelPayment(code)
                 if (paying) {
-                    val paymentID = paymentVM.paymentArg.value?.paymentId ?: ""
+                    val paymentID = paymentVM.arg.value?.paymentId ?: ""
                     paymentVM.updateStatusPayment(paymentID, PaymentStatusCode.CANCEL_PAYMENT)
                 }
                 if (paying && calledFacePay) return
@@ -159,13 +163,22 @@ class MainActivity : BaseActivity() {
     private fun onPaymentArgChanged(it: PaymentArg?) {
         when (it) {
             null -> {
-                activityVM(FaceVM::class).faceArg.value = null
-                activityVM(PinVM::class).pinCodeResponse.value = null
+                faceVM.faceArg.value = null
+                pinVM.pinCodeResponse.value = null
             }
             else -> navigate(MainDirections.actionGlobalSplashFragment()) {
                 setLaunchSingleTop()
             }
         }
     }
+
+    private fun onProgressArgChanged(it: ProgressArg?) {
+        when {
+            it != null -> {
+                navigate(it.direction)
+            }
+        }
+    }
+
 
 }

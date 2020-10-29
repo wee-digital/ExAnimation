@@ -56,7 +56,11 @@ class DeviceFragment : Main.Dialog() {
 
     override fun onViewClick(v: View?) {
         when (v) {
-            deviceViewBack, deviceViewClose -> {
+            deviceViewBack -> {
+                dismiss()
+                navigate(MainDirections.actionGlobalQrFragment())
+            }
+            deviceViewClose -> {
                 dismiss()
             }
             deviceViewRegister -> {

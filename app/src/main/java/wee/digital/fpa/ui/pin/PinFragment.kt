@@ -9,10 +9,10 @@ import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceFragment
-import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.fpa.ui.payment.PaymentVM
+import wee.digital.fpa.ui.progress.ProgressArg
 
 class PinFragment : Main.Dialog() {
 
@@ -56,8 +56,6 @@ class PinFragment : Main.Dialog() {
     /**
      * [FaceFragment] properties
      */
-    private val faceVM by lazy { activityVM(FaceVM::class) }
-
     private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     private val pinVM by lazy { activityVM(PinVM::class) }
@@ -66,9 +64,10 @@ class PinFragment : Main.Dialog() {
 
     private fun onPinCodeFilled(pinCode: String) {
         timeoutVM.stopTimeout()
+        progressVM.arg.postValue(ProgressArg.payment)
         pinVM.onPinFilled(
                 pinCode = pinCode,
-                paymentArg = paymentVM.paymentArg.value,
+                paymentArg = paymentVM.arg.value,
                 deviceInfo = mainVM.deviceInfo.value
         )
     }
@@ -88,23 +87,25 @@ class PinFragment : Main.Dialog() {
     }
 
     private fun onRetryMessage(it: String) {
+        progressVM.arg.postValue(null)
         pinProgressLayout.notifyInputRemoved()
         timeoutVM.startTimeout(Timeout.PIN_VERIFY)
         pinView.onBindErrorText(it)
     }
 
     private fun onErrorMessage(it: MessageArg) {
-        paymentVM.paymentArg.postValue(null)
+        progressVM.arg.postValue(null)
+        paymentVM.arg.postValue(null)
         timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
         activityVM(MessageVM::class).arg.value = it
         navigate(MainDirections.actionGlobalMessageFragment())
     }
 
     private fun onPaymentDeny() {
-        paymentVM.paymentArg.postValue(null)
+        paymentVM.arg.postValue(null)
         timeoutVM.stopTimeout()
         dismiss()
-        navigate(MainDirections.actionGlobalSplashFragment()) {
+        navigate(MainDirections.actionGlobalAdvFragment()) {
             setLaunchSingleTop()
         }
     }

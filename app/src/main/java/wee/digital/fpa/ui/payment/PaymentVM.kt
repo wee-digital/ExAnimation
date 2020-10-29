@@ -13,7 +13,7 @@ import wee.digital.fpa.ui.base.BaseViewModel
 
 class PaymentVM : BaseViewModel() {
 
-    val paymentArg = MutableLiveData<PaymentArg?>()
+    val arg = MutableLiveData<PaymentArg?>()
 
     fun getNapasClient(dataSocket: SocketResultResp) {
         PaymentRepository.ins.getClientId(object : Api.ClientListener<ClientIDResp> {
@@ -25,7 +25,7 @@ class PaymentVM : BaseViewModel() {
                     Shared.paymentProcessing = true
                     return
                 }
-                paymentArg.postValue(PaymentArg(
+                arg.postValue(PaymentArg(
                         clientIp = data.ip,
                         paymentId = dataSocket.paymentId,
                         amount = dataSocket.amount,
@@ -35,7 +35,7 @@ class PaymentVM : BaseViewModel() {
 
             override fun onFailed(code: Int, message: String) {
                 log.d("getNapasClient: $code $message")
-                paymentArg.postValue(null)
+                arg.postValue(null)
             }
 
         })

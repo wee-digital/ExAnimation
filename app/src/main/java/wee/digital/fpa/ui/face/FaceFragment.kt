@@ -24,7 +24,7 @@ class FaceFragment : Main.Fragment() {
         faceView.onViewInit()
         faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
             timeoutVM.stopTimeout()
-            faceVM.verifyFace(bitmap, pointData, dataCollect, paymentVM.paymentArg.value)
+            faceVM.verifyFace(bitmap, pointData, dataCollect, paymentVM.arg.value)
         }
     }
 
@@ -63,17 +63,16 @@ class FaceFragment : Main.Fragment() {
     }
 
     private fun onFaceVerifyError(it: MessageArg) {
-        paymentVM.paymentArg.postValue(null)
+        paymentVM.arg.postValue(null)
         timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
         activityVM(MessageVM::class).arg.value = it
         navigate(MainDirections.actionGlobalMessageFragment())
     }
 
     private fun onPaymentDeny() {
-        paymentVM.paymentArg.postValue(null)
+        paymentVM.arg.postValue(null)
         timeoutVM.stopTimeout()
-        navigate(MainDirections.actionGlobalSplashFragment()) {
-            setNoneAnim()
+        navigate(MainDirections.actionGlobalAdvFragment()) {
             setLaunchSingleTop()
         }
     }

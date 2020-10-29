@@ -1,41 +1,41 @@
 package wee.digital.fpa.ui.progress
 
-import kotlinx.android.synthetic.main.progress_pay.*
+import kotlinx.android.synthetic.main.progress.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.payment.PaymentVM
 import wee.digital.library.extension.load
 import wee.digital.library.util.Media
 
 class ProgressPayFragment : Main.Dialog() {
 
-    private val progressVM by lazy { activityVM(ProgressVM::class) }
+    private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.progress_pay
     }
 
     override fun onViewCreated() {
-
+        timeoutVM.startTimeout(5)
+        progressImageView.load(R.mipmap.img_face_paid)
+        view?.postDelayed({
+            Media.play(R.raw.facepay_sound)
+        }, 2000)
     }
 
     override fun onLiveDataObserve() {
+        timeoutVM.inTheEnd.observe {
+            paymentVM.arg.postValue(null)
+            dismiss()
+        }
         progressVM.arg.observe {
             if (it == null) {
                 dismiss()
-            } else {
-                onBindArg(it)
             }
         }
     }
 
-    private fun onBindArg(it: ProgressArg?) {
-        progressImageViewPay.load(it?.image!!)
-        view?.postDelayed({
-            Media.play(it?.sound)
-        }, it?.soundDelayed)
-
-    }
 
 
 }

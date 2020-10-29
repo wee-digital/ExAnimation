@@ -14,8 +14,6 @@ class SplashFragment : Main.Fragment() {
 
     private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
-    private val splashVM by lazy { activityVM(SplashVM::class) }
-
     private val splashView by lazy { SplashView(this) }
 
     /**
@@ -33,7 +31,7 @@ class SplashFragment : Main.Fragment() {
         timeoutVM.second.observe {
             splashView.onBindRemainingText(it)
         }
-        paymentVM.paymentArg.observe {
+        paymentVM.arg.observe {
             onPaymentArgChanged(it)
         }
     }

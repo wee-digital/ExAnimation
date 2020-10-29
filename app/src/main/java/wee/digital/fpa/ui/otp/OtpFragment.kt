@@ -14,6 +14,7 @@ import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.fpa.ui.pin.PinVM
+import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
 
@@ -22,6 +23,8 @@ class OtpFragment : Main.Dialog() {
     companion object {
         private const val NAPAS_STATIC_URL = "https://napas-qc.facepay.vn/v1/static"
     }
+
+    private val messageVM by lazy { activityVM(MessageVM::class) }
 
     private val pinVM by lazy { viewModel(PinVM::class) }
 
@@ -59,28 +62,29 @@ class OtpFragment : Main.Dialog() {
     private fun onTransactionFailed(data: String) {
         when (data) {
             "INSUFFICIENT_FUNDS" -> {
-                activityVM(MessageVM::class).arg.value = MessageArg(
+                messageVM.arg.value = MessageArg(
                         title = "Giao dịch thất bại",
                         message = "Không đủ số dư thanh toán",
                         button = null,
                 )
             }
             "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
-                activityVM(MessageVM::class).arg.value = MessageArg(
+                messageVM.arg.value = MessageArg(
                         title = "Giao dịch thất bại",
                         message = "Quá hạn mức giao dịch",
                         button = null,
                 )
             }
             else -> { //  data == "CANCEL"
-                activityVM(MessageVM::class).arg.value = MessageArg.paymentCancelMessage
+                messageVM.arg.value = MessageArg.paymentCancelMessage
             }
         }
         navigate(MainDirections.actionGlobalMessageFragment())
     }
 
     private fun onTransactionSuccess() {
-
+        dismiss()
+        navigate(MainDirections.actionGlobalProgressPayFragment())
     }
 
     private inner class OtpWebViewClient : WebViewClient() {

@@ -29,7 +29,7 @@ class PaymentFragment : Main.Dialog() {
         timeoutVM.inTheEnd.observe {
             if (it) onPaymentDeny()
         }
-        paymentVM.paymentArg.observe {
+        paymentVM.arg.observe {
             paymentView.onPaymentDataChanged(it)
         }
         mainVM.deviceInfo.observe {
@@ -53,9 +53,12 @@ class PaymentFragment : Main.Dialog() {
     }
 
     private fun onPaymentDeny() {
-        paymentVM.paymentArg.postValue(null)
+        paymentVM.arg.postValue(null)
         timeoutVM.stopTimeout()
         dismiss()
+        navigate(MainDirections.actionGlobalAdvFragment()) {
+            setLaunchSingleTop()
+        }
     }
 
 }

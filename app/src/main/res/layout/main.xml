@@ -30,4 +30,13 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="DeviceName\n1.0.0" />
 
+    <View
+        android:id="@+id/mainViewExit"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_margin="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

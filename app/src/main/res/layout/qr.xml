@@ -72,15 +72,13 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/qrViewProgress"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_24sdp"
-            android:clickable="false"
-            app:layout_constraintBottom_toBottomOf="@+id/qrTextViewHint"
-            app:layout_constraintDimensionRatio="w,1:1"
+            style="@style/ImageView.Progress"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/qrTextViewHint"
-            tools:src="@mipmap/img_placeholder" />
+            app:layout_constraintTop_toBottomOf="@+id/frgQRLayout"
+            tools:src="@mipmap/img_progress_placeholder"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
