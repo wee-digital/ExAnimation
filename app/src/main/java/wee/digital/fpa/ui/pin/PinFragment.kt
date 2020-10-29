@@ -5,9 +5,15 @@ import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
+import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
+import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
+import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceFragment
+import wee.digital.fpa.ui.face.FaceVM
+import wee.digital.fpa.ui.message.MessageArg
+import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.fpa.ui.payment.PaymentVM
 
 class PinFragment : Main.Dialog() {
@@ -31,14 +37,18 @@ class PinFragment : Main.Dialog() {
         timeoutVM.inTheEnd.observe {
             if (it) onPaymentDeny()
         }
-        pinVM.errorMessage.observe {
-            pinProgressLayout.notifyInputRemoved()
-            pinView.onBindErrorText(it)
+        pinVM.retryMessage.observe {
+            onRetryMessage(it)
         }
-        pinVM.pinCodeSuccess.observe {
-            onPinVerifySuccess()
+        pinVM.errorMessage.observe {
+            onErrorMessage(it)
+        }
+        pinVM.pinCodeResponse.observe {
+            onPinVerifySuccess(it)
         }
     }
+
+
 
     override fun onViewClick(v: View?) {
         when (v) {
@@ -49,6 +59,8 @@ class PinFragment : Main.Dialog() {
     /**
      * [FaceFragment] properties
      */
+    private val faceVM by lazy { activityVM(FaceVM::class) }
+
     private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     private val pinVM by lazy { viewModel(PinVM::class) }
@@ -56,7 +68,7 @@ class PinFragment : Main.Dialog() {
     private val pinView by lazy { PinView(this) }
 
     private fun onPinCodeFilled(pinCode: String) {
-        timeoutVM.startTimeout(Timeout.PIN_VERIFY)
+        timeoutVM.stopTimeout()
         pinVM.onPinFilled(
                 pinCode = pinCode,
                 paymentArg = paymentVM.paymentArg.value,
@@ -64,17 +76,41 @@ class PinFragment : Main.Dialog() {
         )
     }
 
-    private fun onPinVerifySuccess() {
+    private fun onPinVerifySuccess(it: VerifyPINCodeDTOResp) {
+        val a: VerifyFaceDTOResp? = faceVM.faceArg.value ?: throw Event.faceArgError
+        dismiss()
+        when {
+            // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
+            it.hasDefaultAccount -> {
+                navigate(MainDirections.actionGlobalOtpFragment())
+            }
+            // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
+            else -> {
+                navigate(MainDirections.actionGlobalCardFragment())
+            }
+        }
+    }
 
+    private fun onRetryMessage(it: String) {
+        pinProgressLayout.notifyInputRemoved()
+        timeoutVM.startTimeout(Timeout.PIN_VERIFY)
+        pinView.onBindErrorText(it)
+    }
+
+    private fun onErrorMessage(it: MessageArg) {
+        paymentVM.paymentArg.postValue(null)
+        timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
+        activityVM(MessageVM::class).arg.value = it
+        navigate(MainDirections.actionGlobalMessageFragment())
     }
 
     private fun onPaymentDeny() {
         paymentVM.paymentArg.postValue(null)
+        timeoutVM.stopTimeout()
         dismiss()
         navigate(MainDirections.actionGlobalSplashFragment()) {
             setLaunchSingleTop()
         }
     }
-
 
 }

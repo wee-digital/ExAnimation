@@ -3,7 +3,9 @@ package wee.digital.fpa.ui.message
 import androidx.constraintlayout.widget.ConstraintSet
 import kotlinx.android.synthetic.main.message.*
 import wee.digital.fpa.R
+import wee.digital.library.extension.hide
 import wee.digital.library.extension.setHyperText
+import wee.digital.library.extension.show
 import wee.digital.library.extension.string
 
 class MessageView(val v: MessageFragment) {
@@ -14,7 +16,14 @@ class MessageView(val v: MessageFragment) {
         v.messageImageViewIcon.setImageResource(arg.icon ?: R.mipmap.img_checked_flat)
         v.messageTextViewTitle.text = arg.title ?: string(R.string.app_name)
         v.messageTextViewMessage.setHyperText(arg.message)
-        v.messageViewClose.text = arg.button ?: "Đóng"
+
+        if (arg.button.isNullOrEmpty()){
+            v.messageViewClose.show()
+            v.messageViewClose.text = arg.button
+        }else{
+            v.messageViewClose.hide()
+        }
+
         v.messageViewClose.setOnClickListener {
             v.dismiss()
             arg.onClose()

@@ -122,6 +122,14 @@
     <action
         android:id="@+id/action_global_disconnectFragment"
         app:destination="@id/disconnectFragment" />
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="wee.digital.fpa.ui.otp.OtpFragment"
+        android:label="OtpFragment"
+        tools:layout="@layout/otp" />
+    <action
+        android:id="@+id/action_global_otpFragment"
+        app:destination="@id/otpFragment" />
 
 
 </navigation>

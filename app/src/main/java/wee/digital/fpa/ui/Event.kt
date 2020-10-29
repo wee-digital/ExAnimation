@@ -1,13 +1,15 @@
-package wee.digital.fpa.data.local
+package wee.digital.fpa.ui
 
 import wee.digital.fpa.app.toast
 
 
 object Event {
 
-    val paymentArgError = NullPointerException("MainVM.paymentArg is null value")
+    val paymentArgError = NullPointerException("PaymentVM.paymentArg is null value")
 
     val deviceInfoError = NullPointerException("MainVM.deviceInfo is null value")
+
+    val faceArgError = NullPointerException("FaceVM.faceArg is null value")
 
     fun initConsumer() {
         Thread.setDefaultUncaughtExceptionHandler { _, e ->
@@ -17,6 +19,9 @@ object Event {
 
                 }
                 deviceInfoError -> {
+
+                }
+                faceArgError -> {
 
                 }
             }

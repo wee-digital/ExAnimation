@@ -148,7 +148,7 @@ class MainActivity : BaseActivity() {
         when (it) {
             null -> {
                 faceVM.faceArg.value = null
-                timeoutVM.stopTimeout()
+
             }
             else -> {
 

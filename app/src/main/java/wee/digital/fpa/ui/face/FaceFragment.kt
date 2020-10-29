@@ -71,6 +71,7 @@ class FaceFragment : Main.Fragment() {
 
     private fun onPaymentDeny() {
         paymentVM.paymentArg.postValue(null)
+        timeoutVM.stopTimeout()
         navigate(MainDirections.actionGlobalSplashFragment()) {
             setNoneAnim()
             setLaunchSingleTop()
@@ -83,12 +84,10 @@ class FaceFragment : Main.Fragment() {
             timeoutVM.startTimeout(Timeout.FACE_VERIFY)
         }
         it.onDeny = {
-            navigate(MainDirections.actionGlobalSplashFragment()) {
-                setLaunchSingleTop()
-            }
+            onPaymentDeny()
         }
         faceView.animateOnFaceCaptured()
-        timeoutVM.startTimeout(Timeout.FACE_RETRY)
+        timeoutVM.startTimeout(Timeout.FACE_VERIFY)
         activityVM(ConfirmVM::class).arg.value = it
         navigate(MainDirections.actionGlobalConfirmFragment())
     }

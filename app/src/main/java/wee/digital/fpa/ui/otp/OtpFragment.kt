@@ -8,7 +8,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_otp.*
+import kotlinx.android.synthetic.main.otp.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.app.toast
@@ -21,13 +21,13 @@ import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
 import wee.digital.library.extension.post
 
-class OtpFragment : Main.Fragment() {
+class OtpFragment : Main.Dialog() {
 
     private var keyboardDisposable: Disposable? = null
 
     private var isMargin = false
 
-    override fun layoutResource(): Int = R.layout.fragment_otp
+    override fun layoutResource(): Int = R.layout.otp
 
     override fun onViewCreated() {
         settingWebView()
