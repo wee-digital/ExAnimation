@@ -8,9 +8,9 @@ import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
 import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.library.extension.bold
 import wee.digital.library.extension.color
 import wee.digital.library.extension.string
@@ -25,7 +25,7 @@ class DeviceVM : BaseViewModel() {
 
     val progressVisible = EventLiveData<Boolean>()
 
-    fun registerDevice(sName: String?,qr: JsonObject?) {
+    fun registerDevice(sName: String?, qr: JsonObject?) {
         if (progressVisible.value == true) return
         if (sName?.length ?: 0 < 5) {
             nameError.value = "Tên thiết bị phải từ 5 đến 20 ký tự"
@@ -81,8 +81,6 @@ class DeviceVM : BaseViewModel() {
 
     private fun onRegisterError(s: String?) {
         val message = MessageArg(
-                headerGuideline = R.id.guidelineConnect,
-                icon = R.mipmap.img_x_mark_flat,
                 title = string(R.string.device_register_failed),
                 button = string(R.string.device_register_fail),
                 message = s

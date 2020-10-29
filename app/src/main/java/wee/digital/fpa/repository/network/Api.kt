@@ -64,7 +64,7 @@ class Api {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(response: Response<ResponseBody>) {
-                        Log.e("dataApi", "$response")
+                        Log.d("dataApi", "$response")
 
 //                        val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
 //                        val timeSend = response.raw().sentRequestAtMillis().toDouble()
@@ -116,7 +116,7 @@ class Api {
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("CallApiLog", "$e")
+                        Log.d("CallApiLog", "$e")
 
                         val timeCall = System.currentTimeMillis() - timeIn
                         /*LogGrafana.instance.postHttp(url, timeCall, 404, "${e.message}")*/
@@ -190,11 +190,11 @@ class Api {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(response: Response<ResponseBody>) {
-                        Log.e("dataApi", "$response")
+                        Log.d("dataApi", "$response")
 
                         val timeCall = System.currentTimeMillis() - timeIn
 
-                        Log.e("timeCallApi", "$url - [${System.currentTimeMillis() - timeIn}]")
+                        Log.d("timeCallApi", "$url - [${System.currentTimeMillis() - timeIn}]")
 
                         when (response.code()) {
 
@@ -237,7 +237,7 @@ class Api {
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("CallApiLog", "$e")
+                        Log.d("CallApiLog", "$e")
 
                         val timeCall = System.currentTimeMillis() - timeIn
                         /*LogGrafana.instance.postHttp(url, timeCall, 404, "${e.message}")*/
@@ -272,7 +272,7 @@ class Api {
 
                     override fun onError(e: Throwable) {
                         listener.onFail(ErrCode.API_FAIL, e.message.toString(), null)
-                        Log.e("callUpLoadVideo", "onError : ${e.message}")
+                        Log.d("callUpLoadVideo", "onError : ${e.message}")
                     }
 
                 })
@@ -286,16 +286,16 @@ class Api {
                 .subscribe(object : SingleObserver<Response<ResponseBody>> {
 
                     override fun onSubscribe(d: Disposable) {
-                        Log.e("callUpLoadVideo", "onSubscribe")
+                        Log.d("callUpLoadVideo", "onSubscribe")
                     }
 
                     override fun onSuccess(t: Response<ResponseBody>) {
-                        Log.e("callUpLoadVideo", "${t.code()}")
+                        Log.d("callUpLoadVideo", "${t.code()}")
                         listener.onSuccess(JsonObject())
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("callUpLoadVideo", e.message.toString())
+                        Log.d("callUpLoadVideo", e.message.toString())
                         listener.onFail(ErrCode.API_FAIL, "${e.message}", null)
                     }
 

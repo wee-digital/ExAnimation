@@ -3,164 +3,115 @@ package wee.digital.fpa.ui.otp
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.UrlQuerySanitizer
-import android.view.MotionEvent
-import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import gun0912.tedkeyboardobserver.TedRxKeyboardObserver
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.app.toast
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.fpa.ui.pin.PinVM
-import wee.digital.fpa.util.Utils
 import wee.digital.library.extension.gone
-import wee.digital.library.extension.load
 import wee.digital.library.extension.post
 
 class OtpFragment : Main.Dialog() {
 
+    companion object {
+        private const val NAPAS_STATIC_URL = "https://napas-qc.facepay.vn/v1/static"
+    }
+
     private val pinVM by lazy { viewModel(PinVM::class) }
 
-    private var keyboardDisposable: Disposable? = null
-
-    private var isMargin = false
+    private val otpView by lazy { OtpView(this) }
 
     override fun layoutResource(): Int {
         return R.layout.otp
     }
 
     override fun onViewCreated() {
-        settingWebView()
-        val napasUrl = pinVM.pinCodeResponse.value?.formOtp ?: throw Event.pinDataError
-        loadWebViewOtp(napasUrl)
+        otpView.onViewInit()
+        loadOtpWebView()
     }
 
-    override fun onLiveDataObserve() {}
+    override fun onLiveDataObserve() {
 
-    private fun initStatusKeyboard() {
-        keyboardDisposable = TedRxKeyboardObserver(requireActivity())
-                .listen()
-                .subscribe({ isShow -> checkMarginView(isShow) }, {})
-    }
-
-    /**
-     * setting webView & init handler keyboard status
-     */
-    private fun settingWebView() {
-        frgOtpGif.load(R.drawable.loading)
-        webViewOtp_web.layoutParams.height = Utils.getScreenHeight() + 320
-        webViewOtp_web.setOnTouchListener { v, event -> event.action === MotionEvent.ACTION_MOVE }
-        webViewOtp_web.isScrollContainer = false
-        webViewOtp_web.isVerticalScrollBarEnabled = false
-        webViewOtp_web.isHorizontalScrollBarEnabled = false
-    }
-
-    private fun checkMarginView(statusKeyboard: Boolean) {
-        if (statusKeyboard) {
-            if (isMargin) return
-            isMargin = true
-            post(100) {
-                webViewOtp_scroll.fling(0)
-                webViewOtp_scroll.scrollTo(0, webViewOtp_web.bottom)
-            }
-        } else {
-            if (!isMargin) return
-            isMargin = false
-            webViewOtp_scroll.post {
-                webViewOtp_scroll.fling(0)
-                webViewOtp_scroll.scrollTo(0, webViewOtp_web.bottom)
-            }
-        }
     }
 
     /**
      * load webView Otp
      */
     @SuppressLint("SetJavaScriptEnabled")
-    private fun loadWebViewOtp(html: String) {
-        webViewOtp_web.loadDataWithBaseURL(
+    private fun loadOtpWebView() {
+        val url = pinVM.pinCodeResponse.value?.formOtp ?: throw Event.pinDataError
+        otpWebView.loadDataWithBaseURL(
                 "https://dps-staging.napas.com.vn/api/restjs/resources/js/napas.hostedform.min.js",
-                """$html""",
+                """$url""",
                 "text/html",
                 "UTF-8",
                 null
         )
+        otpWebView.webViewClient = OtpWebViewClient()
+    }
 
-        webViewOtp_web.settings.javaScriptEnabled = true
-        webViewOtp_web.addJavascriptInterface(JavaScriptInterface(), "javascript_obj")
-
-        webViewOtp_web.webViewClient = object : WebViewClient() {
-
-            override fun onPageCommitVisible(view: WebView?, url: String?) {
-                super.onPageCommitVisible(view, url)
-                post(3000) { if (frgOtpGif.isShown) frgOtpGif.gone() }
+    private fun onTransactionFailed(data: String) {
+        when (data) {
+            "INSUFFICIENT_FUNDS" -> {
+                activityVM(MessageVM::class).arg.value = MessageArg(
+                        title = "Giao dịch thất bại",
+                        message = "Không đủ số dư thanh toán",
+                        button = null,
+                )
             }
+            "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
+                activityVM(MessageVM::class).arg.value = MessageArg(
+                        title = "Giao dịch thất bại",
+                        message = "Quá hạn mức giao dịch",
+                        button = null,
+                )
+            }
+            else -> { //  data == "CANCEL"
+                activityVM(MessageVM::class).arg.value = MessageArg.paymentCancelMessage
+            }
+        }
+        navigate(MainDirections.actionGlobalMessageFragment())
+    }
 
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                try {
-                    val listUrl = url?.split("=") ?: return
-                    if (listUrl.size < 2) return
-                    when (listUrl[0]) {
-                        "https://napas-qc.facepay.vn/v1/static/payment-fail?reason" -> {
-                            val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
-                            handlerTransactionFail(reason)
-                        }
-                        "https://napas-qc.facepay.vn/v1/static/payment-success?facepayRef" -> {
-                            toast("payment transaction success")
-                        }
-                    }
-                } catch (e: Exception) {
+    private fun onTransactionSuccess() {
+
+    }
+
+    private inner class OtpWebViewClient : WebViewClient() {
+
+        override fun onPageCommitVisible(view: WebView?, url: String?) {
+            super.onPageCommitVisible(view, url)
+            post(3000) {
+                if (otpImageViewProgress.isShown) {
+                    otpImageViewProgress.gone()
                 }
             }
         }
-    }
 
-    private fun handlerTransactionFail(data: String) {
-        when (data) {
-            "INSUFFICIENT_FUNDS" -> {
-                //khong du so du thanh toan
-            }
-            "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
-                //qua han muc giao dich
-            }
-            "CANCEL" -> {
-
-                activityVM(MessageVM::class).arg.value = MessageArg(
-                        icon = R.mipmap.img_x_mark_flat,
-                        title = "Sample title",
-                        message = "huy bo giao dich"
-                )
-                navigate(MainDirections.actionGlobalMessageFragment())
-            }
-            else -> {
-
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+            try {
+                val listUrl = url?.split("=") ?: return
+                if (listUrl.size < 2) return
+                when (listUrl[0]) {
+                    "$NAPAS_STATIC_URL/payment-fail?reason" -> {
+                        val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
+                        onTransactionFailed(reason)
+                    }
+                    "$NAPAS_STATIC_URL/payment-success?facepayRef" -> {
+                        onTransactionSuccess()
+                    }
+                }
+            } catch (e: Exception) {
             }
         }
     }
 
-    private inner class JavaScriptInterface {
-        @JavascriptInterface
-        fun onResultWebView() {
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        initStatusKeyboard()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        keyboardDisposable?.dispose()
-
-    }
 
 }

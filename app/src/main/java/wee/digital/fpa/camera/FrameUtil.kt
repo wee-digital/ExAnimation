@@ -97,7 +97,7 @@ object FrameUtil {
             }
 
         } catch (ex: Exception) {
-            Log.e("getFaceResult", ex.message.toString())
+            Log.d("getFaceResult", ex.message.toString())
             bitmap.recycle()
             null
         }
@@ -162,7 +162,7 @@ object FrameUtil {
             bitmap.recycle()
             cropBitmap
         } catch (ex: Exception) {
-            Log.e("getFaceResult", ex.message.toString())
+            Log.d("getFaceResult", ex.message.toString())
             bitmap.recycle()
             null
         }
@@ -241,7 +241,7 @@ object FrameUtil {
     fun getDataPoint(face: Box): FacePointData {
         val listNewPoint = arrayListOf<Point>()
         for (point in face.landmark) {
-            val newP = convertPoint(point, face.transform2Rect())
+            val newP = convertPoint(point)
             listNewPoint.add(newP)
         }
 
@@ -280,7 +280,7 @@ object FrameUtil {
         )
     }
 
-    private fun convertPoint(oldPoint: Point?, faceRect: Rect): Point {
+    private fun convertPoint(oldPoint: Point?): Point {
         oldPoint ?: return Point(0, 0)
         val old_X = oldPoint.x
         val old_Y = oldPoint.y
@@ -327,7 +327,7 @@ object FrameUtil {
             }
             return rgb
         } catch (e: Exception) {
-            Log.e(TAG, "Error: ${e.message}")
+            Log.d(TAG, "Error: ${e.message}")
             return null
         }
 
@@ -418,7 +418,7 @@ object FrameUtil {
         val nose = data.Nose
         val dataFace =
                 "${rect.left}a${rect.top}a${rect.right}a${rect.bottom}a${eyeLeft.x}a${eyeLeft.y}a${eyeRight.x}a${eyeRight.y}a${mouthLeft.x}a${mouthLeft.y}a${mouthRight.x}a${mouthRight.y}a${nose.x}a${nose.y}"
-        Log.e("dataFaceUtils", "$dataFace")
+        Log.d("dataFaceUtils", "$dataFace")
         return "$dataFace"
     }
 
@@ -611,7 +611,7 @@ object FrameUtil {
         val bot = face.box[3]
         val x = (left + right) * 0.5f
         val y = (top + bot) * 0.5f
-        Log.e("checkZoneFaceasdsadas", "$x")
+        Log.d("checkZoneFaceasdsadas", "$x")
         return x in Detection.zoneFaceX && y in Detection.zoneFaceY
     }
 
@@ -630,7 +630,7 @@ object FrameUtil {
                     val prepareKey = Base64.decode(Key.PREPARE_KEY, Base64.NO_PADDING)
                     val objectData = Crypto.aesDecryptCBC(prepareKey, qr)
                     value = String(objectData)
-                    Log.e("decryptQRCode", value)
+                    Log.d("decryptQRCode", value)
                 } else {
                     return null
                 }

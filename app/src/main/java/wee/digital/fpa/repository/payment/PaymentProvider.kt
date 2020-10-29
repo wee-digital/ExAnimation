@@ -32,12 +32,12 @@ class PaymentProvider : IBase.Payment {
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onError(e: Throwable) {
-                        Log.e("getClientId", "fail : ${e.message}")
+                        Log.d("getClientId", "fail : ${e.message}")
                         listener.onFailed(code = ErrCode.API_FAIL, message = e.message.toString())
                     }
 
                     override fun onSuccess(t: JsonObject) {
-                        Log.e("getClientId", "success : $t")
+                        Log.d("getClientId", "success : $t")
                         val data = Gson().fromJson(t, ClientIDResp::class.java)
                         listener.onSuccess(data)
                     }
@@ -51,13 +51,13 @@ class PaymentProvider : IBase.Payment {
     ) {
         Api.instance.postApi(url = "device/payment-request", data = data, listener = object : Api.ApiCallBack {
             override fun onSuccess(data: JsonObject) {
-                Log.e("requestPayment", "success : $data")
+                Log.d("requestPayment", "success : $data")
                 val resp = data.parse(RequestPaymentDTOResp::class.java)!!
                 listener.onSuccess(data = resp)
             }
 
             override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                Log.e("requestPayment", "fail : $code - $mess - $data")
+                Log.d("requestPayment", "fail : $code - $mess - $data")
                 listener.onFailed(code = code, message = mess)
             }
         })
@@ -75,7 +75,7 @@ class PaymentProvider : IBase.Payment {
                 listener = object : Api.ApiCallBack {
 
                     override fun onSuccess(data: JsonObject) {
-                        Log.e("verifyFace", "$data")
+                        Log.d("verifyFace", "$data")
                         val resp = data.parse(VerifyFaceDTOResp::class.java)!!
                         resp.code = ErrCode.SUCCESS
 
@@ -83,7 +83,7 @@ class PaymentProvider : IBase.Payment {
                     }
 
                     override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                        Log.e("verifyFace", "$code - $mess - $data")
+                        Log.d("verifyFace", "$code - $mess - $data")
                         val errCode = verifyFaceFailed(code, mess, data)
                         listener.onFailed(code = errCode, message = mess)
                     }
@@ -96,7 +96,7 @@ class PaymentProvider : IBase.Payment {
     ) {
         Api.instance.postApi(url = "verifyPinCode", data = dataReq, listener = object : Api.ApiCallBack {
             override fun onSuccess(data: JsonObject) {
-                Log.e("verifyPINCode", "$data")
+                Log.d("verifyPINCode", "$data")
                 val resp = data.parse(VerifyPINCodeDTOResp::class.java)!!
                 resp.code = ErrCode.SUCCESS
 
@@ -104,7 +104,7 @@ class PaymentProvider : IBase.Payment {
             }
 
             override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                Log.e("verifyPINCode", "$code - $mess - $data")
+                Log.d("verifyPINCode", "$code - $mess - $data")
                 val errCode = verifyPINCodeFailed(code, mess, data)
                 listener.onFailed(code = errCode, message = mess)
             }
@@ -116,7 +116,7 @@ class PaymentProvider : IBase.Payment {
         Api.instance.postApi(url = "facepay", data = dataReq, listener = object : Api.ApiCallBack {
 
             override fun onSuccess(data: JsonObject) {
-                Log.e("payment", "$data")
+                Log.d("payment", "$data")
                 val resp = data.parse(PaymentDTOResp::class.java)!!
                 resp.code = ErrCode.SUCCESS
 
@@ -124,7 +124,7 @@ class PaymentProvider : IBase.Payment {
             }
 
             override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                Log.e("payment", "$code - $mess - $data")
+                Log.d("payment", "$code - $mess - $data")
                 val resp = paymentFailed(code, mess, data)
                 listener.onFailed(resp)
             }
@@ -138,14 +138,14 @@ class PaymentProvider : IBase.Payment {
         Api.instance.postApi(url = "get-bank-accounts", data = dataReq, listener = object : Api.ApiCallBack {
 
             override fun onSuccess(data: JsonObject) {
-                Log.e("getBankAccList", "$data")
+                Log.d("getBankAccList", "$data")
                 val resp = data.parse(GetBankAccListDTOResp::class.java)!!
 
                 listener.onSuccess(resp)
             }
 
             override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                Log.e("getBankAccList", "$code - $mess - $data")
+                Log.d("getBankAccList", "$code - $mess - $data")
                 listener.onFailed(code = code, message = mess)
             }
         })
@@ -156,7 +156,7 @@ class PaymentProvider : IBase.Payment {
             override fun onSuccess(data: JsonObject) {}
 
             override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                Log.e("updatePaymentStatus", "$code - $mess - $data")
+                Log.d("updatePaymentStatus", "$code - $mess - $data")
             }
         })
     }
@@ -167,11 +167,11 @@ class PaymentProvider : IBase.Payment {
                 data = dataReq,
                 listener = object : Api.ApiCallBack {
                     override fun onSuccess(data: JsonObject) {
-                        Log.e("updateCancelPayment", "$data")
+                        Log.d("updateCancelPayment", "$data")
                     }
 
                     override fun onFail(code: Int, mess: String, data: JsonObject?) {
-                        Log.e("updateCancelPayment", "$code - $mess - $data")
+                        Log.d("updateCancelPayment", "$code - $mess - $data")
                     }
                 })
     }
@@ -193,7 +193,7 @@ class PaymentProvider : IBase.Payment {
     }
 
     private fun verifyPINCodeFailed(code: Int, mess: String, data: JsonObject?): Int {
-        Log.e("verifyPin", "$code - $mess - $data")
+        Log.d("verifyPin", "$code - $mess - $data")
 
         return when (code) {
             ErrCode.API_FAIL -> ErrCode.WRONG_PIN_CODE
@@ -202,7 +202,7 @@ class PaymentProvider : IBase.Payment {
     }
 
     private fun paymentFailed(code: Int, mess: String, data: JsonObject?): PaymentDTOResp {
-        Log.e("payment", "$code - $mess - $data")
+        Log.d("payment", "$code - $mess - $data")
 
         val resp = PaymentDTOResp()
         if (code == ErrCode.INSUFFICIENT_ACC_BALANCE) {

@@ -178,7 +178,7 @@ public class BitmapUtils {
             // Get the length and check if it is reasonable.
             length = pack(jpeg, offset, 2, false);
             if (length < 2 || offset + length > jpeg.length) {
-                Log.e(TAG, "Invalid length");
+                Log.d(TAG, "Invalid length");
                 return 0;
             }
             // Break if the marker is EXIF in APP1.
@@ -198,14 +198,14 @@ public class BitmapUtils {
             // Identify the byte order.
             int tag = pack(jpeg, offset, 4, false);
             if (tag != 0x49492A00 && tag != 0x4D4D002A) {
-                Log.e(TAG, "Invalid byte order");
+                Log.d(TAG, "Invalid byte order");
                 return 0;
             }
             boolean littleEndian = (tag == 0x49492A00);
             // Get the offset and check if it is reasonable.
             int count = pack(jpeg, offset + 4, 4, littleEndian) + 2;
             if (count < 10 || count > length) {
-                Log.e(TAG, "Invalid offset");
+                Log.d(TAG, "Invalid offset");
                 return 0;
             }
             offset += count;
@@ -369,7 +369,7 @@ public class BitmapUtils {
                 //data = YUV420toNV21(image);
             }
         } catch (Exception ex) {
-            Log.e("ImagetoByteArray", ex.getMessage());
+            Log.d("ImagetoByteArray", ex.getMessage());
         }
 
         return data;

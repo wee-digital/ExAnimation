@@ -64,7 +64,7 @@ class Detection(context: Context) {
             mDepthLabeler =
                     FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(labelerDepthCheckOptions)
         } catch (e: Exception) {
-            Log.e("initNTCNN", "Error: ${e.message}")
+            Log.d("initNTCNN", "Error: ${e.message}")
         }
     }
 
@@ -132,7 +132,7 @@ class Detection(context: Context) {
                     checkFaceFake(
                             cropDepthBitmap,
                             data.face,
-                            portrait!!,
+                            portrait,
                             byteFullFace,
                             data.dataFace,
                             dataCollect
@@ -209,7 +209,7 @@ class Detection(context: Context) {
         }
 
         if (labelStatusFace(labels) == "real") {
-            Log.e("Detection", "get face ok")
+            Log.d("Detection", "get face ok")
             countFaceOk++
             if (countFaceOk > 2) {
                 listener?.faceEligible(face, portrait, fullFace, faceData, dataCollect)

@@ -5,17 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewContent"
     style="@style/MatchParent"
-    android:background="@color/colorDialogBackground">
+    tools:background="@color/colorPrimary">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         style="@style/Guideline.Connect" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frgInputDeviceRoot"
         style="@style/Dialog.BottomFragment"
-        android:fitsSystemWindows="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,5 +118,6 @@
             tools:src="@mipmap/img_placeholder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

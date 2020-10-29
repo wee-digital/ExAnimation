@@ -38,11 +38,11 @@ class CollectionData {
                 .observeOn(Schedulers.computation())
                 .subscribe (
                         {
-                            Log.e("encryptCollectData","success")
+                            Log.d("encryptCollectData","success")
                             postCollectData(it.headers,it.body)
                         },
                         {
-                            Log.e("encryptCollectData","${it.message}")
+                            Log.d("encryptCollectData","${it.message}")
                         }
                 )
     }
@@ -56,10 +56,10 @@ class CollectionData {
                 .subscribe(object : SingleObserver<Response<ResponseBody>> {
                     override fun onSubscribe(d: Disposable) {}
                     override fun onSuccess(t: Response<ResponseBody>) {
-                        Log.e("facePosCollectData", "onSuccess")
+                        Log.d("facePosCollectData", "onSuccess")
                     }
                     override fun onError(e: Throwable) {
-                        Log.e("facePosCollectData", "onError")
+                        Log.d("facePosCollectData", "onError")
                     }
                 })
     }

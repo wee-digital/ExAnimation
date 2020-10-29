@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.SocketResultResp
+import wee.digital.fpa.repository.dto.UpdateCancelPaymentDTOReq
 import wee.digital.fpa.repository.dto.UpdatePaymentStatusDTOReq
 import wee.digital.fpa.repository.model.ClientIDResp
 import wee.digital.fpa.repository.network.Api
@@ -46,4 +47,8 @@ class PaymentVM : BaseViewModel(){
         PaymentRepository.ins.updatePaymentStatus(dataReq)
     }
 
+    fun requestCancelPayment(type: Int) {
+        val dataReq = UpdateCancelPaymentDTOReq(type = type)
+        PaymentRepository.ins.updateCancelPayment(dataReq)
+    }
 }

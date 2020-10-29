@@ -12,7 +12,7 @@ class Socket {
 
     fun connectWebSocketMonitor(token: String, webSocketMonitorListener: WebSocketControl.WebSocketMonitorListener) {
         if (webSocketControlMonitorV2 == null) {
-            Log.e("connectWebSocketMonitor", "Open Connect WebSocketMonitor")
+            Log.d("connectWebSocketMonitor", "Open Connect WebSocketMonitor")
             webSocketControlMonitorV2 = WebSocketControl()
             webSocketControlMonitorV2?.addWebSocketListener(webSocketMonitorListener)
             webSocketControlMonitorV2?.openConnect(token)
@@ -22,7 +22,7 @@ class Socket {
         closeWebSocketMonitor(object : WebSocketControl.WebSocketMonitorCloseListener {
 
             override fun onClosed() {
-                Log.e("connectWebSocketMonitor", "closeWebSocketMonitor")
+                Log.d("connectWebSocketMonitor", "closeWebSocketMonitor")
                 webSocketControlMonitorV2 = null
                 connectWebSocketMonitor(token, webSocketMonitorListener)
             }

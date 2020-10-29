@@ -59,8 +59,6 @@ class PinVM : BaseViewModel() {
                 onPinVerifyRetry()
             }
             2 -> errorMessage.postValue(MessageArg(
-                    headerGuideline = R.id.guidelineConnect,
-                    icon = R.mipmap.img_x_mark_flat,
                     title = "Giao dịch bị hủy bỏ",
                     message = "Lỗi thanh toán. Bạn vui lòng chọn thẻ khác".format()
             ))

@@ -41,6 +41,14 @@ interface BaseView {
         nav.navigate(directions, option.build())
     }
 
+    fun navigateTop(directions: NavDirections, block: (NavOptions.Builder.() -> Unit) = {}) {
+        val option = NavOptions.Builder()
+                .setDefaultAnim()
+        option.setLaunchSingleTop()
+        option.block()
+        nav.navigate(directions, option.build())
+    }
+
     fun navigateUp() {
         nav.navigateUp()
     }
@@ -50,11 +58,13 @@ interface BaseView {
         setPopEnterAnim(R.anim.vertical_reserved_pop_enter)
         return this
     }
+
     fun NavOptions.Builder.setNoneAnim(): NavOptions.Builder {
         setEnterAnim(0)
         setPopEnterAnim(0)
         return this
     }
+
     fun NavOptions.Builder.setLaunchSingleTop(): NavOptions.Builder {
         setLaunchSingleTop(true)
         setPopUpTo(nav.graph.id, false)

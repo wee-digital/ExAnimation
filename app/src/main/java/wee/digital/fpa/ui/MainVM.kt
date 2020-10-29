@@ -73,19 +73,10 @@ class MainVM : BaseViewModel() {
         })
     }
 
-    fun requestCancelPayment(type: Int) {
-        val dataReq = UpdateCancelPaymentDTOReq(type = type)
-        PaymentRepository.ins.updateCancelPayment(dataReq)
-    }
-
-
     fun resetDeviceData() {
         BaseData.ins.resetDeviceInfo()
     }
 
-    /**
-     * device status features
-     */
     private fun onDeviceStatus(status: Int) {
         when (status) {
             ErrCode.DEVICE_EXISTS -> {

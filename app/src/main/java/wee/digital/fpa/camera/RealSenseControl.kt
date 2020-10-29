@@ -147,7 +147,7 @@ class RealSenseControl : DeviceListener {
                 }
 
             } catch (e: Exception) {
-                Log.e(TAG, "${e.message}")
+                Log.d(TAG, "${e.message}")
                 errorMessage += " ${e.message}"
                 false
             }
@@ -168,7 +168,7 @@ class RealSenseControl : DeviceListener {
                 }
                 mHandler?.removeCallbacks(this)
                 isFrameOK = false
-                Log.e(TAG, errorMessage)
+                Log.d(TAG, errorMessage)
                 if (errorMessage.isNotEmpty()) {
                     hardwareReset()
                 } else {
@@ -188,7 +188,7 @@ class RealSenseControl : DeviceListener {
         mHandlerThread?.start()
         mHandler = Handler(mHandlerThread!!.looper)
         mHandlerThread?.uncaughtExceptionHandler =
-                Thread.UncaughtExceptionHandler { t, e -> Log.e(TAG, "${t.name} - ${e.message}") }
+                Thread.UncaughtExceptionHandler { t, e -> Log.d(TAG, "${t.name} - ${e.message}") }
 
         mProcessThread.start()
         mHandlerProcess = Handler(mProcessThread.looper)
@@ -221,7 +221,7 @@ class RealSenseControl : DeviceListener {
     }
 
     fun startStreamThread() {
-        Log.e(TAG, "try streaming starting...")
+        Log.d(TAG, "try streaming starting...")
         if (mIsStreaming) return
         try {
             mIsStreaming = true
@@ -238,22 +238,22 @@ class RealSenseControl : DeviceListener {
             configAndStart()
         } catch (e: Exception) {
             startListener?.onError("${e.message}")
-            Log.e(TAG, "${e.message}")
+            Log.d(TAG, "${e.message}")
         }
     }
 
     fun stopStreamThread() {
         if (!mIsStreaming) return
-        Log.e(TAG, "try stop streaming")
+        Log.d(TAG, "try stop streaming")
         try {
             mIsStreaming = false
             isStopCamera = true
             isFrameProcessing = false
             mDevice?.close()
             mPipelineProfile?.close()
-            Log.e(TAG, "streaming stopped successfully")
+            Log.d(TAG, "streaming stopped successfully")
         } catch (e: java.lang.Exception) {
-            Log.e(TAG, "failed to stop streaming : ${e.message}")
+            Log.d(TAG, "failed to stop streaming : ${e.message}")
             startListener?.onError("${e.message}")
             mPipeline = null
         }
@@ -269,7 +269,7 @@ class RealSenseControl : DeviceListener {
             val now = System.currentTimeMillis()
             mPipelineProfile = mPipeline!!.start(config)
             val time = System.currentTimeMillis() - now
-            Log.e("startCamera", "$time")
+            Log.d("startCamera", "$time")
             mDevice = mPipelineProfile?.device
             mHandler?.post(mStreaming)
 
@@ -285,12 +285,12 @@ class RealSenseControl : DeviceListener {
             }
             DEVICE_CONFIG = deviceConfig
             printInfo(mDevice!!)
-            Log.e(TAG, "streaming started successfully")
+            Log.d(TAG, "streaming started successfully")
         }
     }
 
     private fun hardwareReset() {
-        Log.e(TAG, "hardwareReset")
+        Log.d(TAG, "hardwareReset")
         mDevice?.hardwareReset()
     }
 
@@ -309,38 +309,38 @@ class RealSenseControl : DeviceListener {
 
     private fun printInfo(device: Device) {
         device.querySensors()?.forEach { sensor ->
-            Log.e(TAG, "Sensor $sensor")
+            Log.d(TAG, "Sensor $sensor")
             if (sensor != null) {
                 try {
                     if (sensor.`is`(Extension.COLOR_SENSOR)) {
                         mColorSensor = sensor.`as`(Extension.COLOR_SENSOR)
                         val brightness = mColorSensor!!.getValue(Option.BRIGHTNESS)
-                        Log.e(TAG, "brightness $brightness - Setting.....")
+                        Log.d(TAG, "brightness $brightness - Setting.....")
                         val exposure = mColorSensor!!.getValue(Option.EXPOSURE)
-                        Log.e(TAG, "exposure $exposure - Setting.....")
+                        Log.d(TAG, "exposure $exposure - Setting.....")
                         val contrast = mColorSensor!!.getValue(Option.CONTRAST)
-                        Log.e(TAG, "contrast $contrast - Setting.....")
+                        Log.d(TAG, "contrast $contrast - Setting.....")
                         val saturation = mColorSensor!!.getValue(Option.SATURATION)
-                        Log.e(TAG, "saturation $saturation - Setting.....")
+                        Log.d(TAG, "saturation $saturation - Setting.....")
                         val backLightCompensation =
                                 mColorSensor!!.getValue(Option.BACKLIGHT_COMPENSATION)
-                        Log.e(TAG, "backLight_compensation $backLightCompensation - Setting.....")
+                        Log.d(TAG, "backLight_compensation $backLightCompensation - Setting.....")
                         val gain = mColorSensor!!.getValue(Option.GAIN)
-                        Log.e(TAG, "gain $gain - Setting.....")
+                        Log.d(TAG, "gain $gain - Setting.....")
                         val gamma = mColorSensor!!.getValue(Option.GAMMA)
-                        Log.e(TAG, "gama $gamma - Setting.....")
+                        Log.d(TAG, "gama $gamma - Setting.....")
                         val whiteBalance = mColorSensor!!.getValue(Option.WHITE_BALANCE)
-                        Log.e(TAG, "white_balance $whiteBalance - Setting.....")
+                        Log.d(TAG, "white_balance $whiteBalance - Setting.....")
                         val sharpness = mColorSensor!!.getValue(Option.SHARPNESS)
-                        Log.e(TAG, "sharpness $sharpness - Setting.....")
+                        Log.d(TAG, "sharpness $sharpness - Setting.....")
                         val hue = mColorSensor!!.getValue(Option.HUE)
-                        Log.e(TAG, "hue $hue - Setting.....")
+                        Log.d(TAG, "hue $hue - Setting.....")
                         val enableAutoExposure =
                                 mColorSensor!!.getValue(Option.ENABLE_AUTO_EXPOSURE)
-                        Log.e(TAG, "enable_auto_exposure $enableAutoExposure - Setting.....")
+                        Log.d(TAG, "enable_auto_exposure $enableAutoExposure - Setting.....")
                         val enableAutoWhiteBalance =
                                 mColorSensor!!.getValue(Option.ENABLE_AUTO_WHITE_BALANCE)
-                        Log.e(TAG, "auto_white_balance $enableAutoWhiteBalance - Setting.....")
+                        Log.d(TAG, "auto_white_balance $enableAutoWhiteBalance - Setting.....")
 
                         colorConfig.apply {
                             this.brightness = brightness
@@ -357,7 +357,7 @@ class RealSenseControl : DeviceListener {
                         }
                     }
                 } catch (e: Exception) {
-                    Log.e(TAG, "Error: ${e.message}")
+                    Log.d(TAG, "Error: ${e.message}")
                 }
             }
         }
@@ -396,12 +396,12 @@ class RealSenseControl : DeviceListener {
     )
 
     override fun onDeviceAttach() {
-        Log.e(TAG, "onDeviceAttach")
+        Log.d(TAG, "onDeviceAttach")
         startStreamThread()
     }
 
     override fun onDeviceDetach() {
-        Log.e(TAG, "onDeviceDetach")
+        Log.d(TAG, "onDeviceDetach")
         stopStreamThread()
     }
 

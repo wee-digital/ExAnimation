@@ -25,7 +25,7 @@ class MainView(val v: MainActivity) {
         })
     }
 
-    fun onDeviceInfoChanged(it: DeviceInfo?) {
+    fun onBindDeviceInfo(it: DeviceInfo?) {
         v.mainTextViewDeviceInfo.text = "${it?.fullName}\n${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     }
 

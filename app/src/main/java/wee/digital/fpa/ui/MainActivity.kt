@@ -4,7 +4,6 @@ package wee.digital.fpa.ui
 import androidx.navigation.NavDirections
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.app.toast
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.GetTokenDTOResp
 import wee.digital.fpa.repository.dto.SocketResultResp
@@ -21,7 +20,6 @@ import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
-import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
 import wee.digital.library.extension.post
 
@@ -115,7 +113,9 @@ class MainActivity : BaseActivity() {
 
     private fun onSocketResponseChanged(it: SocketResultResp) {
         when (it.event) {
-            SocketEvent.HAS_PAYMENT -> paymentVM.getNapasClient(it)
+            SocketEvent.HAS_PAYMENT -> {
+                paymentVM.getNapasClient(it)
+            }
             SocketEvent.DIMISS_PAYMENT -> {
                 val calledFacePay = Shared.calledFacePay.value ?: false
                 val paying = Shared.paymentProcessing
@@ -125,30 +125,33 @@ class MainActivity : BaseActivity() {
                     paying && !calledFacePay -> CancelPaymentCode.CANCEL_SUCCESS
                     else -> 0
                 }
-                mainVM.requestCancelPayment(code)
+                paymentVM.requestCancelPayment(code)
                 if (paying) {
                     val paymentID = paymentVM.paymentArg.value?.paymentId ?: ""
                     paymentVM.updateStatusPayment(paymentID, PaymentStatusCode.CANCEL_PAYMENT)
                 }
                 if (paying && calledFacePay) return
-                toast("go home")
             }
             SocketEvent.DELETE_CACHE -> {
                 Utils.deleteCache()
                 mainVM.resetDeviceData()
                 Main.rootDirection.postValue(MainDirections.actionGlobalConnectFragment())
-                toast("device not exist")
             }
         }
     }
 
     private fun onDeviceInfoChanged(it: DeviceInfo?) {
         when {
-            it?.uid.isNullOrEmpty() -> navigate(MainDirections.actionGlobalConnectFragment()) {
-                setLaunchSingleTop()
+            it?.uid.isNullOrEmpty() -> {
+                navigate(MainDirections.actionGlobalConnectFragment()) {
+                    setLaunchSingleTop()
+                }
             }
             else -> {
-                mainView.onDeviceInfoChanged(it)
+                mainView.onBindDeviceInfo(it)
+                navigate(MainDirections.actionGlobalAdvFragment()) {
+                    setLaunchSingleTop()
+                }
             }
         }
     }
@@ -159,8 +162,8 @@ class MainActivity : BaseActivity() {
                 activityVM(FaceVM::class).faceArg.value = null
                 activityVM(PinVM::class).pinCodeResponse.value = null
             }
-            else -> {
-
+            else -> navigate(MainDirections.actionGlobalSplashFragment()) {
+                setLaunchSingleTop()
             }
         }
     }

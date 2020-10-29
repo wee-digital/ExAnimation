@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.fragment_slider.view.*
 import wee.digital.fpa.R
 
-class MediaAdapter : RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
+class AdvAdapter : RecyclerView.Adapter<AdvAdapter.ViewHolder>() {
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v)
 
@@ -64,8 +64,8 @@ class MediaAdapter : RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
         }
     }
 
-
     var viewPager: ViewPager2? = null
+
     fun bindToViewPager(viewPager: ViewPager2) {
         this.viewPager = viewPager
         viewPager.adapter = this

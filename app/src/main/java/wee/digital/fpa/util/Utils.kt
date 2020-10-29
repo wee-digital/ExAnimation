@@ -27,7 +27,7 @@ object Utils {
         val nose = data.Nose
         val dataFace =
                 "${rect.left}a${rect.top}a${rect.right}a${rect.bottom}a${eyeLeft.x}a${eyeLeft.y}a${eyeRight.x}a${eyeRight.y}a${mouthLeft.x}a${mouthLeft.y}a${mouthRight.x}a${mouthRight.y}a${nose.x}a${nose.y}"
-        Log.e("dataFaceUtils", "$dataFace")
+        Log.d("dataFaceUtils", "$dataFace")
         return "$dataFace"
     }
 

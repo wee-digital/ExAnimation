@@ -60,7 +60,7 @@ class App : Application() {
                 .subscribe(object : SingleObserver<Response<JsonArray>> {
                     override fun onSubscribe(d: Disposable) {}
                     override fun onSuccess(response: Response<JsonArray>) {
-                        Log.e("MyAppGetBanks", response.body().toString())
+                        Log.d("MyAppGetBanks", response.body().toString())
                         if (response.code() == 200) {
                             Shared.bankJson.postValue(response.body())
                         } else {
@@ -69,7 +69,7 @@ class App : Application() {
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.e("MyAppGetBanks", e.message.toString())
+                        Log.d("MyAppGetBanks", e.message.toString())
                         Shared.bankJson.postValue(null)
                     }
                 })

@@ -129,7 +129,7 @@ class EncryptData {
                         EncryptResultCollect(headers, Base64.encodeToString(bodyEncrypt, Base64.NO_WRAP))
                 )
             } catch (e: java.lang.Exception) {
-                Log.e("TestKey", "${e.message}")
+                Log.d("TestKey", "${e.message}")
                 singleEmitter.onError(e)
             }
         }

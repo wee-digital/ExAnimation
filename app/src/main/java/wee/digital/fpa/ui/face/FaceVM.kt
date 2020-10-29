@@ -63,7 +63,6 @@ class FaceVM : ViewModel() {
             }
             else -> verifyRetry.postValue(ConfirmArg(
                     headerGuideline = R.id.guidelineFace,
-                    icon = R.mipmap.img_x_mark_flat,
                     title = "Tài khoản không tồn tại",
                     message = "Bạn vui lòng đăng ký tài khoản Facepay trước khi thực hiện thanh toán",
                     buttonAccept = "Thử lại",

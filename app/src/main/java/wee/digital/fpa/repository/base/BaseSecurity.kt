@@ -79,7 +79,7 @@ class BaseSecurity {
                 return priKey.privateKey.encoded
             }
         } catch (e: Exception) {
-            Log.e("getRSAPriKey", "${e.message}")
+            Log.d("getRSAPriKey", "${e.message}")
             return null
         }
 
@@ -92,7 +92,7 @@ class BaseSecurity {
                 return priKey.certificate.publicKey.encoded
             }
         } catch (e: Exception) {
-            Log.e("getRSAPubKey", "${e.message}")
+            Log.d("getRSAPubKey", "${e.message}")
             return null
         }
     }
@@ -153,7 +153,7 @@ class BaseSecurity {
             }
 
         } catch (e: java.lang.Exception) {
-            Log.e("Security", "${e.message}")
+            Log.d("Security", "${e.message}")
             e.printStackTrace()
         }
         return null
@@ -172,10 +172,10 @@ class BaseSecurity {
                 random.nextBytes(iv)
                 cipher.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey, random)
                 val data = base64Decode(base64Str)
-                Log.e("rsaDecrypt", "Decrypt data size: ${data.size}")
+                Log.d("rsaDecrypt", "Decrypt data size: ${data.size}")
                 cipher.doFinal(data)
             } catch (e: Throwable) {
-                Log.e("rsaDecrypt", "${e.message}")
+                Log.d("rsaDecrypt", "${e.message}")
                 null
             }
         } else {
@@ -199,7 +199,7 @@ class BaseSecurity {
             //---
             base64Encode(inputEncrypt)
         } catch (e: Exception) {
-            Log.e("rsaEncrypt", "${e.message}")
+            Log.d("rsaEncrypt", "${e.message}")
             "null"
         }
     }
@@ -208,7 +208,7 @@ class BaseSecurity {
         createNewKeyStoreSign(ALIAS_SIGN)
         val entry: KeyStore.Entry = keyStore.getEntry(ALIAS_SIGN, protectParam)
         if (entry !is KeyStore.PrivateKeyEntry) {
-            Log.e("Security", "Not an instance of a PrivateKeyEntry")
+            Log.d("Security", "Not an instance of a PrivateKeyEntry")
             return ""
         }
         curSign = Signature.getInstance(SIGN_ALGORITHM).run {
@@ -226,7 +226,7 @@ class BaseSecurity {
         createNewKeyStoreSign(ALIAS_SIGN)
         val entry = keyStore.getEntry(ALIAS_SIGN, protectParam) as? KeyStore.PrivateKeyEntry
         if (entry == null) {
-            Log.e("Security", "Not an instance of a PrivateKeyEntry")
+            Log.d("Security", "Not an instance of a PrivateKeyEntry")
             return false
         }
         val sign = Signature.getInstance(SIGN_ALGORITHM)
@@ -247,7 +247,7 @@ class BaseSecurity {
                             .setKeySize(4096)
                             .build()
             )
-            Log.e("Security", "createNewKeyStoreRSA")
+            Log.d("Security", "createNewKeyStoreRSA")
             keyPairGenerator.generateKeyPair()
         }
     }
@@ -286,7 +286,7 @@ class BaseSecurity {
                         setUserAuthenticationValidityDurationSeconds(15)*/
                         setRandomizedEncryptionRequired(true)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && hasStrongBox(app)) {
-                            Log.e("Security", "addStrongBoxBacked")
+                            Log.d("Security", "addStrongBoxBacked")
                             setIsStrongBoxBacked(true)
                             setUnlockedDeviceRequired(true)
                         }
@@ -298,7 +298,7 @@ class BaseSecurity {
             )
             generator.init(spec)
             generator.generateKey()
-            Log.e("Security", "createNewKeyStoreAES")
+            Log.d("Security", "createNewKeyStoreAES")
         }
     }
 
@@ -311,7 +311,7 @@ class BaseSecurity {
                 setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
                 setKeySize(521)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && hasStrongBox(app)) {
-                    Log.e("Security", "addStrongBoxBacked")
+                    Log.d("Security", "addStrongBoxBacked")
                     setIsStrongBoxBacked(true)
                 }
                 setRandomizedEncryptionRequired(true)
@@ -322,7 +322,7 @@ class BaseSecurity {
             )
             generator.initialize(spec)
             generator.generateKeyPair()
-            Log.e("Security", "createNewKeyStoreSign")
+            Log.d("Security", "createNewKeyStoreSign")
         }
     }
 
@@ -333,7 +333,7 @@ class BaseSecurity {
             val keyInfo: KeyInfo = factory.getKeySpec(key.secretKey, KeyInfo::class.java)
             return keyInfo.isInsideSecureHardware
         } catch (e: GeneralSecurityException) {
-            Log.e(
+            Log.d(
                     "Security",
                     "Could not determine if private key is in secure hardware or not"
             )

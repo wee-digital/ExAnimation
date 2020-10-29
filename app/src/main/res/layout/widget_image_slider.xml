@@ -10,12 +10,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.daimajia.slider.library.Indicators.PagerIndicator
-        android:id="@+id/slideIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_54sdp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

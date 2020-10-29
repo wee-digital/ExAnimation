@@ -35,7 +35,7 @@ import kotlin.coroutines.suspendCoroutine
                     TensorFlowInferenceInterface(assetManager, MODEL_FILE)
             Log.d("Facenet", "[*]load model success")
         } catch (e: Exception) {
-            Log.e("Facenet", "[*]load model failed$e")
+            Log.d("Facenet", "[*]load model failed$e")
             return false
         }
         return true
