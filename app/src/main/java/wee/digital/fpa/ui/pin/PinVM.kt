@@ -1,5 +1,6 @@
 package wee.digital.fpa.ui.pin
 
+import wee.digital.fpa.data.local.Config
 import wee.digital.fpa.data.local.Event
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
@@ -13,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
 
-    private val failureCount = AtomicInteger(5)
+    private val retryCount = AtomicInteger(Config.PIN_RETRY_COUNT)
 
     val errorMessage = EventLiveData<String?>()
 
@@ -29,6 +30,7 @@ class PinVM : BaseViewModel() {
     }
 
     private fun verifyPinCode(req: VerifyPINCodeDTOReq) {
+        retryCount.decrementAndGet()
         PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<VerifyPINCodeDTOResp> {
             override fun onSuccess(data: VerifyPINCodeDTOResp) {
                 onPinVerifySuccess()
@@ -46,10 +48,9 @@ class PinVM : BaseViewModel() {
     }
 
     private fun onPinVerifyFailed(code: Int, message: String? = null) {
-        failureCount.decrementAndGet()
         val s = when {
-            code == 1 && failureCount.get() > 0 -> {
-                "Mã PIN không đúng, bạn còn %s lần thử lại".format(failureCount.get())
+            code == 1 && retryCount.get() > 0 -> {
+                "Mã PIN không đúng, bạn còn %s lần thử lại".format(retryCount.get())
             }
             code == 2 -> {
                 "Lỗi thanh toán. Bạn vui lòng chọn thẻ khác".format()

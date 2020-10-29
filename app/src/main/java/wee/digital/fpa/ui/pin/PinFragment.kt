@@ -25,7 +25,7 @@ class PinFragment : Main.Dialog() {
     }
 
     override fun onLiveDataObserve() {
-        timeoutVM.startTimeout(Timeout.PIN_TIMEOUT)
+        timeoutVM.startTimeout(Timeout.PIN_VERIFY)
         timeoutVM.inTheEnd.observe {
             if (it) onPaymentDeny()
         }
@@ -42,7 +42,7 @@ class PinFragment : Main.Dialog() {
     }
 
     private fun onPinCodeFilled(pinCode: String) {
-        timeoutVM.startTimeout(Timeout.PIN_TIMEOUT)
+        timeoutVM.startTimeout(Timeout.PIN_VERIFY)
         pinVM.onPinFilled(
                 pinCode = pinCode,
                 paymentArg = mainVM.paymentArg.value,
