@@ -50,11 +50,11 @@ class FaceFragment : Main.Fragment() {
     /**
      * [FaceFragment] properties
      */
-    private val paymentVM: PaymentVM by lazy { activityVM(PaymentVM::class) }
+    private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
-    private val faceVM: FaceVM by lazy { activityVM(FaceVM::class) }
+    private val faceVM by lazy { activityVM(FaceVM::class) }
 
-    private val faceView: FaceView by lazy { FaceView(this) }
+    private val faceView by lazy { FaceView(this) }
 
     private fun onFaceVerifySuccess() {
         timeoutVM.stopTimeout()

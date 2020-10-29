@@ -77,15 +77,14 @@ class PinFragment : Main.Dialog() {
     }
 
     private fun onPinVerifySuccess(it: VerifyPINCodeDTOResp) {
-        val a: VerifyFaceDTOResp? = faceVM.faceArg.value ?: throw Event.faceArgError
         dismiss()
         when {
-            // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
             it.hasDefaultAccount -> {
+                // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
                 navigate(MainDirections.actionGlobalOtpFragment())
             }
-            // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
             else -> {
+                // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
                 navigate(MainDirections.actionGlobalCardFragment())
             }
         }

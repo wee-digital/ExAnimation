@@ -15,7 +15,7 @@ class ProgressPayFragment : Main.Fragment() {
     override fun onViewCreated() {
 
     }
-    
+
     override fun onLiveDataObserve() {
         progressVM.arg.observe {
             onBindArg(it)
