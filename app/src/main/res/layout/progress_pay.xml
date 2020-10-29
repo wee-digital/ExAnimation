@@ -19,45 +19,32 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/progressImageViewPay"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/facepay"
-            android:visibility="gone"
-            android:padding="@dimen/margin"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_84sdp"
+            android:scaleType="centerInside"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="w,630:210"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/paymentImageViewLogo"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_64sdp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/img_progress"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.4" />
+
+            tools:src="@mipmap/img_progress2" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentNapasTitle"
             style="@style/BodyRegular"
-            android:text="CHÚNG TÔI ĐANG XỬ LÝ THANH TOÁN,"
+            android:hint="CHÚNG TÔI ĐANG XỬ LÝ THANH TOÁN,"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/paymentImageViewLogo"
-            app:layout_constraintVertical_bias="0.3" />
+            app:layout_constraintTop_toBottomOf="@+id/progressImageViewPay"
+            app:layout_constraintVertical_bias="0.2" />
 
         <wee.digital.fpa.widget.GradientTextWidget
             android:id="@+id/paymentNapasMessage"
             style="@style/BodySemibold"
-            android:text="BẠN CHỜ MỘT CHÚT NHÉ"
+            android:hint="BẠN CHỜ MỘT CHÚT NHÉ"
             android:layout_marginTop="@dimen/margin"
             app:layout_constraintTop_toBottomOf="@id/paymentNapasTitle"
             app:layout_constraintEnd_toEndOf="@+id/paymentNapasTitle"

@@ -16,8 +16,8 @@ class GradientTextWidget : AppCompatTextView {
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
 
         paint.shader = LinearGradient(0F, 0F, width.toFloat(), 0F,
-                ContextCompat.getColor(context, R.color.gradient_blue_start),
-                ContextCompat.getColor(context, R.color.gradient_blue_end),
+                ContextCompat.getColor(context, R.color.gradient_blue_start2),
+                ContextCompat.getColor(context, R.color.gradient_blue_end2),
                 Shader.TileMode.CLAMP)
     }
 

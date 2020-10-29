@@ -42,10 +42,10 @@ class MainActivity : BaseActivity() {
         post(1000) {
             activityVM(ProgressVM::class).arg.value = ProgressArg(
                     image = R.mipmap.img_progress,
-                    sound = R.raw.sound_bip,
-                    soundDelayed = 1000,
-                    title = "hello",
-                    message = "message"
+                    sound = R.raw.facepay_sound,
+                    soundDelayed = 2000,
+                    title = "CHÚNG TÔI ĐANG XỬ LÝ THANH TOÁN,",
+                    message = "BẠN CHỜ MỘT CHÚT NHÉ"
             )
             navigate(MainDirections.actionGlobalCardFragment())
         }

@@ -32,8 +32,12 @@
     <color name="color_gray_2">#A0A0A0</color>
     <color name="gradient_blue_start">#378AE1</color>
     <color name="gradient_blue_end">#419DF2</color>
+    <color name="gradient_blue_start2">#439EFB</color>
+    <color name="gradient_blue_end2">#82F5FA</color>
     <color name="gradient_red_start">#F24141</color>
     <color name="gradient_red_end">#D22222</color>
     <color name="color_notification">#FFFFFF</color>
+
+
 
 </resources>
