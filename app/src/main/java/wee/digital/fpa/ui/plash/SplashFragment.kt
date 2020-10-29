@@ -25,11 +25,11 @@ class SplashFragment : Main.Fragment() {
     }
 
     override fun onLiveDataObserve() {
+        timeoutVM.second.observe {
+            splashView.onBindRemainingText(it)
+        }
         mainVM.paymentArg.observe {
             onPaymentArgChanged(it)
-        }
-        remainingVM.interval.observe {
-            splashView.onBindRemainingText(it)
         }
     }
 

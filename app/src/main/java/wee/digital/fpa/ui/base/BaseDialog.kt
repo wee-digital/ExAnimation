@@ -88,5 +88,4 @@ abstract class BaseDialog : DialogFragment(), BaseView {
     fun <T> LiveData<T>.observe(block: (T) -> Unit) {
         observe(viewLifecycleOwner, Observer(block))
     }
-
 }

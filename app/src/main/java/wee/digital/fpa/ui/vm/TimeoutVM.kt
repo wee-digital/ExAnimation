@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import wee.digital.fpa.ui.base.BaseViewModel
+import wee.digital.fpa.ui.base.EventLiveData
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -12,22 +13,23 @@ class TimeoutVM : BaseViewModel() {
 
     private var disposable: Disposable? = null
 
-    val interval = MutableLiveData<Int>()
+    val second = MutableLiveData<Int>()
+
+    val inTheEnd = MutableLiveData<Boolean>()
 
     fun startTimeout(intervalInSecond: Int) {
         val waitingCounter = AtomicInteger(intervalInSecond)
-        interval.value = intervalInSecond
+        second.value = intervalInSecond
         disposable?.dispose()
         disposable = Observable
                 .interval(1, 1, TimeUnit.SECONDS)
-                .map {
-                    waitingCounter.decrementAndGet()
-                }
+                .map { waitingCounter.decrementAndGet() }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    interval.value = it
-                    if (it <= 0) {
-                        disposable?.dispose()
+                    second.value = it
+                    when {
+                        it == 0 -> inTheEnd.postValue(true)
+                        it < 0 -> disposable?.dispose()
                     }
                 }, {})
 
@@ -35,7 +37,8 @@ class TimeoutVM : BaseViewModel() {
 
     fun stopTimeout() {
         disposable?.dispose()
-        interval.value = -1
+        second.postValue(-1)
+        inTheEnd.postValue(false)
     }
 
 }

@@ -21,10 +21,10 @@ class Main {
 
         val mainVM by lazy { activityVM(MainVM::class) }
 
-        val remainingVM by lazy { activityVM(TimeoutVM::class) }
+        val timeoutVM by lazy { activityVM(TimeoutVM::class) }
 
         override fun onAttach(context: Context) {
-            remainingVM.stopTimeout()
+            timeoutVM.stopTimeout()
             super.onAttach(context)
         }
     }
@@ -33,12 +33,13 @@ class Main {
 
         val mainVM by lazy { activityVM(MainVM::class) }
 
-        val remainingVM by lazy { activityVM(TimeoutVM::class) }
+        val timeoutVM by lazy { activityVM(TimeoutVM::class) }
 
         override fun onAttach(context: Context) {
-            remainingVM.stopTimeout()
+            timeoutVM.stopTimeout()
             super.onAttach(context)
         }
+
     }
 
 }
