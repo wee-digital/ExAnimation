@@ -19,8 +19,6 @@ import wee.digital.library.extension.string
 
 class DeviceVM : BaseViewModel() {
 
-    val objQRCode = MutableLiveData<JsonObject>()
-
     val nameError = EventLiveData<String?>()
 
     var registerError = EventLiveData<MessageArg>()
@@ -29,14 +27,14 @@ class DeviceVM : BaseViewModel() {
 
     val progressVisible = EventLiveData<Boolean>()
 
-    fun registerDevice(sName: String?) {
+    fun registerDevice(sName: String?,qr: JsonObject?) {
         if (progressVisible.value == true) return
         if (sName?.length ?: 0 < 5) {
             nameError.value = "Tên thiết bị phải từ 5 đến 20 ký tự"
             return
         }
         val info = DeviceInfoStore(
-                qrCode = Shared.qrCode.value ?: JsonObject(),
+                qrCode = qr ?: JsonObject(),
                 name = sName!!
         )
         registerDevice(info)

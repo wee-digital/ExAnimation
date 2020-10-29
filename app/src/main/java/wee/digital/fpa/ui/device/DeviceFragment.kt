@@ -9,13 +9,16 @@ import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.arg.MessageArg
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.connect.ConnectVM
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.library.extension.addEditorActionListener
 import wee.digital.library.extension.trimText
 
 class DeviceFragment : Main.Dialog() {
 
-    private val deviceVM by lazy { activityVM(DeviceVM::class) }
+    private val connectVM by lazy { activityVM(ConnectVM::class) }
+
+    private val deviceVM by lazy { viewModel(DeviceVM::class) }
 
     private val deviceView by lazy { DeviceView(this) }
 
@@ -34,7 +37,7 @@ class DeviceFragment : Main.Dialog() {
     }
 
     override fun onLiveDataObserve() {
-        deviceVM.objQRCode.observe {
+        connectVM.objQRCode.observe {
             deviceView.onBindStation(it)
         }
         deviceVM.nameError.observe {
@@ -68,7 +71,7 @@ class DeviceFragment : Main.Dialog() {
     private fun onRegisterDevice() {
         deviceTextViewError.text = null
         val s = deviceEditTextName.trimText
-        deviceVM.registerDevice(s)
+        deviceVM.registerDevice(s,connectVM.objQRCode.value)
     }
 
     private fun onRegisterSuccess(arg: MessageArg) {
