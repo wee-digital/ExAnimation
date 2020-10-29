@@ -7,7 +7,7 @@ import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
-import wee.digital.fpa.ui.arg.PaymentArg
+import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import java.util.concurrent.atomic.AtomicInteger
@@ -41,7 +41,6 @@ class PinVM : BaseViewModel() {
             }
         })
     }
-
 
     private fun onPinVerifySuccess() {
         errorMessage.postValue(null)

@@ -3,8 +3,6 @@ package wee.digital.fpa.ui.payment
 import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.utils.SystemUrl
-import wee.digital.fpa.ui.arg.PaymentArg
-import wee.digital.fpa.util.observerCameraStream
 import wee.digital.library.extension.load
 import wee.digital.library.extension.moneyFormat
 import wee.digital.library.extension.nowFormat

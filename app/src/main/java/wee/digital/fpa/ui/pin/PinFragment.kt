@@ -6,8 +6,12 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.payment.PaymentVM
 
 class PinFragment : Main.Dialog() {
+
+    private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     private val pinVM by lazy { viewModel(PinVM::class) }
 
@@ -45,13 +49,13 @@ class PinFragment : Main.Dialog() {
         timeoutVM.startTimeout(Timeout.PIN_VERIFY)
         pinVM.onPinFilled(
                 pinCode = pinCode,
-                paymentArg = mainVM.paymentArg.value,
+                paymentArg = paymentVM.paymentArg.value,
                 deviceInfo = mainVM.deviceInfo.value
         )
     }
 
     private fun onPaymentDeny() {
-        mainVM.paymentArg.postValue(null)
+        paymentVM.paymentArg.postValue(null)
         timeoutVM.stopTimeout()
         dismiss()
         navigate(MainDirections.actionGlobalSplashFragment()) {
