@@ -56,7 +56,10 @@ class PinView(private val v: PinFragment) {
 
     fun onBindErrorText(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.pinTextViewTitle.color("232323")
+            v.pinTextViewTitle.paint.shader = LinearGradient(0F, 0F, v.pinTextViewTitle.width.toFloat(), 0F,
+                    color(R.color.color_black),
+                    color(R.color.color_black),
+                    Shader.TileMode.CLAMP)
             v.pinTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
         } else {
             v.pinTextViewTitle.paint.shader = LinearGradient(0F, 0F, v.pinTextViewTitle.width.toFloat(), 0F,

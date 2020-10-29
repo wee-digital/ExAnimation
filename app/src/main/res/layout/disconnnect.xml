@@ -2,14 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchWidth">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         style="@style/WrapContent"
         android:layout_marginTop="@dimen/margin"
-        android:background="@drawable/bg_rounded"
-        android:backgroundTint="@color/colorAlert"
+        android:background="@drawable/drw_alert_bg"
         android:elevation="1dp"
         android:paddingStart="@dimen/margin"
         android:paddingTop="@dimen/_4sdp"
@@ -18,8 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/disconnectImageViewIcon"

@@ -91,8 +91,8 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle1"
         style="@style/Headline1SemiBold"
-        android:fontFamily="@font/inter_semibold"
         android:includeFontPadding="false"
+        android:textColor="@color/color_black"
         android:text="Selfie time !"
         app:layout_constraintBottom_toTopOf="@id/faceTextViewTitle2"
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2" />
@@ -112,6 +112,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle3"
         style="@style/Headline3"
+        android:textColor="@color/color_black"
         android:layout_marginTop="@dimen/margin"
         android:text="vào giữa vùng nhận diện"
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2"

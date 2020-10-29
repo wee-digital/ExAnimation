@@ -21,12 +21,11 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/splashTextViewRemaining"
         style="@style/BodyRegular"
-        android:layout_marginTop="@dimen/margin2"
+        android:layout_marginTop="@dimen/margin"
         android:textColor="@color/color_notification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="-9dp"
         tools:text="Time remaining: 00:30" />
 
     <androidx.appcompat.widget.AppCompatImageView
