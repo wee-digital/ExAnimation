@@ -18,8 +18,7 @@ class TimeoutVM : BaseViewModel() {
     val inTheEnd = MutableLiveData<Boolean>()
 
     fun startTimeout(intervalInSecond: Int) {
-        val waitingCounter = AtomicInteger(intervalInSecond)
-        second.value = intervalInSecond
+        val waitingCounter = AtomicInteger(intervalInSecond + 1)
         disposable?.dispose()
         disposable = Observable
                 .interval(1, 1, TimeUnit.SECONDS)
