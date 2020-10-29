@@ -11,7 +11,7 @@ import wee.digital.fpa.ui.confirm.ConfirmVM
 class FaceFragment : Main.Fragment() {
 
 
-    private val faceVM: FaceVM by lazy { activityVM(FaceVM::class) }
+    private val faceVM: FaceVM by lazy { viewModel(FaceVM::class) }
 
     private val faceView: FaceView by lazy { FaceView(this) }
 
@@ -26,20 +26,22 @@ class FaceFragment : Main.Fragment() {
     }
 
     override fun onLiveDataObserve() {
-        timeoutVM.startTimeout(Timeout.FACE_TIMEOUT)
+        timeoutVM.startTimeout(Timeout.FACE_VERIFY)
         timeoutVM.second.observe {
             faceView.onBindRemainingText(it)
         }
         timeoutVM.inTheEnd.observe {
             if (it) onPaymentDeny()
         }
-        faceVM.verifyError.observe {
-            onFaceVerifyError(it)
-        }
         faceVM.verifySuccess.observe {
             onFaceVerifySuccess()
         }
-
+        faceVM.verifyError.observe {
+            onFaceVerifyError(it)
+        }
+        faceVM.verifyRetry.observe {
+            onFaceVerifyRetry(it)
+        }
     }
 
     private fun onFaceVerifySuccess() {
@@ -49,21 +51,7 @@ class FaceFragment : Main.Fragment() {
     }
 
     private fun onFaceVerifyError(it: ConfirmArg) {
-        onFaceVerifySuccess()
-        return
-        it.onAccept = {
-            timeoutVM.startTimeout(Timeout.FACE_TIMEOUT)
-            faceView.animateOnStartFaceReg()
-        }
-        it.onDeny = {
-            navigate(MainDirections.actionGlobalSplashFragment()) {
-                setLaunchSingleTop()
-            }
-        }
-        faceView.animateOnFaceCaptured()
-        timeoutVM.startTimeout(Timeout.FACE_TIMEOUT)
-        activityVM(ConfirmVM::class).arg.value = it
-        navigate(MainDirections.actionGlobalConfirmFragment())
+
 
     }
 
@@ -73,6 +61,22 @@ class FaceFragment : Main.Fragment() {
         navigate(MainDirections.actionGlobalSplashFragment()) {
             setLaunchSingleTop()
         }
+    }
+
+    private fun onFaceVerifyRetry(it: ConfirmArg) {
+        it.onAccept = {
+            timeoutVM.startTimeout(Timeout.FACE_VERIFY)
+            faceView.animateOnStartFaceReg()
+        }
+        it.onDeny = {
+            navigate(MainDirections.actionGlobalSplashFragment()) {
+                setLaunchSingleTop()
+            }
+        }
+        faceView.animateOnFaceCaptured()
+        timeoutVM.startTimeout(Timeout.FACE_RETRY)
+        activityVM(ConfirmVM::class).arg.value = it
+        navigate(MainDirections.actionGlobalConfirmFragment())
     }
 
 

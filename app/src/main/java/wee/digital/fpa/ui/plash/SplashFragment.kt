@@ -6,6 +6,8 @@ import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.arg.PaymentArg
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.util.startCamera
+import wee.digital.fpa.util.stopCamera
 
 class SplashFragment : Main.Fragment() {
 
@@ -39,9 +41,11 @@ class SplashFragment : Main.Fragment() {
     private fun onPaymentArgChanged(arg: PaymentArg?) {
         when (arg) {
             null -> {
+                stopCamera()
                 splashView.animateOnDimissPayment()
             }
             else -> {
+                startCamera()
                 navigate(MainDirections.actionGlobalPaymentFragment())
                 splashView.animateOnHasPayment()
             }

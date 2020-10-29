@@ -10,30 +10,31 @@ import wee.digital.fpa.app.App
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
-import wee.digital.fpa.util.observerCamera
+import wee.digital.fpa.util.observerCameraListener
 import wee.digital.library.extension.*
 
-class QrView(private val v: QrFragment) {
+class QrView(private val v: QrFragment) : RealSenseControl.Listener {
 
-    private var scanQRCode = ScanQRCode()
-
-    private fun onStartCamera() {
-        App.realSenseControl?.listener = object : RealSenseControl.Listener {
-            override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
-                colorBitmap ?: return
-                App.realSenseControl?.hasFace()
-                v.requireActivity().runOnUiThread {
-                    v.qrImageViewCamera?.setImageBitmap(colorBitmap)
-                }
-                scanQRCode.decodeQRCode(colorBitmap)
-            }
+    /**
+     * [RealSenseControl.Listener] implement
+     */
+    override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
+        colorBitmap ?: return
+        App.realSenseControl?.hasFace()
+        v.requireActivity().runOnUiThread {
+            v.qrImageViewCamera?.setImageBitmap(colorBitmap)
         }
+        scanQRCode.decodeQRCode(colorBitmap)
     }
+
+    /**
+     * [QrView] properties
+     */
+    private var scanQRCode = ScanQRCode()
 
     fun onViewInit() {
         v.addClickListener(v.dialogViewClose)
-        v.observerCamera()
-        onStartCamera()
+        v.observerCameraListener(this)
         scanQRCode.initListener(v)
     }
 
@@ -59,4 +60,6 @@ class QrView(private val v: QrFragment) {
             v.qrViewProgress.clear()
         }
     }
+
+
 }
