@@ -7,9 +7,12 @@ import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.connect.ConnectVM
 import wee.digital.fpa.ui.device.DeviceVM
 
 class QrFragment : Main.Dialog(), ScanQRCode.QRCodeProcessingListener {
+
+    private val connectVM by lazy { activityVM(ConnectVM::class) }
 
     private val qrVM by lazy { viewModel(QrVM::class) }
 
@@ -29,7 +32,7 @@ class QrFragment : Main.Dialog(), ScanQRCode.QRCodeProcessingListener {
         }
         qrVM.qrCode.observe {
             dismiss()
-            activityVM(DeviceVM::class).objQRCode.value = it
+            connectVM.objQRCode.value = it
             navigate(MainDirections.actionGlobalDeviceFragment())
         }
     }

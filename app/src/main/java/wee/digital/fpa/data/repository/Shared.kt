@@ -7,8 +7,6 @@ import wee.digital.fpa.repository.model.DeviceInfoStore
 
 object Shared {
 
-    val qrCode = MutableLiveData<JsonObject>()
-
     /**
      * data for flow payment FacePay
      */
