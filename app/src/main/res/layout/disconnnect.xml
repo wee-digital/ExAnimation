@@ -2,13 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/MatchWidth">
+    style="@style/MatchParent">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         style="@style/WrapContent"
         android:layout_marginTop="@dimen/margin"
         android:background="@drawable/drw_alert_bg"
         android:elevation="1dp"
+        app:layout_constraintVertical_bias="0.0"
         android:paddingStart="@dimen/margin"
         android:paddingTop="@dimen/_4sdp"
         android:paddingEnd="@dimen/margin"

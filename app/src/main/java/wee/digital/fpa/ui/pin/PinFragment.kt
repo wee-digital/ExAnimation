@@ -63,7 +63,7 @@ class PinFragment : Main.Dialog() {
 
     private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
-    private val pinVM by lazy { viewModel(PinVM::class) }
+    private val pinVM by lazy { activityVM(PinVM::class) }
 
     private val pinView by lazy { PinView(this) }
 

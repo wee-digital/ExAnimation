@@ -3,8 +3,11 @@ package wee.digital.fpa.ui.card
 import kotlinx.android.synthetic.main.card.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.pin.PinVM
 
 class CardFragment : Main.Dialog() {
+
+    private val pinVM by lazy { viewModel(PinVM::class) }
 
     private val cardVM by lazy { viewModel(CardVM::class) }
 
@@ -19,7 +22,7 @@ class CardFragment : Main.Dialog() {
     }
 
     override fun onLiveDataObserve() {
-        cardVM.fetchCardList()
+        cardVM.fetchCardList(pinVM.pinCodeResponse.value)
         cardVM.cardList.observe {
             adapter.set(it)
         }

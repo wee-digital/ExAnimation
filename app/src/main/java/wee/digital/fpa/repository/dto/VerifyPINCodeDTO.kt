@@ -45,9 +45,10 @@ data class VerifyPINCodeDTOResp(
         @Expose
         var formOtp: String = "",
 
-
         @SerializedName("HaveDefaultAccount")
-        @Expose
-        var hasDefaultAccount: Boolean = false
+        var hasDefaultAccount: Boolean,
+
+        @SerializedName("UserID")
+        var userId: String,
 
 )

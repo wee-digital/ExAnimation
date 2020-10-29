@@ -7,15 +7,18 @@ import android.view.MotionEvent
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import gun0912.tedkeyboardobserver.TedRxKeyboardObserver
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.app.toast
+import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
+import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.fpa.util.Utils
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
@@ -23,23 +26,28 @@ import wee.digital.library.extension.post
 
 class OtpFragment : Main.Dialog() {
 
+    private val pinVM by lazy { viewModel(PinVM::class) }
+
     private var keyboardDisposable: Disposable? = null
 
     private var isMargin = false
 
-    override fun layoutResource(): Int = R.layout.otp
+    override fun layoutResource(): Int {
+        return R.layout.otp
+    }
 
     override fun onViewCreated() {
         settingWebView()
-        //loadWebViewOtp()   call to load WebView
+        val napasUrl = pinVM.pinCodeResponse.value?.formOtp ?: throw Event.pinDataError
+        loadWebViewOtp(napasUrl)
     }
 
     override fun onLiveDataObserve() {}
 
     private fun initStatusKeyboard() {
-        /* keyboardDisposable = TedRxKeyboardObserver(activity())
-                 .listen()
-                 .subscribe({ isShow -> checkMarginView(isShow) }, {})*/
+        keyboardDisposable = TedRxKeyboardObserver(requireActivity())
+                .listen()
+                .subscribe({ isShow -> checkMarginView(isShow) }, {})
     }
 
     /**
@@ -105,7 +113,9 @@ class OtpFragment : Main.Dialog() {
                             val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
                             handlerTransactionFail(reason)
                         }
-                        "https://napas-qc.facepay.vn/v1/static/payment-success?facepayRef" -> toast("payment transaction success")
+                        "https://napas-qc.facepay.vn/v1/static/payment-success?facepayRef" -> {
+                            toast("payment transaction success")
+                        }
                     }
                 } catch (e: Exception) {
                 }
@@ -115,8 +125,12 @@ class OtpFragment : Main.Dialog() {
 
     private fun handlerTransactionFail(data: String) {
         when (data) {
-            "INSUFFICIENT_FUNDS" -> "khong du so du thanh toan"
-            "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> toast("qua han muc giao dich")
+            "INSUFFICIENT_FUNDS" -> {
+                //khong du so du thanh toan
+            }
+            "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
+                //qua han muc giao dich
+            }
             "CANCEL" -> {
 
                 activityVM(MessageVM::class).arg.value = MessageArg(
@@ -126,7 +140,9 @@ class OtpFragment : Main.Dialog() {
                 )
                 navigate(MainDirections.actionGlobalMessageFragment())
             }
-            else -> toast("null")
+            else -> {
+
+            }
         }
     }
 

@@ -11,6 +11,10 @@ object Event {
 
     val faceArgError = NullPointerException("FaceVM.faceArg is null value")
 
+    val bankDataError = NullPointerException("Bank data error")
+
+    val pinDataError = NullPointerException("Pin data error")
+
     fun initConsumer() {
         Thread.setDefaultUncaughtExceptionHandler { _, e ->
             toast(e.message ?: "unknown error")
@@ -22,6 +26,9 @@ object Event {
 
                 }
                 faceArgError -> {
+
+                }
+                bankDataError -> {
 
                 }
             }

@@ -1,5 +1,6 @@
 package wee.digital.fpa.ui.pin
 
+import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Config
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
@@ -22,7 +23,7 @@ class PinVM : BaseViewModel() {
 
     val errorMessage = EventLiveData<MessageArg>()
 
-    val pinCodeResponse = EventLiveData<VerifyPINCodeDTOResp>()
+    val pinCodeResponse = MutableLiveData<VerifyPINCodeDTOResp>()
 
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, deviceInfo: DeviceInfo?) {
         paymentArg ?: throw Event.paymentArgError
@@ -63,12 +64,9 @@ class PinVM : BaseViewModel() {
                     title = "Giao dịch bị hủy bỏ",
                     message = "Lỗi thanh toán. Bạn vui lòng chọn thẻ khác".format()
             ))
-            else -> errorMessage.postValue(MessageArg(
-                    headerGuideline = R.id.guidelineConnect,
-                    icon = R.mipmap.img_x_mark_flat,
-                    title = "Giao dịch bị hủy bỏ",
-                    message = message ?: "Lỗi"
-            ))
+            else -> {
+                errorMessage.postValue(MessageArg.paymentCancelMessage)
+            }
         }
 
     }
@@ -78,12 +76,9 @@ class PinVM : BaseViewModel() {
             0 -> {
                 retryMessage.postValue("Mã PIN không đúng, bạn còn %s lần thử lại".format(retryCount.get()))
             }
-            else -> errorMessage.postValue(MessageArg(
-                    headerGuideline = R.id.guidelineConnect,
-                    icon = R.mipmap.img_x_mark_flat,
-                    title = "Giao dịch bị hủy bỏ",
-                    message = "Yêu cầu thanh toán của bạn đã bị hủy. Vui lòng liên hệ với nhân viên để biết thêm thông tin"
-            ))
+            else -> {
+                errorMessage.postValue(MessageArg.paymentCancelMessage)
+            }
 
         }
     }

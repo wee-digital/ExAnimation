@@ -17,6 +17,7 @@ import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.payment.PaymentVM
+import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
@@ -47,7 +48,7 @@ class MainActivity : BaseActivity() {
                     title = "hello",
                     message = "message"
             )
-            navigate(MainDirections.actionGlobalCardFragment())
+            navigate(MainDirections.actionGlobalOtpFragment())
         }
     }
 
@@ -79,10 +80,6 @@ class MainActivity : BaseActivity() {
     /**
      * [MainActivity] properties
      */
-    private val timeoutVM by lazy { activityVM(TimeoutVM::class) }
-
-    private val faceVM by lazy { activityVM(FaceVM::class) }
-
     private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     private val socketVM by lazy { viewModel(SocketVM::class) }
@@ -159,8 +156,8 @@ class MainActivity : BaseActivity() {
     private fun onPaymentArgChanged(it: PaymentArg?) {
         when (it) {
             null -> {
-                faceVM.faceArg.value = null
-
+                activityVM(FaceVM::class).faceArg.value = null
+                activityVM(PinVM::class).pinCodeResponse.value = null
             }
             else -> {
 

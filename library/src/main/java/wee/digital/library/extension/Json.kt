@@ -156,6 +156,17 @@ fun JsonObject?.list(key: String): List<JsonObject>? {
     }
 }
 
+
+fun JsonObject?.listString(key: String): List<String>? {
+    val s = array(key).toString()
+    return try {
+        return convertFactory.fromJson(StringReader(s), Array<String>::class.java).toList()
+    } catch (ignore: Exception) {
+        null
+    }
+}
+
+
 fun JsonObject?.str(key: String, default: String? = null): String? {
     this ?: return default
     if (!has(key)) return default

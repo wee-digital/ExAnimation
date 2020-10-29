@@ -7,12 +7,12 @@ import wee.digital.fpa.R
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.data.local.Config
-import wee.digital.fpa.ui.Event
 import wee.digital.fpa.repository.dto.VerifyFaceDTOReq
 import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.network.CollectionData
 import wee.digital.fpa.repository.payment.PaymentRepository
+import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
@@ -58,12 +58,9 @@ class FaceVM : ViewModel() {
 
     fun onVerifyFaceFailed() {
         when (retryCount.decrementAndGet()) {
-            0 -> verifyError.postValue(MessageArg(
-                    headerGuideline = R.id.guidelineConnect,
-                    icon = R.mipmap.img_x_mark_flat,
-                    title = "Giao dịch bị hủy bỏ",
-                    message = "Yêu cầu thanh toán của bạn đã bị hủy. Vui lòng liên hệ với nhân viên để biết thêm thông tin"
-            ))
+            0 -> {
+                verifyError.postValue(MessageArg.paymentCancelMessage)
+            }
             else -> verifyRetry.postValue(ConfirmArg(
                     headerGuideline = R.id.guidelineFace,
                     icon = R.mipmap.img_x_mark_flat,
