@@ -3,7 +3,6 @@ package wee.digital.fpa.ui.message
 import androidx.constraintlayout.widget.ConstraintSet
 import kotlinx.android.synthetic.main.message.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.arg.MessageArg
 import wee.digital.library.extension.setHyperText
 import wee.digital.library.extension.string
 

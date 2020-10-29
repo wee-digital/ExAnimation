@@ -4,20 +4,21 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.arg.ConfirmArg
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.confirm.ConfirmVM
+import wee.digital.fpa.ui.message.MessageArg
+import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.fpa.ui.payment.PaymentVM
 
 class FaceFragment : Main.Fragment() {
 
-    private val paymentVM: PaymentVM by lazy { activityVM(PaymentVM::class) }
-
-    private val faceVM: FaceVM by lazy { activityVM(FaceVM::class) }
-
-    private val faceView: FaceView by lazy { FaceView(this) }
-
-    override fun layoutResource(): Int = R.layout.face
+    /**
+     * [Main.Fragment] override
+     */
+    override fun layoutResource(): Int {
+        return R.layout.face
+    }
 
     override fun onViewCreated() {
         faceView.onViewInit()
@@ -46,20 +47,30 @@ class FaceFragment : Main.Fragment() {
         }
     }
 
+    /**
+     * [FaceFragment] properties
+     */
+    private val paymentVM: PaymentVM by lazy { activityVM(PaymentVM::class) }
+
+    private val faceVM: FaceVM by lazy { activityVM(FaceVM::class) }
+
+    private val faceView: FaceView by lazy { FaceView(this) }
+
     private fun onFaceVerifySuccess() {
         timeoutVM.stopTimeout()
         faceView.animateOnFaceCaptured()
         navigate(MainDirections.actionGlobalPinFragment())
     }
 
-    private fun onFaceVerifyError(it: ConfirmArg) {
-
-
+    private fun onFaceVerifyError(it: MessageArg) {
+        paymentVM.paymentArg.postValue(null)
+        timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
+        activityVM(MessageVM::class).arg.value = it
+        navigate(MainDirections.actionGlobalMessageFragment())
     }
 
     private fun onPaymentDeny() {
-        paymentVM.paymentArg.value = null
-        timeoutVM.stopTimeout()
+        paymentVM.paymentArg.postValue(null)
         navigate(MainDirections.actionGlobalSplashFragment()) {
             setNoneAnim()
             setLaunchSingleTop()

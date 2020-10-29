@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.arg.MessageArg
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.connect.ConnectVM

@@ -18,6 +18,8 @@ class PinVM : BaseViewModel() {
 
     val errorMessage = EventLiveData<String?>()
 
+    val pinCodeSuccess = EventLiveData<Boolean>()
+
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, deviceInfo: DeviceInfo?) {
         paymentArg ?: throw Event.paymentArgError
         deviceInfo ?: throw Event.deviceInfoError
@@ -43,7 +45,7 @@ class PinVM : BaseViewModel() {
     }
 
     private fun onPinVerifySuccess() {
-        errorMessage.postValue(null)
+        pinCodeSuccess.postValue(true)
     }
 
     private fun onPinVerifyFailed(code: Int, message: String? = null) {

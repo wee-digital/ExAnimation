@@ -7,16 +7,14 @@ import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.face.FaceFragment
 import wee.digital.fpa.ui.payment.PaymentVM
 
 class PinFragment : Main.Dialog() {
 
-    private val paymentVM by lazy { activityVM(PaymentVM::class) }
-
-    private val pinVM by lazy { viewModel(PinVM::class) }
-
-    private val pinView by lazy { PinView(this) }
-
+    /**
+     * [Main.Fragment] override
+     */
     override fun layoutResource(): Int {
         return R.layout.pin
     }
@@ -37,6 +35,9 @@ class PinFragment : Main.Dialog() {
             pinProgressLayout.notifyInputRemoved()
             pinView.onBindErrorText(it)
         }
+        pinVM.pinCodeSuccess.observe {
+            onPinVerifySuccess()
+        }
     }
 
     override fun onViewClick(v: View?) {
@@ -44,6 +45,15 @@ class PinFragment : Main.Dialog() {
             pinViewClose -> onPaymentDeny()
         }
     }
+
+    /**
+     * [FaceFragment] properties
+     */
+    private val paymentVM by lazy { activityVM(PaymentVM::class) }
+
+    private val pinVM by lazy { viewModel(PinVM::class) }
+
+    private val pinView by lazy { PinView(this) }
 
     private fun onPinCodeFilled(pinCode: String) {
         timeoutVM.startTimeout(Timeout.PIN_VERIFY)
@@ -54,14 +64,16 @@ class PinFragment : Main.Dialog() {
         )
     }
 
+    private fun onPinVerifySuccess() {
+
+    }
+
     private fun onPaymentDeny() {
         paymentVM.paymentArg.postValue(null)
-        timeoutVM.stopTimeout()
         dismiss()
         navigate(MainDirections.actionGlobalSplashFragment()) {
             setLaunchSingleTop()
         }
-
     }
 
 

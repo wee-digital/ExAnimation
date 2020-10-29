@@ -12,24 +12,20 @@ import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.utils.CancelPaymentCode
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.repository.utils.SocketEvent
-import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.base.BaseActivity
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceVM
+import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.payment.PaymentVM
 import wee.digital.fpa.ui.vm.SocketVM
+import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
 
 class MainActivity : BaseActivity() {
 
-    private val paymentVM by lazy { activityVM(PaymentVM::class) }
-
-    private val socketVM by lazy { viewModel(SocketVM::class) }
-
-    private val mainVM by lazy { viewModel(MainVM::class) }
-
-    private val mainView by lazy { MainView(this) }
-
+    /**
+     * [BaseActivity] override
+     */
     override fun layoutResource(): Int {
         return R.layout.main
     }
@@ -68,10 +64,21 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
     /**
-     *
+     * [MainActivity] properties
      */
+    private val timeoutVM by lazy { activityVM(TimeoutVM::class) }
+
+    private val faceVM by lazy { activityVM(FaceVM::class) }
+
+    private val paymentVM by lazy { activityVM(PaymentVM::class) }
+
+    private val socketVM by lazy { viewModel(SocketVM::class) }
+
+    private val mainVM by lazy { viewModel(MainVM::class) }
+
+    private val mainView by lazy { MainView(this) }
+
     private fun onRootDirectionChanged(it: NavDirections) {
         navigate(it) {
             setLaunchSingleTop()
@@ -140,7 +147,8 @@ class MainActivity : BaseActivity() {
     private fun onPaymentArgChanged(it: PaymentArg?) {
         when (it) {
             null -> {
-                activityVM(FaceVM::class).faceArg.value = null
+                faceVM.faceArg.value = null
+                timeoutVM.stopTimeout()
             }
             else -> {
 

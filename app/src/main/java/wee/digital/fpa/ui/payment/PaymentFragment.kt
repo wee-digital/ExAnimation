@@ -53,8 +53,7 @@ class PaymentFragment : Main.Dialog() {
     }
 
     private fun onPaymentDeny() {
-        paymentVM.paymentArg.value = null
-        timeoutVM.stopTimeout()
+        paymentVM.paymentArg.postValue(null)
         dismiss()
     }
 

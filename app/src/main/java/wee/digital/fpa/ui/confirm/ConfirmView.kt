@@ -2,7 +2,6 @@ package wee.digital.fpa.ui.confirm
 
 import kotlinx.android.synthetic.main.confirm.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.arg.ConfirmArg
 import wee.digital.library.extension.setHyperText
 import wee.digital.library.extension.string
 

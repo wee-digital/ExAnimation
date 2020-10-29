@@ -13,18 +13,20 @@ import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.network.CollectionData
 import wee.digital.fpa.repository.payment.PaymentRepository
-import wee.digital.fpa.ui.arg.ConfirmArg
-import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.confirm.ConfirmArg
+import wee.digital.fpa.ui.message.MessageArg
+import wee.digital.fpa.ui.payment.PaymentArg
+import wee.digital.library.extension.notNullOrEmpty
 import java.util.concurrent.atomic.AtomicInteger
 
 class FaceVM : ViewModel() {
 
     var faceArg = MutableLiveData<VerifyFaceDTOResp>()
 
-    var verifyError = EventLiveData<ConfirmArg>()
-
     var verifyRetry = EventLiveData<ConfirmArg>()
+
+    var verifyError = EventLiveData<MessageArg>()
 
     private val retryCount = AtomicInteger(Config.FACE_RETRY_COUNT)
 
@@ -57,17 +59,20 @@ class FaceVM : ViewModel() {
 
     fun onVerifyFaceFailed() {
         when (retryCount.decrementAndGet()) {
-            0 -> {
-
-            }
+            0 -> verifyError.postValue(MessageArg(
+                    headerGuideline = R.id.guidelineConnect,
+                    icon = R.mipmap.img_x_mark_flat,
+                    title = "Giao dịch bị hủy bỏ",
+                    message = "Yêu cầu thanh toán của bạn đã bị hủy. Vui lòng liên hệ với nhân viên để biết thêm thông tin"
+            ))
             else -> verifyRetry.postValue(ConfirmArg(
                     headerGuideline = R.id.guidelineFace,
                     icon = R.mipmap.img_x_mark_flat,
                     title = "Tài khoản không tồn tại",
                     message = "Bạn vui lòng đăng ký tài khoản Facepay trước khi thực hiện thanh toán",
                     buttonAccept = "Thử lại",
-                    buttonDeny = "Hủy bỏ giao dịch")
-            )
+                    buttonDeny = "Hủy bỏ giao dịch"
+            ))
         }
 
     }
