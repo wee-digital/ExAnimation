@@ -37,6 +37,10 @@ data class VerifyFaceDTOResp(
         @Expose
         var fullName: String? = "",
 
+        /**
+         * @sample: [isSkipPinCode] == false
+         * @return: on feature [wee.digital.fpa.ui.pin.PinFragment]
+         */
         @SerializedName("IsSkipPinCode")
         @Expose
         var isSkipPinCode: Boolean = false,
@@ -45,6 +49,10 @@ data class VerifyFaceDTOResp(
         @Expose
         var isRetry: Boolean = false,
 
+        /**
+         * @sample: haveOTP == true && formOtp.notNullOPrEmpty
+         * @return: on feature [wee.digital.fpa.ui.otp.OtpFragments]
+         */
         @SerializedName("HaveForm")
         @Expose
         var haveOTP: Boolean = false,
