@@ -99,9 +99,10 @@
             style="@style/Headline1SemiBold"
             android:text="365,000"
             android:textColor="@color/colorBlack"
+            android:layout_marginTop="@dimen/margin"
             android:textSize="@dimen/_18ssp"
             app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
-            app:layout_constraintTop_toBottomOf="@+id/paymentTextView3" />
+            app:layout_constraintTop_toTopOf="@+id/paymentTextView3" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView"

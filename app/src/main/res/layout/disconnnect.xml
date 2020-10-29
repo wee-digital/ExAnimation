@@ -30,7 +30,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/disconnectTextViewMessage"
-            style="@style/TextView"
+            style="@style/BodyRegular"
             android:layout_marginStart="@dimen/_4sdp"
             android:text="Mất kết nối với hệ thống..."
             android:textColor="@color/colorWhite" />

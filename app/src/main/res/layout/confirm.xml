@@ -33,7 +33,9 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirmTextViewTitle"
-            style="@style/Message.Title"
+            style="@style/Headline2"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/margin2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmImageViewIcon"
@@ -41,8 +43,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirmTextViewMessage"
-            style="@style/Message.Text"
+            style="@style/BodyRegular"
             android:maxLines="8"
+            android:layout_marginTop="@dimen/margin2"
+            android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/confirmViewAccept"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +56,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirmViewAccept"
-            style="@style/Button.Primary"
+            style="@style/Button.Semibold"
             android:layout_marginBottom="@dimen/margin2"
             app:layout_constraintBottom_toTopOf="@+id/confirmViewDeny"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +64,9 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirmViewDeny"
-            style="@style/Button"
+            style="@style/Button.Semibold"
+            android:background="@null"
+            android:textColor="@color/color_gray_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
