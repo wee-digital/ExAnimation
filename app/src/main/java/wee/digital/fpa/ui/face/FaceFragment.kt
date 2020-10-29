@@ -9,8 +9,7 @@ import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.confirm.ConfirmVM
 
 class FaceFragment : Main.Fragment() {
-
-
+    
     private val faceVM: FaceVM by lazy { viewModel(FaceVM::class) }
 
     private val faceView: FaceView by lazy { FaceView(this) }
@@ -59,6 +58,7 @@ class FaceFragment : Main.Fragment() {
         mainVM.paymentArg.value = null
         timeoutVM.stopTimeout()
         navigate(MainDirections.actionGlobalSplashFragment()) {
+            setNoneAnim()
             setLaunchSingleTop()
         }
     }

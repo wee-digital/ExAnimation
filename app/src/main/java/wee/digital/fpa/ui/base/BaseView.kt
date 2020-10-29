@@ -48,11 +48,13 @@ interface BaseView {
     fun NavOptions.Builder.setDefaultAnim(): NavOptions.Builder {
         setEnterAnim(R.anim.vertical_reserved_enter)
         setPopEnterAnim(R.anim.vertical_reserved_pop_enter)
-        /*setExitAnim(R.anim.vertical_reserved_exit)
-        setPopExitAnim(R.anim.vertical_reserved_pop_exit)*/
         return this
     }
-
+    fun NavOptions.Builder.setNoneAnim(): NavOptions.Builder {
+        setEnterAnim(0)
+        setPopEnterAnim(0)
+        return this
+    }
     fun NavOptions.Builder.setLaunchSingleTop(): NavOptions.Builder {
         setLaunchSingleTop(true)
         setPopUpTo(nav.graph.id, false)
