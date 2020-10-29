@@ -19,14 +19,6 @@
         android:id="@+id/action_global_cardFragment"
         app:destination="@id/cardFragment" />
     <dialog
-        android:id="@+id/progressNapasFragment"
-        android:name="wee.digital.fpa.ui.progress.ProgressNapasFragment"
-        android:label="ProgressNapasFragment"
-        tools:layout="@layout/progress_napas" />
-    <action
-        android:id="@+id/action_global_progressNapasFragment"
-        app:destination="@id/progressNapasFragment" />
-    <dialog
         android:id="@+id/paymentFragment"
         android:name="wee.digital.fpa.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
@@ -122,6 +114,14 @@
     <action
         android:id="@+id/action_global_disconnectFragment"
         app:destination="@id/disconnectFragment" />
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="wee.digital.fpa.ui.otp.OtpFragment"
+        android:label="OtpFragment"
+        tools:layout="@layout/otp" />
+    <action
+        android:id="@+id/action_global_otpFragment"
+        app:destination="@id/otpFragment" />
 
 
 </navigation>

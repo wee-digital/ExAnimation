@@ -7,7 +7,7 @@ import wee.digital.fpa.R
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.data.local.Config
-import wee.digital.fpa.data.local.Event
+import wee.digital.fpa.ui.Event
 import wee.digital.fpa.repository.dto.VerifyFaceDTOReq
 import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
 import wee.digital.fpa.repository.network.Api
@@ -17,12 +17,11 @@ import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
-import wee.digital.library.extension.notNullOrEmpty
 import java.util.concurrent.atomic.AtomicInteger
 
 class FaceVM : ViewModel() {
 
-    var faceArg = MutableLiveData<VerifyFaceDTOResp>()
+    var faceArg = MutableLiveData<VerifyFaceDTOResp?>()
 
     var verifyRetry = EventLiveData<ConfirmArg>()
 

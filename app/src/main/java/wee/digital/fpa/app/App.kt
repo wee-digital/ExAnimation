@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import wee.digital.fpa.BuildConfig
 import wee.digital.fpa.camera.RealSenseControl
-import wee.digital.fpa.data.local.Event
+import wee.digital.fpa.ui.Event
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.base.BaseSharedPref
 import wee.digital.fpa.repository.network.MyApiService
