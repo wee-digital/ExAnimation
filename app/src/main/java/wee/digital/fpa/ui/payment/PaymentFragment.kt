@@ -6,10 +6,13 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.base.activityVM
 
 class PaymentFragment : Main.Dialog() {
 
-    private val v by lazy {
+    private val paymentVM by lazy { activityVM(PaymentVM::class) }
+
+    private val paymentView by lazy {
         PaymentView(this)
     }
 
@@ -18,7 +21,7 @@ class PaymentFragment : Main.Dialog() {
     }
 
     override fun onViewCreated() {
-        v.onViewInit()
+        paymentView.onViewInit()
     }
 
     override fun onLiveDataObserve() {
@@ -26,11 +29,11 @@ class PaymentFragment : Main.Dialog() {
         timeoutVM.inTheEnd.observe {
             if (it) onPaymentDeny()
         }
-        mainVM.paymentArg.observe {
-            v.onPaymentDataChanged(it)
+        paymentVM.paymentArg.observe {
+            paymentView.onPaymentDataChanged(it)
         }
         mainVM.deviceInfo.observe {
-            v.onDeviceInfoChanged(it)
+            paymentView.onDeviceInfoChanged(it)
         }
     }
 
@@ -50,7 +53,7 @@ class PaymentFragment : Main.Dialog() {
     }
 
     private fun onPaymentDeny() {
-        mainVM.paymentArg.value = null
+        paymentVM.paymentArg.value = null
         timeoutVM.stopTimeout()
         dismiss()
     }

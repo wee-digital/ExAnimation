@@ -12,12 +12,17 @@ import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.utils.CancelPaymentCode
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.repository.utils.SocketEvent
+import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.base.BaseActivity
+import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.face.FaceVM
+import wee.digital.fpa.ui.payment.PaymentVM
 import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.util.Utils
-import wee.digital.library.extension.post
 
 class MainActivity : BaseActivity() {
+
+    private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     private val socketVM by lazy { viewModel(SocketVM::class) }
 
@@ -58,7 +63,11 @@ class MainActivity : BaseActivity() {
         socketVM.response.observe {
             onSocketResponseChanged(it)
         }
+        paymentVM.paymentArg.observe {
+            onPaymentArgChanged(it)
+        }
     }
+
 
     /**
      *
@@ -90,7 +99,7 @@ class MainActivity : BaseActivity() {
 
     private fun onSocketResponseChanged(it: SocketResultResp) {
         when (it.event) {
-            SocketEvent.HAS_PAYMENT -> mainVM.getNapasClient(it)
+            SocketEvent.HAS_PAYMENT -> paymentVM.getNapasClient(it)
             SocketEvent.DIMISS_PAYMENT -> {
                 val calledFacePay = Shared.calledFacePay.value ?: false
                 val paying = Shared.paymentProcessing
@@ -102,8 +111,8 @@ class MainActivity : BaseActivity() {
                 }
                 mainVM.requestCancelPayment(code)
                 if (paying) {
-                    val paymentID = Shared.paymentID.value ?: ""
-                    mainVM.updateStatusPayment(paymentID, PaymentStatusCode.CANCEL_PAYMENT)
+                    val paymentID = paymentVM.paymentArg.value?.paymentId ?: ""
+                    paymentVM.updateStatusPayment(paymentID, PaymentStatusCode.CANCEL_PAYMENT)
                 }
                 if (paying && calledFacePay) return
                 toast("go home")
@@ -124,6 +133,17 @@ class MainActivity : BaseActivity() {
             }
             else -> {
                 mainView.onDeviceInfoChanged(it)
+            }
+        }
+    }
+
+    private fun onPaymentArgChanged(it: PaymentArg?) {
+        when (it) {
+            null -> {
+                activityVM(FaceVM::class).faceArg.value = null
+            }
+            else -> {
+
             }
         }
     }

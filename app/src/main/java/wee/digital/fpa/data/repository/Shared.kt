@@ -10,10 +10,6 @@ object Shared {
     /**
      * data for flow payment FacePay
      */
-    val paymentID = MutableLiveData<String>()
-
-    val clientID = MutableLiveData<String>()
-
     var paymentProcessing: Boolean = false
 
     val calledFacePay = MutableLiveData<Boolean>()

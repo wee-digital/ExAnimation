@@ -1,24 +1,26 @@
 package wee.digital.fpa.ui.face
 
 import android.util.Base64
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.data.local.Config
-import wee.digital.fpa.data.repository.Shared
+import wee.digital.fpa.data.local.Event
 import wee.digital.fpa.repository.dto.VerifyFaceDTOReq
 import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.network.CollectionData
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.arg.ConfirmArg
+import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.base.EventLiveData
 import java.util.concurrent.atomic.AtomicInteger
 
 class FaceVM : ViewModel() {
 
-    var verifySuccess = EventLiveData<Boolean>()
+    var faceArg = MutableLiveData<VerifyFaceDTOResp>()
 
     var verifyError = EventLiveData<ConfirmArg>()
 
@@ -26,15 +28,20 @@ class FaceVM : ViewModel() {
 
     private val retryCount = AtomicInteger(Config.FACE_RETRY_COUNT)
 
-    fun verifyFace(bitmap: ByteArray, dataFace: FacePointData, dataColl: DataCollect) {
+    fun verifyFace(bitmap: ByteArray,
+                   dataFace: FacePointData,
+                   dataColl: DataCollect,
+                   paymentArg: PaymentArg?
+    ) {
+        paymentArg ?: throw Event.paymentArgError
         retryCount.decrementAndGet()
         val face = Base64.encodeToString(bitmap, Base64.NO_WRAP)
-        val req = VerifyFaceDTOReq(face, Shared.paymentID.value ?: "", Shared.clientID.value ?: "")
+        val req = VerifyFaceDTOReq(face, paymentArg.paymentId, paymentArg.clientIp)
 
         PaymentRepository.ins.verifyFace(req, dataFace, object : Api.ClientListener<VerifyFaceDTOResp> {
             override fun onSuccess(data: VerifyFaceDTOResp) {
                 CollectionData.instance.encryptCollData(dataColl)
-                onVerifyFaceSuccess()
+                onVerifyFaceSuccess(data)
             }
 
             override fun onFailed(code: Int, message: String) {
@@ -44,8 +51,8 @@ class FaceVM : ViewModel() {
         })
     }
 
-    fun onVerifyFaceSuccess() {
-        verifySuccess.postValue(true)
+    fun onVerifyFaceSuccess(data: VerifyFaceDTOResp) {
+        faceArg.postValue(data)
     }
 
     fun onVerifyFaceFailed() {

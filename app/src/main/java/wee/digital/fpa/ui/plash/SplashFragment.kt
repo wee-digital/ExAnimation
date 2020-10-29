@@ -3,13 +3,16 @@ package wee.digital.fpa.ui.plash
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.arg.PaymentArg
+import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.payment.PaymentVM
 import wee.digital.fpa.util.startCamera
 import wee.digital.fpa.util.stopCamera
 
 class SplashFragment : Main.Fragment() {
+
+    private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     private val splashVM by lazy { activityVM(SplashVM::class) }
 
@@ -30,7 +33,7 @@ class SplashFragment : Main.Fragment() {
         timeoutVM.second.observe {
             splashView.onBindRemainingText(it)
         }
-        mainVM.paymentArg.observe {
+        paymentVM.paymentArg.observe {
             onPaymentArgChanged(it)
         }
     }

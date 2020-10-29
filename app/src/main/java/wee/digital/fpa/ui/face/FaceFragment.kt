@@ -7,10 +7,13 @@ import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.arg.ConfirmArg
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.confirm.ConfirmVM
+import wee.digital.fpa.ui.payment.PaymentVM
 
 class FaceFragment : Main.Fragment() {
 
-    private val faceVM: FaceVM by lazy { viewModel(FaceVM::class) }
+    private val paymentVM: PaymentVM by lazy { activityVM(PaymentVM::class) }
+
+    private val faceVM: FaceVM by lazy { activityVM(FaceVM::class) }
 
     private val faceView: FaceView by lazy { FaceView(this) }
 
@@ -20,7 +23,7 @@ class FaceFragment : Main.Fragment() {
         faceView.onViewInit()
         faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
             timeoutVM.stopTimeout()
-            faceVM.verifyFace(bitmap, pointData, dataCollect)
+            faceVM.verifyFace(bitmap, pointData, dataCollect, paymentVM.paymentArg.value)
         }
     }
 
@@ -32,7 +35,7 @@ class FaceFragment : Main.Fragment() {
         timeoutVM.inTheEnd.observe {
             if (it) onPaymentDeny()
         }
-        faceVM.verifySuccess.observe {
+        faceVM.faceArg.observe {
             onFaceVerifySuccess()
         }
         faceVM.verifyError.observe {
@@ -55,7 +58,7 @@ class FaceFragment : Main.Fragment() {
     }
 
     private fun onPaymentDeny() {
-        mainVM.paymentArg.value = null
+        paymentVM.paymentArg.value = null
         timeoutVM.stopTimeout()
         navigate(MainDirections.actionGlobalSplashFragment()) {
             setNoneAnim()
