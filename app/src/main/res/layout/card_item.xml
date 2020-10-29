@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/paymentViewCard"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_8sdp"
+    style="@style/MatchWidth"
+    android:layout_margin="@dimen/margin2"
     android:layout_weight="1">
 
     <androidx.constraintlayout.widget.Guideline
@@ -23,17 +24,18 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/paymentImageViewCard"
-        app:cardCornerRadius="10dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:cardElevation="0dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/img_placeholder"
-        app:layout_constraintDimensionRatio="h,285:173"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,285:173"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:backgroundTint="@color/colorAccent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cardItemLogo"
@@ -48,8 +50,8 @@
         android:id="@+id/cardItemIcon"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_50sdp"
-        android:alpha="0.2"
         android:adjustViewBounds="true"
+        android:alpha="0.2"
         app:layout_constraintBottom_toBottomOf="@+id/cardItemGuideHorizontal110"
         app:layout_constraintEnd_toEndOf="@+id/cardItemGuide110" />
 
@@ -69,8 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
-        android:text="**** **** **** ****"
         android:alpha="0.5"
+        android:text="**** **** **** ****"
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintStart_toStartOf="parent"

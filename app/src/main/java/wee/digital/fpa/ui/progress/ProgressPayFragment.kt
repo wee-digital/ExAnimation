@@ -18,7 +18,7 @@ class ProgressPayFragment : Main.Dialog() {
     override fun onViewCreated() {
 
     }
-    
+
     override fun onLiveDataObserve() {
         progressVM.arg.observe {
             if (it == null){

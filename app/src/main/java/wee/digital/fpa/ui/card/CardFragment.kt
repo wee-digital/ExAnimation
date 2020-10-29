@@ -4,7 +4,9 @@ import kotlinx.android.synthetic.main.card.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
 
-class CardFragment : Main.Fragment() {
+class CardFragment : Main.Dialog() {
+
+    private val cardVM by lazy { viewModel(CardVM::class) }
 
     private val adapter = CardAdapter()
 
@@ -13,11 +15,14 @@ class CardFragment : Main.Fragment() {
     }
 
     override fun onViewCreated() {
-        adapter.set(CardItem.defaultList)
         adapter.bind(paymentRecyclerViewCard, 2)
     }
 
     override fun onLiveDataObserve() {
+        cardVM.fetchCardList()
+        cardVM.cardList.observe {
+            adapter.set(it)
+        }
     }
 
 }
