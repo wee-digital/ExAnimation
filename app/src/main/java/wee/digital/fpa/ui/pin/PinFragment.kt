@@ -24,17 +24,11 @@ class PinFragment : Main.Dialog() {
         }
     }
 
-    private fun onPinCodeFilled(pinCode: String) {
-        remainingVM.startTimeout(Timeout.PIN_TIMEOUT)
-        pinVM.onPinFilled(
-                pinCode = pinCode,
-                paymentArg = mainVM.paymentArg.value,
-                deviceInfo = mainVM.deviceInfo.value
-        )
-    }
-
     override fun onLiveDataObserve() {
-        remainingVM.startTimeout(Timeout.PIN_TIMEOUT)
+        timeoutVM.startTimeout(Timeout.PIN_TIMEOUT)
+        timeoutVM.inTheEnd.observe {
+            if (it) onPaymentDeny()
+        }
         pinVM.errorMessage.observe {
             pinProgressLayout.notifyInputRemoved()
             pinView.onBindErrorText(it)
@@ -43,14 +37,27 @@ class PinFragment : Main.Dialog() {
 
     override fun onViewClick(v: View?) {
         when (v) {
-            pinViewClose -> {
-                mainVM.paymentArg.value = null
-                dismiss()
-                navigate(MainDirections.actionGlobalSplashFragment()) {
-                    setLaunchSingleTop()
-                }
-            }
+            pinViewClose -> onPaymentDeny()
         }
+    }
+
+    private fun onPinCodeFilled(pinCode: String) {
+        timeoutVM.startTimeout(Timeout.PIN_TIMEOUT)
+        pinVM.onPinFilled(
+                pinCode = pinCode,
+                paymentArg = mainVM.paymentArg.value,
+                deviceInfo = mainVM.deviceInfo.value
+        )
+    }
+
+    private fun onPaymentDeny() {
+        mainVM.paymentArg.postValue(null)
+        timeoutVM.stopTimeout()
+        dismiss()
+        navigate(MainDirections.actionGlobalSplashFragment()) {
+            setLaunchSingleTop()
+        }
+
     }
 
 

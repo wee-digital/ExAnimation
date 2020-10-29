@@ -43,10 +43,10 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
             override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
                 colorBitmap ?: return
                 dataCollect ?: return
+                if (!hasFaceDetect) return
                 v.requireActivity().runOnUiThread {
                     v.faceImageViewCamera?.setImageBitmap(colorBitmap)
                 }
-                if (!hasFaceDetect) return
                 mDetection?.bitmapChecking(colorBitmap, depthBitmap, dataCollect)
             }
 
@@ -69,13 +69,13 @@ class FaceView(private val v: FaceFragment) : Detection.DetectionCallBack {
     }
 
     fun onBindRemainingText(second: Int) {
-        if (second > 0) {
-            val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
-            val sRemaining = "Thời gian còn lại: %s".format(sHour)
-            v.faceTextViewRemaining.setHyperText(sRemaining)
-        } else {
+        if (second < 0) {
             v.faceTextViewRemaining.text = null
+            return
         }
+        val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
+        val sRemaining = "Thời gian còn lại: %s".format(sHour)
+        v.faceTextViewRemaining.setHyperText(sRemaining)
     }
 
     fun animateOnFaceCaptured() {

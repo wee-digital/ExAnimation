@@ -15,13 +15,13 @@ class SplashView(private val v: SplashFragment) {
     }
 
     fun onBindRemainingText(second: Int) {
-        if (second > 0) {
-            val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
-            val sRemaining = "Thời gian còn lại: %s".format(sHour)
-            v.splashTextViewRemaining.setHyperText(sRemaining)
-        } else {
+        if (second < 0) {
             v.splashTextViewRemaining.text = null
+            return
         }
+        val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
+        val sRemaining = "Thời gian còn lại: %s".format(sHour)
+        v.splashTextViewRemaining.setHyperText(sRemaining)
     }
 
     fun animateOnHasPayment(onAnimEnd: () -> Unit = {}) {

@@ -19,20 +19,19 @@ class FaceFragment : Main.Fragment() {
 
     override fun onViewCreated() {
         faceView.onViewInit()
-
         faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
-            remainingVM.stopTimeout()
+            timeoutVM.stopTimeout()
             faceVM.verifyFace(bitmap, pointData, dataCollect)
         }
     }
 
     override fun onLiveDataObserve() {
-        remainingVM.startTimeout(Timeout.FACE_TIMEOUT)
-        remainingVM.interval.observe {
+        timeoutVM.startTimeout(Timeout.FACE_TIMEOUT)
+        timeoutVM.second.observe {
             faceView.onBindRemainingText(it)
-            if (it == 0) navigate(MainDirections.actionGlobalSplashFragment()) {
-                setLaunchSingleTop()
-            }
+        }
+        timeoutVM.inTheEnd.observe {
+            if (it) onPaymentDeny()
         }
         faceVM.verifyError.observe {
             onFaceVerifyError(it)
@@ -44,6 +43,7 @@ class FaceFragment : Main.Fragment() {
     }
 
     private fun onFaceVerifySuccess() {
+        timeoutVM.stopTimeout()
         faceView.animateOnFaceCaptured()
         navigate(MainDirections.actionGlobalPinFragment())
     }
@@ -52,7 +52,7 @@ class FaceFragment : Main.Fragment() {
         onFaceVerifySuccess()
         return
         it.onAccept = {
-            remainingVM.startTimeout(Timeout.FACE_TIMEOUT)
+            timeoutVM.startTimeout(Timeout.FACE_TIMEOUT)
             faceView.animateOnStartFaceReg()
         }
         it.onDeny = {
@@ -61,10 +61,18 @@ class FaceFragment : Main.Fragment() {
             }
         }
         faceView.animateOnFaceCaptured()
-        remainingVM.startTimeout(Timeout.FACE_TIMEOUT)
+        timeoutVM.startTimeout(Timeout.FACE_TIMEOUT)
         activityVM(ConfirmVM::class).arg.value = it
         navigate(MainDirections.actionGlobalConfirmFragment())
 
+    }
+
+    private fun onPaymentDeny() {
+        mainVM.paymentArg.value = null
+        timeoutVM.stopTimeout()
+        navigate(MainDirections.actionGlobalSplashFragment()) {
+            setLaunchSingleTop()
+        }
     }
 
 

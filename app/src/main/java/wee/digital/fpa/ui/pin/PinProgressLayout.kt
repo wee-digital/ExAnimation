@@ -23,7 +23,7 @@ import wee.digital.library.extension.tint
 class PinProgressLayout : ConstraintLayout {
 
     companion object {
-        private val DEL = "DEL"
+        private const val DEL = "DEL"
     }
 
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
@@ -43,7 +43,7 @@ class PinProgressLayout : ConstraintLayout {
     private lateinit var progressView: View
 
     private val progressTransition = ChangeBounds().apply {
-        duration = 200
+        duration = 180
     }
 
     private var isTransition = false

@@ -15,13 +15,8 @@ class PaymentView(private val v: PaymentFragment) {
     }
 
     fun onPaymentDataChanged(it: PaymentArg?) {
-        when (it) {
-            null -> v.dismiss()
-            else -> {
-                v.paymentTextViewDate.text = "${nowFormat("dd")} tháng ${nowFormat("MM yyyy")}"
-                v.paymentTextViewAmount.text = it.amount.moneyFormat()
-            }
-        }
+        v.paymentTextViewDate.text = "${nowFormat("dd")} tháng ${nowFormat("MM yyyy")}"
+        v.paymentTextViewAmount.text = it?.amount.moneyFormat()
     }
 
     fun onDeviceInfoChanged(it: DeviceInfo?) {

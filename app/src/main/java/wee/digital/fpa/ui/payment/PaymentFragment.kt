@@ -9,7 +9,9 @@ import wee.digital.fpa.ui.Main
 
 class PaymentFragment : Main.Dialog() {
 
-    private val v by lazy { PaymentView(this) }
+    private val v by lazy {
+        PaymentView(this)
+    }
 
     override fun layoutResource(): Int {
         return R.layout.payment
@@ -20,7 +22,10 @@ class PaymentFragment : Main.Dialog() {
     }
 
     override fun onLiveDataObserve() {
-        remainingVM.startTimeout(Timeout.PAYMENT_TIMEOUT)
+        timeoutVM.startTimeout(Timeout.PAYMENT_TIMEOUT)
+        timeoutVM.inTheEnd.observe {
+            if (it) onPaymentDeny()
+        }
         mainVM.paymentArg.observe {
             v.onPaymentDataChanged(it)
         }
@@ -37,6 +42,7 @@ class PaymentFragment : Main.Dialog() {
     }
 
     private fun onPaymentAccept() {
+        timeoutVM.stopTimeout()
         dismiss()
         navigate(MainDirections.actionGlobalFaceFragment()) {
             setLaunchSingleTop()
@@ -45,6 +51,8 @@ class PaymentFragment : Main.Dialog() {
 
     private fun onPaymentDeny() {
         mainVM.paymentArg.value = null
+        timeoutVM.stopTimeout()
+        dismiss()
     }
 
 }
