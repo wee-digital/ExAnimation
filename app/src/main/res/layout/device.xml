@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewContent"
     style="@style/MatchParent"
-    android:fitsSystemWindows="true"
     android:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
