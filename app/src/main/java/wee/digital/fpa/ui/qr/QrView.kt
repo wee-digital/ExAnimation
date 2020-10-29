@@ -40,7 +40,10 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
 
     fun onBindMessage(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.qrTextViewHint.color(R.color.colorBlack)
+            v.qrTextViewHint.paint.shader = LinearGradient(0F, 0F, v.qrTextViewHint.width.toFloat(), 0F,
+                    ContextCompat.getColor(v.requireContext(), R.color.color_black),
+                    ContextCompat.getColor(v.requireContext(), R.color.color_black),
+                    Shader.TileMode.CLAMP)
             v.qrTextViewHint.text = "Vui lòng đưa mã vào\nvùng nhận diện"
         } else {
             v.qrTextViewHint.paint.shader = LinearGradient(0F, 0F, v.qrTextViewHint.width.toFloat(), 0F,

@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewContent"
     style="@style/MatchParent"
-    android:fitsSystemWindows="true"
     android:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
@@ -46,7 +45,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceTextViewStation"
             style="@style/Headline1SemiBold"
-            android:layout_marginStart="@dimen/margin2"
+            android:layout_marginStart="@dimen/margin4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deviceTextViewTitle"
             tools:text="@tools:sample/lorem" />
@@ -62,9 +61,9 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/deviceEditTextName"
             style="@style/EditText"
-            android:layout_marginStart="@dimen/margin2"
+            android:layout_marginStart="@dimen/margin4"
             android:layout_marginTop="@dimen/margin5"
-            android:layout_marginEnd="@dimen/margin2"
+            android:layout_marginEnd="@dimen/margin4"
             android:background="@null"
             android:hint="Tên thiết bị (Ví dụ: thiết bị số 1,...)"
             android:paddingStart="0dp"
@@ -77,10 +76,9 @@
             android:id="@+id/deviceTextViewError"
             style="@style/DescriptionRegular"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/margin2"
-            android:layout_marginStart="@dimen/margin2"
+            android:layout_marginStart="@dimen/margin4"
             android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin2"
+            android:layout_marginEnd="@dimen/margin4"
             android:textColor="@color/colorAlert"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,9 +89,9 @@
             android:id="@+id/deviceTextViewTerm"
             style="@style/DescriptionSemibold"
             android:layout_width="0dp"
-            android:layout_marginStart="@dimen/margin2"
+            android:layout_marginStart="@dimen/margin4"
             android:layout_marginTop="@dimen/margin4"
-            android:layout_marginEnd="@dimen/margin2"
+            android:layout_marginEnd="@dimen/margin4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deviceTextViewError"
@@ -102,7 +100,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceViewRegister"
             style="@style/Button.Semibold"
-            android:layout_margin="@dimen/margin2"
+            android:layout_margin="@dimen/margin4"
             android:text="Đăng ký thiết bị"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

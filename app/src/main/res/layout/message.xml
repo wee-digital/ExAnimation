@@ -34,7 +34,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageTextViewTitle"
             style="@style/Headline2"
-            android:layout_marginTop="@dimen/margin"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/margin2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageImageViewIcon"
@@ -42,13 +43,14 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageTextViewMessage"
-            style="@style/BodySemibold"
+            style="@style/BodyRegular"
+            android:textAlignment="center"
             android:maxLines="8"
             app:layout_constraintBottom_toTopOf="@+id/messageViewClose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageTextViewTitle"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/margin2"
             app:layout_constraintVertical_bias="0.0"
             tools:text="@tools:sample/lorem/random" />
 

@@ -39,6 +39,7 @@ class App : Application() {
         baseSharedPref = BaseSharedPref()
         baseSharedPref!!.init(this)
         getBanksJson()
+
     }
 
     companion object {
