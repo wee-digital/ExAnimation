@@ -8,8 +8,6 @@ import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.repository.model.DataContentFail
 import wee.digital.fpa.repository.utils.ErrCode
 import java.io.File
-import java.text.DecimalFormat
-import java.text.NumberFormat
 
 object Utils {
 
@@ -81,10 +79,10 @@ object Utils {
     /**
      * set content Fail
      */
-    fun getContentFailFromCode(code : Int) : DataContentFail{
+    fun getContentFailFromCode(code: Int): DataContentFail {
         var title = ""
         var mess = ""
-        when(code) {
+        when (code) {
             ErrCode.BANK_UNKNOWN_ERROR -> {
                 title = "Thanh toán không thành công"
                 mess = "Tài khoản ngân hàng liên kết hiện tại không thể thực hiện thanh toán. Bạn Vui lòng thử lại"

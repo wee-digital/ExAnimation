@@ -6,10 +6,10 @@ import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.connect.ConnectVM
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.library.extension.addEditorActionListener
 import wee.digital.library.extension.trimText
@@ -71,7 +71,7 @@ class DeviceFragment : Main.Dialog() {
     private fun onRegisterDevice() {
         deviceTextViewError.text = null
         val s = deviceEditTextName.trimText
-        deviceVM.registerDevice(s,connectVM.objQRCode.value)
+        deviceVM.registerDevice(s, connectVM.objQRCode.value)
     }
 
     private fun onRegisterSuccess(arg: MessageArg) {

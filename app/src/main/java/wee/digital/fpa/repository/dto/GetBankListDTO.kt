@@ -29,7 +29,7 @@ data class GetBankAccListDTOResp(
         @Expose
         var basicBankAccList: List<BasicBankAcc> = arrayListOf()
 ) {
-    fun getBankAccList(): ArrayList<BankAccInfo>{
+    fun getBankAccList(): ArrayList<BankAccInfo> {
         val bankAccList = arrayListOf<BankAccInfo>()
         if (this.basicBankAccList.isNotEmpty()) {
             val jsonArray =
@@ -38,9 +38,9 @@ data class GetBankAccListDTOResp(
 
             for (basicBankAcc in this.basicBankAccList) {
                 val bankAccInfo =
-                    bankListJson.single { item ->
-                        item.BankCode == basicBankAcc.BankCode
-                    }
+                        bankListJson.single { item ->
+                            item.BankCode == basicBankAcc.BankCode
+                        }
 
                 bankAccInfo.accountID = basicBankAcc.id
                 bankAccList.add(bankAccInfo)

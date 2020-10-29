@@ -35,7 +35,7 @@ class WebSocketControl : WebSocketListener() {
         Log.d(TAG, "onOpen - $response")
         LogGrafana.instance.postWebSocket("WebSocket onConnected ${response.message}")
         mURLConnected = mURLConnecting
-        mWebSocketMonitorListener?.onConnected(webSocket,response)
+        mWebSocketMonitorListener?.onConnected(webSocket, response)
         isOpen = true
     }
 
@@ -44,7 +44,7 @@ class WebSocketControl : WebSocketListener() {
         Log.d(TAG, "onFailure - $t - $response")
         LogGrafana.instance.postWebSocket("onFailure - $t - $response")
         isOpen = false
-        mWebSocketMonitorListener?.onError(webSocket,t)
+        mWebSocketMonitorListener?.onError(webSocket, t)
         mWebSocketMonitorCloseListener?.onClosed()
     }
 

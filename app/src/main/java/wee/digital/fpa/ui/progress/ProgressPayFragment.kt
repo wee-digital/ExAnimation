@@ -21,7 +21,7 @@ class ProgressPayFragment : Main.Dialog() {
 
     override fun onLiveDataObserve() {
         progressVM.arg.observe {
-            if (it == null){
+            if (it == null) {
                 dismiss()
             } else {
                 onBindArg(it)
@@ -33,7 +33,7 @@ class ProgressPayFragment : Main.Dialog() {
         progressImageViewPay.load(it?.image!!)
         view?.postDelayed({
             Media.play(it?.sound)
-        },it?.soundDelayed)
+        }, it?.soundDelayed)
 
     }
 

@@ -1,7 +1,6 @@
 package wee.digital.fpa.repository.network
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.google.gson.Gson
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -34,7 +33,7 @@ class LogGrafana {
 
     @SuppressLint("CheckResult")
     fun postWebSocket(valueData: String) {
-        if(BaseData.deviceInfo.shopName.isEmpty()) return
+        if (BaseData.deviceInfo.shopName.isEmpty()) return
         val apiService = getClient().create(MyApiService::class.java)
         val headers: HashMap<String, String> = HashMap()
         headers["facePOSWebSocket"] = "POS${BaseData.deviceInfo.shopName}_${BaseData.deviceInfo.posName}"
@@ -52,7 +51,7 @@ class LogGrafana {
 
     @SuppressLint("CheckResult")
     fun postNoAccount(valueData: String) {
-        if(BaseData.deviceInfo.shopName.isEmpty()) return
+        if (BaseData.deviceInfo.shopName.isEmpty()) return
         val apiService = getClient().create(MyApiService::class.java)
         val data = "${SystemUrl.BASE_URL}_${BaseData.deviceInfo.posName}_POS($valueData)"
         val headers: HashMap<String, String> = HashMap()
@@ -71,7 +70,7 @@ class LogGrafana {
 
     @SuppressLint("CheckResult")
     fun postHttp(url: String, time: Long, code: Int, fail: String? = "") {
-        if(BaseData.deviceInfo.shopName.isEmpty()) return
+        if (BaseData.deviceInfo.shopName.isEmpty()) return
         val apiService = getClient().create(MyApiService::class.java)
         val dataString = "URL : $url - timeCallApi : [$time] - code : $code , $fail"
         val header: HashMap<String, String> = HashMap()

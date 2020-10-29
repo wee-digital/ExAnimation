@@ -12,7 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import androidx.transition.Transition
 import androidx.viewpager.widget.ViewPager
 import io.reactivex.Observer
 import io.reactivex.SingleObserver

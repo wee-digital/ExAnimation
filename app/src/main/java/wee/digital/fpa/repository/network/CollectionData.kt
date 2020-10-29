@@ -20,6 +20,7 @@ class CollectionData {
     companion object {
         val instance: CollectionData by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { CollectionData() }
     }
+
     private var retrofit: Retrofit? = null
     private fun getClient(): Retrofit {
         if (retrofit != null) return retrofit as Retrofit
@@ -31,23 +32,25 @@ class CollectionData {
                 .build()
         return retrofit as Retrofit
     }
+
     @SuppressLint("CheckResult")
-    fun encryptCollData(dataCollect: DataCollect){
+    fun encryptCollData(dataCollect: DataCollect) {
         EncryptData.instance.encryptCollectData(dataCollect)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.computation())
-                .subscribe (
+                .subscribe(
                         {
-                            Log.d("encryptCollectData","success")
-                            postCollectData(it.headers,it.body)
+                            Log.d("encryptCollectData", "success")
+                            postCollectData(it.headers, it.body)
                         },
                         {
-                            Log.d("encryptCollectData","${it.message}")
+                            Log.d("encryptCollectData", "${it.message}")
                         }
                 )
     }
+
     @SuppressLint("CheckResult")
-    private fun postCollectData(headers: HashMap<String,Any>, data: String) {
+    private fun postCollectData(headers: HashMap<String, Any>, data: String) {
         val apiService = getClient().create(MyApiService::class.java)
         headers["FacePOSCollectData"] = "POS_${BaseData.deviceInfo.posName}"
         apiService.postCollData(headers, data)
@@ -58,6 +61,7 @@ class CollectionData {
                     override fun onSuccess(t: Response<ResponseBody>) {
                         Log.d("facePosCollectData", "onSuccess")
                     }
+
                     override fun onError(e: Throwable) {
                         Log.d("facePosCollectData", "onError")
                     }

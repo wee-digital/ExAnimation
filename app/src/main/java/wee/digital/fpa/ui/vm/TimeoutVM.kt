@@ -5,7 +5,6 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import wee.digital.fpa.ui.base.BaseViewModel
-import wee.digital.fpa.ui.base.EventLiveData
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 

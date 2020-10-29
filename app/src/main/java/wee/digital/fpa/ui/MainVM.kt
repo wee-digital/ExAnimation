@@ -7,10 +7,8 @@ import io.reactivex.disposables.Disposable
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
 import wee.digital.fpa.repository.dto.GetTokenDTOResp
-import wee.digital.fpa.repository.dto.UpdateCancelPaymentDTOReq
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.network.Api
-import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.repository.utils.ErrCode
 import wee.digital.fpa.ui.base.BaseViewModel
 import java.util.concurrent.TimeUnit

@@ -1,7 +1,6 @@
 package wee.digital.fpa.ui.pin
 
 import androidx.lifecycle.MutableLiveData
-import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Config
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp

@@ -51,4 +51,4 @@ data class VerifyPINCodeDTOResp(
         @SerializedName("UserID")
         var userId: String,
 
-)
+        )

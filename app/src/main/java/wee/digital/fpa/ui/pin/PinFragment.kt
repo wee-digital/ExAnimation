@@ -5,9 +5,7 @@ import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
-import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
-import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceFragment
@@ -47,7 +45,6 @@ class PinFragment : Main.Dialog() {
             onPinVerifySuccess(it)
         }
     }
-
 
 
     override fun onViewClick(v: View?) {

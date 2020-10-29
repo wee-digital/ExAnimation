@@ -8,7 +8,6 @@ import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.connect.ConnectVM
-import wee.digital.fpa.ui.device.DeviceVM
 
 class QrFragment : Main.Dialog(), ScanQRCode.QRCodeProcessingListener {
 

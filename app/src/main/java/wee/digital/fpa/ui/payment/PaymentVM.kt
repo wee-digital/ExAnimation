@@ -1,7 +1,6 @@
 package wee.digital.fpa.ui.payment
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.SocketResultResp
 import wee.digital.fpa.repository.dto.UpdateCancelPaymentDTOReq
@@ -12,7 +11,7 @@ import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.ui.base.BaseViewModel
 
-class PaymentVM : BaseViewModel(){
+class PaymentVM : BaseViewModel() {
 
     val paymentArg = MutableLiveData<PaymentArg?>()
 

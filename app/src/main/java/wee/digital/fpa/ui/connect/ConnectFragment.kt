@@ -6,7 +6,6 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.device.DeviceVM
 
 class ConnectFragment : Main.Fragment() {
 

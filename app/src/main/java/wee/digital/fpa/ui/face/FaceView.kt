@@ -1,7 +1,6 @@
 package wee.digital.fpa.ui.face
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
 import kotlinx.android.synthetic.main.face.*
@@ -145,7 +144,7 @@ class FaceView(private val v: FaceFragment) :
             view.setBackgroundResource(R.drawable.drw_face)
             view.postDelayed({
                 hasFaceDetect = true
-            },500)
+            }, 500)
         }
         viewTransition.beginTransition(v.viewContent, {
             clear(viewId, ConstraintSet.BOTTOM)

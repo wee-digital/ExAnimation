@@ -1,10 +1,7 @@
 package wee.digital.fpa.util
 
 import androidx.fragment.app.Fragment
-import com.intel.realsense.librealsense.RsContext
-import com.intel.realsense.librealsense.UsbUtilities
 import wee.digital.fpa.app.App
-import wee.digital.fpa.app.app
 import wee.digital.fpa.camera.RealSenseControl
 
 fun Fragment.observerCameraStream() {

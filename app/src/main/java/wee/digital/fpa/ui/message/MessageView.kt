@@ -17,10 +17,10 @@ class MessageView(val v: MessageFragment) {
         v.messageTextViewTitle.text = arg.title ?: string(R.string.app_name)
         v.messageTextViewMessage.setHyperText(arg.message)
 
-        if (arg.button.isNullOrEmpty()){
+        if (arg.button.isNullOrEmpty()) {
             v.messageViewClose.show()
             v.messageViewClose.text = arg.button
-        }else{
+        } else {
             v.messageViewClose.hide()
         }
 

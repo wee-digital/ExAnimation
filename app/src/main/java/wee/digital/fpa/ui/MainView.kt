@@ -19,6 +19,7 @@ class MainView(val v: MainActivity) {
                 UsbUtilities.grantUsbPermissionIfNeeded(app)
                 App.realSenseControl = RealSenseControl()
             }
+
             override fun onDestroy() {
                 App.realSenseControl?.stopStreamThread()
             }
