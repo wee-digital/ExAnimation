@@ -13,18 +13,18 @@ class ProgressPayFragment : Main.Fragment() {
     }
 
     override fun onViewCreated() {
-    }
 
+    }
+    
     override fun onLiveDataObserve() {
-
-        /*if (drawable is Animatable) {
-            val gif: Animatable = drawable as Animatable
-            if (gif.isRunning) {
-                gif.stop()
-            } else {
-                gif.start()
-            }
-        }*/
+        progressVM.arg.observe {
+            onBindArg(it)
+        }
     }
+
+    private fun onBindArg(it: ProgressArg?) {
+
+    }
+
 
 }

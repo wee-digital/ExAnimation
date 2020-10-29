@@ -17,9 +17,12 @@ import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.payment.PaymentVM
+import wee.digital.fpa.ui.progress.ProgressArg
+import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
+import wee.digital.library.extension.post
 
 class MainActivity : BaseActivity() {
 
@@ -36,7 +39,16 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-
+        post(1000) {
+            activityVM(ProgressVM::class).arg.value = ProgressArg(
+                    image = R.mipmap.img_progress,
+                    sound = R.raw.sound_bip,
+                    soundDelayed = 1000,
+                    title = "hello",
+                    message = "message"
+            )
+            navigate(MainDirections.actionGlobalCardFragment())
+        }
     }
 
     override fun onLiveDataObserve() {
