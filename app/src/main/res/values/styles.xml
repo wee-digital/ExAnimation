@@ -34,7 +34,7 @@
     </style>
 
     <style name="Headline2" parent="TextView">
-        <item name="android:textSize">@dimen/_21ssp</item>
+        <item name="android:textSize">@dimen/_20ssp</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -244,7 +244,7 @@
 
     <style name="Guideline.Face">
         <item name="android:orientation">horizontal</item>
-        <item name="layout_constraintGuide_percent">0.4</item>
+        <item name="layout_constraintGuide_percent">0.35</item>
     </style>
 
     <style name="Guideline.Splash">

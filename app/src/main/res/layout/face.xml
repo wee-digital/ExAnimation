@@ -103,7 +103,7 @@
         android:fontFamily="@font/inter_semibold"
         android:includeFontPadding="false"
         android:text="Đưa khuôn mặt"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/gradient_blue_end"
         app:layout_constraintBottom_toTopOf="@+id/faceGuidelineCameraTop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

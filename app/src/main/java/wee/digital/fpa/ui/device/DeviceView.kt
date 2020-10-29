@@ -49,14 +49,14 @@ class DeviceView(private val v: DeviceFragment) {
     }
 
     private fun configTermText() {
-        val sPolicy = string(R.string.device_policy).bold().color("#378AE1")
+        val sPolicy = string(R.string.device_policy).bold().color("#419DF2")
         val sTerm = string(R.string.device_term).format(sPolicy)
         v.deviceTextViewTerm.setHyperText(sTerm)
     }
 
     fun onBindStation(obj: JsonObject) {
         val s = obj.str("FullName")
-        val text = string(R.string.device_hi).format(s.color("#378AE1").bold())
+        val text = string(R.string.device_hi).format(s.color("#419DF2").bold())
         v.deviceTextViewStation.setHyperText(text)
     }
 

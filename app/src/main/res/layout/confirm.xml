@@ -18,14 +18,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/confirmDialogContent"
         style="@style/Dialog.BottomFragment"
-        android:padding="@dimen/margin2"
+        android:padding="@dimen/margin3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineFace">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/confirmImageViewIcon"
             style="@style/Message.Icon"
+            android:layout_marginTop="@dimen/margin"
             android:src="@mipmap/img_x_mark_flat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,19 +48,17 @@
             android:id="@+id/confirmTextViewMessage"
             style="@style/BodyRegular"
             android:maxLines="8"
-            android:layout_marginTop="@dimen/margin2"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/confirmViewAccept"
+            android:layout_marginTop="@dimen/margin2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmTextViewTitle"
-            app:layout_constraintVertical_bias="0.0"
             tools:text="@tools:sample/lorem/random" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirmViewAccept"
             style="@style/Button.Semibold"
-            android:layout_marginBottom="@dimen/margin2"
+            android:layout_marginBottom="@dimen/margin"
             app:layout_constraintBottom_toTopOf="@+id/confirmViewDeny"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
