@@ -97,21 +97,15 @@ interface SimpleAnimatorListener : Animator.AnimatorListener {
 
 fun Transition.beginTransition(layout: ConstraintLayout, vararg blocks: ConstraintSet.() -> Unit): Transition {
     if (blocks.isEmpty()) return this
-    val set = ConstraintSet()
-    set.clone(layout)
     for (i in 0 until blocks.lastIndex) {
         this.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
                 this@beginTransition.removeListener(this)
-                TransitionManager.beginDelayedTransition(layout, this@beginTransition)
-                blocks[i + 1](set)
-                set.applyTo(layout)
+                beginTransition(layout, blocks[i + 1])
             }
         })
     }
-    TransitionManager.beginDelayedTransition(layout, this@beginTransition)
-    blocks[0](set)
-    set.applyTo(layout)
+    beginTransition(layout, blocks[0])
     return this
 }
 

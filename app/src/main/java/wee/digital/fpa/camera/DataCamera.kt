@@ -40,10 +40,10 @@ data class DataGetFacePoint(
 
 fun Rect.cropPortrait(bitmap: Bitmap): Bitmap? {
 
-        val plusH = height() * 0.6
+        val plusH = height() * 0.5
         val minusWH = (height() - width())/2
 
-        val plusW = (width() + minusWH) * 0.6
+        val plusW = (width() + minusWH) * 0.5
         val height = height() + plusH.roundToInt()
         val width = width() + plusW.roundToInt()
 

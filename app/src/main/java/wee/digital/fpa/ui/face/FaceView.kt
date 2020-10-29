@@ -1,6 +1,7 @@
 package wee.digital.fpa.ui.face
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
 import kotlinx.android.synthetic.main.face.*
@@ -10,10 +11,7 @@ import wee.digital.fpa.camera.Detection
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.util.observerCameraListener
-import wee.digital.library.extension.beginTransition
-import wee.digital.library.extension.bold
-import wee.digital.library.extension.load
-import wee.digital.library.extension.setHyperText
+import wee.digital.library.extension.*
 
 
 class FaceView(private val v: FaceFragment) :
@@ -115,38 +113,53 @@ class FaceView(private val v: FaceFragment) :
     }
 
     fun animateOnFaceCaptured() {
-        val viewId = v.faceImageViewCamera.id
-        val faceHeight = (v.faceImageViewCamera.height / 2.23).toInt()
-        val scale = faceHeight / v.faceImageViewCamera.height.toFloat()
-        //v.faceImageViewCamera.setBackgroundResource(0)
+
+        val view = v.faceImageViewCamera
+        val viewId = view.id
+        val height = (view.height / 2.23).toInt()
+        val scale = height / view.height.toFloat()
+
+        viewTransition.onEndTransition {
+            view.setBackgroundResource(0)
+        }
         viewTransition.beginTransition(v.viewContent) {
             setAlpha(v.faceTextViewTitle1.id, 0f)
             setAlpha(v.faceTextViewTitle2.id, 0f)
             setAlpha(v.faceTextViewTitle3.id, 0f)
             connect(viewId, ConstraintSet.TOP, v.faceTextViewRemaining.id, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.BOTTOM, v.guidelineFace.id, ConstraintSet.BOTTOM)
+            connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+            connect(viewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
         }
-
         animateImageScale(scale)
+
     }
 
     fun animateOnStartFaceReg() {
-        val viewId = v.faceImageViewCamera.id
+
+        val view = v.faceImageViewCamera
+        val viewId = view.id
+        val height = (view.height * 2.23).toInt()
         val scale = 1f
-        //v.faceImageViewCamera.setBackgroundResource(R.drawable.drw_face)
+        viewTransition.onEndTransition {
+            view.setBackgroundResource(R.drawable.drw_face)
+            view.postDelayed({
+                hasFaceDetect = true
+            },500)
+        }
         viewTransition.beginTransition(v.viewContent, {
             clear(viewId, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
+            connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+            connect(viewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
         }, {
             setAlpha(v.faceTextViewTitle1.id, 1f)
             setAlpha(v.faceTextViewTitle2.id, 1f)
             setAlpha(v.faceTextViewTitle3.id, 1f)
-            hasFaceDetect = true
         })
         animateImageScale(scale)
+
     }
-
-
 
 
 }

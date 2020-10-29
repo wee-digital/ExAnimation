@@ -65,8 +65,8 @@ class FaceFragment : Main.Fragment() {
 
     private fun onFaceVerifyRetry(it: ConfirmArg) {
         it.onAccept = {
-            timeoutVM.startTimeout(Timeout.FACE_VERIFY)
             faceView.animateOnStartFaceReg()
+            timeoutVM.startTimeout(Timeout.FACE_VERIFY)
         }
         it.onDeny = {
             navigate(MainDirections.actionGlobalSplashFragment()) {
