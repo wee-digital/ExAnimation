@@ -34,6 +34,9 @@ class AdvFragment : Main.Fragment() {
         advVM.imageList.observe {
             advAdapter.set(it)
             advAdapter.bindToViewPager(advViewPager)
+            view?.postDelayed({
+                advViewPager.setCurrentItem(advViewPager.currentItem + 1, true)
+            },5000L)
         }
         advVM.pageLiveData.observe {
             val i = advViewPager.currentItem + 1

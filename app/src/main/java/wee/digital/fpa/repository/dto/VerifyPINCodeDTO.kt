@@ -19,7 +19,7 @@ data class VerifyPINCodeDTOReq(
 
         @SerializedName("ClientIP")
         @Expose
-        var clientID: String = ""
+        var clientIP: String = ""
 
 )
 
