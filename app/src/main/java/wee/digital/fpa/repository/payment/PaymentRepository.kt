@@ -29,14 +29,14 @@ class PaymentRepository : IBase.Payment {
     override fun verifyFace(
             dataReq: VerifyFaceDTOReq,
             facePointData: FacePointData,
-            listener: Api.ClientListener<VerifyFaceDTOResp>
+            listener: Api.ClientListener<FaceArg>
     ) {
         mPaymentProvider.verifyFace(dataReq = dataReq, facePointData = facePointData, listener = listener)
     }
 
     override fun verifyPINCode(
             dataReq: VerifyPINCodeDTOReq,
-            listener: Api.ClientListener<VerifyPINCodeDTOResp>
+            listener: Api.ClientListener<PinArg>
     ) {
         mPaymentProvider.verifyPINCode(dataReq = dataReq, listener = listener)
     }

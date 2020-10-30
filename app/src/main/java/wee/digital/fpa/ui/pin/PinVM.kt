@@ -2,8 +2,8 @@ package wee.digital.fpa.ui.pin
 
 import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.data.local.Config
+import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
-import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
@@ -16,13 +16,19 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
 
-    private val retryCount = AtomicInteger(Config.PIN_RETRY_COUNT)
+    private val retryCount = AtomicInteger()
+
+    val pinArg = object : MutableLiveData<PinArg?>() {
+        override fun setValue(value: PinArg?) {
+            retryCount.set(Config.PIN_RETRY_COUNT)
+            super.setValue(value)
+        }
+    }
 
     val retryMessage = EventLiveData<String>()
 
     val errorMessage = EventLiveData<MessageArg>()
 
-    val pinCodeResponse = MutableLiveData<VerifyPINCodeDTOResp>()
 
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, deviceInfo: DeviceInfo?) {
         paymentArg ?: throw Event.paymentArgError
@@ -37,8 +43,8 @@ class PinVM : BaseViewModel() {
 
     private fun verifyPinCode(req: VerifyPINCodeDTOReq) {
 
-        PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<VerifyPINCodeDTOResp> {
-            override fun onSuccess(data: VerifyPINCodeDTOResp) {
+        PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<PinArg> {
+            override fun onSuccess(data: PinArg) {
                 onPinVerifySuccess(data)
             }
 
@@ -48,8 +54,8 @@ class PinVM : BaseViewModel() {
         })
     }
 
-    private fun onPinVerifySuccess(data: VerifyPINCodeDTOResp) {
-        pinCodeResponse.postValue(data)
+    private fun onPinVerifySuccess(data: PinArg) {
+        pinArg.postValue(data)
     }
 
     private fun onPinVerifyFailed(code: Int, message: String? = null) {
@@ -69,7 +75,7 @@ class PinVM : BaseViewModel() {
     }
 
     private fun onPinVerifyRetry() {
-        when (retryCount.decrementAndGet()) {
+        when (retryCount.getAndDecrement()) {
             0 -> {
                 retryMessage.postValue("Mã PIN không đúng, bạn còn %s lần thử lại".format(retryCount.get()))
             }

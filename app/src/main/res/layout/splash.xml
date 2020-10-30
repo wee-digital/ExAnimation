@@ -7,7 +7,11 @@
     style="@style/MatchParent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/splashGuideline"
+        android:id="@+id/guidelineHeader"
+        style="@style/Guideline.Header" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSplash"
         style="@style/Guideline.Splash" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -21,8 +25,8 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/splashTextViewRemaining"
         style="@style/BodyRegular"
-        android:layout_marginTop="@dimen/margin"
         android:textColor="@color/color_notification"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

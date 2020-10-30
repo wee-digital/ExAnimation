@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.GetBankAccListDTOReq
 import wee.digital.fpa.repository.dto.GetBankAccListDTOResp
-import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
+import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
@@ -17,7 +17,7 @@ class CardVM : BaseViewModel() {
 
     val cardList = MutableLiveData<List<CardItem>>()
 
-    fun fetchCardList(pinArg: VerifyPINCodeDTOResp?) {
+    fun fetchCardList(pinArg: PinArg?) {
         val body = GetBankAccListDTOReq(
                 userID = pinArg?.userId ?: throw Event.pinDataError
         )

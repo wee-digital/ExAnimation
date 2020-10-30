@@ -12,6 +12,7 @@ import wee.digital.fpa.ui.connect.ConnectVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.library.extension.addEditorActionListener
+import wee.digital.library.extension.hideKeyboard
 import wee.digital.library.extension.trimText
 
 class DeviceFragment : Main.Dialog() {
@@ -73,12 +74,14 @@ class DeviceFragment : Main.Dialog() {
      * [DeviceFragment] properties
      */
     private fun onRegisterDevice() {
+        hideKeyboard()
         deviceTextViewError.text = null
         val s = deviceEditTextName.trimText
         deviceVM.registerDevice(s, connectVM.objQRCode.value)
     }
 
     private fun onRegisterSuccess(arg: MessageArg) {
+        mainVM.syncDeviceInfo()
         dismiss()
         activityVM(MessageVM::class).arg.value = arg
         navigate(MainDirections.actionGlobalMessageFragment())

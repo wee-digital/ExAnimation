@@ -66,7 +66,7 @@ class PaymentProvider : IBase.Payment {
     override fun verifyFace(
             dataReq: VerifyFaceDTOReq,
             facePointData: FacePointData,
-            listener: Api.ClientListener<VerifyFaceDTOResp>
+            listener: Api.ClientListener<FaceArg>
     ) {
         Api.instance.postApi(
                 url = "verifyFace",
@@ -76,7 +76,7 @@ class PaymentProvider : IBase.Payment {
 
                     override fun onSuccess(data: JsonObject) {
                         Log.d("verifyFace", "$data")
-                        val resp = data.parse(VerifyFaceDTOResp::class.java)!!
+                        val resp = data.parse(FaceArg::class.java)!!
                         resp.code = ErrCode.SUCCESS
 
                         listener.onSuccess(resp)
@@ -92,12 +92,12 @@ class PaymentProvider : IBase.Payment {
 
     override fun verifyPINCode(
             dataReq: VerifyPINCodeDTOReq,
-            listener: Api.ClientListener<VerifyPINCodeDTOResp>
+            listener: Api.ClientListener<PinArg>
     ) {
         Api.instance.postApi(url = "verifyPinCode", data = dataReq, listener = object : Api.ApiCallBack {
             override fun onSuccess(data: JsonObject) {
                 Log.d("verifyPINCode", "$data")
-                val resp = data.parse(VerifyPINCodeDTOResp::class.java)!!
+                val resp = data.parse(PinArg::class.java)!!
                 resp.code = ErrCode.SUCCESS
 
                 listener.onSuccess(resp)

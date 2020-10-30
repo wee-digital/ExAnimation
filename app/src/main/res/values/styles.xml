@@ -25,39 +25,39 @@
     </style>
 
     <style name="Headline1SemiBold" parent="TextView">
-        <item name="android:textSize">@dimen/_20ssp</item>
+        <item name="android:textSize">@dimen/_19ssp</item>
         <item name="fontFamily">@font/inter_semibold</item>
     </style>
 
     <style name="Headline1Regular" parent="TextView">
-        <item name="android:textSize">@dimen/_20ssp</item>
+        <item name="android:textSize">@dimen/_19ssp</item>
     </style>
 
     <style name="Headline2" parent="TextView">
-        <item name="android:textSize">@dimen/_20ssp</item>
+        <item name="android:textSize">@dimen/_19ssp</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="Headline3" parent="TextView">
-        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textSize">@dimen/_11ssp</item>
     </style>
 
     <style name="BodySemibold" parent="TextView">
-        <item name="android:textSize">@dimen/_13ssp</item>
+        <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
     </style>
 
     <style name="BodyRegular" parent="TextView">
-        <item name="android:textSize">@dimen/_11ssp</item>
+        <item name="android:textSize">@dimen/_10ssp</item>
     </style>
 
     <style name="DescriptionSemibold" parent="TextView">
         <item name="android:fontFamily">@font/inter_semibold</item>
-        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textSize">@dimen/_9ssp</item>
     </style>
 
     <style name="DescriptionRegular" parent="TextView">
-        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textSize">@dimen/_9ssp</item>
     </style>
 
     <!-- EDIT TEXT -->
@@ -237,18 +237,19 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Guideline.Connect">
+    <style name="Guideline.Horizontal">
         <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="Guideline.Header" parent="Guideline.Horizontal">
         <item name="layout_constraintGuide_percent">0.08</item>
     </style>
 
-    <style name="Guideline.Face">
-        <item name="android:orientation">horizontal</item>
+    <style name="Guideline.Face" parent="Guideline.Horizontal">
         <item name="layout_constraintGuide_percent">0.35</item>
     </style>
 
-    <style name="Guideline.Splash">
-        <item name="android:orientation">horizontal</item>
+    <style name="Guideline.Splash" parent="Guideline.Horizontal">
         <item name="layout_constraintGuide_percent">0.20</item>
     </style>
 

@@ -13,7 +13,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/splashImageViewLogo"
         android:layout_width="0dp"

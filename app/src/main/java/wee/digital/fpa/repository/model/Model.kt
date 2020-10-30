@@ -4,8 +4,8 @@ import android.os.Bundle
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import wee.digital.fpa.repository.dto.PaymentDTOResp
-import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
-import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
+import wee.digital.fpa.repository.dto.FaceArg
+import wee.digital.fpa.repository.dto.PinArg
 
 /**
  * [wee.dev.faceposv2.repository.network.EncryptData]
@@ -23,12 +23,12 @@ data class DataRegisterDevice(val name: String = "", val status: Int = 0)
 /**
  * [wee.dev.faceposv2.ui.payment.PaymentViewModel.verifyFace]
  */
-data class PaymentVerifyFace(val dataResp: VerifyFaceDTOResp, val bundle: Bundle)
+data class PaymentVerifyFace(val dataResp: FaceArg, val bundle: Bundle)
 
 /**
  * [wee.dev.faceposv2.ui.payment.PaymentViewModel.verifyPin]
  */
-data class PaymentVerifyPin(val dataResp: VerifyPINCodeDTOResp, val bundle: Bundle)
+data class PaymentVerifyPin(val dataResp: PinArg, val bundle: Bundle)
 
 /**
  * [wee.dev.faceposv2.ui.payment.PaymentViewModel.payment]

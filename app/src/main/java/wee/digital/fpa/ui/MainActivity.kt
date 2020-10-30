@@ -21,7 +21,6 @@ import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.util.Utils
-import wee.digital.library.extension.post
 
 class MainActivity : BaseActivity() {
 
@@ -161,10 +160,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onPaymentArgChanged(it: PaymentArg?) {
+        faceVM.faceArg.value = null
+        pinVM.pinArg.value = null
         when (it) {
             null -> {
-                faceVM.faceArg.value = null
-                pinVM.pinCodeResponse.value = null
+
             }
             else -> navigate(MainDirections.actionGlobalSplashFragment()) {
                 setLaunchSingleTop()

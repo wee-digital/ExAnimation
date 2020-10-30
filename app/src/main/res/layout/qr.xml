@@ -8,14 +8,14 @@
     android:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        style="@style/Guideline.Connect" />
+        android:id="@+id/guidelineHeader"
+        style="@style/Guideline.Header" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline1">
+        app:layout_constraintTop_toTopOf="@+id/guidelineHeader">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/qrImageViewCamera"
