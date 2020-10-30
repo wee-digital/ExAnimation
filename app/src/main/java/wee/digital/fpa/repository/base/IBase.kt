@@ -17,8 +17,8 @@ interface IBase {
     interface Payment {
         fun getClientId(listener: Api.ClientListener<ClientIDResp>)
         fun requestPayment(data: RequestPaymentDTOReq, listener: Api.ClientListener<RequestPaymentDTOResp>)
-        fun verifyFace(dataReq: VerifyFaceDTOReq, facePointData: FacePointData, listener: Api.ClientListener<VerifyFaceDTOResp>)
-        fun verifyPINCode(dataReq: VerifyPINCodeDTOReq, listener: Api.ClientListener<VerifyPINCodeDTOResp>)
+        fun verifyFace(dataReq: VerifyFaceDTOReq, facePointData: FacePointData, listener: Api.ClientListener<FaceArg>)
+        fun verifyPINCode(dataReq: VerifyPINCodeDTOReq, listener: Api.ClientListener<PinArg>)
         fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentDTOResp>)
         fun getBankAccList(dataReq: GetBankAccListDTOReq, listener: Api.ClientListener<GetBankAccListDTOResp>)
         fun updatePaymentStatus(dataReq: UpdatePaymentStatusDTOReq)

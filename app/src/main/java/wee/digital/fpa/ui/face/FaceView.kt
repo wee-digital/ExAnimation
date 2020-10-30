@@ -27,11 +27,12 @@ class FaceView(private val v: FaceFragment) :
     override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
         colorBitmap ?: return
         dataCollect ?: return
-        if (!hasFaceDetect) return
-        v.requireActivity().runOnUiThread {
+        if (hasStream) v.requireActivity().runOnUiThread {
             v.faceImageViewCamera?.setImageBitmap(colorBitmap)
         }
-        mDetection?.bitmapChecking(colorBitmap, depthBitmap, dataCollect)
+        if (hasFaceReg) {
+            mDetection?.bitmapChecking(colorBitmap, depthBitmap, dataCollect)
+        }
     }
 
     /**
@@ -60,7 +61,8 @@ class FaceView(private val v: FaceFragment) :
     }
 
     override fun faceEligible(bm: ByteArray, portrait: Bitmap, frameFullFace: ByteArray, faceData: FacePointData, dataCollect: DataCollect) {
-        hasFaceDetect = false
+        hasFaceReg = false
+        hasStream = false
         v.faceImageViewCamera.setImageBitmap(portrait)
         onFaceEligible(bm, faceData, dataCollect)
     }
@@ -70,7 +72,9 @@ class FaceView(private val v: FaceFragment) :
      */
     private var mDetection: Detection? = null
 
-    private var hasFaceDetect = true
+    private var hasStream = true
+
+    private var hasFaceReg = true
 
     var onFaceEligible: (ByteArray, FacePointData, DataCollect) -> Unit = { _, _, _ -> }
 
@@ -135,7 +139,7 @@ class FaceView(private val v: FaceFragment) :
     }
 
     fun animateOnStartFaceReg() {
-
+        hasStream = true
         val view = v.faceImageViewCamera
         val viewId = view.id
         val height = (view.height * 2.23).toInt()
@@ -143,7 +147,7 @@ class FaceView(private val v: FaceFragment) :
         viewTransition.onEndTransition {
             view.setBackgroundResource(R.drawable.drw_face)
             view.postDelayed({
-                hasFaceDetect = true
+                hasFaceReg = true
             }, 500)
         }
         viewTransition.beginTransition(v.viewContent, {

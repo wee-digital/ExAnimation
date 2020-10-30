@@ -23,7 +23,7 @@ data class VerifyPINCodeDTOReq(
 
 )
 
-data class VerifyPINCodeDTOResp(
+data class PinArg(
 
         @SerializedName("Code")
         @Expose

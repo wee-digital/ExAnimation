@@ -5,7 +5,7 @@ import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
-import wee.digital.fpa.repository.dto.VerifyPINCodeDTOResp
+import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceFragment
@@ -41,7 +41,7 @@ class PinFragment : Main.Dialog() {
         pinVM.errorMessage.observe {
             onErrorMessage(it)
         }
-        pinVM.pinCodeResponse.observe {
+        pinVM.pinArg.observe {
             onPinVerifySuccess(it)
         }
     }
@@ -72,7 +72,8 @@ class PinFragment : Main.Dialog() {
         )
     }
 
-    private fun onPinVerifySuccess(it: VerifyPINCodeDTOResp) {
+    private fun onPinVerifySuccess(it: PinArg?) {
+        it ?: return
         dismiss()
         when {
             it.hasDefaultAccount -> {

@@ -20,7 +20,7 @@ data class VerifyFaceDTOReq(
 
 )
 
-data class VerifyFaceDTOResp(
+data class FaceArg(
         @SerializedName("Code")
         @Expose
         var code: Int = 0,

@@ -8,7 +8,7 @@ import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.data.local.Config
 import wee.digital.fpa.repository.dto.VerifyFaceDTOReq
-import wee.digital.fpa.repository.dto.VerifyFaceDTOResp
+import wee.digital.fpa.repository.dto.FaceArg
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.network.CollectionData
 import wee.digital.fpa.repository.payment.PaymentRepository
@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class FaceVM : ViewModel() {
 
-    var faceArg = MutableLiveData<VerifyFaceDTOResp?>()
+    var faceArg = MutableLiveData<FaceArg?>()
 
     var verifyRetry = EventLiveData<ConfirmArg>()
 
@@ -39,8 +39,8 @@ class FaceVM : ViewModel() {
         val face = Base64.encodeToString(bitmap, Base64.NO_WRAP)
         val req = VerifyFaceDTOReq(face, paymentArg.paymentId, paymentArg.clientIp)
 
-        PaymentRepository.ins.verifyFace(req, dataFace, object : Api.ClientListener<VerifyFaceDTOResp> {
-            override fun onSuccess(data: VerifyFaceDTOResp) {
+        PaymentRepository.ins.verifyFace(req, dataFace, object : Api.ClientListener<FaceArg> {
+            override fun onSuccess(data: FaceArg) {
                 CollectionData.instance.encryptCollData(dataColl)
                 onVerifyFaceSuccess(data)
             }
@@ -52,7 +52,7 @@ class FaceVM : ViewModel() {
         })
     }
 
-    fun onVerifyFaceSuccess(data: VerifyFaceDTOResp) {
+    fun onVerifyFaceSuccess(data: FaceArg) {
         faceArg.postValue(data)
     }
 

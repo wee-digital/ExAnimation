@@ -22,7 +22,7 @@ class CardFragment : Main.Dialog() {
     }
 
     override fun onLiveDataObserve() {
-        cardVM.fetchCardList(pinVM.pinCodeResponse.value)
+        cardVM.fetchCardList(pinVM.pinArg.value)
         cardVM.cardList.observe {
             adapter.set(it)
         }

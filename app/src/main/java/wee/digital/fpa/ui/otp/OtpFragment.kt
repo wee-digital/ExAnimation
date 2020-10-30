@@ -14,7 +14,6 @@ import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.fpa.ui.pin.PinVM
-import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
 
@@ -48,7 +47,7 @@ class OtpFragment : Main.Dialog() {
      */
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadOtpWebView() {
-        val url = pinVM.pinCodeResponse.value?.formOtp ?: throw Event.pinDataError
+        val url = pinVM.pinArg.value?.formOtp ?: throw Event.pinDataError
         otpWebView.loadDataWithBaseURL(
                 "https://dps-staging.napas.com.vn/api/restjs/resources/js/napas.hostedform.min.js",
                 """$url""",
