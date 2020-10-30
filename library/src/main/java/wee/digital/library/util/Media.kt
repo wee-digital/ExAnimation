@@ -38,7 +38,6 @@ object Media {
         post(100) {
             if (soundIndex != -1) {
                 soundPool.play(soundIndex, 1f, 1f, 1, 0, 1.0f)
-                isSilent = true
             }
         }
     }
