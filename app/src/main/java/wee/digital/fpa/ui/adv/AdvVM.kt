@@ -34,7 +34,7 @@ class AdvVM : BaseViewModel() {
     fun countdownToNextSlide(page: Int) {
         disposable?.dispose()
         disposable = Observable
-                .interval(0, 3, TimeUnit.SECONDS)
+                .interval(0, 5, TimeUnit.SECONDS)
                 .map { page + 1 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

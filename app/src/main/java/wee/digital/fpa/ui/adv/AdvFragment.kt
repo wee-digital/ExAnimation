@@ -16,6 +16,7 @@ class AdvFragment : Main.Fragment() {
     }
 
     override fun onViewCreated() {
+
     }
 
     override fun onLiveDataObserve() {
@@ -23,12 +24,21 @@ class AdvFragment : Main.Fragment() {
         advVM.imageList.observe {
             advAdapter.set(it)
             advAdapter.bindToViewPager(advViewPager)
+
             if (advAdapter.get(advAdapter.currentPosition +1)?.isImage!!){
                 advVM.countdownToNextSlide(advAdapter.currentPosition)
             }
         }
+
         advVM.pageLiveData.observe {
             advViewPager.setCurrentItem(it,true)
+            view?.postDelayed({
+                if (advAdapter.get(it)?.isImage!!){
+                    advVM.countdownToNextSlide(it)
+                }
+            },5000L)
+
+
         }
     }
 
