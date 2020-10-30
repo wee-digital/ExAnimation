@@ -43,7 +43,9 @@ class SplashFragment : Main.Fragment() {
         when (arg) {
             null -> {
                 stopCamera()
-                splashView.animateOnDimissPayment()
+                splashView.animateOnDismissPayment {
+                    navigateAdvFragment()
+                }
             }
             else -> {
                 startCamera()

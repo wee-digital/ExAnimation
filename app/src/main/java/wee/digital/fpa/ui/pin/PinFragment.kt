@@ -103,12 +103,9 @@ class PinFragment : Main.Dialog() {
     }
 
     private fun onPaymentDeny() {
-        paymentVM.arg.postValue(null)
-        timeoutVM.stopTimeout()
         dismiss()
-        navigate(MainDirections.actionGlobalAdvFragment()) {
-            setLaunchSingleTop()
-        }
+        timeoutVM.stopTimeout()
+        paymentVM.arg.postValue(null)
     }
 
 }

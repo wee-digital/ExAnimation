@@ -37,10 +37,10 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-       /* post(1000) {
-            progressVM.arg.value = ProgressArg.payment
-            navigate(MainDirections.actionGlobalOtpFragment())
-        }*/
+        /* post(1000) {
+             progressVM.arg.value = ProgressArg.payment
+             navigate(MainDirections.actionGlobalOtpFragment())
+         }*/
     }
 
     override fun onLiveDataObserve() {
@@ -138,7 +138,7 @@ class MainActivity : BaseActivity() {
             SocketEvent.DELETE_CACHE -> {
                 Utils.deleteCache()
                 mainVM.resetDeviceData()
-                Main.rootDirection.postValue(MainDirections.actionGlobalConnectFragment())
+                Main.mainDirection.postValue(MainDirections.actionGlobalConnectFragment())
             }
         }
     }
@@ -167,6 +167,7 @@ class MainActivity : BaseActivity() {
 
             }
             else -> navigate(MainDirections.actionGlobalSplashFragment()) {
+                setNoneAnim()
                 setLaunchSingleTop()
             }
         }
