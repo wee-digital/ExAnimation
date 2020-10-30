@@ -3,7 +3,6 @@ package wee.digital.fpa.ui.adv
 import kotlinx.android.synthetic.main.adv.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
 
 class AdvFragment : Main.Fragment() {
 
@@ -25,20 +24,19 @@ class AdvFragment : Main.Fragment() {
             advAdapter.set(it)
             advAdapter.bindToViewPager(advViewPager)
 
-            if (advAdapter.get(advAdapter.currentPosition +1)?.isImage!!){
+            // sai cho nay
+            if (advAdapter.get(advAdapter.currentPosition + 1)?.isImage!!) {
                 advVM.countdownToNextSlide(advAdapter.currentPosition)
             }
         }
 
         advVM.pageLiveData.observe {
-            advViewPager.setCurrentItem(it,true)
-            view?.postDelayed({
-                if (advAdapter.get(it)?.isImage!!){
-                    advVM.countdownToNextSlide(it)
-                }
-            },5000L)
+            advViewPager.setCurrentItem(it, true)
 
-
+            // sai cho nay
+            if (advAdapter.get(it + 1)?.isImage == true) {
+                advVM.countdownToNextSlide(it)
+            }
         }
     }
 

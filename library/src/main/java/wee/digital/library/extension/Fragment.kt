@@ -1,16 +1,23 @@
 package wee.digital.library.extension
 
+import android.app.Activity
 import android.os.Build
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
 import androidx.fragment.app.*
 import wee.digital.library.R
 
 
 fun Fragment?.hideKeyboard() {
-    this?.requireActivity()?.hideKeyboard()
+    this ?: return
+    val view = this.view
+    if (view != null) {
+        val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm?.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }
 
 fun DialogFragment?.hideSystemUI() {

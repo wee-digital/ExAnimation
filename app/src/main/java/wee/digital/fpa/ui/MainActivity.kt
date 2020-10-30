@@ -20,7 +20,6 @@ import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
-import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
 
 class MainActivity : BaseActivity() {
@@ -101,7 +100,7 @@ class MainActivity : BaseActivity() {
     private fun onCheckDeviceStatus() {
         navigate(MainDirections.actionGlobalDisconnectFragment()) {
             setEnterAnim(R.anim.vertical_enter)
-            setPopEnterAnim(R.anim.vertical_pop_enter)
+            setPopExitAnim(R.anim.vertical_pop_exit)
         }
         mainVM.checkDeviceStatusOnTimer()
     }

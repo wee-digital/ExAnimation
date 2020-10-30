@@ -25,6 +25,7 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
     }
 
     override fun View.onBindModel(model: MediaItem, position: Int, layout: Int) {
+        currentPosition = position
         when {
             model.imageRes != null -> {
                 advImageView.load(model.imageRes)
@@ -40,7 +41,6 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
                     }
                 })
                 if (position == 0) {
-                    currentPosition = 0
                     customMediaView.onPlayVideo()
                 }
             }
@@ -53,7 +53,9 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
 
     override fun get(position: Int): MediaItem? {
         if (listItem.isEmpty()) return null
-        return listItem[position % listItem.size]
+        val realPosition = position % listItem.size
+        if (realPosition !in 0..lastIndex)return null
+        return listItem[realPosition]
     }
 
     var viewPager: ViewPager2? = null
