@@ -83,7 +83,7 @@ class RealSenseControl : DeviceListener {
             var errorMessage = ""
             val isNext = try {
                 try {
-                    if (/*listener != null && !isPauseCamera && */!isFrameProcessing && isInternet) {
+                    if (listener != null && !isFrameProcessing && isInternet) {
                         isFrameProcessing = true
                         FrameReleaser().use { fr ->
                             val frames: FrameSet =

@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
+import kotlinx.android.synthetic.main.face.*
 import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
@@ -18,15 +20,14 @@ import wee.digital.library.extension.show
 
 class QrView(private val v: QrFragment) : RealSenseControl.Listener {
 
+
     /**
      * [RealSenseControl.Listener] implement
      */
     override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
         colorBitmap ?: return
         App.realSenseControl?.hasFace()
-        v.requireActivity().runOnUiThread {
-            v.qrImageViewCamera?.setImageBitmap(colorBitmap)
-        }
+        imageLiveData.postValue(colorBitmap)
         scanQRCode.decodeQRCode(colorBitmap)
     }
 
@@ -35,10 +36,15 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
      */
     private var scanQRCode = ScanQRCode()
 
+    private val imageLiveData = MutableLiveData<Bitmap>()
+
     fun onViewInit() {
         v.qrViewProgress.load(R.mipmap.img_progress)
         v.addClickListener(v.dialogViewClose)
         v.observerCameraListener(this)
+        imageLiveData.observe(v.viewLifecycleOwner, {
+            v.qrImageViewCamera?.setImageBitmap(it)
+        })
         scanQRCode.initListener(v)
     }
 

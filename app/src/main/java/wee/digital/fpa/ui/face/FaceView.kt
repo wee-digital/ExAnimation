@@ -1,14 +1,19 @@
 package wee.digital.fpa.ui.face
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.transition.ChangeBounds
 import kotlinx.android.synthetic.main.face.*
 import wee.digital.fpa.R
+import wee.digital.fpa.app.App
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.Detection
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
+import wee.digital.fpa.util.SimpleLifecycleObserver
 import wee.digital.fpa.util.observerCameraListener
 import wee.digital.library.extension.*
 
@@ -27,8 +32,8 @@ class FaceView(private val v: FaceFragment) :
     override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
         colorBitmap ?: return
         dataCollect ?: return
-        if (hasStream) v.requireActivity().runOnUiThread {
-            v.faceImageViewCamera?.setImageBitmap(colorBitmap)
+        if (hasStream) {
+            imageLiveData.postValue(colorBitmap)
         }
         if (hasFaceReg) {
             mDetection?.bitmapChecking(colorBitmap, depthBitmap, dataCollect)
@@ -39,6 +44,7 @@ class FaceView(private val v: FaceFragment) :
      * [Detection.DetectionCallBack] implement
      */
     override fun faceNull() {
+        App.realSenseControl?.hasFace()
         if (hasFace) {
             hasFace = false
             v.faceImageViewAnim.post {
@@ -50,6 +56,7 @@ class FaceView(private val v: FaceFragment) :
     }
 
     override fun hasFace() {
+        App.realSenseControl?.hasFace()
         if (!hasFace) {
             hasFace = true
             v.faceImageViewAnim.post {
@@ -84,6 +91,8 @@ class FaceView(private val v: FaceFragment) :
         duration = ANIM_DURATION
     }
 
+    private val imageLiveData = MutableLiveData<Bitmap>()
+
     private fun onConfigFaceReg() {
         mDetection = Detection(v.requireActivity()).also {
             it.initCallBack(this)
@@ -102,6 +111,9 @@ class FaceView(private val v: FaceFragment) :
     fun onViewInit() {
         v.faceImageViewAnim.load(R.mipmap.img_progress)
         v.observerCameraListener(this)
+        imageLiveData.observe(v.viewLifecycleOwner, {
+            v.faceImageViewCamera?.setImageBitmap(it)
+        })
         onConfigFaceReg()
     }
 
@@ -148,7 +160,7 @@ class FaceView(private val v: FaceFragment) :
             view.setBackgroundResource(R.drawable.drw_face)
             view.postDelayed({
                 hasFaceReg = true
-            }, 500)
+            }, 600)
         }
         viewTransition.beginTransition(v.viewContent, {
             clear(viewId, ConstraintSet.BOTTOM)

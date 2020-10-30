@@ -108,7 +108,7 @@ class Detection(context: Context) {
             dataCollect: DataCollect
     ) {
         handlerDetection?.post {
-            if (box.score > 0.99) {
+            if (box.score > 0.99 && box.width() > 80) {
                 listener?.hasFace()
 
                 val byteFullFace = BitmapUtils.bitmapToByteArray(bmColor)
