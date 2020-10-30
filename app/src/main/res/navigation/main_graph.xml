@@ -73,7 +73,7 @@
         tools:layout="@layout/progress" />
     <action
         android:id="@+id/action_global_progressFragment"
-        app:destination="@id/progressPayFragment" />
+        app:destination="@id/progressFragment" />
     <dialog
         android:id="@+id/progressPayFragment"
         android:name="wee.digital.fpa.ui.progress.ProgressPayFragment"

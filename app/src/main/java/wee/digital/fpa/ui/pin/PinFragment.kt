@@ -107,6 +107,10 @@ class PinFragment : Main.Dialog() {
         dismiss()
         timeoutVM.stopTimeout()
         paymentVM.arg.postValue(null)
+        navigate(MainDirections.actionGlobalAdvFragment()) {
+            setNoneAnim()
+            setLaunchSingleTop()
+        }
     }
 
 }

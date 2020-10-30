@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:backgroundTint="#1F4A93" />
+        tools:backgroundTint="#437BD1" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cardItemLogo"

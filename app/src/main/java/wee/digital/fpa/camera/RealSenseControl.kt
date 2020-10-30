@@ -116,7 +116,7 @@ class RealSenseControl : DeviceListener {
                                         true
                                     }
                                     else -> {
-                                        listener?.onCameraData(null, null, null)
+                                        //listener?.onCameraData(null, null, null)
                                         isFrameProcessing = false
                                         true
                                     }

@@ -112,7 +112,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/deviceViewRegister"
-            tools:src="@mipmap/img_progress_placeholder"
+            tools:src="@mipmap/img_progress_small"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

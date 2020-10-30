@@ -66,7 +66,7 @@ class DeviceView(private val v: DeviceFragment) {
 
 
     fun onViewInit() {
-        v.deviceViewProgress.load(R.mipmap.img_progress)
+        v.deviceViewProgress.load(R.mipmap.img_progress_small)
         configDeviceNameText()
         configTermText()
         v.addClickListener(v.deviceViewBack, v.deviceViewClose, v.deviceViewRegister)

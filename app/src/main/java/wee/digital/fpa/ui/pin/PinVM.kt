@@ -12,6 +12,7 @@ import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
+import wee.digital.library.extension.post
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {

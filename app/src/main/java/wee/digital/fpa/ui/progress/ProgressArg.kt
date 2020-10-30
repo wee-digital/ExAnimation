@@ -5,15 +5,14 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 
 data class ProgressArg(
-        val direction : NavDirections = MainDirections.actionGlobalProgressFragment(),
-        val image: Int,
-        val title: String,
-        val message: String
+        var direction : NavDirections = MainDirections.actionGlobalProgressFragment(),
+        var image: Int = R.mipmap.img_progress_small,
+        var title: String,
+        var message: String
 ) {
     companion object {
 
         val payment = ProgressArg(
-                image = R.mipmap.img_progress,
                 title = "CHÚNG TÔI ĐANG XỬ LÝ THANH TOÁN",
                 message = "BẠN CHỜ MỘT CHÚT NHÉ"
         )

@@ -23,6 +23,7 @@ import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
+import wee.digital.library.extension.post
 
 class MainActivity : BaseActivity() {
 
@@ -39,10 +40,15 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-        /* post(1000) {
-             progressVM.arg.value = ProgressArg.payment
-             navigate(MainDirections.actionGlobalOtpFragment())
-         }*/
+        post(2000) {
+            progressVM.arg.value = ProgressArg.payment.also {
+                it.direction = MainDirections.actionGlobalProgressPayFragment()
+            }
+        }
+
+        post(8000) {
+            progressVM.arg.value = null
+        }
     }
 
     override fun onLiveDataObserve() {
