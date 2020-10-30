@@ -40,10 +40,11 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-       
+        navigate(MainDirections.actionGlobalPinFragment())
     }
 
     override fun onLiveDataObserve() {
+        return
         mainVM.checkDeviceStatus()
         mainVM.syncDeviceInfo()
         mainVM.rootDirection.observe {

@@ -123,7 +123,7 @@
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
         <item name="android:textColor">@color/color_black</item>
-        <item name="android:textSize">@dimen/_11ssp</item>
+        <item name="android:textSize">@dimen/_9ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Dialog title</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
@@ -134,7 +134,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
-        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textColor">#A0A0A0</item>
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Cửa hàng</item>
@@ -143,7 +143,7 @@
     <style name="Dialog.TitleIcon">
         <item name="android:layout_width">@dimen/_40sdp</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
-        <item name="android:tint">@color/colorGray</item>
+        <item name="android:tint">#A0A0A0</item>
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
 
@@ -246,7 +246,7 @@
     </style>
 
     <style name="Guideline.Face" parent="Guideline.Horizontal">
-        <item name="layout_constraintGuide_percent">0.35</item>
+        <item name="layout_constraintGuide_percent">0.41</item>
     </style>
 
     <style name="Guideline.Splash" parent="Guideline.Horizontal">

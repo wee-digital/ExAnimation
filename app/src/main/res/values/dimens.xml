@@ -4,7 +4,7 @@
     <dimen name="defaultHeight">@dimen/_32sdp</dimen>
     <dimen name="defaultElevation">1dp</dimen>
     <dimen name="defaultButtonSize">@dimen/_32sdp</dimen>
-    <dimen name="indicatorSize">@dimen/_8sdp</dimen>
+    <dimen name="indicatorSize">@dimen/_6sdp</dimen>
     <dimen name="pinKeySize">@dimen/_46sdp</dimen>
 
 </resources>

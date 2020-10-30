@@ -45,7 +45,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/faceImageViewAnim"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_278sdp"
+        android:layout_height="@dimen/_276sdp"
         android:alpha="0.0"
         app:layout_constraintBottom_toBottomOf="@+id/faceImageViewCamera"
         app:layout_constraintDimensionRatio="w,1:1"
@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="@+id/faceImageViewCamera"
         app:layout_constraintTop_toTopOf="@+id/faceImageViewCamera"
         tools:alpha="1.0"
-        tools:src="@mipmap/img_progress_placeholder" />
+        tools:src="@mipmap/img_progress" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/faceImageViewCamera"
