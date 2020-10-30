@@ -8,28 +8,13 @@ import wee.digital.fpa.ui.vm.TimeoutVM
 
 class Main {
 
-    interface MainFragmentInt : BaseView {
 
-        fun navigateAdvFragment() {
-            navigate(MainDirections.actionGlobalAdvFragment()) {
-                setNoneAnim()
-                setLaunchSingleTop()
-            }
-        }
-        fun navigateSplashFragment() {
-            navigate(MainDirections.actionGlobalSplashFragment()) {
-                setNoneAnim()
-                setLaunchSingleTop()
-            }
-        }
-    }
-
-    abstract class Fragment : BaseFragment(), MainFragmentInt {
+    abstract class Fragment : BaseFragment() {
 
         val timeoutVM by lazy { activityVM(TimeoutVM::class) }
     }
 
-    abstract class Dialog : BaseDialog(), MainFragmentInt {
+    abstract class Dialog : BaseDialog() {
 
         val progressVM by lazy { viewModel(ProgressVM::class) }
 

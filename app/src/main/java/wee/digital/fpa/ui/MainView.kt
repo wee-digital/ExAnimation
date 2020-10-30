@@ -33,7 +33,7 @@ class MainView(val v: MainActivity) {
 
     fun onBindDeviceInfo(it: DeviceInfo?) {
         it ?: return
-        v.mainTextViewDeviceInfo.text = "${it?.fullName} - ${it?.posName}"
+        v.mainTextViewDeviceInfo.text = "${it.fullName} - ${it.posName}"
     }
 
 }
