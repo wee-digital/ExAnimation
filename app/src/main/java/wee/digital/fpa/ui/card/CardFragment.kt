@@ -1,13 +1,15 @@
 package wee.digital.fpa.ui.card
 
 import kotlinx.android.synthetic.main.card.*
+import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.pin.PinVM
 
 class CardFragment : Main.Dialog() {
 
-    private val pinVM by lazy { viewModel(PinVM::class) }
+    private val pinVM by lazy { activityVM(PinVM::class) }
 
     private val cardVM by lazy { viewModel(CardVM::class) }
 
@@ -19,6 +21,10 @@ class CardFragment : Main.Dialog() {
 
     override fun onViewCreated() {
         adapter.bind(paymentRecyclerViewCard, 2)
+        adapter.itemClick = { model, position ->
+            dismiss()
+            navigate(MainDirections.actionGlobalOtpFragment())
+        }
     }
 
     override fun onLiveDataObserve() {
