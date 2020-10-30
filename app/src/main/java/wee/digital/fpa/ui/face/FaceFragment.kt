@@ -76,6 +76,7 @@ class FaceFragment : Main.Fragment() {
         paymentVM.arg.postValue(null)
         timeoutVM.stopTimeout()
         navigate(MainDirections.actionGlobalAdvFragment()) {
+            setNoneAnim()
             setLaunchSingleTop()
         }
     }
