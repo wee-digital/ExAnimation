@@ -20,6 +20,7 @@ import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
+import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
 
 class MainActivity : BaseActivity() {
@@ -69,7 +70,12 @@ class MainActivity : BaseActivity() {
         progressVM.arg.observe {
             onProgressArgChanged(it)
         }
+        timeoutVM.inTheEnd.observe {
+           onTimeout()
+        }
     }
+
+
 
 
     /**
@@ -82,6 +88,8 @@ class MainActivity : BaseActivity() {
     private val progressVM by lazy { viewModel(ProgressVM::class) }
 
     private val faceVM by lazy { activityVM(FaceVM::class) }
+
+    private val timeoutVM by lazy { activityVM(TimeoutVM::class) }
 
     private val pinVM by lazy { activityVM(PinVM::class) }
 
@@ -170,6 +178,13 @@ class MainActivity : BaseActivity() {
                 setNoneAnim()
                 setLaunchSingleTop()
             }
+        }
+    }
+
+    private fun onTimeout() {
+        navigate(MainDirections.actionGlobalAdvFragment()) {
+            setNoneAnim()
+            setLaunchSingleTop()
         }
     }
 

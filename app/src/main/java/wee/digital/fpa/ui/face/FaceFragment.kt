@@ -35,7 +35,7 @@ class FaceFragment : Main.Fragment() {
             faceView.onBindRemainingText(it)
         }
         timeoutVM.inTheEnd.observe {
-            if (it) onPaymentDeny()
+            if (it) paymentVM.arg.postValue(null)
         }
         faceVM.faceArg.observe {
             onFaceVerifySuccess(it)
@@ -72,18 +72,17 @@ class FaceFragment : Main.Fragment() {
         navigate(MainDirections.actionGlobalMessageFragment())
     }
 
-    private fun onPaymentDeny() {
-        paymentVM.arg.postValue(null)
-        timeoutVM.stopTimeout()
-    }
-
     private fun onFaceVerifyRetry(it: ConfirmArg) {
         it.onAccept = {
             faceView.animateOnStartFaceReg()
             timeoutVM.startTimeout(Timeout.FACE_VERIFY)
         }
         it.onDeny = {
-            onPaymentDeny()
+            timeoutVM.stopTimeout()
+            navigate(MainDirections.actionGlobalAdvFragment()) {
+                setNoneAnim()
+                setLaunchSingleTop()
+            }
         }
         faceView.animateOnFaceCaptured()
         timeoutVM.startTimeout(Timeout.FACE_VERIFY)
