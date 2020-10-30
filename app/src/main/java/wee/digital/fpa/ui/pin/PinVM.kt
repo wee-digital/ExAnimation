@@ -2,8 +2,8 @@ package wee.digital.fpa.ui.pin
 
 import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.data.local.Config
-import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
 import wee.digital.fpa.repository.dto.PinArg
+import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
@@ -16,13 +16,19 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
 
-    private val retryCount = AtomicInteger(Config.PIN_RETRY_COUNT)
+    private val retryCount = AtomicInteger()
+
+    val pinArg = object : MutableLiveData<PinArg?>() {
+        override fun setValue(value: PinArg?) {
+            retryCount.set(Config.PIN_RETRY_COUNT)
+            super.setValue(value)
+        }
+    }
 
     val retryMessage = EventLiveData<String>()
 
     val errorMessage = EventLiveData<MessageArg>()
 
-    val pinArg = MutableLiveData<PinArg?>()
 
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, deviceInfo: DeviceInfo?) {
         paymentArg ?: throw Event.paymentArgError
