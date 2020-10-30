@@ -71,9 +71,6 @@ class MainActivity : BaseActivity() {
         progressVM.arg.observe {
             onProgressArgChanged(it)
         }
-        networkLiveData.observe {
-            if (!it) mainView.showDisconnectDialog()
-        }
     }
 
 
@@ -96,7 +93,6 @@ class MainActivity : BaseActivity() {
 
     private val mainView by lazy { MainView(this) }
 
-
     private fun onRootDirectionChanged(it: NavDirections) {
         navigate(it) {
             setLaunchSingleTop()
@@ -104,7 +100,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onCheckDeviceStatus() {
-        mainView.showDisconnectDialog()
+        mainView.showDisconnectDialog(socketVM.webSocket.value)
         mainVM.checkDeviceStatusOnTimer()
     }
 

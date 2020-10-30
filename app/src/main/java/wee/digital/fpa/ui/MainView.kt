@@ -3,15 +3,15 @@ package wee.digital.fpa.ui
 import com.intel.realsense.librealsense.RsContext
 import com.intel.realsense.librealsense.UsbUtilities
 import kotlinx.android.synthetic.main.main.*
+import okhttp3.WebSocket
 import wee.digital.fpa.BuildConfig
-import wee.digital.fpa.MainDirections
-import wee.digital.fpa.R
 import wee.digital.fpa.app.App
 import wee.digital.fpa.app.app
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.util.SimpleLifecycleObserver
 import wee.digital.library.extension.addFastClickListener
+import wee.digital.library.extension.isShow
 
 class MainView(val v: MainActivity) {
 
@@ -38,10 +38,7 @@ class MainView(val v: MainActivity) {
         v.mainTextViewDeviceInfo.text = "${it.fullName} - ${it.posName}"
     }
 
-    fun showDisconnectDialog(){
-        v.navigate(MainDirections.actionGlobalDisconnectFragment()) {
-            setEnterAnim(R.anim.vertical_enter)
-            setPopExitAnim(R.anim.vertical_pop_exit)
-        }
+    fun showDisconnectDialog(socket: WebSocket?) {
+        v.mainViewDisconnect.isShow(socket == null)
     }
 }
