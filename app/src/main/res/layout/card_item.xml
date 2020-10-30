@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/paymentViewCard"
     style="@style/MatchWidth"
-    android:layout_margin="@dimen/margin2"
+    android:layout_marginStart="@dimen/margin"
+    android:layout_marginEnd="@dimen/margin"
+    android:layout_marginBottom="@dimen/margin"
     android:layout_weight="1">
 
     <androidx.constraintlayout.widget.Guideline
@@ -44,7 +46,9 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/img_logo"
+        tools:tint="@color/colorWhite" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cardItemIcon"
@@ -57,14 +61,15 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cardItemIconChip"
-        android:layout_width="@dimen/_20sdp"
+        android:layout_width="0dp"
         android:layout_height="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_10sdp"
         android:adjustViewBounds="true"
         android:src="@mipmap/ic_chip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="w,56:40"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardItemLogo" />
+        app:layout_constraintTop_toTopOf="@+id/paymentImageViewCard" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"

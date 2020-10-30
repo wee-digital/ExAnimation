@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHeader"
-        style="@style/Guideline.Header"/>
+        style="@style/Guideline.Header" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineFace"
@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/confirmDialogContent"
         style="@style/Dialog.BottomFragment"
-        android:padding="@dimen/margin3"
+        android:padding="@dimen/margin2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -37,8 +37,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirmTextViewTitle"
             style="@style/Headline2"
-            android:textAlignment="center"
             android:layout_marginTop="@dimen/margin2"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmImageViewIcon"
@@ -47,12 +47,13 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirmTextViewMessage"
             style="@style/BodyRegular"
-            android:maxLines="8"
-            android:textAlignment="center"
+            android:layout_width="0dp"
             android:layout_marginTop="@dimen/margin2"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmTextViewTitle"
+            tools:maxLines="2"
             tools:text="@tools:sample/lorem/random" />
 
         <androidx.appcompat.widget.AppCompatTextView
