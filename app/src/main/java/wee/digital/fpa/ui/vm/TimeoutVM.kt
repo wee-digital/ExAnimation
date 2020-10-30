@@ -26,8 +26,13 @@ class TimeoutVM : BaseViewModel() {
                 .subscribe({
                     second.value = it
                     when {
-                        it == 0 -> inTheEnd.postValue(true)
-                        it < 0 -> disposable?.dispose()
+                        it == 0 -> {
+                            inTheEnd.postValue(true)
+                            inTheEnd.value = false
+                        }
+                        it < 0 -> {
+                            disposable?.dispose()
+                        }
                     }
                 }, {})
 

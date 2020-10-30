@@ -43,7 +43,6 @@ abstract class BaseDialog : DialogFragment(), BaseView {
         super.onViewCreated(view, savedInstanceState)
         log.d("onViewCreated")
         onViewCreated()
-        log.d("onLiveDataObserve")
         onLiveDataObserve()
     }
 
