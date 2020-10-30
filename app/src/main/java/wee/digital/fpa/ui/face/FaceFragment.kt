@@ -75,10 +75,6 @@ class FaceFragment : Main.Fragment() {
     private fun onPaymentDeny() {
         paymentVM.arg.postValue(null)
         timeoutVM.stopTimeout()
-        navigate(MainDirections.actionGlobalAdvFragment()) {
-            setNoneAnim()
-            setLaunchSingleTop()
-        }
     }
 
     private fun onFaceVerifyRetry(it: ConfirmArg) {

@@ -37,10 +37,10 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-       /* post(1000) {
-            progressVM.arg.value = ProgressArg.payment
-            navigate(MainDirections.actionGlobalOtpFragment())
-        }*/
+        /* post(1000) {
+             progressVM.arg.value = ProgressArg.payment
+             navigate(MainDirections.actionGlobalOtpFragment())
+         }*/
     }
 
     override fun onLiveDataObserve() {
@@ -163,10 +163,12 @@ class MainActivity : BaseActivity() {
         faceVM.faceArg.value = null
         pinVM.pinArg.value = null
         when (it) {
-            null -> {
-
+            null -> navigate(MainDirections.actionGlobalAdvFragment()) {
+                setNoneAnim()
+                setLaunchSingleTop()
             }
             else -> navigate(MainDirections.actionGlobalSplashFragment()) {
+                setNoneAnim()
                 setLaunchSingleTop()
             }
         }
