@@ -16,23 +16,25 @@ class AdvFragment : Main.Fragment() {
     }
 
     override fun onViewCreated() {
-        advAdapter.bindToViewPager(advViewPager)
-
     }
 
     override fun onLiveDataObserve() {
         advVM.fetchAdvList()
         advVM.imageList.observe {
-
+            advAdapter.set(it)
+            advAdapter.bindToViewPager(advViewPager)
+            if (advAdapter.get(advAdapter.currentPosition +1)?.isImage!!){
+                advVM.countdownToNextSlide(advAdapter.currentPosition)
+            }
         }
         advVM.pageLiveData.observe {
-
+            advViewPager.setCurrentItem(it,true)
         }
     }
 
     override fun onPause() {
         super.onPause()
-        advVM.stopSlide()
+        advVM.stopCountdownToNextSlide()
     }
 
 }
