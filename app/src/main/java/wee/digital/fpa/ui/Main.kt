@@ -1,8 +1,10 @@
 package wee.digital.fpa.ui
 
 import androidx.navigation.NavDirections
-import wee.digital.fpa.MainDirections
-import wee.digital.fpa.ui.base.*
+import wee.digital.fpa.ui.base.BaseDialog
+import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.TimeoutVM
 

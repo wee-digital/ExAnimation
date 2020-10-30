@@ -29,8 +29,9 @@ abstract class BaseFragment : Fragment(), BaseView {
         onLiveDataObserve()
     }
 
-    override fun onStart() {
-        super.onStart()
+
+    override fun onResume() {
+        super.onResume()
         requireActivity().hideSystemUI()
     }
 
