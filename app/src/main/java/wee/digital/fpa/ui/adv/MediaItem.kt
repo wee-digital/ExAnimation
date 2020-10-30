@@ -6,4 +6,6 @@ class MediaItem(
         val imageRes: Int? = null
 ) {
     var myMediaPlayer: MyMediaController? = null
+
+    val isImage get() = imageRes!=null
 }

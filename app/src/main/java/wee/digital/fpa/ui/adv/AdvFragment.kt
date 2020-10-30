@@ -16,6 +16,8 @@ class AdvFragment : Main.Fragment() {
     }
 
     override fun onViewCreated() {
+        advAdapter.bindToViewPager(advViewPager)
+
     }
 
     override fun onLiveDataObserve() {
@@ -23,6 +25,14 @@ class AdvFragment : Main.Fragment() {
         advVM.imageList.observe {
 
         }
+        advVM.pageLiveData.observe {
+
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        advVM.stopSlide()
     }
 
 }

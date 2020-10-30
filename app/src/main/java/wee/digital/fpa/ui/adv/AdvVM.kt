@@ -2,12 +2,20 @@ package wee.digital.fpa.ui.adv
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseViewModel
+import java.util.concurrent.TimeUnit
 
 class AdvVM : BaseViewModel() {
 
     val imageList = MutableLiveData<List<Int>>()
+
+    private var disposable: Disposable? = null
+
+    val pageLiveData = MutableLiveData<Int>()
 
     private val videoList = listOf(
             MediaItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_tree).toString()),
@@ -16,8 +24,29 @@ class AdvVM : BaseViewModel() {
 
     fun fetchAdvList() {
         imageList.postValue(listOf(
-                R.mipmap.img_adv1, R.mipmap.img_adv2, R.mipmap.img_adv3, R.mipmap.img_adv4
+                R.mipmap.img_adv1,
+                R.mipmap.img_adv2,
+                R.mipmap.img_adv3,
+                R.mipmap.img_adv4
         ))
+    }
+
+    fun startSlide(page: Int) {
+        disposable?.dispose()
+        disposable = Observable
+                .interval(1, 5, TimeUnit.SECONDS)
+                .map { page + 1 }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    disposable?.dispose()
+                    pageLiveData.postValue(it)
+                }, {})
+
+    }
+
+    fun stopSlide() {
+        disposable?.dispose()
+        pageLiveData.postValue(-1)
     }
 
 }
