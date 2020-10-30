@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 
 class AdvVM : BaseViewModel() {
 
-    val imageList = MutableLiveData<List<Int>>()
+    val imageList = MutableLiveData<List<MediaItem>?>()
 
     private var disposable: Disposable? = null
 
@@ -24,10 +24,10 @@ class AdvVM : BaseViewModel() {
 
     fun fetchAdvList() {
         imageList.postValue(listOf(
-                R.mipmap.img_adv1,
-                R.mipmap.img_adv2,
-                R.mipmap.img_adv3,
-                R.mipmap.img_adv4
+                MediaItem(null, R.mipmap.img_adv1),
+                MediaItem(null, R.mipmap.img_adv2),
+                MediaItem(null, R.mipmap.img_adv3),
+                MediaItem(null, R.mipmap.img_adv4)
         ))
     }
 
