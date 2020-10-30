@@ -1,67 +1,59 @@
 package wee.digital.fpa.ui.adv
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
-import kotlinx.android.synthetic.main.fragment_slider.view.*
+import kotlinx.android.synthetic.main.adv_image_item.view.*
+import kotlinx.android.synthetic.main.adv_video_item.view.*
 import wee.digital.fpa.R
+import wee.digital.library.adapter.BaseRecyclerAdapter
+import wee.digital.library.extension.load
 
-class AdvAdapter : RecyclerView.Adapter<AdvAdapter.ViewHolder>() {
-
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v)
-
-    /**
-     * [RecyclerView.Adapter] override
-     */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_slider, parent, false)
-        return ViewHolder(v)
-    }
-
-    override fun getItemCount(): Int {
-        return listItem.size * 10000000
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val model = get(position) ?: return
-        holder.itemView.onBindViewHolder(model, position)
-    }
-
+class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
 
     /**
      * Current of viewpager position adapt this adapter
      */
     var currentPosition: Int = -1
 
-    private var listItem = mutableListOf<MyMediaPlayer>()
-
-    fun get(position: Int): MyMediaPlayer? {
-        if (listItem.isEmpty()) return null
-        return listItem[position % listItem.size]
+    override fun layoutResource(model: MediaItem, position: Int): Int {
+        return if (model.imageRes != null) {
+            R.layout.adv_image_item
+        } else {
+            R.layout.adv_video_item
+        }
     }
 
-    fun set(collection: Collection<MyMediaPlayer>) {
-        listItem = collection.toMutableList()
-        notifyDataSetChanged()
-    }
-
-    private fun View.onBindViewHolder(model: MyMediaPlayer, position: Int) {
-        customMediaView.videoUri = model.uri
-        model.myMediaPlayer = customMediaView
-        customMediaView.setVideoListener(object : MyMediaPlayListener {
-            override fun onVideoStopped() {
-                viewPager?.also {
-                    it.currentItem = it.currentItem + 1
+    override fun View.onBindModel(model: MediaItem, position: Int, layout: Int) {
+        when {
+            model.imageRes != null -> {
+                advImageView.load(model.imageRes)
+            }
+            model.videoUri != null -> {
+                customMediaView.videoUri = model.videoUri
+                model.myMediaPlayer = customMediaView
+                customMediaView.setVideoListener(object : MyMediaPlayListener {
+                    override fun onVideoStopped() {
+                        viewPager?.also {
+                            it.currentItem = it.currentItem + 1
+                        }
+                    }
+                })
+                if (position == 0) {
+                    currentPosition = 0
+                    customMediaView.onPlayVideo()
                 }
             }
-        })
-        if (position == 0) {
-            currentPosition = 0
-            customMediaView.onPlayVideo()
         }
+    }
+
+    override fun getItemCount(): Int {
+        return listItem.size * 10000000
+    }
+
+    override fun get(position: Int): MediaItem? {
+        if (listItem.isEmpty()) return null
+        return listItem[position % listItem.size]
     }
 
     var viewPager: ViewPager2? = null
@@ -85,4 +77,6 @@ class AdvAdapter : RecyclerView.Adapter<AdvAdapter.ViewHolder>() {
             }
         })
     }
+
+
 }

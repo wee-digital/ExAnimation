@@ -10,8 +10,8 @@ class AdvVM : BaseViewModel() {
     val imageList = MutableLiveData<List<Int>>()
 
     private val videoList = listOf(
-            MyMediaPlayer(RawResourceDataSource.buildRawResourceUri(R.raw.video_tree).toString()),
-            MyMediaPlayer(RawResourceDataSource.buildRawResourceUri(R.raw.video_water).toString())
+            MediaItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_tree).toString()),
+            MediaItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_water).toString())
     )
 
     fun fetchAdvList() {

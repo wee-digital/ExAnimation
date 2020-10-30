@@ -21,7 +21,7 @@ class AdvFragment : Main.Fragment() {
     override fun onLiveDataObserve() {
         advVM.fetchAdvList()
         advVM.imageList.observe {
-            advImageSlider.listItem = it
+
         }
     }
 
