@@ -34,7 +34,7 @@
             android:id="@+id/paymentImageViewStation"
             android:layout_width="0dp"
             android:layout_height="@dimen/_58sdp"
-            android:src="@mipmap/img_placeholder"
+            tools:src="@mipmap/img_logo"
             app:layout_constraintBottom_toTopOf="@+id/guideline1"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintStart_toStartOf="parent"

@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guidelineFace">
+        app:layout_constraintTop_toTopOf="@+id/guidelineHeader">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/confirmImageViewIcon"
@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmImageViewIcon"
-            tools:text="@tools:sample/lorem" />
+            tools:text="Title goes here" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirmTextViewMessage"

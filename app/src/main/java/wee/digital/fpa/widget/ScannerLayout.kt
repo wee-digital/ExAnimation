@@ -12,9 +12,9 @@ import androidx.annotation.*
 import wee.digital.fpa.R
 import kotlin.math.roundToInt
 
-class LayoutScanner : FrameLayout {
+class ScannerLayout : FrameLayout {
 
-    var viewFinderView: ViewScanner? = null
+    var viewFinderView: ScannerView? = null
         private set
 
     private var mAutoFocusButton: ImageView? = null
@@ -116,7 +116,7 @@ class LayoutScanner : FrameLayout {
             @AttrRes defStyleAttr: Int, @StyleRes defStyleRes: Int
     ) {
 
-        viewFinderView = ViewScanner(context)
+        viewFinderView = ScannerView(context)
         val density = context.resources.displayMetrics.density
         mButtonSize = (density * BUTTON_SIZE_DP).roundToInt()
         mFocusAreaSize = (density * FOCUS_AREA_SIZE_DP).roundToInt()

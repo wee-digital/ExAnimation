@@ -40,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageImageViewIcon"
-            tools:text="Đăng ký thiết bị thành công" />
+            tools:text="Title goes here" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageTextViewMessage"
@@ -49,14 +49,14 @@
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin2"
             android:layout_marginEnd="@dimen/margin"
-            android:maxLines="4"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/messageViewClose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageTextViewTitle"
             app:layout_constraintVertical_bias="0.0"
-            tools:text="Xem thông tin các thiết bị đã liên kết trong phần quản lý thiết bị tại pos.facepay.vn" />
+            tools:maxLines="2"
+            tools:text="@tools:sample/lorem/random" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageViewClose"
