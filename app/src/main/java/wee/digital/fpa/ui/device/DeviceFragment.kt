@@ -60,7 +60,7 @@ class DeviceFragment : Main.Dialog() {
         when (v) {
             deviceViewBack -> {
                 dismiss()
-                navigate(MainDirections.actionGlobalQrFragment())
+                navigate(Main.qr)
             }
             deviceViewClose -> {
                 dismiss()
@@ -87,13 +87,13 @@ class DeviceFragment : Main.Dialog() {
         }
         dismiss()
         activityVM(MessageVM::class).arg.value = arg
-        navigate(MainDirections.actionGlobalMessageFragment())
+        navigate(Main.message)
     }
 
     private fun onRegisterError(arg: MessageArg) {
         dismiss()
         activityVM(MessageVM::class).arg.value = arg
-        navigate(MainDirections.actionGlobalMessageFragment())
+        navigate(Main.message)
     }
 
 }

@@ -28,7 +28,7 @@ class ConnectFragment : Main.Fragment() {
     override fun onViewClick(v: View?) {
         when (v) {
             connectViewScanQR -> {
-                navigate(MainDirections.actionGlobalQrFragment())
+                navigate(Main.qr)
             }
         }
     }

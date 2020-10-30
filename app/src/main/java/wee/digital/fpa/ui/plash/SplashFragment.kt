@@ -44,7 +44,7 @@ class SplashFragment : Main.Fragment() {
             null -> {
                 stopCamera()
                 splashView.animateOnDismissPayment {
-                    navigate(MainDirections.actionGlobalAdvFragment()) {
+                    navigate(Main.adv) {
                         setNoneAnim()
                         setLaunchSingleTop()
                     }
@@ -52,7 +52,7 @@ class SplashFragment : Main.Fragment() {
             }
             else -> {
                 startCamera()
-                navigate(MainDirections.actionGlobalPaymentFragment())
+                navigate(Main.payment)
                 splashView.animateOnHasPayment()
             }
         }

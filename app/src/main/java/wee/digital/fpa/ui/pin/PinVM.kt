@@ -33,7 +33,6 @@ class PinVM : BaseViewModel() {
 
     val errorMessage = EventLiveData<MessageArg>()
 
-
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, faceArg: FaceArg?) {
         paymentArg ?: throw Event.paymentArgError
         faceArg ?: throw Event.faceArgError

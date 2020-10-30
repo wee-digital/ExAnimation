@@ -46,7 +46,7 @@ class ProgressPayFragment : Main.Dialog() {
         post(6000) {
             dismiss()
             paymentVM.arg.postValue(null)
-            navigate(MainDirections.actionGlobalAdvFragment()) {
+            navigate(Main.adv) {
                 setNoneAnim()
                 setLaunchSingleTop()
             }

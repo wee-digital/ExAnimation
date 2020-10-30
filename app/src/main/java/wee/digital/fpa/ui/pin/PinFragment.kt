@@ -80,13 +80,13 @@ class PinFragment : Main.Dialog() {
         it ?: return
         dismiss()
         when {
+            // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
             it.hasDefaultAccount -> {
-                // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
-                navigate(MainDirections.actionGlobalOtpFragment())
+                navigate(Main.otp)
             }
+            // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
             else -> {
-                // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
-                navigate(MainDirections.actionGlobalCardFragment())
+                navigate(Main.card)
             }
         }
     }
@@ -103,14 +103,14 @@ class PinFragment : Main.Dialog() {
         paymentVM.arg.postValue(null)
         timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
         activityVM(MessageVM::class).arg.value = it
-        navigate(MainDirections.actionGlobalMessageFragment())
+        navigate(Main.message)
     }
 
     private fun onPaymentDeny() {
         dismiss()
         timeoutVM.stopTimeout()
         paymentVM.arg.postValue(null)
-        navigate(MainDirections.actionGlobalAdvFragment()) {
+        navigate(Main.adv) {
             setNoneAnim()
             setLaunchSingleTop()
         }

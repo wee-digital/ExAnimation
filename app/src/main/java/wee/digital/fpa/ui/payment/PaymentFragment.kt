@@ -48,7 +48,7 @@ class PaymentFragment : Main.Dialog() {
     private fun onPaymentAccept() {
         timeoutVM.stopTimeout()
         dismiss()
-        navigate(MainDirections.actionGlobalFaceFragment()) {
+        navigate(Main.face) {
             setLaunchSingleTop()
         }
     }

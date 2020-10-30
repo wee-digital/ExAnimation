@@ -23,7 +23,7 @@ class CardFragment : Main.Dialog() {
         adapter.bind(paymentRecyclerViewCard, 2)
         adapter.itemClick = { model, position ->
             dismiss()
-            navigate(MainDirections.actionGlobalOtpFragment())
+            navigate(Main.otp)
         }
     }
 

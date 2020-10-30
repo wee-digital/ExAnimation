@@ -32,7 +32,7 @@ class QrFragment : Main.Dialog(), ScanQRCode.QRCodeProcessingListener {
         qrVM.qrCode.observe {
             dismiss()
             connectVM.objQRCode.value = it
-            navigate(MainDirections.actionGlobalDeviceFragment())
+            navigate(Main.device)
         }
     }
 

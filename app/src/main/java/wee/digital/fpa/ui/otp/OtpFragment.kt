@@ -78,12 +78,12 @@ class OtpFragment : Main.Dialog() {
                 messageVM.arg.value = MessageArg.paymentCancelMessage
             }
         }
-        navigate(MainDirections.actionGlobalMessageFragment())
+        navigate(Main.message)
     }
 
     private fun onTransactionSuccess() {
         dismiss()
-        navigate(MainDirections.actionGlobalProgressPayFragment())
+        navigate(Main.progressPay)
     }
 
     private inner class OtpWebViewClient : WebViewClient() {

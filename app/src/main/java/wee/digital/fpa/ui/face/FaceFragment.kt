@@ -63,7 +63,7 @@ class FaceFragment : Main.Fragment() {
         it ?: return
         timeoutVM.stopTimeout()
         faceView.animateOnFaceCaptured()
-        navigate(MainDirections.actionGlobalPinFragment())
+        navigate(Main.pin)
     }
 
     private fun onFaceVerifyError(it: MessageArg?) {
@@ -71,7 +71,7 @@ class FaceFragment : Main.Fragment() {
         paymentVM.arg.postValue(null)
         timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
         activityVM(MessageVM::class).arg.value = it
-        navigate(MainDirections.actionGlobalMessageFragment())
+        navigate(Main.message)
     }
 
     private fun onFaceVerifyRetry(it: ConfirmArg) {
@@ -82,7 +82,7 @@ class FaceFragment : Main.Fragment() {
         it.onDeny = {
             timeoutVM.stopTimeout()
             paymentVM.arg.postValue(null)
-            navigate(MainDirections.actionGlobalAdvFragment()) {
+            navigate(Main.adv) {
                 setNoneAnim()
                 setLaunchSingleTop()
             }
@@ -90,12 +90,12 @@ class FaceFragment : Main.Fragment() {
         faceView.animateOnFaceCaptured()
         timeoutVM.startTimeout(Timeout.FACE_VERIFY)
         activityVM(ConfirmVM::class).arg.value = it
-        navigate(MainDirections.actionGlobalConfirmFragment())
+        navigate(Main.confirm)
     }
 
     private fun onTimeout() {
         paymentVM.arg.postValue(null)
-        navigate(MainDirections.actionGlobalAdvFragment()) {
+        navigate(Main.adv) {
             setNoneAnim()
             setLaunchSingleTop()
         }
