@@ -1,5 +1,6 @@
 package wee.digital.fpa.repository.base
 
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.utils.SharedPrefUtil
@@ -17,13 +18,10 @@ class BaseData {
             get() = Gson().fromJson(SharedPrefUtil.getDeviceInfo(), DeviceInfo::class.java)
             set(value) {
                 ins.mDeviceInfo = value
+                deviceInfoLiveData.postValue(value)
             }
 
-        var loginStatus: Boolean
-            get() = SharedPrefUtil.getLoginStatus()
-            set(value) {
-                SharedPrefUtil.saveLoginStatus(loginStatus)
-            }
+        val deviceInfoLiveData = MutableLiveData<DeviceInfo?>()
     }
 
     //==DEVICE INFO====

@@ -9,6 +9,6 @@ class ConfirmArg(
         var message: String? = null,
         var buttonAccept: String? = null,
         var buttonDeny: String? = "Đóng",
-        var onAccept: () -> Unit = {},
-        var onDeny: () -> Unit = {}
+        var onAccept: (ConfirmFragment) -> Unit = {},
+        var onDeny: (ConfirmFragment) -> Unit = {}
 )

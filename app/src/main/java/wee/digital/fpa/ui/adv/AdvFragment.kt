@@ -22,6 +22,7 @@ class AdvFragment : Main.Fragment() {
         advVM.fetchAdvList()
         advAdapter.onPageChanged = {
             val i = advViewPager.currentItem
+            log.d(i)
             if (advAdapter.get(i)?.isImage == true) {
                 advVM.countdownToNextSlide()
             }

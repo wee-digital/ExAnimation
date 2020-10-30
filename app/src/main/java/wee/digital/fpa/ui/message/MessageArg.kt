@@ -8,7 +8,7 @@ data class MessageArg(
         var title: String? = null,
         var message: String? = null,
         var button: String? = "Đóng",
-        var onClose: () -> Unit = {}
+        var onClose: (MessageFragment) -> Unit = {}
 ) {
     companion object {
 

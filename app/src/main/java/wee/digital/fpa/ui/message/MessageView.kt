@@ -26,7 +26,7 @@ class MessageView(val v: MessageFragment) {
 
         v.messageViewClose.setOnClickListener {
             v.dismiss()
-            arg.onClose()
+            arg.onClose(v)
         }
     }
 
