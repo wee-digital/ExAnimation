@@ -20,7 +20,9 @@ import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
+import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
+import wee.digital.library.extension.networkLiveData
 
 class MainActivity : BaseActivity() {
 
@@ -69,9 +71,10 @@ class MainActivity : BaseActivity() {
         progressVM.arg.observe {
             onProgressArgChanged(it)
         }
+        networkLiveData.observe {
+            if (!it) mainView.showDisconnectDialog()
+        }
     }
-
-
 
 
     /**
@@ -87,9 +90,12 @@ class MainActivity : BaseActivity() {
 
     private val pinVM by lazy { activityVM(PinVM::class) }
 
+    private val timeoutVM by lazy { activityVM(TimeoutVM::class) }
+
     private val mainVM by lazy { viewModel(MainVM::class) }
 
     private val mainView by lazy { MainView(this) }
+
 
     private fun onRootDirectionChanged(it: NavDirections) {
         navigate(it) {
@@ -98,10 +104,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onCheckDeviceStatus() {
-        navigate(MainDirections.actionGlobalDisconnectFragment()) {
-            setEnterAnim(R.anim.vertical_enter)
-            setPopExitAnim(R.anim.vertical_pop_exit)
-        }
+        mainView.showDisconnectDialog()
         mainVM.checkDeviceStatusOnTimer()
     }
 
@@ -162,15 +165,18 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onPaymentArgChanged(it: PaymentArg?) {
-        faceVM.faceArg.value = null
-        pinVM.pinArg.value = null
         when (it) {
             null -> {
-
+                return
             }
-            else -> navigate(MainDirections.actionGlobalSplashFragment()) {
-                setNoneAnim()
-                setLaunchSingleTop()
+            else -> {
+                timeoutVM.inTheEnd.value = null
+                faceVM.faceArg.value = null
+                pinVM.pinArg.value = null
+                navigate(MainDirections.actionGlobalSplashFragment()) {
+                    setNoneAnim()
+                    setLaunchSingleTop()
+                }
             }
         }
     }

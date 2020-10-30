@@ -33,7 +33,8 @@ class PinFragment : Main.Dialog() {
     override fun onLiveDataObserve() {
         timeoutVM.startTimeout(Timeout.PIN_VERIFY)
         timeoutVM.inTheEnd.observe {
-            if (it) onPaymentDeny()
+            it ?: return@observe
+            onPaymentDeny()
         }
         pinVM.retryMessage.observe {
             onRetryMessage(it)

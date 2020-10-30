@@ -27,7 +27,8 @@ class PaymentFragment : Main.Dialog() {
     override fun onLiveDataObserve() {
         timeoutVM.startTimeout(Timeout.PAYMENT_CONFIRM)
         timeoutVM.inTheEnd.observe {
-            if (it) onPaymentDeny()
+            it ?: return@observe
+            onPaymentDeny()
         }
         paymentVM.arg.observe {
             paymentView.onPaymentDataChanged(it)

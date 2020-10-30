@@ -26,6 +26,7 @@ class ProgressPayFragment : Main.Dialog() {
 
     override fun onLiveDataObserve() {
         timeoutVM.inTheEnd.observe {
+            it ?: return@observe
             paymentVM.arg.postValue(null)
             dismiss()
         }
@@ -35,7 +36,6 @@ class ProgressPayFragment : Main.Dialog() {
             }
         }
     }
-
 
 
 }

@@ -35,7 +35,8 @@ class FaceFragment : Main.Fragment() {
             faceView.onBindRemainingText(it)
         }
         timeoutVM.inTheEnd.observe {
-            if (it) onTimeout()
+            it ?: return@observe
+            onTimeout()
         }
         faceVM.faceArg.observe {
             onFaceVerifySuccess(it)
@@ -47,7 +48,6 @@ class FaceFragment : Main.Fragment() {
             onFaceVerifyRetry(it)
         }
     }
-
 
 
     /**
