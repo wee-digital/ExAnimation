@@ -16,6 +16,8 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
      */
     var currentPosition: Int = -1
 
+    var onPageChanged: () -> Unit = {}
+
     override fun layoutResource(model: MediaItem, position: Int): Int {
         return if (model.imageRes != null) {
             R.layout.adv_image_item
@@ -26,6 +28,7 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
 
     override fun View.onBindModel(model: MediaItem, position: Int, layout: Int) {
         currentPosition = position
+
         when {
             model.imageRes != null -> {
                 advImageView.load(model.imageRes)
@@ -54,7 +57,7 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
     override fun get(position: Int): MediaItem? {
         if (listItem.isEmpty()) return null
         val realPosition = position % listItem.size
-        if (realPosition !in 0..lastIndex)return null
+        if (realPosition !in 0..lastIndex) return null
         return listItem[realPosition]
     }
 
@@ -69,6 +72,7 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
                     ViewPager.SCROLL_STATE_DRAGGING -> {
                     }
                     ViewPager.SCROLL_STATE_IDLE -> {
+                        onPageChanged()
                         if (currentPosition != -1) {
                             get(currentPosition)?.myMediaPlayer?.onStopVideo(currentPosition)
                         }

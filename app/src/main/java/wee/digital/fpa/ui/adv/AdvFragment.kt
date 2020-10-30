@@ -20,23 +20,19 @@ class AdvFragment : Main.Fragment() {
 
     override fun onLiveDataObserve() {
         advVM.fetchAdvList()
+        advAdapter.onPageChanged = {
+            val i = advViewPager.currentItem
+            if (advAdapter.get(i)?.isImage == true) {
+                advVM.countdownToNextSlide()
+            }
+        }
         advVM.imageList.observe {
             advAdapter.set(it)
             advAdapter.bindToViewPager(advViewPager)
-
-            // sai cho nay
-            if (advAdapter.get(advAdapter.currentPosition + 1)?.isImage!!) {
-                advVM.countdownToNextSlide(advAdapter.currentPosition)
-            }
         }
-
         advVM.pageLiveData.observe {
-            advViewPager.setCurrentItem(it, true)
-
-            // sai cho nay
-            if (advAdapter.get(it + 1)?.isImage == true) {
-                advVM.countdownToNextSlide(it)
-            }
+            val i = advViewPager.currentItem + 1
+            advViewPager.setCurrentItem(i, true)
         }
     }
 

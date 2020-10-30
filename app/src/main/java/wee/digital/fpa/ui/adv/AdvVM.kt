@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.base.BaseViewModel
+import wee.digital.fpa.ui.base.EventLiveData
 import java.util.concurrent.TimeUnit
 
 class AdvVM : BaseViewModel() {
@@ -15,7 +16,7 @@ class AdvVM : BaseViewModel() {
 
     private var disposable: Disposable? = null
 
-    val pageLiveData = MutableLiveData<Int>()
+    val pageLiveData = EventLiveData<Boolean>()
 
     private val videoList = listOf(
             MediaItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_tree).toString()),
@@ -31,22 +32,20 @@ class AdvVM : BaseViewModel() {
         ))
     }
 
-    fun countdownToNextSlide(page: Int) {
+    fun countdownToNextSlide() {
         disposable?.dispose()
         disposable = Observable
                 .interval(0, 5, TimeUnit.SECONDS)
-                .map { page + 1 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     disposable?.dispose()
-                    pageLiveData.postValue(it)
+                    pageLiveData.postValue(true)
                 }, {})
 
     }
 
     fun stopCountdownToNextSlide() {
         disposable?.dispose()
-        pageLiveData.postValue(-1)
     }
 
 }
