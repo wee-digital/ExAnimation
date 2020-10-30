@@ -6,9 +6,7 @@ import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.payment.PaymentVM
-import wee.digital.library.extension.hide
-import wee.digital.library.extension.load
-import wee.digital.library.extension.post
+import wee.digital.library.extension.*
 import wee.digital.library.util.Media
 
 class ProgressPayFragment : Main.Dialog() {
@@ -20,7 +18,7 @@ class ProgressPayFragment : Main.Dialog() {
     }
 
     override fun onViewCreated() {
-
+        progressImageViewPay.clear()
     }
 
     override fun onLiveDataObserve() {
@@ -40,12 +38,12 @@ class ProgressPayFragment : Main.Dialog() {
     }
 
     private fun onEndProgress() {
-        hide(progressImageView,progressTextViewTitle,progressTextViewMessage)
-        progressImageViewPay.load(R.mipmap.img_face_paid)
+        hide(progressImageView, progressTextViewTitle, progressTextViewMessage)
+        progressImageViewPay.loadGif(R.mipmap.img_face_paid)
         post(2000) {
             Media.play(R.raw.facepay_sound)
         }
-        post(4000) {
+        post(6000) {
             dismiss()
             paymentVM.arg.postValue(null)
             navigate(MainDirections.actionGlobalAdvFragment()) {

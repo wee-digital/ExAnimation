@@ -8,6 +8,7 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestListener
@@ -61,6 +62,15 @@ fun ImageView?.load(res: Int) {
             .load(res)
             .into(this)
 }
+fun ImageView?.loadGif(res: Int) {
+    this ?: return
+    GlideApp.with(context)
+            .load(res)
+            .diskCacheStrategy(DiskCacheStrategy.NONE )
+            .skipMemoryCache(true)
+            .into(this)
+}
+
 
 fun ImageView?.clear() {
     this ?: return

@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_78sdp"
             android:scaleType="centerInside"
-            android:src="@mipmap/img_face_paid"
+            tools:src="@mipmap/img_face_paid"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

@@ -40,15 +40,6 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-        post(2000) {
-            progressVM.arg.value = ProgressArg.payment.also {
-                it.direction = MainDirections.actionGlobalProgressPayFragment()
-            }
-        }
-
-        post(8000) {
-            progressVM.arg.value = null
-        }
     }
 
     override fun onLiveDataObserve() {
@@ -85,7 +76,7 @@ class MainActivity : BaseActivity() {
 
     private val socketVM by lazy { viewModel(SocketVM::class) }
 
-    private val progressVM by lazy { viewModel(ProgressVM::class) }
+    private val progressVM by lazy { activityVM(ProgressVM::class) }
 
     private val faceVM by lazy { activityVM(FaceVM::class) }
 
