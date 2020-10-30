@@ -98,7 +98,7 @@ class MainActivity : BaseActivity() {
     private fun onCheckDeviceStatus() {
         navigate(MainDirections.actionGlobalDisconnectFragment()) {
             setEnterAnim(R.anim.vertical_enter)
-            setExitAnim(R.anim.vertical_exit)
+            setPopEnterAnim(R.anim.vertical_pop_enter)
         }
         mainVM.checkDeviceStatusOnTimer()
     }

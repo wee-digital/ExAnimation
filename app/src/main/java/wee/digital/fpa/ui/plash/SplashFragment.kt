@@ -44,7 +44,10 @@ class SplashFragment : Main.Fragment() {
             null -> {
                 stopCamera()
                 splashView.animateOnDismissPayment {
-                    navigateAdvFragment()
+                    navigate(MainDirections.actionGlobalAdvFragment()) {
+                        setNoneAnim()
+                        setLaunchSingleTop()
+                    }
                 }
             }
             else -> {
