@@ -80,8 +80,8 @@ class FaceFragment : Main.Fragment() {
             timeoutVM.startTimeout(Timeout.FACE_VERIFY)
         }
         it.onDeny = {
-            paymentVM.arg.postValue(null)
             timeoutVM.stopTimeout()
+            paymentVM.arg.postValue(null)
             navigate(MainDirections.actionGlobalAdvFragment()) {
                 setNoneAnim()
                 setLaunchSingleTop()

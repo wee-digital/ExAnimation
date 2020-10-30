@@ -18,11 +18,11 @@ class ConfirmView(val v: ConfirmFragment) {
         v.confirmViewDeny.text = arg.buttonDeny ?: "Đóng"
         v.confirmViewAccept.setOnClickListener {
             v.dismiss()
-            arg.onAccept()
+            arg.onAccept(v)
         }
         v.confirmViewDeny.setOnClickListener {
             v.dismiss()
-            arg.onDeny()
+            arg.onDeny(v)
         }
     }
 

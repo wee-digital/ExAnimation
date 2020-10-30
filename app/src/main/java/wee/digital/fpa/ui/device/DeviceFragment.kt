@@ -83,7 +83,7 @@ class DeviceFragment : Main.Dialog() {
 
     private fun onRegisterSuccess(arg: MessageArg) {
         arg.onClose = {
-            mainVM.syncDeviceInfo()
+            it.mainVM.syncDeviceInfo()
         }
         dismiss()
         activityVM(MessageVM::class).arg.value = arg
