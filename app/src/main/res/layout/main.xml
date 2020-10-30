@@ -66,9 +66,11 @@
         android:paddingBottom="@dimen/_4sdp"
         android:text="Mất kết nối với hệ thống..."
         android:textColor="@color/colorWhite"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

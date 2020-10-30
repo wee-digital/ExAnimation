@@ -2,6 +2,7 @@ package wee.digital.fpa.ui
 
 
 import androidx.navigation.NavDirections
+import okhttp3.WebSocket
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.repository.Shared
@@ -22,7 +23,6 @@ import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
-import wee.digital.library.extension.networkLiveData
 
 class MainActivity : BaseActivity() {
 
@@ -58,9 +58,7 @@ class MainActivity : BaseActivity() {
             onTokenResponseChanged(it)
         }
         socketVM.webSocket.observe {
-            if (it == null) {
-                onCheckDeviceStatus()
-            }
+            onWebSocketChanged(it)
         }
         socketVM.response.observe {
             onSocketResponseChanged(it)
@@ -100,7 +98,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onCheckDeviceStatus() {
-        mainView.showDisconnectDialog(socketVM.webSocket.value)
         mainVM.checkDeviceStatusOnTimer()
     }
 
@@ -183,6 +180,14 @@ class MainActivity : BaseActivity() {
                 navigate(it.direction)
             }
         }
+    }
+
+    private fun onWebSocketChanged(webSocket: WebSocket?) {
+        if (webSocket == null) {
+            onCheckDeviceStatus()
+        }
+        val isDisconnected = mainVM.deviceInfo != null && webSocket == null
+        mainView.showDisconnectDialog(isDisconnected)
     }
 
 

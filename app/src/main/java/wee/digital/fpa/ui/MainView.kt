@@ -38,7 +38,7 @@ class MainView(val v: MainActivity) {
         v.mainTextViewDeviceInfo.text = "${it.fullName} - ${it.posName}"
     }
 
-    fun showDisconnectDialog(socket: WebSocket?) {
-        v.mainViewDisconnect.isShow(socket == null)
+    fun showDisconnectDialog(isDisconnected: Boolean) {
+        v.mainViewDisconnect.isShow(isDisconnected)
     }
 }
