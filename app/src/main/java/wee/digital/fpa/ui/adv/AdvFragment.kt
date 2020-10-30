@@ -18,18 +18,8 @@ class AdvFragment : Main.Fragment() {
     override fun layoutResource(): Int {
         return R.layout.adv
     }
-    private val progressVM by lazy { activityVM(ProgressVM::class) }
+
     override fun onViewCreated() {
-        viewTest.setOnClickListener {
-            progressVM.arg.value = ProgressArg.payment.also {
-                it.direction = MainDirections.actionGlobalProgressPayFragment()
-            }
-
-            post(5000) {
-                progressVM.arg.value = null
-            }
-        }
-
     }
 
     override fun onLiveDataObserve() {
