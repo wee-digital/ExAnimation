@@ -1,7 +1,6 @@
 package wee.digital.fpa.ui.face
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -13,7 +12,6 @@ import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.Detection
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
-import wee.digital.fpa.util.SimpleLifecycleObserver
 import wee.digital.fpa.util.observerCameraListener
 import wee.digital.library.extension.*
 
@@ -111,7 +109,7 @@ class FaceView(private val v: FaceFragment) :
     fun onViewInit() {
         v.faceImageViewAnim.load(R.mipmap.img_progress)
         v.observerCameraListener(this)
-        imageLiveData.observe(v.viewLifecycleOwner, Observer{
+        imageLiveData.observe(v.viewLifecycleOwner, Observer {
             v.faceImageViewCamera?.setImageBitmap(it)
         })
         onConfigFaceReg()

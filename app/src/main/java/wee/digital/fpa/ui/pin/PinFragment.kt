@@ -2,17 +2,12 @@ package wee.digital.fpa.ui.pin
 
 import android.view.View
 import kotlinx.android.synthetic.main.pin.*
-import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceFragment
-import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.fpa.ui.message.MessageVM
-import wee.digital.fpa.ui.payment.PaymentVM
 import wee.digital.fpa.ui.progress.ProgressArg
 
 class PinFragment : Main.Dialog() {
@@ -58,11 +53,7 @@ class PinFragment : Main.Dialog() {
     /**
      * [FaceFragment] properties
      */
-    private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
-    private val pinVM by lazy { activityVM(PinVM::class) }
-
-    private val faceVM by lazy {activityVM(FaceVM::class)}
 
     private val pinView by lazy { PinView(this) }
 
@@ -102,7 +93,7 @@ class PinFragment : Main.Dialog() {
         progressVM.arg.postValue(null)
         paymentVM.arg.postValue(null)
         timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-        activityVM(MessageVM::class).arg.value = it
+        messageVM.arg.value = it
         navigate(Main.message)
     }
 

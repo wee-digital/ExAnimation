@@ -1,13 +1,8 @@
 package wee.digital.fpa.ui.adv
 
 import kotlinx.android.synthetic.main.adv.*
-import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.progress.ProgressArg
-import wee.digital.fpa.ui.progress.ProgressVM
-import wee.digital.library.extension.post
 
 class AdvFragment : Main.Fragment() {
 
@@ -36,7 +31,7 @@ class AdvFragment : Main.Fragment() {
             advAdapter.bindToViewPager(advViewPager)
             view?.postDelayed({
                 advViewPager.setCurrentItem(advViewPager.currentItem + 1, true)
-            },5000L)
+            }, 5000L)
         }
         advVM.pageLiveData.observe {
             val i = advViewPager.currentItem + 1

@@ -13,7 +13,7 @@ class MessageView(val v: MessageFragment) {
     fun onBindArg(arg: MessageArg?) {
         arg ?: return
         onBindDialogSize(arg.headerGuideline)
-        v.messageImageViewIcon.setImageResource(arg.icon ?: R.mipmap.img_checked_flat)
+        v.messageImageViewIcon.setImageResource(arg.icon)
         v.messageTextViewTitle.text = arg.title ?: string(R.string.app_name)
         v.messageTextViewMessage.setHyperText(arg.message)
 

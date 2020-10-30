@@ -1,17 +1,12 @@
 package wee.digital.fpa.ui.progress
 
 import kotlinx.android.synthetic.main.progress_pay.*
-import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.payment.PaymentVM
 import wee.digital.library.extension.*
 import wee.digital.library.util.Media
 
 class ProgressPayFragment : Main.Dialog() {
-
-    private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.progress_pay
