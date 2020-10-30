@@ -200,12 +200,6 @@ dependencies {
 
     //exo player
     implementation 'com.google.android.exoplayer:exoplayer:2.12.0'
-
-    // Async image load
-    implementation deps.glide.glide
-    implementation deps.glide.compiler
-
-
 }
 
 apply plugin: "com.google.gms.google-services"

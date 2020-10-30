@@ -38,10 +38,10 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-        post(1000) {
+       /* post(1000) {
             progressVM.arg.value = ProgressArg.payment
             navigate(MainDirections.actionGlobalOtpFragment())
-        }
+        }*/
     }
 
     override fun onLiveDataObserve() {

@@ -1,23 +1,33 @@
 package wee.digital.fpa.ui
 
-import wee.digital.fpa.app.toast
+import androidx.lifecycle.MutableLiveData
 
 
 object Event {
 
-    val paymentArgError = NullPointerException("PaymentVM.paymentArg is null value")
+    val liveData
+        get() = MutableLiveData<Throwable>()
 
-    val deviceInfoError = NullPointerException("MainVM.deviceInfo is null value")
+    val paymentArgError
+        get() = NullPointerException("PaymentVM.paymentArg is null value")
 
-    val faceArgError = NullPointerException("FaceVM.faceArg is null value")
+    val deviceInfoError
+        get() = NullPointerException("MainVM.deviceInfo is null value")
 
-    val bankDataError = NullPointerException("Bank data error")
+    val faceArgError
+        get() = NullPointerException("FaceVM.faceArg is null value")
 
-    val pinDataError = NullPointerException("Pin data error")
+    val bankDataError
+        get() = NullPointerException("Bank data error")
+
+    val pinDataError
+        get() = NullPointerException("Pin data error")
 
     fun initConsumer() {
+        return
         Thread.setDefaultUncaughtExceptionHandler { _, e ->
-            toast(e.message ?: "unknown error")
+
+            liveData.postValue(e)
             when (e) {
                 paymentArgError -> {
 
