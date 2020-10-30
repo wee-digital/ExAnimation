@@ -14,6 +14,7 @@ import wee.digital.library.extension.addFastClickListener
 class MainView(val v: MainActivity) {
 
     fun onViewInit() {
+        v.mainTextViewVersion.text = "${BuildConfig.VERSION_NAME}-${BuildConfig.VERSION_CODE}"
         v.lifecycle.addObserver(object : SimpleLifecycleObserver() {
             override fun onCreated() {
                 RsContext.init(app)
@@ -31,7 +32,8 @@ class MainView(val v: MainActivity) {
     }
 
     fun onBindDeviceInfo(it: DeviceInfo?) {
-        v.mainTextViewDeviceInfo.text = "${it?.fullName}\n${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+        it ?: return
+        v.mainTextViewDeviceInfo.text = "${it?.fullName} - ${it?.posName}"
     }
 
 }

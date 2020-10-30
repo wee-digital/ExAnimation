@@ -35,18 +35,14 @@ interface BaseView {
     val nav: NavController
 
     fun navigate(directions: NavDirections, block: (NavOptions.Builder.() -> Unit) = {}) {
-        val option = NavOptions.Builder()
+        val options = NavOptions.Builder()
                 .setDefaultAnim()
-        option.block()
-        nav.navigate(directions, option.build())
+        options.block()
+        nav.navigate(directions, options.build())
     }
 
-    fun navigateTop(directions: NavDirections, block: (NavOptions.Builder.() -> Unit) = {}) {
-        val option = NavOptions.Builder()
-                .setDefaultAnim()
-        option.setLaunchSingleTop()
-        option.block()
-        nav.navigate(directions, option.build())
+    fun navigate(directions: NavDirections, options: NavOptions.Builder) {
+        nav.navigate(directions, options.build())
     }
 
     fun navigateUp() {

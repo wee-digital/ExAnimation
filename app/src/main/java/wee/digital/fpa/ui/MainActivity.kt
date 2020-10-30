@@ -138,7 +138,7 @@ class MainActivity : BaseActivity() {
             SocketEvent.DELETE_CACHE -> {
                 Utils.deleteCache()
                 mainVM.resetDeviceData()
-                Main.rootDirection.postValue(MainDirections.actionGlobalConnectFragment())
+                Main.mainDirection.postValue(MainDirections.actionGlobalConnectFragment())
             }
         }
     }
@@ -163,9 +163,8 @@ class MainActivity : BaseActivity() {
         faceVM.faceArg.value = null
         pinVM.pinArg.value = null
         when (it) {
-            null -> navigate(MainDirections.actionGlobalAdvFragment()) {
-                setNoneAnim()
-                setLaunchSingleTop()
+            null -> {
+
             }
             else -> navigate(MainDirections.actionGlobalSplashFragment()) {
                 setNoneAnim()

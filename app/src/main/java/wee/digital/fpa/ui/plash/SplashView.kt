@@ -24,30 +24,31 @@ class SplashView(private val v: SplashFragment) {
         v.splashTextViewRemaining.setHyperText(sRemaining)
     }
 
-    fun animateOnHasPayment(onAnimEnd: () -> Unit = {}) {
-        val height = v.splashImageViewLogo.height / 2
-        if (v.splashImageViewLogo.height == height) return
-        viewTransition.onEndTransition {
-            onAnimEnd()
-        }
-        val logoId = v.splashImageViewLogo.id
-        viewTransition.beginTransition(v.viewContent) {
-            constrainHeight(logoId, height)
-            connect(logoId, ConstraintSet.TOP, v.splashTextViewRemaining.id, ConstraintSet.BOTTOM)
-            connect(logoId, ConstraintSet.BOTTOM, v.guidelineSplash.id, ConstraintSet.BOTTOM)
-            setVerticalBias(logoId, 0.55f)
+    fun animateOnHasPayment() {
+        v.view?.post {
+            val height = v.splashImageViewLogo.height / 2
+            if (v.splashImageViewLogo.height == height) return@post
+            val logoId = v.splashImageViewLogo.id
+            viewTransition.beginTransition(v.viewContent) {
+                constrainHeight(logoId, height)
+                connect(logoId, ConstraintSet.TOP, v.splashTextViewRemaining.id, ConstraintSet.BOTTOM)
+                connect(logoId, ConstraintSet.BOTTOM, v.guidelineSplash.id, ConstraintSet.BOTTOM)
+                setVerticalBias(logoId, 0.55f)
+            }
         }
     }
 
-    fun animateOnDimissPayment() {
-        val height = v.splashImageViewLogo.height * 2
-        if (v.splashImageViewLogo.height == height) return
-        val logoId = v.splashImageViewLogo.id
-        viewTransition.beginTransition(v.viewContent) {
-            constrainHeight(logoId, height)
-            connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
-            connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-            setVerticalBias(logoId, 0.5f)
+    fun animateOnDismissPayment(onEndTransition : ()->Unit) {
+        v.view?.post {
+            val height = v.splashImageViewLogo.height * 2
+            if (v.splashImageViewLogo.height == height) return@post
+            val logoId = v.splashImageViewLogo.id
+            viewTransition.beginTransition(v.viewContent) {
+                constrainHeight(logoId, height)
+                connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
+                connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
+                setVerticalBias(logoId, 0.5f)
+            }.onEndTransition(onEndTransition)
         }
     }
 

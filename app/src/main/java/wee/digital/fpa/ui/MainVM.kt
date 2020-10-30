@@ -21,7 +21,7 @@ class MainVM : BaseViewModel() {
 
     val deviceInfo = MutableLiveData<DeviceInfo?>()
 
-    val rootDirection get() = Main.rootDirection
+    val rootDirection get() = Main.mainDirection
 
     fun syncDeviceInfo() {
         deviceInfo.postValue(BaseData.ins.getDeviceInfoPref())
