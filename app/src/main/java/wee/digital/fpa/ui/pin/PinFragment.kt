@@ -9,6 +9,7 @@ import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceFragment
+import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.fpa.ui.payment.PaymentVM
@@ -61,6 +62,8 @@ class PinFragment : Main.Dialog() {
 
     private val pinVM by lazy { activityVM(PinVM::class) }
 
+    private val faceVM by lazy {activityVM(FaceVM::class)}
+
     private val pinView by lazy { PinView(this) }
 
     private fun onPinCodeFilled(pinCode: String) {
@@ -69,7 +72,7 @@ class PinFragment : Main.Dialog() {
         pinVM.onPinFilled(
                 pinCode = pinCode,
                 paymentArg = paymentVM.arg.value,
-                deviceInfo = mainVM.deviceInfo.value
+                faceArg = faceVM.faceArg.value
         )
     }
 
