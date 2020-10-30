@@ -9,7 +9,7 @@ class AdvFragment : Main.Fragment() {
 
     private val advAdapter = AdvAdapter()
 
-    private val advVM by lazy { activityVM(AdvVM::class) }
+    private val advVM by lazy { viewModel(AdvVM::class) }
 
     override fun layoutResource(): Int {
         return R.layout.adv

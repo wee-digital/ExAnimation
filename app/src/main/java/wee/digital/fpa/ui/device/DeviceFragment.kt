@@ -33,6 +33,7 @@ class DeviceFragment : Main.Dialog() {
     override fun onViewCreated() {
         deviceView.onViewInit()
         deviceEditTextName.addEditorActionListener(EditorInfo.IME_ACTION_DONE) {
+            deviceEditTextName.clearFocus()
             onRegisterDevice()
         }
     }

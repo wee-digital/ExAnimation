@@ -9,6 +9,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 
@@ -16,7 +17,8 @@ fun Activity?.hideKeyboard() {
     this ?: return
     if (null != currentFocus?.windowToken) {
         val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        //imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0)
     }
 }
 
