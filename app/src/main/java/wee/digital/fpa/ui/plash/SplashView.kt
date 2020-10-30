@@ -34,7 +34,7 @@ class SplashView(private val v: SplashFragment) {
         viewTransition.beginTransition(v.viewContent) {
             constrainHeight(logoId, height)
             connect(logoId, ConstraintSet.TOP, v.splashTextViewRemaining.id, ConstraintSet.BOTTOM)
-            connect(logoId, ConstraintSet.BOTTOM, v.splashGuideline.id, ConstraintSet.BOTTOM)
+            connect(logoId, ConstraintSet.BOTTOM, v.guidelineSplash.id, ConstraintSet.BOTTOM)
             setVerticalBias(logoId, 0.55f)
         }
     }

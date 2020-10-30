@@ -3,7 +3,7 @@ package wee.digital.fpa.ui.message
 import wee.digital.fpa.R
 
 data class MessageArg(
-        var headerGuideline: Int = R.id.guidelineConnect,
+        var headerGuideline: Int = R.id.guidelineHeader,
         var icon: Int = R.mipmap.img_x_mark_flat,
         var title: String? = null,
         var message: String? = null,

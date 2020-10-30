@@ -34,8 +34,6 @@ class FaceVM : BaseViewModel() {
 
     var verifyError = EventLiveData<MessageArg>()
 
-
-
     fun verifyFace(bitmap: ByteArray,
                    dataFace: FacePointData,
                    dataColl: DataCollect,
@@ -63,7 +61,7 @@ class FaceVM : BaseViewModel() {
     }
 
     fun onVerifyFaceFailed() {
-        when (retryCount.decrementAndGet()) {
+        when (retryCount.getAndDecrement()) {
             0 -> {
                 verifyError.postValue(MessageArg.paymentCancelMessage)
             }

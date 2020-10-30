@@ -6,8 +6,8 @@
     style="@style/MatchParent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/otpGuideline"
-        style="@style/Guideline.Connect" />
+        android:id="@+id/guidelineHeader"
+        style="@style/Guideline.Header" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/otpViewFragment"
@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/otpGuideline">
+        app:layout_constraintTop_toTopOf="@+id/guidelineHeader">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/otpTextViewTitle"

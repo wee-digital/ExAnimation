@@ -8,8 +8,8 @@
     tools:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineConnect"
-        style="@style/Guideline.Connect" />
+        android:id="@+id/guidelineHeader"
+        style="@style/Guideline.Header" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineFace"

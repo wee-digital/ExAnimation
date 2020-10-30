@@ -4,35 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchParent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        style="@style/WrapContent"
-        android:layout_marginTop="@dimen/margin"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHeader"
+        style="@style/Guideline.Header" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/disconnectTextViewMessage"
+        style="@style/BodyRegular"
         android:background="@drawable/drw_alert_bg"
+        android:drawableStart="@drawable/ic_x_mark_outline"
+        android:drawablePadding="@dimen/_4sdp"
+        android:drawableTint="@color/colorWhite"
         android:elevation="1dp"
-        app:layout_constraintVertical_bias="0.0"
         android:paddingStart="@dimen/margin"
         android:paddingTop="@dimen/_4sdp"
         android:paddingEnd="@dimen/margin"
         android:paddingBottom="@dimen/_4sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Mất kết nối với hệ thống..."
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/disconnectImageViewIcon"
-            android:layout_width="@dimen/_14sdp"
-            android:layout_height="@dimen/_14sdp"
-            android:src="@drawable/ic_x_mark_outline"
-            android:tint="@color/colorWhite" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/disconnectTextViewMessage"
-            style="@style/BodyRegular"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:text="Mất kết nối với hệ thống..."
-            android:textColor="@color/colorWhite" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

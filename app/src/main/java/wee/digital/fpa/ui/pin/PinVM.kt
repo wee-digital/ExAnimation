@@ -75,7 +75,7 @@ class PinVM : BaseViewModel() {
     }
 
     private fun onPinVerifyRetry() {
-        when (retryCount.decrementAndGet()) {
+        when (retryCount.getAndDecrement()) {
             0 -> {
                 retryMessage.postValue("Mã PIN không đúng, bạn còn %s lần thử lại".format(retryCount.get()))
             }
