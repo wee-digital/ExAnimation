@@ -1,6 +1,8 @@
 package wee.digital.fpa.ui.pin
 
+import android.util.Base64
 import androidx.lifecycle.MutableLiveData
+import crypto.Crypto
 import wee.digital.fpa.data.local.Config
 import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
@@ -12,7 +14,6 @@ import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
-import wee.digital.library.extension.post
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
@@ -34,11 +35,13 @@ class PinVM : BaseViewModel() {
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, deviceInfo: DeviceInfo?) {
         paymentArg ?: throw Event.paymentArgError
         deviceInfo ?: throw Event.deviceInfoError
+        val hashCode = Crypto.hash(pinCode)
+        val finalCode = Base64.encodeToString(hashCode,Base64.NO_WRAP)
         verifyPinCode(VerifyPINCodeDTOReq(
                 uid = arrayListOf(deviceInfo.uid),
                 paymentID = paymentArg.paymentId,
-                pinCode = pinCode,
-                clientID = paymentArg.clientIp
+                pinCode = finalCode,
+                clientIP = paymentArg.clientIp
         ))
     }
 
