@@ -5,23 +5,17 @@ import androidx.lifecycle.MutableLiveData
 
 object Event {
 
-    val liveData
-        get() = MutableLiveData<Throwable>()
+    val liveData = MutableLiveData<Throwable>()
 
-    val paymentArgError
-        get() = NullPointerException("PaymentVM.paymentArg is null value")
+    val paymentArgError = NullPointerException("PaymentVM.paymentArg is null value")
 
-    val deviceInfoError
-        get() = NullPointerException("MainVM.deviceInfo is null value")
+    val deviceInfoError = NullPointerException("MainVM.deviceInfo is null value")
 
-    val faceArgError
-        get() = NullPointerException("FaceVM.faceArg is null value")
+    val faceArgError = NullPointerException("FaceVM.faceArg is null value")
 
-    val bankDataError
-        get() = NullPointerException("Bank data error")
+    val bankDataError = NullPointerException("Bank data error")
 
-    val pinDataError
-        get() = NullPointerException("Pin data error")
+    val pinDataError = NullPointerException("Pin data error")
 
     fun initConsumer() {
         return

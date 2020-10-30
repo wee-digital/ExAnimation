@@ -66,21 +66,20 @@ class DeviceView(private val v: DeviceFragment) {
 
 
     fun onViewInit() {
+        v.deviceViewProgress.load(R.mipmap.img_progress)
         configDeviceNameText()
         configTermText()
         v.addClickListener(v.deviceViewBack, v.deviceViewClose, v.deviceViewRegister)
         v.deviceEditTextName.requestFocus()
-
-
     }
 
     fun onProgressChanged(isVisibility: Boolean) {
         if (isVisibility) {
             v.deviceViewRegister.hide()
-            v.deviceViewProgress.load(R.mipmap.img_progress)
+            v.deviceViewProgress.show()
         } else {
             v.deviceViewRegister.show()
-            v.deviceViewProgress.clear()
+            v.deviceViewProgress.hide()
         }
     }
 

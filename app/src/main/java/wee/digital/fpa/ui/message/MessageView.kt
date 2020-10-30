@@ -18,10 +18,10 @@ class MessageView(val v: MessageFragment) {
         v.messageTextViewMessage.setHyperText(arg.message)
 
         if (arg.button.isNullOrEmpty()) {
+            v.messageViewClose.hide()
+        } else {
             v.messageViewClose.show()
             v.messageViewClose.text = arg.button
-        } else {
-            v.messageViewClose.hide()
         }
 
         v.messageViewClose.setOnClickListener {
