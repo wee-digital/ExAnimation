@@ -29,7 +29,7 @@
             app:layout_constraintTop_toBottomOf="@id/confirmTextViewTitle"
             tools:src="@color/colorBlack" />
 
-        <wee.digital.fpa.widget.LayoutScanner
+        <wee.digital.fpa.widget.ScannerLayout
             android:id="@+id/frgQRLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_272sdp"

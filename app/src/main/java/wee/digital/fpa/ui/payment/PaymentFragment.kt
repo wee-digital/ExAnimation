@@ -2,19 +2,13 @@ package wee.digital.fpa.ui.payment
 
 import android.view.View
 import kotlinx.android.synthetic.main.payment.*
-import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
 
 class PaymentFragment : Main.Dialog() {
 
-    private val paymentVM by lazy { activityVM(PaymentVM::class) }
-
-    private val paymentView by lazy {
-        PaymentView(this)
-    }
+    private val paymentView by lazy { PaymentView(this) }
 
     override fun layoutResource(): Int {
         return R.layout.payment
@@ -48,7 +42,7 @@ class PaymentFragment : Main.Dialog() {
     private fun onPaymentAccept() {
         timeoutVM.stopTimeout()
         dismiss()
-        navigate(MainDirections.actionGlobalFaceFragment()) {
+        navigate(Main.face) {
             setLaunchSingleTop()
         }
     }

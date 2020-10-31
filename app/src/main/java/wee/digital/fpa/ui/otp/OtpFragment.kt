@@ -6,14 +6,10 @@ import android.net.UrlQuerySanitizer
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.otp.*
-import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.fpa.ui.message.MessageVM
-import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
 
@@ -22,10 +18,6 @@ class OtpFragment : Main.Dialog() {
     companion object {
         private const val NAPAS_STATIC_URL = "https://napas-qc.facepay.vn/v1/static"
     }
-
-    private val messageVM by lazy { activityVM(MessageVM::class) }
-
-    private val pinVM by lazy { viewModel(PinVM::class) }
 
     private val otpView by lazy { OtpView(this) }
 
@@ -78,12 +70,12 @@ class OtpFragment : Main.Dialog() {
                 messageVM.arg.value = MessageArg.paymentCancelMessage
             }
         }
-        navigate(MainDirections.actionGlobalMessageFragment())
+        navigate(Main.message)
     }
 
     private fun onTransactionSuccess() {
         dismiss()
-        navigate(MainDirections.actionGlobalProgressPayFragment())
+        navigate(Main.progressPay)
     }
 
     private inner class OtpWebViewClient : WebViewClient() {

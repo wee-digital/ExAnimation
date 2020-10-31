@@ -4,11 +4,9 @@ import android.util.Base64
 import androidx.lifecycle.MutableLiveData
 import crypto.Crypto
 import wee.digital.fpa.data.local.Config
-import wee.digital.fpa.repository.base.BaseData.Companion.deviceInfo
 import wee.digital.fpa.repository.dto.FaceArg
 import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.repository.dto.VerifyPINCodeDTOReq
-import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
@@ -33,15 +31,14 @@ class PinVM : BaseViewModel() {
 
     val errorMessage = EventLiveData<MessageArg>()
 
-
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, faceArg: FaceArg?) {
         paymentArg ?: throw Event.paymentArgError
         faceArg ?: throw Event.faceArgError
         val hashCode = Crypto.hash(pinCode)
-        val finalCode = Base64.encodeToString(hashCode,Base64.NO_WRAP)
+        val finalCode = Base64.encodeToString(hashCode, Base64.NO_WRAP)
 
         verifyPinCode(VerifyPINCodeDTOReq(
-                uid = faceArg?.userID!!,
+                uid = faceArg.userID,
                 paymentID = paymentArg.paymentId,
                 pinCode = finalCode,
                 clientIP = paymentArg.clientIp

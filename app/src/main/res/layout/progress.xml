@@ -19,21 +19,22 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/progressImageView"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_38sdp"
+            style="@style/ImageView.Progress"
             android:scaleType="centerInside"
             android:src="@mipmap/img_progress_small"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.499"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.331" />
+            app:layout_constraintVertical_bias="0.425" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/progressTextViewTitle"
             style="@style/BodyRegular"
             android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_9ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +46,7 @@
             android:id="@+id/progressTextViewMessage"
             style="@style/BodySemibold"
             android:layout_marginTop="@dimen/_4sdp"
+            android:textSize="@dimen/_9ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

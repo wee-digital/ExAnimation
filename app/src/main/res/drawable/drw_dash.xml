@@ -14,7 +14,7 @@
             <stroke
                 android:width="1dip"
                 android:color="@android:color/darker_gray"
-                android:dashWidth="@dimen/_3sdp"
+                android:dashWidth="@dimen/_6sdp"
                 android:dashGap="@dimen/_3sdp" />
         </shape>
     </item>

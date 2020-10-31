@@ -2,11 +2,8 @@ package wee.digital.fpa.ui.confirm
 
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
 
 class ConfirmFragment : Main.Dialog() {
-
-    private val confirmVM by lazy { activityVM(ConfirmVM::class) }
 
     private val confirmView by lazy { ConfirmView(this) }
 

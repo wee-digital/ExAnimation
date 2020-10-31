@@ -5,7 +5,6 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
-import kotlinx.android.synthetic.main.face.*
 import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App

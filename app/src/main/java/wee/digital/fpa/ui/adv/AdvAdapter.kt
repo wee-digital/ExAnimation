@@ -9,7 +9,7 @@ import wee.digital.fpa.R
 import wee.digital.library.adapter.BaseRecyclerAdapter
 import wee.digital.library.extension.load
 
-class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
+class AdvAdapter : BaseRecyclerAdapter<AdvItem>() {
 
     /**
      * Current of viewpager position adapt this adapter
@@ -18,7 +18,7 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
 
     var onPageChanged: () -> Unit = {}
 
-    override fun layoutResource(model: MediaItem, position: Int): Int {
+    override fun layoutResource(model: AdvItem, position: Int): Int {
         return if (model.imageRes != null) {
             R.layout.adv_image_item
         } else {
@@ -26,7 +26,7 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
         }
     }
 
-    override fun View.onBindModel(model: MediaItem, position: Int, layout: Int) {
+    override fun View.onBindModel(model: AdvItem, position: Int, layout: Int) {
         currentPosition = position
 
         when {
@@ -54,7 +54,7 @@ class AdvAdapter : BaseRecyclerAdapter<MediaItem>() {
         return listItem.size * 10000000
     }
 
-    override fun get(position: Int): MediaItem? {
+    override fun get(position: Int): AdvItem? {
         if (listItem.isEmpty()) return null
         val realPosition = position % listItem.size
         if (realPosition !in 0..lastIndex) return null
