@@ -22,7 +22,11 @@
         android:id="@+id/paymentFragment"
         android:name="wee.digital.fpa.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
-        tools:layout="@layout/payment" />
+        tools:layout="@layout/payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_faceFragment"
+            app:destination="@id/faceFragment" />
+    </dialog>
     <action
         android:id="@+id/action_global_paymentFragment"
         app:destination="@id/paymentFragment" />
@@ -30,7 +34,11 @@
         android:id="@+id/connectFragment"
         android:name="wee.digital.fpa.ui.connect.ConnectFragment"
         android:label="ConnectFragment"
-        tools:layout="@layout/connect" />
+        tools:layout="@layout/connect" >
+        <action
+            android:id="@+id/action_connectFragment_to_qrFragment"
+            app:destination="@id/qrFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_connectFragment"
         app:destination="@id/connectFragment" />
@@ -94,7 +102,11 @@
         android:id="@+id/qrFragment"
         android:name="wee.digital.fpa.ui.qr.QrFragment"
         android:label="QrFragment"
-        tools:layout="@layout/qr" />
+        tools:layout="@layout/qr" >
+        <action
+            android:id="@+id/action_qrFragment_to_deviceFragment"
+            app:destination="@id/deviceFragment" />
+    </dialog>
     <action
         android:id="@+id/action_global_qrFragment"
         app:destination="@id/qrFragment" />
@@ -110,7 +122,11 @@
         android:id="@+id/faceFragment"
         android:name="wee.digital.fpa.ui.face.FaceFragment"
         android:label="FaceFragment"
-        tools:layout="@layout/face" />
+        tools:layout="@layout/face" >
+        <action
+            android:id="@+id/action_faceFragment_to_pinFragment"
+            app:destination="@id/pinFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_faceFragment"
         app:destination="@id/faceFragment" />

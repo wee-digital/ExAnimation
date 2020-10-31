@@ -9,7 +9,7 @@
         android:id="@+id/splashViewBackground"
         style="@style/MatchParent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/img_spash"
+        android:src="@mipmap/img_splash"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

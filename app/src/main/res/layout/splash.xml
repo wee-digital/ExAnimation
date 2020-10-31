@@ -18,7 +18,7 @@
         android:id="@+id/splashViewBackground"
         style="@style/MatchParent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/img_spash"
+        android:src="@mipmap/img_splash"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Time remaining: 00:30" />
+        android:text="Time remaining: 00:30" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/splashImageViewLogo"

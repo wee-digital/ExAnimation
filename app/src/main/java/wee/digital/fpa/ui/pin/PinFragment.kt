@@ -32,6 +32,7 @@ class PinFragment : Main.Dialog() {
             it ?: return@observe
             onPaymentDeny()
         }
+        pinVM.onStart()
         pinVM.retryMessage.observe {
             onRetryMessage(it)
         }
@@ -84,17 +85,21 @@ class PinFragment : Main.Dialog() {
 
     private fun onRetryMessage(it: String) {
         progressVM.arg.postValue(null)
-        pinProgressLayout.notifyInputRemoved()
-        timeoutVM.startTimeout(Timeout.PIN_VERIFY)
-        pinView.onBindErrorText(it)
+        view?.postDelayed({
+            pinProgressLayout.notifyInputRemoved()
+            timeoutVM.startTimeout(Timeout.PIN_VERIFY)
+            pinView.onBindErrorText(it)
+        }, 200)
     }
 
     private fun onErrorMessage(it: MessageArg) {
         progressVM.arg.postValue(null)
         paymentVM.arg.postValue(null)
-        timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-        messageVM.arg.value = it
-        navigate(Main.message)
+        view?.postDelayed({
+            timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
+            messageVM.arg.value = it
+            navigate(Main.message)
+        }, 200)
     }
 
     private fun onPaymentDeny() {

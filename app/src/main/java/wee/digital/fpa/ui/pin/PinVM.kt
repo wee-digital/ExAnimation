@@ -13,18 +13,14 @@ import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
+import wee.digital.library.extension.post
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
 
     private val retryCount = AtomicInteger()
 
-    val pinArg = object : MutableLiveData<PinArg?>() {
-        override fun setValue(value: PinArg?) {
-            retryCount.set(Config.PIN_RETRY_COUNT)
-            super.setValue(value)
-        }
-    }
+    val pinArg = MutableLiveData<PinArg?>()
 
     val retryMessage = EventLiveData<String>()
 
@@ -32,13 +28,15 @@ class PinVM : BaseViewModel() {
 
     val paymentResult = EventLiveData<Boolean>()
 
+    fun onStart(){
+        retryCount.set(Config.PIN_RETRY_COUNT)
+    }
 
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, faceArg: FaceArg?) {
         paymentArg ?: throw Event.paymentArgError
         faceArg ?: throw Event.faceArgError
         val hashCode = Crypto.hash(pinCode)
         val finalCode = Base64.encodeToString(hashCode, Base64.NO_WRAP)
-
         val body = VerifyPINCodeDTOReq(
                 uid = faceArg.userID,
                 paymentID = paymentArg.paymentId,
@@ -68,7 +66,6 @@ class PinVM : BaseViewModel() {
         )
         PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentDTOResp> {
             override fun onSuccess(data: PaymentDTOResp) {
-
                 when {
                     data.code == 0 -> {
                         // show progress face paid

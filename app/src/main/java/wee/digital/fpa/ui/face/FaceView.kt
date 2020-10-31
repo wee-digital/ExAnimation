@@ -14,6 +14,7 @@ import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.util.observerCameraListener
 import wee.digital.library.extension.*
+import java.util.concurrent.atomic.AtomicInteger
 
 
 class FaceView(private val v: FaceFragment) :
@@ -38,30 +39,38 @@ class FaceView(private val v: FaceFragment) :
         }
     }
 
+    private val nonFaceCount = AtomicInteger(40)
+
     /**
      * [Detection.DetectionCallBack] implement
      */
     override fun faceNull() {
         App.realSenseControl?.hasFace()
-        if (hasFace) {
-            hasFace = false
+        if (!hasFace && nonFaceCount.decrementAndGet() > 0) return
+        hasFace = false
+        try {
             v.faceImageViewAnim.post {
                 viewTransition.beginTransition(v.viewContent) {
                     setAlpha(v.faceImageViewAnim.id, 0f)
                 }
             }
+        } catch (ignore: Exception) {
         }
     }
 
     override fun hasFace() {
         App.realSenseControl?.hasFace()
-        if (!hasFace) {
-            hasFace = true
+        nonFaceCount.set(20)
+        if (hasFace) return
+        hasFace = true
+        try {
             v.faceImageViewAnim.post {
+                v.faceImageViewAnim.loadGif(R.mipmap.img_progress)
                 viewTransition.beginTransition(v.viewContent) {
                     setAlpha(v.faceImageViewAnim.id, 1f)
                 }
             }
+        } catch (ignore: Exception) {
         }
     }
 

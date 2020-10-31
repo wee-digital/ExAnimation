@@ -49,7 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/deviceTextViewTitle"
-            tools:text="@tools:sample/lorem" />
+            android:text="Hi! Facepay" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceTextViewHint"
@@ -63,7 +63,7 @@
             android:id="@+id/deviceEditTextName"
             style="@style/EditText"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/margin5"
+            android:layout_marginTop="@dimen/margin4"
             android:background="@null"
             android:hint="Tên thiết bị (Ví dụ: thiết bị số 1,...)"
             android:paddingStart="0dp"
@@ -81,18 +81,18 @@
             app:layout_constraintEnd_toEndOf="@+id/deviceEditTextName"
             app:layout_constraintStart_toStartOf="@+id/deviceEditTextName"
             app:layout_constraintTop_toBottomOf="@+id/deviceEditTextName"
-            tools:text="@tools:sample/lorem" />
+            android:text="@tools:sample/lorem" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceTextViewTerm"
-            style="@style/DescriptionSemibold"
+            style="@style/DescriptionRegular"
             android:layout_width="0dp"
             android:layout_marginTop="@dimen/margin4"
             android:layout_marginEnd="@dimen/margin4"
             app:layout_constraintEnd_toEndOf="@+id/deviceTextViewStation"
             app:layout_constraintStart_toStartOf="@+id/deviceTextViewStation"
             app:layout_constraintTop_toBottomOf="@+id/deviceTextViewError"
-            tools:text="@tools:sample/lorem" />
+            android:text="@tools:sample/lorem" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/deviceViewRegister"

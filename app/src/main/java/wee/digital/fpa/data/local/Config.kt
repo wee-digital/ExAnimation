@@ -7,5 +7,7 @@ object Config {
 
     const val PIN_RETRY_COUNT = 5
 
-    const val MODE_PREVIEW = true
+    var VIEW_ENABLE = true
+
+    var VM_ENABLE = true
 }

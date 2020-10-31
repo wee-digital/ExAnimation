@@ -9,7 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import wee.digital.library.extension.hideSystemUI
+import wee.digital.fpa.data.local.Config
+import wee.digital.library.extension.hideKeyboard
 import wee.digital.log.Logger
 
 abstract class BaseFragment : Fragment(), BaseView {
@@ -25,14 +26,25 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        log.d("onViewCreated")
-        onViewCreated()
-        onLiveDataObserve()
+        if (Config.VIEW_ENABLE) {
+            log.d("onViewCreated")
+            onViewCreated()
+        }
+        if (Config.VM_ENABLE) {
+            log.d("onLiveDataObserve")
+            onLiveDataObserve()
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        requireActivity().hideSystemUI()
+        log.d("onResume")
+        requireActivity().hideKeyboard()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        log.d("onPause")
     }
 
     /**

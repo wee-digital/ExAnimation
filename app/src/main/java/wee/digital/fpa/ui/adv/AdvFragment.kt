@@ -30,7 +30,7 @@ class AdvFragment : Main.Fragment() {
             advAdapter.set(it)
             advAdapter.bindToViewPager(advViewPager)
             view?.postDelayed({
-                advViewPager.setCurrentItem(advViewPager.currentItem + 1, true)
+                advViewPager?.setCurrentItem(advViewPager.currentItem + 1, true)
             }, 5000L)
         }
         advVM.pageLiveData.observe {

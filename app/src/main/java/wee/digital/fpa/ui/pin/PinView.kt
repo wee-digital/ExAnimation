@@ -12,8 +12,8 @@ class PinView(private val v: PinFragment) {
 
     private val keyListItem = listOf(
             "1", "2", "3", R.drawable.drw_pin_del,
-            "4", "5", "6", "0",
-            "7", "8", "9"
+            "4", "5", "6", null,
+            "7", "8", "9", "0"
     )
 
     private fun configPinProgressView() {
