@@ -12,7 +12,7 @@ data class MessageArg(
 ) {
     companion object {
 
-        val paymentCancelMessage
+        val paymentCancel
             get() = MessageArg(
                     title = "Giao dịch bị hủy bỏ",
                     button = null,

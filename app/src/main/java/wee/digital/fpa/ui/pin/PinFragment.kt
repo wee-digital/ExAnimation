@@ -11,7 +11,6 @@ import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.face.FaceFragment
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.progress.ProgressArg
-import wee.digital.library.extension.post
 
 class PinFragment : Main.Dialog() {
 
@@ -33,16 +32,16 @@ class PinFragment : Main.Dialog() {
         timeoutVM.startTimeout(Timeout.PIN_VERIFY)
         timeoutVM.inTheEnd.observe {
             it ?: return@observe
-            onPaymentDeny()
+            onPaymentCancel()
         }
         pinVM.onStart()
         pinVM.paymentSuccess.observe {
             onPaymentSuccess(it)
         }
-        pinVM.errorMessage.observe {
-            onErrorMessage(it)
+        pinVM.pinVerifyError.observe {
+            onPaymentError(MessageArg.paymentCancel)
         }
-        pinVM.pinRetry.observe {
+        pinVM.pinVerifyRetry.observe {
             onRetryMessage(it)
         }
         pinVM.cardRequired.observe {
@@ -61,7 +60,9 @@ class PinFragment : Main.Dialog() {
 
     override fun onViewClick(v: View?) {
         when (v) {
-            pinViewClose -> onPaymentDeny()
+            pinViewClose -> {
+                onPaymentCancel()
+            }
         }
     }
 
@@ -94,24 +95,6 @@ class PinFragment : Main.Dialog() {
         pinView.onBindErrorText("Mã PIN không đúng, bạn còn %s lần thử lại".format(it))
     }
 
-    private fun onErrorMessage(it: MessageArg) {
-        progressVM.arg.postValue(null)
-        paymentVM.arg.postValue(null)
-        timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-        messageVM.arg.value = it
-        navigate(Main.message)
-    }
-
-    private fun onPaymentDeny() {
-        dismiss()
-        timeoutVM.stopTimeout()
-        paymentVM.arg.postValue(null)
-        navigate(Main.adv) {
-            setNoneAnim()
-            setLaunchSingleTop()
-        }
-    }
-
     private fun onOtpRequired(it: PaymentDTOResp?) {
         it ?: return
         dismiss()
@@ -135,11 +118,7 @@ class PinFragment : Main.Dialog() {
                 },
                 buttonDeny = "Huỷ bỏ",
                 onDeny = {
-                    paymentVM.arg.postValue(null)
-                    navigate(Main.adv) {
-                        setNoneAnim()
-                        setLaunchSingleTop()
-                    }
+                    onPaymentCancel()
                 },
         )
         confirmVM.arg.postValue(arg)

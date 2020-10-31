@@ -7,8 +7,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.card.CardItem
+import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
@@ -27,14 +28,24 @@ class OtpFragment : Main.Dialog() {
 
     override fun onViewCreated() {
         otpView.onViewInit()
-
+        otpVM.onStart()
     }
 
     override fun onLiveDataObserve() {
         otpVM.otpForm.observe {
             loadOtpWebView(it)
         }
+        cardVM.cardList.observe {
+            onCardListChanged(it)
+        }
+        otpVM.retryMessage.observe {
+            onRetryMessage(it)
+        }
+        otpVM.errorMessage.observe {
+            onErrorMessage(it)
+        }
     }
+
 
     /**
      * load webView Otp
@@ -51,33 +62,59 @@ class OtpFragment : Main.Dialog() {
         otpWebView.webViewClient = OtpWebViewClient()
     }
 
-    private fun onTransactionFailed(data: String) {
-        when (data) {
-            "INSUFFICIENT_FUNDS" -> {
-                messageVM.arg.value = MessageArg(
-                        title = "Giao dịch thất bại",
-                        message = "Không đủ số dư thanh toán",
-                        button = null,
-                )
-            }
-            "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
-                messageVM.arg.value = MessageArg(
-                        title = "Giao dịch thất bại",
-                        message = "Quá hạn mức giao dịch",
-                        button = null,
-                )
-            }
-            else -> { //  data == "CANCEL"
-                messageVM.arg.value = MessageArg.paymentCancelMessage
-            }
-        }
-        navigate(Main.message)
-    }
 
     private fun onTransactionSuccess() {
         dismiss()
         navigate(Main.progress)
     }
+
+
+    private fun onRetryMessage(it: ConfirmArg?) {
+        it ?: return
+        it.apply {
+            buttonAccept = "Thử lại"
+            onAccept = {
+
+            }
+            buttonDeny = "Hủy bỏ giao dịch"
+            onDeny = {
+                timeoutVM.stopTimeout()
+                paymentVM.arg.postValue(null)
+                navigate(Main.adv) {
+                    setNoneAnim()
+                    setLaunchSingleTop()
+                }
+            }
+        }
+        confirmVM.arg.value = it
+        dismiss()
+        navigate(Main.confirm)
+    }
+
+    private fun onErrorMessage(it: MessageArg?) {
+        it ?: return
+        //messageVM.arg = it
+
+    }
+
+
+    private fun onCardRequired() {
+        val cardList = cardVM.cardList.value
+        if (cardList.isNullOrEmpty()) {
+            cardVM.fetchCardList(pinVM.pinArg.value)
+        } else {
+
+        }
+    }
+
+
+    private fun onCardListChanged(it: List<CardItem>?) {
+        progressVM.arg.postValue(null)
+        it ?: return
+        dismiss()
+        navigate(Main.card)
+    }
+
 
     private inner class OtpWebViewClient : WebViewClient() {
 
@@ -98,7 +135,7 @@ class OtpFragment : Main.Dialog() {
                 when (listUrl[0]) {
                     "$NAPAS_STATIC_URL/payment-fail?reason" -> {
                         val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
-                        onTransactionFailed(reason)
+                        otpVM.onTransactionFailed(reason)
                     }
                     "$NAPAS_STATIC_URL/payment-success?facepayRef" -> {
                         onTransactionSuccess()

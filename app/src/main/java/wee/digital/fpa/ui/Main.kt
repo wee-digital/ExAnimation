@@ -2,6 +2,7 @@ package wee.digital.fpa.ui
 
 import androidx.navigation.NavDirections
 import wee.digital.fpa.MainDirections
+import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.EventLiveData
@@ -10,6 +11,7 @@ import wee.digital.fpa.ui.card.CardVM
 import wee.digital.fpa.ui.confirm.ConfirmVM
 import wee.digital.fpa.ui.connect.ConnectVM
 import wee.digital.fpa.ui.face.FaceVM
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.message.MessageVM
 import wee.digital.fpa.ui.otp.OtpVM
 import wee.digital.fpa.ui.payment.PaymentVM
@@ -30,6 +32,25 @@ class Main {
         val paymentVM by lazy { activityVM(PaymentVM::class) }
 
         val faceVM by lazy { activityVM(FaceVM::class) }
+
+        val progressVM by lazy { activityVM(ProgressVM::class) }
+
+        fun onPaymentError(messageArg: MessageArg?) {
+            progressVM.arg.postValue(null)
+            paymentVM.arg.postValue(null)
+            timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
+            messageVM.arg.value = messageArg
+            navigate(message)
+        }
+
+        fun onPaymentCancel() {
+            timeoutVM.stopTimeout()
+            paymentVM.arg.postValue(null)
+            navigate(adv) {
+                setNoneAnim()
+                setLaunchSingleTop()
+            }
+        }
 
     }
 
@@ -56,6 +77,25 @@ class Main {
         val cardVM by lazy { activityVM(CardVM::class) }
 
         val otpVM by lazy { activityVM(OtpVM::class) }
+
+        fun onPaymentError(messageArg: MessageArg?) {
+            progressVM.arg.postValue(null)
+            paymentVM.arg.postValue(null)
+            timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
+            dismiss()
+            messageVM.arg.value = messageArg
+            navigate(message)
+        }
+
+        fun onPaymentCancel() {
+            timeoutVM.stopTimeout()
+            paymentVM.arg.postValue(null)
+            dismiss()
+            navigate(adv) {
+                setNoneAnim()
+                setLaunchSingleTop()
+            }
+        }
     }
 
     companion object {

@@ -2,13 +2,13 @@ package wee.digital.fpa.ui.card
 
 import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.data.repository.Shared
-import wee.digital.fpa.repository.dto.GetBankAccListDTOReq
-import wee.digital.fpa.repository.dto.GetBankAccListDTOResp
-import wee.digital.fpa.repository.dto.PinArg
+import wee.digital.fpa.repository.dto.*
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
+import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.library.extension.listString
 import wee.digital.library.extension.str
 import wee.digital.library.extension.toObject
@@ -16,6 +16,12 @@ import wee.digital.library.extension.toObject
 class CardVM : BaseViewModel() {
 
     val cardList = MutableLiveData<List<CardItem>?>()
+
+    val otpRequired = EventLiveData<PaymentDTOResp?>()
+
+    val paymentSuccess = EventLiveData<PaymentDTOResp?>()
+
+    val paymentError = EventLiveData<Boolean>()
 
     fun fetchCardList(pinArg: PinArg?) {
         val body = GetBankAccListDTOReq(
@@ -54,6 +60,30 @@ class CardVM : BaseViewModel() {
             }
         }
         cardList.postValue(cardItems)
+    }
+
+    fun postPayRequest(bankCode: String, paymentArg: PaymentArg?) {
+        paymentArg ?: throw Event.paymentArgError
+        val body = PaymentDTOReq(
+                paymentID = paymentArg.paymentId,
+                clientIP = paymentArg.clientIp,
+                accountID = bankCode
+        )
+        PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentDTOResp> {
+            override fun onSuccess(data: PaymentDTOResp) {
+                when {
+                    data.code == 0 -> {
+                        paymentSuccess.postValue(data)
+                    }
+                    data.haveOTP && !data.formOtp.isNullOrEmpty() -> {
+                        otpRequired.postValue(data)
+                    }
+                    else -> {
+                        paymentError.postValue(true)
+                    }
+                }
+            }
+        })
     }
 
 }

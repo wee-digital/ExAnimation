@@ -23,9 +23,9 @@ class PinVM : BaseViewModel() {
 
     val paymentSuccess = EventLiveData<PaymentDTOResp?>()
 
-    val errorMessage = EventLiveData<MessageArg>()
+    val pinVerifyError = EventLiveData<Boolean>()
 
-    val pinRetry = EventLiveData<Int>()
+    val pinVerifyRetry = EventLiveData<Int>()
 
     val cardRequired = EventLiveData<Boolean>()
 
@@ -85,7 +85,7 @@ class PinVM : BaseViewModel() {
 
     /**
      * @return: [onPinVerifyRetry]
-     * @return: [errorMessage].postValue
+     * @return: [pinVerifyError].postValue
      */
     private fun onPinVerifyFailed(code: Int, message: String? = null) {
         when (code) {
@@ -93,7 +93,7 @@ class PinVM : BaseViewModel() {
                 onPinVerifyRetry()
             }
             else -> {
-                errorMessage.postValue(MessageArg.paymentCancelMessage)
+                pinVerifyError.postValue(true)
             }
         }
     }
@@ -105,7 +105,9 @@ class PinVM : BaseViewModel() {
      */
     private fun postPayRequest(paymentArg: PaymentArg) {
         val body = PaymentDTOReq(
-                paymentID = paymentArg.paymentId, clientIP = paymentArg.clientIp, accountID = null
+                paymentID = paymentArg.paymentId,
+                clientIP = paymentArg.clientIp,
+                accountID = null
         )
         PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentDTOResp> {
             override fun onSuccess(data: PaymentDTOResp) {
@@ -125,16 +127,16 @@ class PinVM : BaseViewModel() {
     }
 
     /**
-     * @return: [pinRetry].postValue
-     * @return: [errorMessage].postValue
+     * @return: [pinVerifyRetry].postValue
+     * @return: [pinVerifyError].postValue
      */
     private fun onPinVerifyRetry() {
         when (retryCount.getAndDecrement()) {
             0 -> {
-                pinRetry.postValue(retryCount.get())
+                pinVerifyRetry.postValue(retryCount.get())
             }
             else -> {
-                errorMessage.postValue(MessageArg.paymentCancelMessage)
+                pinVerifyError.postValue(true)
             }
 
         }

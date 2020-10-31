@@ -31,16 +31,16 @@ class FaceFragment : Main.Fragment() {
         }
         timeoutVM.inTheEnd.observe {
             it ?: return@observe
-            onTimeout()
+            onPaymentCancel()
         }
         faceVM.faceArg.observe {
             onFaceVerifySuccess(it)
         }
         faceVM.verifyError.observe {
-            if (it) onFaceVerifyError()
+            if (it) onPaymentError(MessageArg.paymentCancel)
         }
         faceVM.verifyRetry.observe {
-            if (it) onFaceVerifyRetry()
+            if (it) onRetryVerify()
         }
     }
 
@@ -57,14 +57,7 @@ class FaceFragment : Main.Fragment() {
         navigate(Main.pin)
     }
 
-    private fun onFaceVerifyError() {
-        paymentVM.arg.postValue(null)
-        timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-        messageVM.arg.value = MessageArg.paymentCancelMessage
-        navigate(Main.message)
-    }
-
-    private fun onFaceVerifyRetry() {
+    private fun onRetryVerify() {
         val arg = ConfirmArg(
                 headerGuideline = R.id.guidelineFace,
                 title = "Tài khoản không tồn tại",
@@ -76,26 +69,13 @@ class FaceFragment : Main.Fragment() {
                 },
                 buttonDeny = "Hủy bỏ giao dịch",
                 onDeny = {
-                    timeoutVM.stopTimeout()
-                    paymentVM.arg.postValue(null)
-                    navigate(Main.adv) {
-                        setNoneAnim()
-                        setLaunchSingleTop()
-                    }
+                    onPaymentCancel()
                 }
         )
         faceView.animateOnFaceCaptured()
         timeoutVM.startTimeout(Timeout.FACE_VERIFY)
         confirmVM.arg.value = arg
         navigate(Main.confirm)
-    }
-
-    private fun onTimeout() {
-        paymentVM.arg.postValue(null)
-        navigate(Main.adv) {
-            setNoneAnim()
-            setLaunchSingleTop()
-        }
     }
 
 
