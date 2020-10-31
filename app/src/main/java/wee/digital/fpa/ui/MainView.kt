@@ -30,6 +30,9 @@ class MainView(val v: MainActivity) {
         v.mainViewExit.addFastClickListener(7) {
             v.finish()
         }
+        v.mainViewTest.setOnClickListener {
+            v.navigate(Main.pin)
+        }
     }
 
     fun onBindDeviceInfo(it: DeviceInfo?) {

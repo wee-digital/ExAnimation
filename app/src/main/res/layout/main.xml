@@ -41,6 +41,13 @@
         android:text="1.0.0" />
 
     <View
+        android:id="@+id/mainViewTest"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
         android:id="@+id/mainViewExit"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"

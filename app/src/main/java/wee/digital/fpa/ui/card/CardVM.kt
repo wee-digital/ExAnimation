@@ -15,7 +15,7 @@ import wee.digital.library.extension.toObject
 
 class CardVM : BaseViewModel() {
 
-    val cardList = MutableLiveData<List<CardItem>>()
+    val cardList = MutableLiveData<List<CardItem>?>()
 
     fun fetchCardList(pinArg: PinArg?) {
         val body = GetBankAccListDTOReq(
@@ -27,7 +27,7 @@ class CardVM : BaseViewModel() {
             }
 
             override fun onFailed(code: Int, message: String) {
-
+                cardList.postValue(null)
             }
 
         })
@@ -55,6 +55,5 @@ class CardVM : BaseViewModel() {
         }
         cardList.postValue(cardItems)
     }
-
 
 }

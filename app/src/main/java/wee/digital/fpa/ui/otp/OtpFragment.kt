@@ -27,22 +27,23 @@ class OtpFragment : Main.Dialog() {
 
     override fun onViewCreated() {
         otpView.onViewInit()
-        loadOtpWebView()
+
     }
 
     override fun onLiveDataObserve() {
-
+        otpVM.otpForm.observe {
+            loadOtpWebView(it)
+        }
     }
 
     /**
      * load webView Otp
      */
     @SuppressLint("SetJavaScriptEnabled")
-    private fun loadOtpWebView() {
-        val url = pinVM.pinArg.value?.formOtp ?: throw Event.pinDataError
+    private fun loadOtpWebView(otpFormUrl: String) {
         otpWebView.loadDataWithBaseURL(
                 "https://dps-staging.napas.com.vn/api/restjs/resources/js/napas.hostedform.min.js",
-                """$url""",
+                """$otpFormUrl""",
                 "text/html",
                 "UTF-8",
                 null

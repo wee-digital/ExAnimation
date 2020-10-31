@@ -2,6 +2,7 @@ package wee.digital.fpa.ui
 
 
 import androidx.navigation.NavDirections
+import kotlinx.android.synthetic.main.main.*
 import okhttp3.WebSocket
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
@@ -40,9 +41,6 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
-        post(2000) {
-            navigate(Main.pin)
-        }
     }
 
     override fun onLiveDataObserve() {
@@ -70,7 +68,6 @@ class MainActivity : BaseActivity() {
             onProgressArgChanged(it)
         }
     }
-
 
     /**
      * [MainActivity] properties

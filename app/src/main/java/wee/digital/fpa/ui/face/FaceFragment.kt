@@ -37,10 +37,10 @@ class FaceFragment : Main.Fragment() {
             onFaceVerifySuccess(it)
         }
         faceVM.verifyError.observe {
-            onFaceVerifyError(it)
+            if (it) onFaceVerifyError()
         }
         faceVM.verifyRetry.observe {
-            onFaceVerifyRetry(it)
+            if (it) onFaceVerifyRetry()
         }
     }
 
@@ -57,30 +57,36 @@ class FaceFragment : Main.Fragment() {
         navigate(Main.pin)
     }
 
-    private fun onFaceVerifyError(it: MessageArg?) {
-        it ?: return
+    private fun onFaceVerifyError() {
         paymentVM.arg.postValue(null)
         timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-        messageVM.arg.value = it
+        messageVM.arg.value = MessageArg.paymentCancelMessage
         navigate(Main.message)
     }
 
-    private fun onFaceVerifyRetry(it: ConfirmArg) {
-        it.onAccept = {
-            faceView.animateOnStartFaceReg()
-            timeoutVM.startTimeout(Timeout.FACE_VERIFY)
-        }
-        it.onDeny = {
-            timeoutVM.stopTimeout()
-            paymentVM.arg.postValue(null)
-            navigate(Main.adv) {
-                setNoneAnim()
-                setLaunchSingleTop()
-            }
-        }
+    private fun onFaceVerifyRetry() {
+        val arg = ConfirmArg(
+                headerGuideline = R.id.guidelineFace,
+                title = "Tài khoản không tồn tại",
+                message = "Bạn vui lòng đăng ký tài khoản Facepay trước khi thực hiện thanh toán",
+                buttonAccept = "Thử lại",
+                onAccept = {
+                    faceView.animateOnStartFaceReg()
+                    timeoutVM.startTimeout(Timeout.FACE_VERIFY)
+                },
+                buttonDeny = "Hủy bỏ giao dịch",
+                onDeny = {
+                    timeoutVM.stopTimeout()
+                    paymentVM.arg.postValue(null)
+                    navigate(Main.adv) {
+                        setNoneAnim()
+                        setLaunchSingleTop()
+                    }
+                }
+        )
         faceView.animateOnFaceCaptured()
         timeoutVM.startTimeout(Timeout.FACE_VERIFY)
-        confirmVM.arg.value = it
+        confirmVM.arg.value = arg
         navigate(Main.confirm)
     }
 

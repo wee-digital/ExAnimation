@@ -1,6 +1,5 @@
 package wee.digital.fpa.repository.network
 
-import android.annotation.SuppressLint
 import android.util.Log
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
@@ -17,23 +16,23 @@ import wee.digital.fpa.repository.utils.SystemUrl
 import java.util.concurrent.TimeUnit
 
 class CollectionData {
+
     companion object {
-        val instance: CollectionData by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { CollectionData() }
+        val instance by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            CollectionData()
+        }
     }
 
-    private var retrofit: Retrofit? = null
-    private fun getClient(): Retrofit {
-        if (retrofit != null) return retrofit as Retrofit
-        retrofit = Retrofit.Builder()
+    private val apiClient by lazy {
+        Retrofit.Builder()
                 .baseUrl(SystemUrl.BASE_URL_COLLECT)
                 .client(OkHttpClient().newBuilder().callTimeout(10, TimeUnit.SECONDS).build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-        return retrofit as Retrofit
+                .create(MyApiService::class.java)
     }
 
-    @SuppressLint("CheckResult")
     fun encryptCollData(dataCollect: DataCollect) {
         EncryptData.instance.encryptCollectData(dataCollect)
                 .subscribeOn(Schedulers.computation())
@@ -49,15 +48,14 @@ class CollectionData {
                 )
     }
 
-    @SuppressLint("CheckResult")
     private fun postCollectData(headers: HashMap<String, Any>, data: String) {
-        val apiService = getClient().create(MyApiService::class.java)
         headers["FacePOSCollectData"] = "POS_${BaseData.deviceInfo.posName}"
-        apiService.postCollData(headers, data)
+        apiClient.postCollData(headers, data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(object : SingleObserver<Response<ResponseBody>> {
                     override fun onSubscribe(d: Disposable) {}
+
                     override fun onSuccess(t: Response<ResponseBody>) {
                         Log.d("facePosCollectData", "onSuccess")
                     }

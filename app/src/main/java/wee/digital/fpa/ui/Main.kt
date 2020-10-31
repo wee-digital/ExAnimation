@@ -6,10 +6,12 @@ import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.card.CardVM
 import wee.digital.fpa.ui.confirm.ConfirmVM
 import wee.digital.fpa.ui.connect.ConnectVM
 import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.message.MessageVM
+import wee.digital.fpa.ui.otp.OtpVM
 import wee.digital.fpa.ui.payment.PaymentVM
 import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.fpa.ui.progress.ProgressVM
@@ -51,6 +53,9 @@ class Main {
 
         val pinVM by lazy { activityVM(PinVM::class) }
 
+        val cardVM by lazy { activityVM(CardVM::class) }
+
+        val otpVM by lazy { activityVM(OtpVM::class) }
     }
 
     companion object {

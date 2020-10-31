@@ -2,7 +2,6 @@ package wee.digital.fpa.ui.face
 
 import android.util.Base64
 import androidx.lifecycle.MutableLiveData
-import wee.digital.fpa.R
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.data.local.Config
@@ -14,8 +13,6 @@ import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
-import wee.digital.fpa.ui.confirm.ConfirmArg
-import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -30,9 +27,9 @@ class FaceVM : BaseViewModel() {
         }
     }
 
-    var verifyRetry = EventLiveData<ConfirmArg>()
+    var verifyRetry = EventLiveData<Boolean>()
 
-    var verifyError = EventLiveData<MessageArg>()
+    var verifyError = EventLiveData<Boolean>()
 
     fun verifyFace(bitmap: ByteArray,
                    dataFace: FacePointData,
@@ -63,15 +60,11 @@ class FaceVM : BaseViewModel() {
     fun onVerifyFaceFailed() {
         when (retryCount.getAndDecrement()) {
             0 -> {
-                verifyError.postValue(MessageArg.paymentCancelMessage)
+                verifyError.postValue(true)
             }
-            else -> verifyRetry.postValue(ConfirmArg(
-                    headerGuideline = R.id.guidelineFace,
-                    title = "Tài khoản không tồn tại",
-                    message = "Bạn vui lòng đăng ký tài khoản Facepay trước khi thực hiện thanh toán",
-                    buttonAccept = "Thử lại",
-                    buttonDeny = "Hủy bỏ giao dịch"
-            ))
+            else -> {
+                verifyRetry.postValue(true)
+            }
         }
 
     }

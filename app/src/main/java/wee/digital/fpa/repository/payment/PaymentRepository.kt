@@ -7,6 +7,7 @@ import wee.digital.fpa.repository.model.ClientIDResp
 import wee.digital.fpa.repository.network.Api
 
 class PaymentRepository : IBase.Payment {
+
     private val mPaymentProvider = PaymentProvider()
 
     companion object {
