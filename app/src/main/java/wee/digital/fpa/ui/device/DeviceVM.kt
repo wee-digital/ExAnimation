@@ -1,85 +1,42 @@
 package wee.digital.fpa.ui.device
 
 import com.google.gson.JsonObject
-import wee.digital.fpa.R
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
 import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.repository.network.Api
+import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
-import wee.digital.fpa.ui.base.EventLiveData
-import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.library.extension.bold
-import wee.digital.library.extension.color
-import wee.digital.library.extension.string
 
 class DeviceVM : BaseViewModel() {
 
-    val nameError = EventLiveData<String?>()
-
-    var registerError = EventLiveData<MessageArg>()
-
-    var registerSuccess = EventLiveData<MessageArg>()
-
-    val progressVisible = EventLiveData<Boolean>()
+    override fun onStart() {
+    }
 
     fun registerDevice(sName: String?, qr: JsonObject?) {
-        if (progressVisible.value == true) return
         if (sName?.length ?: 0 < 5) {
-            nameError.value = "Tên thiết bị phải từ 5 đến 20 ký tự"
+            eventLiveData.postValue(DeviceEvent.REGISTER_SUCCESS)
             return
         }
-        val info = DeviceInfoStore(
-                qrCode = qr ?: JsonObject(),
+        registerDevice(DeviceInfoStore(
+                qrCode = qr ?: throw Event.qrError,
                 name = sName!!
-        )
-        registerDevice(info)
+        ))
     }
 
     private fun registerDevice(deviceInfo: DeviceInfoStore) {
-        progressVisible.postValue(true)
         DeviceSystemRepository.ins.register(deviceInfo, object : Api.ClientListener<Any> {
-            override fun onSuccess(data: Any) {
-                progressVisible.postValue(false)
-                onRegisterSuccess()
+            override fun onSuccess(response: Any) {
+                eventLiveData.postValue(DeviceEvent.REGISTER_SUCCESS)
             }
 
             override fun onFailed(code: Int, message: String) {
-                progressVisible.postValue(false)
-                val s = when (code) {
-                    in 1..6, 500 -> {
-                        string(R.string.register_failed)
-                                .format("Hotline: 1900 2323".bold().color("#212121"))
-                    }
-                    else -> {
-                        "Có lỗi phát sinh, bạn vui lòng\nthử lại lần nữa"
-                    }
-                }
-                onRegisterError(s)
+                eventLiveData.postValue(DeviceEvent.REGISTER_ERROR)
                 BaseData.ins.resetDeviceInfo()
             }
 
         })
     }
 
-    private fun onRegisterSuccess() {
-        val message = MessageArg(
-                icon = R.mipmap.img_checked_flat,
-                title = string(R.string.device_register_success),
-                button = string(R.string.device_register_finish),
-                message = string(R.string.register_success)
-                        .format("pos.facepay.vn".bold().color("#378AE1")),
-        )
-        registerSuccess.postValue(message)
-    }
-
-    private fun onRegisterError(s: String?) {
-        val message = MessageArg(
-                title = string(R.string.device_register_failed),
-                button = string(R.string.device_register_fail),
-                message = s
-        )
-        registerError.postValue(message)
-    }
 
 }

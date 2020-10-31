@@ -4,6 +4,7 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
+import wee.digital.fpa.ui.pin.view.PinKeyAdapter
 import wee.digital.library.extension.color
 
 class PinView(private val v: PinFragment) {

@@ -3,9 +3,9 @@ package wee.digital.fpa.repository.model
 import android.os.Bundle
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import wee.digital.fpa.repository.dto.PaymentDTOResp
-import wee.digital.fpa.repository.dto.FaceArg
-import wee.digital.fpa.repository.dto.PinArg
+import wee.digital.fpa.repository.dto.PaymentResponse
+import wee.digital.fpa.repository.dto.FaceResponse
+import wee.digital.fpa.repository.dto.PinResponse
 
 /**
  * [wee.dev.faceposv2.repository.network.EncryptData]
@@ -23,17 +23,17 @@ data class DataRegisterDevice(val name: String = "", val status: Int = 0)
 /**
  * [wee.dev.faceposv2.ui.payment.PaymentViewModel.verifyFace]
  */
-data class PaymentVerifyFace(val dataResp: FaceArg, val bundle: Bundle)
+data class PaymentVerifyFace(val dataResp: FaceResponse, val bundle: Bundle)
 
 /**
  * [wee.dev.faceposv2.ui.payment.PaymentViewModel.verifyPin]
  */
-data class PaymentVerifyPin(val dataResp: PinArg, val bundle: Bundle)
+data class PaymentVerifyPin(val dataResp: PinResponse, val bundle: Bundle)
 
 /**
  * [wee.dev.faceposv2.ui.payment.PaymentViewModel.payment]
  */
-data class PaymentFacePay(val dataResp: PaymentDTOResp, val bundle: Bundle)
+data class PaymentFacePay(val dataResp: PaymentResponse, val bundle: Bundle)
 
 /**
  * [wee.dev.faceposv2.ui.payment.PaymentViewModel.getListBank]

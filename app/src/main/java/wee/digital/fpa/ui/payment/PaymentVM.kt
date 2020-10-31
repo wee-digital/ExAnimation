@@ -2,10 +2,10 @@ package wee.digital.fpa.ui.payment
 
 import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.data.repository.Shared
-import wee.digital.fpa.repository.dto.SocketResultResp
+import wee.digital.fpa.repository.dto.SocketResponse
 import wee.digital.fpa.repository.dto.UpdateCancelPaymentDTOReq
 import wee.digital.fpa.repository.dto.UpdatePaymentStatusDTOReq
-import wee.digital.fpa.repository.model.ClientIDResp
+import wee.digital.fpa.repository.model.ClientResponse
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.repository.utils.PaymentStatusCode
@@ -15,22 +15,20 @@ class PaymentVM : BaseViewModel() {
 
     val arg = MutableLiveData<PaymentArg?>()
 
-    fun getNapasClient(dataSocket: SocketResultResp) {
-        PaymentRepository.ins.getClientId(object : Api.ClientListener<ClientIDResp> {
+    override fun onStart() {
+    }
 
-            override fun onSuccess(data: ClientIDResp) {
-                log.d("getNapasClient: $data")
+    fun getNapasClient(socketRes: SocketResponse) {
+        PaymentRepository.ins.getClientId(object : Api.ClientListener<ClientResponse> {
+
+            override fun onSuccess(response: ClientResponse) {
+                log.d("getNapasClient: $response")
                 if (Shared.paymentProcessing) {
-                    updateStatusPayment(dataSocket.paymentId, PaymentStatusCode.DEVICE_PROCESSING)
+                    updateStatusPayment(socketRes.paymentId, PaymentStatusCode.DEVICE_PROCESSING)
                     Shared.paymentProcessing = true
                     return
                 }
-                arg.postValue(PaymentArg(
-                        clientIp = data.ip,
-                        paymentId = dataSocket.paymentId,
-                        amount = dataSocket.amount,
-                        timeout = dataSocket.timeOut
-                ))
+                arg.postValue(PaymentArg(socketRes, response))
             }
 
             override fun onFailed(code: Int, message: String) {

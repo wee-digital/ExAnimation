@@ -45,7 +45,7 @@ data class PaymentDTOReq(
 
 )
 
-data class PaymentDTOResp(
+data class PaymentResponse(
 
         @SerializedName("Code")
         @Expose

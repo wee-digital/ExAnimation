@@ -2,12 +2,14 @@ package wee.digital.fpa.ui.face
 
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
-import wee.digital.fpa.repository.dto.FaceArg
-import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.*
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
+import kotlin.reflect.KClass
 
-class FaceFragment : Main.Fragment() {
+class FaceFragment : Main.Fragment<FaceVM>() {
+
+    private val faceView by lazy { FaceView(this) }
 
     /**
      * [Main.Fragment] override
@@ -16,11 +18,30 @@ class FaceFragment : Main.Fragment() {
         return R.layout.face
     }
 
+    override fun localViewModel(): KClass<FaceVM> {
+        return FaceVM::class
+    }
+
     override fun onViewCreated() {
         faceView.onViewInit()
         faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
             timeoutVM.stopTimeout()
-            faceVM.verifyFace(bitmap, pointData, dataCollect, paymentVM.arg.value)
+            localVM.verifyFace(bitmap, pointData, dataCollect, paymentVM.arg.value)
+        }
+    }
+
+    override fun onLiveEventChanged(event: Int) {
+        when (event) {
+            FaceEvent.VERIFY_SUCCESS -> {
+                onFaceVerifySuccess()
+            }
+            FaceEvent.VERIFY_RETRY -> {
+                onRetryVerify()
+            }
+            FaceEvent.VERIFY_FAILED -> {
+                onPaymentFailed(MessageArg.paymentCancel)
+
+            }
         }
     }
 
@@ -33,25 +54,12 @@ class FaceFragment : Main.Fragment() {
             it ?: return@observe
             onPaymentCancel()
         }
-        faceVM.faceArg.observe {
-            onFaceVerifySuccess(it)
-        }
-        faceVM.verifyError.observe {
-            if (it) onPaymentError(MessageArg.paymentCancel)
-        }
-        faceVM.verifyRetry.observe {
-            if (it) onRetryVerify()
-        }
     }
-
 
     /**
      * [FaceFragment] properties
      */
-    private val faceView by lazy { FaceView(this) }
-
-    private fun onFaceVerifySuccess(it: FaceArg?) {
-        it ?: return
+    private fun onFaceVerifySuccess() {
         timeoutVM.stopTimeout()
         faceView.animateOnFaceCaptured()
         navigate(Main.pin)

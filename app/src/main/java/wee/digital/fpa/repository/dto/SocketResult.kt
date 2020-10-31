@@ -3,7 +3,7 @@ package wee.digital.fpa.repository.dto
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class SocketResultResp(
+data class SocketResponse(
         @SerializedName("Event")
         @Expose
         var event: String = "",

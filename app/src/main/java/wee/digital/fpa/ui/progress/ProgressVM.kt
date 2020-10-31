@@ -6,4 +6,7 @@ import wee.digital.fpa.ui.base.BaseViewModel
 class ProgressVM : BaseViewModel() {
 
     val arg = MutableLiveData<ProgressArg?>()
+
+    override fun onStart() {
+    }
 }

@@ -5,5 +5,10 @@ import com.google.gson.JsonObject
 import wee.digital.fpa.ui.base.BaseViewModel
 
 class ConnectVM : BaseViewModel() {
+
     val objQRCode = MutableLiveData<JsonObject>()
+
+    override fun onStart() {
+    }
+
 }

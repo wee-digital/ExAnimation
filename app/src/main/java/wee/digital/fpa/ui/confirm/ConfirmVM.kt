@@ -6,4 +6,8 @@ import wee.digital.fpa.ui.base.BaseViewModel
 class ConfirmVM : BaseViewModel() {
 
     val arg = MutableLiveData<ConfirmArg>()
+
+    override fun onStart() {
+    }
+
 }

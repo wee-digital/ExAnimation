@@ -4,142 +4,125 @@ import android.util.Base64
 import androidx.lifecycle.MutableLiveData
 import crypto.Crypto
 import wee.digital.fpa.data.local.Config
-import wee.digital.fpa.repository.dto.*
-import wee.digital.fpa.repository.dto.PinArg
+import wee.digital.fpa.repository.dto.PaymentDTOReq
+import wee.digital.fpa.repository.dto.PaymentResponse
+import wee.digital.fpa.repository.dto.PinRequest
+import wee.digital.fpa.repository.dto.PinResponse
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
-import wee.digital.fpa.ui.message.MessageArg
+import wee.digital.fpa.ui.face.FaceArg
 import wee.digital.fpa.ui.payment.PaymentArg
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
 
-    private val retryCount = AtomicInteger()
+    val arg = MutableLiveData<PinArg?>()
 
-    val pinArg = MutableLiveData<PinArg?>()
+    var hasPayRequest: Boolean = false
 
-    val paymentSuccess = EventLiveData<PaymentDTOResp?>()
+    private val restRetriesAtomic = AtomicInteger(Config.PIN_RETRY_COUNT)
 
-    val pinVerifyError = EventLiveData<Boolean>()
+    val restRetriesPin = EventLiveData<Int>()
 
-    val pinVerifyRetry = EventLiveData<Int>()
+    val otpForm = EventLiveData<String>()
 
-    val cardRequired = EventLiveData<Boolean>()
-
-    val cardError = EventLiveData<Boolean>()
-
-    val otpRequired = EventLiveData<PaymentDTOResp?>()
-
-    fun onStart() {
-        retryCount.set(Config.PIN_RETRY_COUNT)
+    override fun onStart() {
+        hasPayRequest = false
+        restRetriesAtomic.set(Config.PIN_RETRY_COUNT)
     }
 
-    fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, faceArg: FaceArg?) {
+    /**
+     * Pin verify
+     */
+    fun onPinVerify(pinCode: String, paymentArg: PaymentArg?, faceArg: FaceArg?) {
         paymentArg ?: throw Event.paymentArgError
         faceArg ?: throw Event.faceArgError
         val hashCode = Crypto.hash(pinCode)
         val finalCode = Base64.encodeToString(hashCode, Base64.NO_WRAP)
-        val body = VerifyPINCodeDTOReq(
-                uid = faceArg.userID,
+        val body = PinRequest(
+                uid = faceArg.userIdList,
                 paymentID = paymentArg.paymentId,
                 pinCode = finalCode,
                 clientIP = paymentArg.clientIp
         )
-        postPinVerify(body, paymentArg)
+        onPinVerify(body)
     }
 
-    /**
-     * @return [onPinVerifySuccess]
-     * @return [onPinVerifyFailed]
-     */
-    private fun postPinVerify(req: VerifyPINCodeDTOReq, paymentArg: PaymentArg) {
-        PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<PinArg> {
-            override fun onSuccess(data: PinArg) {
-                onPinVerifySuccess(data, paymentArg)
+    private fun onPinVerify(req: PinRequest) {
+        PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<PinResponse> {
+            override fun onSuccess(response: PinResponse) {
+                onPinVerifySuccess(response)
             }
 
             override fun onFailed(code: Int, message: String) {
-                onPinVerifyFailed(code, message)
+                onPinVerifyFailed(code, )
             }
         })
     }
 
-    /**
-     * @return: [postPayRequest]
-     * @return: [cardRequired].postValue
-     */
-    private fun onPinVerifySuccess(data: PinArg, paymentArg: PaymentArg) {
-        pinArg.value = data
+    private fun onPinVerifySuccess(response: PinResponse) {
+        arg.value = PinArg(response)
         when {
-            data.hasDefaultAccount -> {
-                postPayRequest(paymentArg)
+            response.hasDefaultAccount -> {
+                eventLiveData.postValue(PinEvent.PAY_REQUEST)
             }
             else -> {
-                cardRequired.postValue(true)
+                eventLiveData.postValue(PinEvent.CARD_REQUIRED)
+            }
+        }
+    }
+
+    private fun onPinVerifyFailed(code: Int) {
+        when {
+            code == 1 && restRetriesAtomic.getAndDecrement() > 0 -> {
+                restRetriesPin.postValue(restRetriesAtomic.get())
+            }
+            else -> {
+                eventLiveData.postValue(PinEvent.PIN_VERIFY_FAILED)
             }
         }
     }
 
     /**
-     * @return: [onPinVerifyRetry]
-     * @return: [pinVerifyError].postValue
+     * Pay request
      */
-    private fun onPinVerifyFailed(code: Int, message: String? = null) {
-        when (code) {
-            1 -> {
-                onPinVerifyRetry()
-            }
-            else -> {
-                pinVerifyError.postValue(true)
-            }
-        }
-    }
-
-    /**
-     * @return: [paymentSuccess].postValue
-     * @return: [otpRequired].postValue
-     * @return: [cardError].postValue
-     */
-    private fun postPayRequest(paymentArg: PaymentArg) {
+    fun onPayRequest(paymentArg: PaymentArg?) {
+        paymentArg ?: throw Event.paymentArgError
         val body = PaymentDTOReq(
                 paymentID = paymentArg.paymentId,
                 clientIP = paymentArg.clientIp,
                 accountID = null
         )
-        PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentDTOResp> {
-            override fun onSuccess(data: PaymentDTOResp) {
-                when {
-                    data.code == 0 -> {
-                        paymentSuccess.postValue(data)
-                    }
-                    data.haveOTP && !data.formOtp.isNullOrEmpty() -> {
-                        otpRequired.postValue(data)
-                    }
-                    else -> {
-                        cardError.postValue(true)
-                    }
-                }
+        PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentResponse> {
+            override fun onSuccess(response: PaymentResponse) {
+                onPayRequestSuccess(response)
+            }
+
+            override fun onFailed(response: PaymentResponse) {
+                onPayRequestFailed()
             }
         })
     }
 
-    /**
-     * @return: [pinVerifyRetry].postValue
-     * @return: [pinVerifyError].postValue
-     */
-    private fun onPinVerifyRetry() {
-        when (retryCount.getAndDecrement()) {
-            0 -> {
-                pinVerifyRetry.postValue(retryCount.get())
+    private fun onPayRequestSuccess(response: PaymentResponse) {
+        when {
+            response.code == 0 -> {
+                eventLiveData.postValue(PinEvent.PAY_REQUEST_SUCCESS)
+            }
+            response.haveOTP && !response.formOtp.isNullOrEmpty() -> {
+                otpForm.postValue(response.formOtp)
             }
             else -> {
-                pinVerifyError.postValue(true)
+                eventLiveData.postValue(PinEvent.CARD_ERROR)
             }
-
         }
+    }
+
+    private fun onPayRequestFailed() {
+        eventLiveData.postValue(PinEvent.PAY_REQUEST_FAILED)
     }
 
 

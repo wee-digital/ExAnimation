@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class OtpVM : BaseViewModel() {
 
-    private val retryCount = AtomicInteger()
+    val retryCount = AtomicInteger()
 
     val otpForm = MutableLiveData<String>()
 
@@ -17,7 +17,7 @@ class OtpVM : BaseViewModel() {
 
     val errorMessage = EventLiveData<MessageArg>()
 
-    fun onStart(){
+    override fun onStart() {
         retryCount.set(1)
     }
 

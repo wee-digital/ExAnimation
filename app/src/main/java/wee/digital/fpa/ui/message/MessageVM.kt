@@ -6,4 +6,7 @@ import wee.digital.fpa.ui.base.BaseViewModel
 class MessageVM : BaseViewModel() {
 
     val arg = MutableLiveData<MessageArg?>()
+
+    override fun onStart() {
+    }
 }

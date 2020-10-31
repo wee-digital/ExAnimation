@@ -7,14 +7,15 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.*
 import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
+import kotlin.reflect.KClass
 
-class OtpFragment : Main.Dialog() {
+class OtpFragment : Main.Dialog<OtpVM>() {
 
     companion object {
         private const val NAPAS_STATIC_URL = "https://napas-qc.facepay.vn/v1/static"
@@ -26,26 +27,31 @@ class OtpFragment : Main.Dialog() {
         return R.layout.otp
     }
 
+    override fun localViewModel(): KClass<OtpVM> {
+        return OtpVM::class
+    }
+
     override fun onViewCreated() {
         otpView.onViewInit()
-        otpVM.onStart()
     }
 
     override fun onLiveDataObserve() {
-        otpVM.otpForm.observe {
+        localVM.otpForm.observe {
             loadOtpWebView(it)
+        }
+        localVM.retryMessage.observe {
+            onRetryMessage(it)
+        }
+        localVM.errorMessage.observe {
+            onErrorMessage(it)
         }
         cardVM.cardList.observe {
             onCardListChanged(it)
         }
-        otpVM.retryMessage.observe {
-            onRetryMessage(it)
-        }
-        otpVM.errorMessage.observe {
-            onErrorMessage(it)
-        }
     }
 
+    override fun onLiveEventChanged(event: Int) {
+    }
 
     /**
      * load webView Otp
@@ -62,12 +68,10 @@ class OtpFragment : Main.Dialog() {
         otpWebView.webViewClient = OtpWebViewClient()
     }
 
-
     private fun onTransactionSuccess() {
         dismiss()
         navigate(Main.progress)
     }
-
 
     private fun onRetryMessage(it: ConfirmArg?) {
         it ?: return
@@ -97,16 +101,14 @@ class OtpFragment : Main.Dialog() {
 
     }
 
-
     private fun onCardRequired() {
         val cardList = cardVM.cardList.value
         if (cardList.isNullOrEmpty()) {
-            cardVM.fetchCardList(pinVM.pinArg.value)
+            cardVM.fetchCardList(pinVM.arg.value)
         } else {
 
         }
     }
-
 
     private fun onCardListChanged(it: List<CardItem>?) {
         progressVM.arg.postValue(null)
@@ -114,7 +116,6 @@ class OtpFragment : Main.Dialog() {
         dismiss()
         navigate(Main.card)
     }
-
 
     private inner class OtpWebViewClient : WebViewClient() {
 

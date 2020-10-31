@@ -2,13 +2,17 @@ package wee.digital.fpa.ui.card
 
 import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.data.repository.Shared
-import wee.digital.fpa.repository.dto.*
+import wee.digital.fpa.repository.dto.GetBankAccListDTOReq
+import wee.digital.fpa.repository.dto.GetBankAccListDTOResp
+import wee.digital.fpa.repository.dto.PaymentDTOReq
+import wee.digital.fpa.repository.dto.PaymentResponse
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.payment.PaymentArg
+import wee.digital.fpa.ui.pin.PinArg
 import wee.digital.library.extension.listString
 import wee.digital.library.extension.str
 import wee.digital.library.extension.toObject
@@ -17,19 +21,18 @@ class CardVM : BaseViewModel() {
 
     val cardList = MutableLiveData<List<CardItem>?>()
 
-    val otpRequired = EventLiveData<PaymentDTOResp?>()
+    val otpForm = EventLiveData<String>()
 
-    val paymentSuccess = EventLiveData<PaymentDTOResp?>()
-
-    val paymentError = EventLiveData<Boolean>()
+    override fun onStart() {
+    }
 
     fun fetchCardList(pinArg: PinArg?) {
         val body = GetBankAccListDTOReq(
                 userID = pinArg?.userId ?: throw Event.pinDataError
         )
         PaymentRepository.ins.getBankAccList(body, object : Api.ClientListener<GetBankAccListDTOResp> {
-            override fun onSuccess(data: GetBankAccListDTOResp) {
-                onCardListResponse(data)
+            override fun onSuccess(response: GetBankAccListDTOResp) {
+                onCardListResponse(response)
             }
 
             override fun onFailed(code: Int, message: String) {
@@ -69,17 +72,17 @@ class CardVM : BaseViewModel() {
                 clientIP = paymentArg.clientIp,
                 accountID = bankCode
         )
-        PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentDTOResp> {
-            override fun onSuccess(data: PaymentDTOResp) {
+        PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentResponse> {
+            override fun onSuccess(response: PaymentResponse) {
                 when {
-                    data.code == 0 -> {
-                        paymentSuccess.postValue(data)
+                    response.code == 0 -> {
+                        eventLiveData.postValue(CardEvent.PAY_SUCCESS)
                     }
-                    data.haveOTP && !data.formOtp.isNullOrEmpty() -> {
-                        otpRequired.postValue(data)
+                    response.haveOTP && !response.formOtp.isNullOrEmpty() -> {
+                        otpForm.postValue(response.formOtp)
                     }
                     else -> {
-                        paymentError.postValue(true)
+                        eventLiveData.postValue(CardEvent.PAY_FAILED)
                     }
                 }
             }

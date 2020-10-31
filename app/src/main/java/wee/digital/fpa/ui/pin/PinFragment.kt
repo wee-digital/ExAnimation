@@ -4,21 +4,28 @@ import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
-import wee.digital.fpa.repository.dto.PaymentDTOResp
-import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.*
 import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.face.FaceFragment
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.progress.ProgressArg
+import wee.digital.library.extension.string
+import kotlin.reflect.KClass
 
-class PinFragment : Main.Dialog() {
+class PinFragment : Main.Dialog<PinVM>() {
+
+    private val pinView by lazy { PinView(this) }
 
     /**
      * [Main.Fragment] override
      */
     override fun layoutResource(): Int {
         return R.layout.pin
+    }
+
+    override fun localViewModel(): KClass<PinVM> {
+        return PinVM::class
     }
 
     override fun onViewCreated() {
@@ -29,32 +36,40 @@ class PinFragment : Main.Dialog() {
     }
 
     override fun onLiveDataObserve() {
+        localVM.restRetriesPin.observe {
+            onRestRetriesPinChanged(it)
+        }
+        localVM.otpForm.observe {
+            onOtpRequired(it)
+        }
         timeoutVM.startTimeout(Timeout.PIN_VERIFY)
         timeoutVM.inTheEnd.observe {
             it ?: return@observe
             onPaymentCancel()
         }
-        pinVM.onStart()
-        pinVM.paymentSuccess.observe {
-            onPaymentSuccess(it)
-        }
-        pinVM.pinVerifyError.observe {
-            onPaymentError(MessageArg.paymentCancel)
-        }
-        pinVM.pinVerifyRetry.observe {
-            onRetryMessage(it)
-        }
-        pinVM.cardRequired.observe {
-            if (it) onCardRequired()
-        }
-        pinVM.cardError.observe {
-            if (it) onCardError()
-        }
-        pinVM.otpRequired.observe {
-            onOtpRequired(it)
-        }
         cardVM.cardList.observe {
             onCardListChanged(it)
+        }
+    }
+
+    override fun onLiveEventChanged(event: Int) {
+        when (event) {
+            PinEvent.PIN_VERIFY_FAILED,
+            PinEvent.PAY_REQUEST_FAILED -> {
+                onPaymentFailed(MessageArg.paymentCancel)
+            }
+            PinEvent.PAY_REQUEST_SUCCESS -> {
+                onPaymentSuccess()
+            }
+            PinEvent.PAY_REQUEST -> {
+                localVM.onPayRequest(paymentVM.arg.value)
+            }
+            PinEvent.CARD_REQUIRED -> {
+                onFetchCardList()
+            }
+            PinEvent.CARD_ERROR -> {
+               onCardError()
+            }
         }
     }
 
@@ -69,41 +84,32 @@ class PinFragment : Main.Dialog() {
     /**
      * [FaceFragment] properties
      */
-    private val pinView by lazy { PinView(this) }
-
     private fun onPinCodeFilled(pinCode: String) {
         timeoutVM.stopTimeout()
         progressVM.arg.postValue(ProgressArg.pay)
-        pinVM.onPinFilled(
+        pinVM.onPinVerify(
                 pinCode = pinCode,
                 paymentArg = paymentVM.arg.value,
-                faceArg = faceVM.faceArg.value
+                faceArg = faceVM.arg.value
         )
-
     }
 
-    private fun onPaymentSuccess(it: PaymentDTOResp?) {
-        it ?: return
+    private fun onPaymentSuccess() {
         dismiss()
         progressVM.arg.postValue(ProgressArg.paid)
     }
 
-    private fun onRetryMessage(it: Int) {
+    private fun onRestRetriesPinChanged(restRetries: Int) {
         progressVM.arg.postValue(null)
         pinProgressLayout.notifyInputRemoved()
         timeoutVM.startTimeout(Timeout.PIN_VERIFY)
-        pinView.onBindErrorText("Mã PIN không đúng, bạn còn %s lần thử lại".format(it))
+        pinView.onBindErrorText(string(R.string.pin_retry_msg).format(restRetries))
     }
 
-    private fun onOtpRequired(it: PaymentDTOResp?) {
-        it ?: return
+    private fun onOtpRequired(otpForm: String) {
         dismiss()
-        otpVM.otpForm.value = it.formOtp
+        otpVM.otpForm.value = otpForm
         navigate(Main.otp)
-    }
-
-    private fun onCardRequired() {
-        cardVM.fetchCardList(pinVM.pinArg.value)
     }
 
     private fun onCardError() {
@@ -114,7 +120,7 @@ class PinFragment : Main.Dialog() {
                 message = "Lỗi thanh toán. Bạn vui lòng chọn thẻ khác".format(),
                 buttonAccept = "Đồng ý",
                 onAccept = {
-                    cardVM.fetchCardList(pinVM.pinArg.value)
+                    cardVM.fetchCardList(pinVM.arg.value)
                 },
                 buttonDeny = "Huỷ bỏ",
                 onDeny = {
@@ -124,11 +130,22 @@ class PinFragment : Main.Dialog() {
         confirmVM.arg.postValue(arg)
     }
 
+    private fun onFetchCardList() {
+        progressVM.arg.postValue(ProgressArg.pay)
+        cardVM.fetchCardList(pinVM.arg.value)
+    }
+
     private fun onCardListChanged(it: List<CardItem>?) {
         progressVM.arg.postValue(null)
-        it ?: return
-        dismiss()
-        navigate(Main.card)
+        when {
+            it.isNullOrEmpty() -> {
+                onPaymentCancel()
+            }
+            else -> {
+                dismiss()
+                navigate(Main.card)
+            }
+        }
     }
 
 

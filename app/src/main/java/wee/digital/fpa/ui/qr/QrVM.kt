@@ -14,6 +14,10 @@ class QrVM : BaseViewModel() {
 
     var qrCode = EventLiveData<JsonObject>()
 
+    override fun onStart() {
+
+    }
+
     fun checkQRCode(text: String?) {
         if (isQRChecked) return
         isQRChecked = true

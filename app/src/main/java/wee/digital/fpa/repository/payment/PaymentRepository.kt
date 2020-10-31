@@ -3,7 +3,7 @@ package wee.digital.fpa.repository.payment
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.repository.base.IBase
 import wee.digital.fpa.repository.dto.*
-import wee.digital.fpa.repository.model.ClientIDResp
+import wee.digital.fpa.repository.model.ClientResponse
 import wee.digital.fpa.repository.network.Api
 
 class PaymentRepository : IBase.Payment {
@@ -16,7 +16,7 @@ class PaymentRepository : IBase.Payment {
         }
     }
 
-    override fun getClientId(listener: Api.ClientListener<ClientIDResp>) {
+    override fun getClientId(listener: Api.ClientListener<ClientResponse>) {
         mPaymentProvider.getClientId(listener = listener)
     }
 
@@ -28,22 +28,22 @@ class PaymentRepository : IBase.Payment {
     }
 
     override fun verifyFace(
-            dataReq: VerifyFaceDTOReq,
+            dataReq: FaceRequest,
             facePointData: FacePointData,
-            listener: Api.ClientListener<FaceArg>
+            listener: Api.ClientListener<FaceResponse>
     ) {
         mPaymentProvider.verifyFace(dataReq = dataReq, facePointData = facePointData, listener = listener)
     }
 
     override fun verifyPINCode(
-            dataReq: VerifyPINCodeDTOReq,
-            listener: Api.ClientListener<PinArg>
+            dataReq: PinRequest,
+            listener: Api.ClientListener<PinResponse>
     ) {
         mPaymentProvider.verifyPINCode(dataReq = dataReq, listener = listener)
     }
 
     // TODO: pin fragment arg to otp fragment
-    override fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentDTOResp>) {
+    override fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentResponse>) {
         mPaymentProvider.payment(dataReq = dataReq, listener = listener)
     }
 

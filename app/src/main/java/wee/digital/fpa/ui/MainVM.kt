@@ -23,6 +23,9 @@ class MainVM : BaseViewModel() {
 
     val rootDirection get() = Main.mainDirection
 
+    override fun onStart() {
+    }
+
     fun syncDeviceInfo() {
         deviceInfo.postValue(BaseData.ins.getDeviceInfoPref())
     }
@@ -57,9 +60,9 @@ class MainVM : BaseViewModel() {
     private fun getToken() {
         DeviceSystemRepository.ins.getToken(object : Api.ClientListener<GetTokenDTOResp> {
 
-            override fun onSuccess(data: GetTokenDTOResp) {
-                log.d("getToken: $data")
-                tokenResponse.postValue(data)
+            override fun onSuccess(response: GetTokenDTOResp) {
+                log.d("getToken: $response")
+                tokenResponse.postValue(response)
             }
 
             override fun onFailed(code: Int, message: String) {

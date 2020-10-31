@@ -2,7 +2,7 @@ package wee.digital.fpa.ui.vm
 
 import okhttp3.Response
 import okhttp3.WebSocket
-import wee.digital.fpa.repository.dto.SocketResultResp
+import wee.digital.fpa.repository.dto.SocketResponse
 import wee.digital.fpa.repository.socket.Socket
 import wee.digital.fpa.repository.socket.WebSocketControl
 import wee.digital.fpa.ui.base.BaseViewModel
@@ -14,7 +14,10 @@ class SocketVM : BaseViewModel(), WebSocketControl.WebSocketMonitorListener {
 
     val webSocket = EventLiveData<WebSocket?>()
 
-    val response = EventLiveData<SocketResultResp>()
+    val response = EventLiveData<SocketResponse>()
+
+    override fun onStart() {
+    }
 
     fun connectSocket(token: String) {
         Socket.action.connectWebSocketMonitor(token, this)
@@ -29,7 +32,7 @@ class SocketVM : BaseViewModel(), WebSocketControl.WebSocketMonitorListener {
     }
 
     override fun onMessage(message: String) {
-        val data = message.parse(SocketResultResp::class.java) ?: return
+        val data = message.parse(SocketResponse::class.java) ?: return
         log.d("WebSocketMonitorListener.onMessage: ${message.jsonFormat()}")
         response.postValue(data)
     }
