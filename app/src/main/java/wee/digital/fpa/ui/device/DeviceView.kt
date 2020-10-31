@@ -66,6 +66,7 @@ class DeviceView(private val v: DeviceFragment) {
 
 
     fun onViewInit() {
+        v.deviceEditTextName.requestFocus()
         v.deviceViewProgress.load(R.mipmap.img_progress_small)
         configDeviceNameText()
         configTermText()

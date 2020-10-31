@@ -43,7 +43,7 @@ class PinProgressLayout : ConstraintLayout {
     private lateinit var progressView: View
 
     private val progressTransition = ChangeBounds().apply {
-        duration = 180
+        duration = 100
     }
 
     private var isTransition = false
@@ -235,6 +235,15 @@ class PinProgressLayout : ConstraintLayout {
 
     fun notifyInputRemoved() {
         keyList.clear()
+
+        progressTransition.beginTransition(this) {
+            setVisibility(progressView.id, View.INVISIBLE)
+            roundViewList.forEach {
+                setVisibility(it.id, View.INVISIBLE)
+            }
+        }
+
+        /*
         val viewId = progressView.id
         progressTransition.beginTransition(this, {
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
@@ -248,7 +257,7 @@ class PinProgressLayout : ConstraintLayout {
             constrainWidth(viewId, 1)
         }, {
             setVisibility(viewId, View.INVISIBLE)
-        })
+        })*/
     }
 
     private fun pushKey(key: String) {

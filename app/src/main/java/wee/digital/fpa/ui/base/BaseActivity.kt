@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import wee.digital.fpa.data.local.Config
 import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 
@@ -22,8 +23,14 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutResource())
-        onViewCreated()
-        onLiveDataObserve()
+        if (Config.VIEW_ENABLE) {
+            log.d("onViewCreated")
+            onViewCreated()
+        }
+        if (Config.VM_ENABLE) {
+            log.d("onLiveDataObserve")
+            onLiveDataObserve()
+        }
     }
 
     /**
@@ -47,7 +54,13 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
      */
     override fun onResume() {
         super.onResume()
+        log.d("onResume")
         hideSystemUI()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        log.d("onPause")
     }
 
     /**

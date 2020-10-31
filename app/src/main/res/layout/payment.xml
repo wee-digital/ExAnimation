@@ -34,7 +34,7 @@
             android:id="@+id/paymentImageViewStation"
             android:layout_width="0dp"
             android:layout_height="@dimen/_58sdp"
-            tools:src="@mipmap/img_logo"
+            android:src="@mipmap/img_logo"
             app:layout_constraintBottom_toTopOf="@+id/guideline1"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextViewStation2"
             style="@style/BodyRegular"
-            android:text="GS25"
+            android:text="Facepay"
             android:textColor="@color/colorBlack"
             app:layout_constraintBaseline_toBaselineOf="@+id/paymentTextView1"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -91,8 +91,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextViewAmount"
             style="@style/Headline1SemiBold"
-            android:text="365,000"
             android:layout_marginTop="@dimen/_6sdp"
+            android:text="365,000"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_18ssp"
             app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
@@ -115,25 +115,25 @@
             android:id="@+id/paymentTextViewStation"
             style="@style/Headline3"
             android:layout_marginStart="@dimen/margin2"
+            android:text="Facepay"
             app:layout_constraintBottom_toBottomOf="@+id/paymentImageViewStation"
             app:layout_constraintStart_toEndOf="@+id/paymentImageViewStation"
             app:layout_constraintTop_toTopOf="@+id/paymentImageViewStation"
-            app:layout_constraintVertical_bias="0.345"
-            tools:text="GS25" />
+            app:layout_constraintVertical_bias="0.345" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentTextViewDate"
             style="@style/DescriptionRegular"
+            android:text="23 tháng 12 2020"
             android:textColor="@color/gray"
             app:layout_constraintStart_toStartOf="@+id/paymentTextViewStation"
-            app:layout_constraintTop_toBottomOf="@+id/paymentTextViewStation"
-            tools:text="@tools:sample/date/mmddyy" />
+            app:layout_constraintTop_toBottomOf="@+id/paymentTextViewStation" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentViewAccept"
             style="@style/Button.Semibold"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:text="Xác nhận"
-            android:layout_marginBottom="@dimen/_4sdp"
             app:layout_constraintBottom_toTopOf="@+id/paymentViewDeny"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -148,7 +148,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/uselessView1"
-            app:layout_constraintVertical_bias="0.916" />
+            app:layout_constraintVertical_bias="0.849" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

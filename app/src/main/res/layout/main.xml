@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchParent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
@@ -28,7 +28,7 @@
         android:textSize="@dimen/_4ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="DeviceInfo" />
+        android:text="DeviceInfo" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/mainTextViewVersion"
@@ -38,7 +38,7 @@
         android:textSize="@dimen/_4ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="1.0.0" />
+        android:text="1.0.0" />
 
     <View
         android:id="@+id/mainViewExit"
@@ -63,7 +63,7 @@
         android:paddingTop="@dimen/_4sdp"
         android:paddingEnd="@dimen/margin"
         android:paddingBottom="@dimen/_4sdp"
-        android:text="Disconnnectd..."
+        android:text="Disconnnected..."
         android:textColor="@color/colorWhite"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
