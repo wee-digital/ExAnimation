@@ -37,11 +37,6 @@ class PinVM : BaseViewModel() {
     }
 
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, faceArg: FaceArg?) {
-        post(5000) {
-            paymentSuccess.postValue(PaymentDTOResp())
-        }
-        return
-
         paymentArg ?: throw Event.paymentArgError
         faceArg ?: throw Event.faceArgError
         val hashCode = Crypto.hash(pinCode)
