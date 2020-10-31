@@ -13,8 +13,6 @@ import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
-import wee.digital.library.extension.post
-import wee.digital.fpa.ui.progress.ProgressArg
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
@@ -27,9 +25,11 @@ class PinVM : BaseViewModel() {
 
     val errorMessage = EventLiveData<MessageArg>()
 
-    val paymentResult = EventLiveData<String>()
+    val paymentSuccess = EventLiveData<PaymentDTOResp?>()
 
-    fun onStart(){
+    val otp = EventLiveData<PaymentDTOResp?>()
+
+    fun onStart() {
         retryCount.set(Config.PIN_RETRY_COUNT)
     }
 
@@ -63,18 +63,18 @@ class PinVM : BaseViewModel() {
     private fun onPinVerifySuccess(data: PinArg, paymentArg: PaymentArg, faceArg: FaceArg) {
         pinArg.postValue(data)
         val body = PaymentDTOReq(
-            paymentID = paymentArg.paymentId,clientIP = paymentArg.clientIp,accountID = null
+                paymentID = paymentArg.paymentId, clientIP = paymentArg.clientIp, accountID = null
         )
         PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentDTOResp> {
             override fun onSuccess(data: PaymentDTOResp) {
                 when {
                     data.code == 0 -> {
                         // show progress face paid
-                        paymentResult.postValue("OK")
+                        paymentSuccess.postValue(data)
                     }
                     data.haveOTP && !data.formOtp.isNullOrEmpty() -> {
                         //navigate napas
-                        paymentResult.postValue("Napas")
+                        otp.postValue(data)
                     }
                     else -> {
                         // failed
@@ -84,7 +84,6 @@ class PinVM : BaseViewModel() {
                         ))
                     }
                 }
-                paymentResult.postValue("OK")
             }
 
         })

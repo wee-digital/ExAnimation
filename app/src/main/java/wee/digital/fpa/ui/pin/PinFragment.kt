@@ -4,6 +4,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
+import wee.digital.fpa.repository.dto.PaymentDTOResp
 import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.face.FaceFragment
@@ -42,9 +43,11 @@ class PinFragment : Main.Dialog() {
         pinVM.pinArg.observe {
             onPinVerifySuccess(it)
         }
-
-        pinVM.paymentResult.observe {
-            onPinPaymentResult(it)
+        pinVM.paymentSuccess.observe {
+            onPaymentSuccess(it)
+        }
+        pinVM.otp.observe {
+            onOtpRequired(it)
         }
     }
 
@@ -87,12 +90,18 @@ class PinFragment : Main.Dialog() {
         }
     }
 
-    private fun onPinPaymentResult(it: String) {
-        when(it){
-            "OK"-> navigate(Main.progressPay)
-            "Napas"-> navigate(Main.otp)
-        }
+    private fun onPaymentSuccess(it: PaymentDTOResp?) {
+        it ?: return
+        progressVM.arg.postValue(ProgressArg.payment.also {
+            it.direction = Main.progressPay
+        })
     }
+
+    private fun onOtpRequired(it: PaymentDTOResp?) {
+        it ?: return
+        navigate(Main.otp)
+    }
+
 
     private fun onRetryMessage(it: String) {
         progressVM.arg.postValue(null)
