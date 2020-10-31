@@ -12,6 +12,7 @@
         style="@style/Guideline.Face" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,11 +29,12 @@
             app:layout_constraintHorizontal_bias="0.499"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.425" />
+            app:layout_constraintVertical_bias="0.42" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/progressTextViewTitle"
             style="@style/BodyRegular"
+            android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_9ssp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,6 +48,7 @@
             android:id="@+id/progressTextViewMessage"
             style="@style/BodySemibold"
             android:layout_marginTop="@dimen/_4sdp"
+            android:gravity="center"
             android:textSize="@dimen/_9ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -54,5 +57,18 @@
             tools:hint="BẠN CHỜ MỘT CHÚT NHÉ" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/progressImageViewPay"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_78sdp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineFace"
+        tools:layout_constraintVertical_bias="0.1"
+        tools:src="@mipmap/img_face_paid" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

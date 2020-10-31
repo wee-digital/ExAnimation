@@ -5,5 +5,5 @@
     android:id="@+id/advImageView"
     style="@style/MatchParent"
     android:background="@color/colorWhite"
-    android:scaleType="centerInside"
+    android:scaleType="fitCenter"
     tools:src="@mipmap/img_placeholder" />

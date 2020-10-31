@@ -83,8 +83,6 @@ class Main {
         val qr = MainDirections.actionGlobalQrFragment()
 
         val progress = MainDirections.actionGlobalProgressFragment()
-
-        val progressPay = MainDirections.actionGlobalProgressPayFragment()
     }
 
 

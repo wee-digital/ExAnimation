@@ -40,6 +40,9 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         mainView.onViewInit()
+        post(2000) {
+            navigate(Main.pin)
+        }
     }
 
     override fun onLiveDataObserve() {
@@ -174,7 +177,7 @@ class MainActivity : BaseActivity() {
     private fun onProgressArgChanged(it: ProgressArg?) {
         when {
             it != null -> {
-                navigate(it.direction)
+                navigate(Main.progress)
             }
         }
     }

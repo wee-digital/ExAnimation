@@ -14,7 +14,11 @@
         android:id="@+id/cardFragment"
         android:name="wee.digital.fpa.ui.card.CardFragment"
         android:label="CardFragment"
-        tools:layout="@layout/card" />
+        tools:layout="@layout/card">
+        <action
+            android:id="@+id/action_cardFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
+    </dialog>
     <action
         android:id="@+id/action_global_cardFragment"
         app:destination="@id/cardFragment" />
@@ -22,7 +26,7 @@
         android:id="@+id/paymentFragment"
         android:name="wee.digital.fpa.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
-        tools:layout="@layout/payment" >
+        tools:layout="@layout/payment">
         <action
             android:id="@+id/action_paymentFragment_to_faceFragment"
             app:destination="@id/faceFragment" />
@@ -34,7 +38,7 @@
         android:id="@+id/connectFragment"
         android:name="wee.digital.fpa.ui.connect.ConnectFragment"
         android:label="ConnectFragment"
-        tools:layout="@layout/connect" >
+        tools:layout="@layout/connect">
         <action
             android:id="@+id/action_connectFragment_to_qrFragment"
             app:destination="@id/qrFragment" />
@@ -83,18 +87,14 @@
         android:id="@+id/action_global_progressFragment"
         app:destination="@id/progressFragment" />
     <dialog
-        android:id="@+id/progressPayFragment"
-        android:name="wee.digital.fpa.ui.progress.ProgressPayFragment"
-        android:label="ProgressPayFragment"
-        tools:layout="@layout/progress_pay" />
-    <action
-        android:id="@+id/action_global_progressPayFragment"
-        app:destination="@id/progressPayFragment" />
-    <dialog
         android:id="@+id/pinFragment"
         android:name="wee.digital.fpa.ui.pin.PinFragment"
         android:label="PinFragment"
-        tools:layout="@layout/pin" />
+        tools:layout="@layout/pin">
+        <action
+            android:id="@+id/action_pinFragment_to_cardFragment"
+            app:destination="@id/cardFragment" />
+    </dialog>
     <action
         android:id="@+id/action_global_pinFragment"
         app:destination="@id/pinFragment" />
@@ -102,7 +102,7 @@
         android:id="@+id/qrFragment"
         android:name="wee.digital.fpa.ui.qr.QrFragment"
         android:label="QrFragment"
-        tools:layout="@layout/qr" >
+        tools:layout="@layout/qr">
         <action
             android:id="@+id/action_qrFragment_to_deviceFragment"
             app:destination="@id/deviceFragment" />
@@ -122,7 +122,7 @@
         android:id="@+id/faceFragment"
         android:name="wee.digital.fpa.ui.face.FaceFragment"
         android:label="FaceFragment"
-        tools:layout="@layout/face" >
+        tools:layout="@layout/face">
         <action
             android:id="@+id/action_faceFragment_to_pinFragment"
             app:destination="@id/pinFragment" />

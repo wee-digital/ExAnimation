@@ -34,17 +34,17 @@ class PinFragment : Main.Dialog() {
             onPaymentDeny()
         }
         pinVM.onStart()
-        pinVM.retryMessage.observe {
-            onRetryMessage(it)
+        pinVM.paymentSuccess.observe {
+            onPaymentSuccess(it)
         }
         pinVM.errorMessage.observe {
             onErrorMessage(it)
         }
-        pinVM.pinArg.observe {
-            onPinVerifySuccess(it)
+        pinVM.pinRetry.observe {
+            onRetryMessage(it)
         }
-        pinVM.paymentSuccess.observe {
-            onPaymentSuccess(it)
+        pinVM.cardRequired.observe {
+            onCardRequired()
         }
         pinVM.otp.observe {
             onOtpRequired(it)
@@ -61,13 +61,11 @@ class PinFragment : Main.Dialog() {
     /**
      * [FaceFragment] properties
      */
-
-
     private val pinView by lazy { PinView(this) }
 
     private fun onPinCodeFilled(pinCode: String) {
         timeoutVM.stopTimeout()
-        progressVM.arg.postValue(ProgressArg.payment)
+        progressVM.arg.postValue(ProgressArg.pay)
         pinVM.onPinFilled(
                 pinCode = pinCode,
                 paymentArg = paymentVM.arg.value,
@@ -75,51 +73,25 @@ class PinFragment : Main.Dialog() {
         )
     }
 
-    private fun onPinVerifySuccess(it: PinArg?) {
-        it ?: return
-        dismiss()
-        when {
-            // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
-            it.hasDefaultAccount -> {
-                //navigate(Main.otp)
-            }
-            // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
-            else -> {
-                //navigate(Main.card)
-            }
-        }
-    }
-
     private fun onPaymentSuccess(it: PaymentDTOResp?) {
         it ?: return
-        progressVM.arg.postValue(ProgressArg.payment.also {
-            it.direction = Main.progressPay
-        })
+        dismiss()
+        progressVM.arg.postValue(ProgressArg.paid)
     }
-
-    private fun onOtpRequired(it: PaymentDTOResp?) {
-        it ?: return
-        navigate(Main.otp)
-    }
-
 
     private fun onRetryMessage(it: String) {
         progressVM.arg.postValue(null)
-        view?.postDelayed({
-            pinProgressLayout.notifyInputRemoved()
-            timeoutVM.startTimeout(Timeout.PIN_VERIFY)
-            pinView.onBindErrorText(it)
-        }, 200)
+        pinProgressLayout.notifyInputRemoved()
+        timeoutVM.startTimeout(Timeout.PIN_VERIFY)
+        pinView.onBindErrorText(it)
     }
 
     private fun onErrorMessage(it: MessageArg) {
         progressVM.arg.postValue(null)
         paymentVM.arg.postValue(null)
-        view?.postDelayed({
-            timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-            messageVM.arg.value = it
-            navigate(Main.message)
-        }, 200)
+        timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
+        messageVM.arg.value = it
+        navigate(Main.message)
     }
 
     private fun onPaymentDeny() {
@@ -130,6 +102,18 @@ class PinFragment : Main.Dialog() {
             setNoneAnim()
             setLaunchSingleTop()
         }
+    }
+
+    private fun onCardRequired() {
+        dismiss()
+        navigate(Main.card)
+    }
+
+
+    private fun onOtpRequired(it: PaymentDTOResp?) {
+        it ?: return
+        dismiss()
+        navigate(Main.otp)
     }
 
 }

@@ -13,6 +13,7 @@ import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
+import wee.digital.library.extension.post
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
@@ -21,11 +22,13 @@ class PinVM : BaseViewModel() {
 
     val pinArg = MutableLiveData<PinArg?>()
 
-    val retryMessage = EventLiveData<String>()
+    val cardRequired = EventLiveData<Boolean?>()
+
+    val paymentSuccess = EventLiveData<PaymentDTOResp?>()
 
     val errorMessage = EventLiveData<MessageArg>()
 
-    val paymentSuccess = EventLiveData<PaymentDTOResp?>()
+    val pinRetry = EventLiveData<String>()
 
     val otp = EventLiveData<PaymentDTOResp?>()
 
@@ -34,6 +37,11 @@ class PinVM : BaseViewModel() {
     }
 
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, faceArg: FaceArg?) {
+        post(5000) {
+            paymentSuccess.postValue(PaymentDTOResp())
+        }
+        return
+
         paymentArg ?: throw Event.paymentArgError
         faceArg ?: throw Event.faceArgError
         val hashCode = Crypto.hash(pinCode)
@@ -44,14 +52,13 @@ class PinVM : BaseViewModel() {
                 pinCode = finalCode,
                 clientIP = paymentArg.clientIp
         )
-        verifyPinCode(body, paymentArg, faceArg)
+        verifyPinCode(body, paymentArg)
     }
 
-    private fun verifyPinCode(req: VerifyPINCodeDTOReq, paymentArg: PaymentArg, faceArg: FaceArg) {
-
+    private fun verifyPinCode(req: VerifyPINCodeDTOReq, paymentArg: PaymentArg) {
         PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<PinArg> {
             override fun onSuccess(data: PinArg) {
-                onPinVerifySuccess(data, paymentArg, faceArg)
+                onPinVerifySuccess(data, paymentArg)
             }
 
             override fun onFailed(code: Int, message: String) {
@@ -60,8 +67,21 @@ class PinVM : BaseViewModel() {
         })
     }
 
-    private fun onPinVerifySuccess(data: PinArg, paymentArg: PaymentArg, faceArg: FaceArg) {
+    private fun onPinVerifySuccess(data: PinArg, paymentArg: PaymentArg) {
         pinArg.postValue(data)
+        when {
+            data.hasDefaultAccount -> {
+                postPayRequest(paymentArg)
+            }
+            else -> {
+                cardRequired.postValue(true)
+            }
+        }
+
+
+    }
+
+    private fun postPayRequest(paymentArg: PaymentArg) {
         val body = PaymentDTOReq(
                 paymentID = paymentArg.paymentId, clientIP = paymentArg.clientIp, accountID = null
         )
@@ -69,15 +89,12 @@ class PinVM : BaseViewModel() {
             override fun onSuccess(data: PaymentDTOResp) {
                 when {
                     data.code == 0 -> {
-                        // show progress face paid
                         paymentSuccess.postValue(data)
                     }
                     data.haveOTP && !data.formOtp.isNullOrEmpty() -> {
-                        //navigate napas
                         otp.postValue(data)
                     }
                     else -> {
-                        // failed
                         errorMessage.postValue(MessageArg(
                                 title = "Giao dịch bị hủy bỏ",
                                 message = "Lỗi thanh toán. Bạn vui lòng chọn thẻ khác".format()
@@ -85,7 +102,6 @@ class PinVM : BaseViewModel() {
                     }
                 }
             }
-
         })
     }
 
@@ -108,7 +124,7 @@ class PinVM : BaseViewModel() {
     private fun onPinVerifyRetry() {
         when (retryCount.getAndDecrement()) {
             0 -> {
-                retryMessage.postValue("Mã PIN không đúng, bạn còn %s lần thử lại".format(retryCount.get()))
+                pinRetry.postValue("Mã PIN không đúng, bạn còn %s lần thử lại".format(retryCount.get()))
             }
             else -> {
                 errorMessage.postValue(MessageArg.paymentCancelMessage)

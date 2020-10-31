@@ -75,7 +75,7 @@ class OtpFragment : Main.Dialog() {
 
     private fun onTransactionSuccess() {
         dismiss()
-        navigate(Main.progressPay)
+        navigate(Main.progress)
     }
 
     private inner class OtpWebViewClient : WebViewClient() {
