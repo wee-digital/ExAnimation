@@ -41,6 +41,7 @@ class PaymentRepository : IBase.Payment {
         mPaymentProvider.verifyPINCode(dataReq = dataReq, listener = listener)
     }
 
+    // TODO: pin fragment arg to otp fragment
     override fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentDTOResp>) {
         mPaymentProvider.payment(dataReq = dataReq, listener = listener)
     }

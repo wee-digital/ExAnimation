@@ -7,4 +7,5 @@ object Config {
 
     const val PIN_RETRY_COUNT = 5
 
+    const val MODE_PREVIEW = true
 }

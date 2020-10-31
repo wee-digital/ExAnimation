@@ -87,10 +87,14 @@ data class PaymentDTOResp(
         @Expose
         var isRetry: Boolean = false,
 
+        // TODO: pin fragment arg to otp fragment
+        // [haveOTP] = true
         @SerializedName("HaveForm")
         @Expose
         var haveOTP: Boolean = false,
 
+        // TODO: pin fragment arg to otp fragment
+        // [haveOTP] = true
         @SerializedName("Form")
         @Expose
         var formOtp: String = ""
