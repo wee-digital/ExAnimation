@@ -68,7 +68,7 @@ class PinFragment : Main.Dialog<PinVM>() {
                 onFetchCardList()
             }
             PinEvent.CARD_ERROR -> {
-               onCardError()
+                onCardError()
             }
         }
     }

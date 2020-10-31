@@ -2,7 +2,6 @@ package wee.digital.fpa.repository.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import wee.digital.fpa.repository.model.FaceInfo
 
 data class FaceRequest(
 

@@ -46,4 +46,4 @@ data class PinResponse(
         @SerializedName("UserID")
         var userId: String,
 
-)
+        )

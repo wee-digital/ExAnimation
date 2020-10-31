@@ -3,8 +3,8 @@ package wee.digital.fpa.repository.model
 import android.os.Bundle
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import wee.digital.fpa.repository.dto.PaymentResponse
 import wee.digital.fpa.repository.dto.FaceResponse
+import wee.digital.fpa.repository.dto.PaymentResponse
 import wee.digital.fpa.repository.dto.PinResponse
 
 /**

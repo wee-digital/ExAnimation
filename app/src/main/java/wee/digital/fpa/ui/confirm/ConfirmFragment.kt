@@ -25,9 +25,9 @@ class ConfirmFragment : Main.Dialog<ConfirmVM>() {
             confirmView.onBindArg(it)
         }
     }
+
     override fun onLiveEventChanged(event: Int) {
     }
-
 
 
 }
