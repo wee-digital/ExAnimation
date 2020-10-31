@@ -11,7 +11,7 @@ class ConfirmView(val v: ConfirmFragment) {
     fun onBindArg(arg: ConfirmArg?) {
         arg ?: return
         onBindDialogSize(arg.headerGuideline)
-        v.confirmImageViewIcon.setImageResource(arg.icon ?: R.mipmap.img_checked_flat)
+        v.confirmImageViewIcon.setImageResource(arg.icon)
         v.confirmTextViewTitle.text = arg.title ?: string(R.string.app_name)
         v.confirmTextViewMessage.setHyperText(arg.message)
         v.confirmViewAccept.text = arg.buttonAccept ?: "Xác nhận"

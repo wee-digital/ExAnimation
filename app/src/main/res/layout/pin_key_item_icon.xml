@@ -9,12 +9,13 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/pinImageViewKey"
-        android:layout_width="@dimen/_46sdp"
+        android:layout_width="@dimen/_38sdp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/margin"
         android:background="@drawable/drw_pin_bg"
-        android:padding="@dimen/_16sdp"
-        android:src="@drawable/ic_placeholder"
+        android:paddingStart="@dimen/_9sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:src="@drawable/drw_pin_del"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

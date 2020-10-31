@@ -3,7 +3,6 @@ package wee.digital.fpa.ui
 import com.intel.realsense.librealsense.RsContext
 import com.intel.realsense.librealsense.UsbUtilities
 import kotlinx.android.synthetic.main.main.*
-import okhttp3.WebSocket
 import wee.digital.fpa.BuildConfig
 import wee.digital.fpa.app.App
 import wee.digital.fpa.app.app

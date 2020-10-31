@@ -23,7 +23,6 @@ import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
-import wee.digital.library.extension.post
 
 class MainActivity : BaseActivity() {
 
@@ -141,13 +140,13 @@ class MainActivity : BaseActivity() {
     private fun onDeviceInfoChanged(it: DeviceInfo?) {
         when {
             it?.uid.isNullOrEmpty() -> {
-                navigate(MainDirections.actionGlobalConnectFragment()) {
+                navigate(Main.connect) {
                     setLaunchSingleTop()
                 }
             }
             else -> {
                 mainView.onBindDeviceInfo(it)
-                navigate(MainDirections.actionGlobalAdvFragment()) {
+                navigate(Main.adv) {
                     setLaunchSingleTop()
                 }
             }
@@ -163,7 +162,7 @@ class MainActivity : BaseActivity() {
                 timeoutVM.inTheEnd.value = null
                 faceVM.faceArg.value = null
                 pinVM.pinArg.value = null
-                navigate(MainDirections.actionGlobalSplashFragment()) {
+                navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()
                 }

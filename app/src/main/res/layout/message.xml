@@ -21,7 +21,8 @@
         android:padding="@dimen/margin2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineHeader">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/messageImageViewIcon"
@@ -34,32 +35,34 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageTextViewTitle"
             style="@style/Headline2"
-            android:textAlignment="center"
             android:layout_marginTop="@dimen/margin2"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageImageViewIcon"
-            tools:text="@tools:sample/lorem" />
+            tools:text="Title goes here" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageTextViewMessage"
             style="@style/BodyRegular"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin2"
+            android:layout_marginEnd="@dimen/margin"
             android:textAlignment="center"
-            android:maxLines="4"
-            android:layout_marginStart="@dimen/margin2"
-            android:layout_marginEnd="@dimen/margin2"
             app:layout_constraintBottom_toTopOf="@+id/messageViewClose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/messageTextViewTitle"
-            android:layout_marginTop="@dimen/margin2"
             app:layout_constraintVertical_bias="0.0"
+            tools:maxLines="2"
             tools:text="@tools:sample/lorem/random" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageViewClose"
             style="@style/Button.Semibold"
-            android:layout_marginBottom="@dimen/margin2"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

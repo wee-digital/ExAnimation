@@ -34,7 +34,7 @@
     </style>
 
     <style name="Headline2" parent="TextView">
-        <item name="android:textSize">@dimen/_19ssp</item>
+        <item name="android:textSize">@dimen/_15ssp</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -48,16 +48,16 @@
     </style>
 
     <style name="BodyRegular" parent="TextView">
-        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textSize">@dimen/_8ssp</item>
     </style>
 
     <style name="DescriptionSemibold" parent="TextView">
         <item name="android:fontFamily">@font/inter_semibold</item>
-        <item name="android:textSize">@dimen/_9ssp</item>
+        <item name="android:textSize">@dimen/_8ssp</item>
     </style>
 
     <style name="DescriptionRegular" parent="TextView">
-        <item name="android:textSize">@dimen/_9ssp</item>
+        <item name="android:textSize">@dimen/_8ssp</item>
     </style>
 
     <!-- EDIT TEXT -->
@@ -103,8 +103,9 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@drawable/drw_btn_primary</item>
-        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textSize">@dimen/_11ssp</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:elevation">1px</item>
     </style>
 
     <!--DIALOG-->
@@ -115,6 +116,7 @@
         <item name="android:layout_height">0dp</item>
         <item name="android:minHeight">@dimen/_200sdp</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
+        <item name="android:paddingTop">@dimen/marginShadow</item>
     </style>
 
     <style name="Dialog.Title" parent="TextView">
@@ -123,10 +125,12 @@
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
         <item name="android:textColor">@color/color_black</item>
-        <item name="android:textSize">@dimen/_11ssp</item>
+        <item name="android:textSize">@dimen/_9ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Dialog title</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:paddingBottom">@dimen/_2sdp</item>
     </style>
 
     <style name="Dialog.Text">
@@ -134,7 +138,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
-        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textColor">#A0A0A0</item>
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Cửa hàng</item>
@@ -143,7 +147,7 @@
     <style name="Dialog.TitleIcon">
         <item name="android:layout_width">@dimen/_40sdp</item>
         <item name="android:layout_height">@dimen/_40sdp</item>
-        <item name="android:tint">@color/colorGray</item>
+        <item name="android:tint">#A0A0A0</item>
         <item name="android:padding">@dimen/_14sdp</item>
     </style>
 
@@ -151,8 +155,8 @@
     <style name="Message" />
 
     <style name="Message.Icon">
-        <item name="android:layout_width">@dimen/_60sdp</item>
-        <item name="android:layout_height">@dimen/_60sdp</item>
+        <item name="android:layout_width">@dimen/_54sdp</item>
+        <item name="android:layout_height">@dimen/_54sdp</item>
         <item name="android:layout_marginBottom">@dimen/margin2</item>
         <item name="android:layout_marginTop">@dimen/margin2</item>
     </style>
@@ -197,15 +201,15 @@
 
     <style name="Connect.HelpIcon" parent="TextView">
         <item name="android:gravity">center</item>
-        <item name="android:layout_width">@dimen/_15sdp</item>
-        <item name="android:layout_height">@dimen/_15sdp</item>
+        <item name="android:layout_width">@dimen/_11sdp</item>
+        <item name="android:layout_height">@dimen/_11sdp</item>
         <item name="android:background">@drawable/bg_oval_outline</item>
         <item name="android:backgroundTint">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorBlue</item>
-        <item name="android:textSize">@dimen/_9ssp</item>
+        <item name="android:textSize">@dimen/_6ssp</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
         <item name="android:layout_marginTop">@dimen/margin2</item>
-        <item name="android:paddingEnd">1dp</item>
+        <item name="android:paddingStart">1dp</item>
     </style>
 
     <style name="Connect.HelpText" parent="TextView2">
@@ -246,7 +250,7 @@
     </style>
 
     <style name="Guideline.Face" parent="Guideline.Horizontal">
-        <item name="layout_constraintGuide_percent">0.35</item>
+        <item name="layout_constraintGuide_percent">0.40</item>
     </style>
 
     <style name="Guideline.Splash" parent="Guideline.Horizontal">
@@ -277,8 +281,9 @@
     <style name="ImageView" />
 
     <style name="ImageView.Progress">
-        <item name="android:layout_width">@dimen/_32sdp</item>
-        <item name="android:layout_height">@dimen/_32sdp</item>
+        <item name="android:layout_width">@dimen/_38sdp</item>
+        <item name="android:layout_height">@dimen/_38sdp</item>
+        <item name="android:scaleType">centerInside</item>
         <item name="android:clickable">false</item>
         <item name="android:visibility">invisible</item>
     </style>

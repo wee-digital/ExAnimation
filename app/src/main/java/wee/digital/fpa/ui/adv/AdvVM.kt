@@ -12,23 +12,23 @@ import java.util.concurrent.TimeUnit
 
 class AdvVM : BaseViewModel() {
 
-    val imageList = MutableLiveData<List<MediaItem>?>()
+    val imageList = MutableLiveData<List<AdvItem>?>()
 
     private var disposable: Disposable? = null
 
     val pageLiveData = EventLiveData<Boolean>()
 
     private val videoList = listOf(
-            MediaItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_tree).toString()),
-            MediaItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_water).toString())
+            AdvItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_tree).toString()),
+            AdvItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_water).toString())
     )
 
     fun fetchAdvList() {
         imageList.postValue(listOf(
-                MediaItem(null, R.mipmap.img_adv1),
-                MediaItem(null, R.mipmap.img_adv2),
-                MediaItem(null, R.mipmap.img_adv3),
-                MediaItem(null, R.mipmap.img_adv4)
+                AdvItem(null, R.mipmap.img_adv1),
+                AdvItem(null, R.mipmap.img_adv2),
+                AdvItem(null, R.mipmap.img_adv3),
+                AdvItem(null, R.mipmap.img_adv4)
         ))
     }
 

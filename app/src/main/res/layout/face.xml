@@ -23,7 +23,6 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewRemaining"
         style="@style/BodyRegular"
-        android:layout_marginTop="@dimen/margin"
         android:textColor="@color/color_gray_1"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +44,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/faceImageViewAnim"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_278sdp"
+        android:layout_height="@dimen/_289sdp"
         android:alpha="0.0"
         app:layout_constraintBottom_toBottomOf="@+id/faceImageViewCamera"
         app:layout_constraintDimensionRatio="w,1:1"
@@ -58,7 +57,7 @@
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/faceImageViewCamera"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_210sdp"
+        android:layout_height="@dimen/_224sdp"
         android:background="@drawable/drw_face"
         android:padding="@dimen/_3sdp"
         android:scaleType="centerCrop"
@@ -95,7 +94,6 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle3"
         style="@style/Headline3"
-        android:layout_marginTop="@dimen/margin"
         android:text="vào giữa vùng nhận diện"
         android:textColor="@color/color_black"
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2"

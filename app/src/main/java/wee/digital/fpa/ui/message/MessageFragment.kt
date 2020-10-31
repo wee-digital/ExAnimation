@@ -3,11 +3,8 @@ package wee.digital.fpa.ui.message
 import android.view.View
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
 
 class MessageFragment : Main.Dialog() {
-
-    private val messageVM by lazy { activityVM(MessageVM::class) }
 
     private val messageView by lazy { MessageView(this) }
 

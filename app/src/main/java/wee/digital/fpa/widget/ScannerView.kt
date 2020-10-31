@@ -10,7 +10,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.annotation.Px
 
-class ViewScanner(context: Context) : View(context) {
+class ScannerView(context: Context) : View(context) {
 
     private val mMaskPaint: Paint
 

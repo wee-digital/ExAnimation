@@ -2,17 +2,12 @@ package wee.digital.fpa.ui.pin
 
 import android.view.View
 import kotlinx.android.synthetic.main.pin.*
-import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.repository.dto.PinArg
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.face.FaceFragment
-import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.fpa.ui.message.MessageVM
-import wee.digital.fpa.ui.payment.PaymentVM
 import wee.digital.fpa.ui.progress.ProgressArg
 
 class PinFragment : Main.Dialog() {
@@ -58,11 +53,7 @@ class PinFragment : Main.Dialog() {
     /**
      * [FaceFragment] properties
      */
-    private val paymentVM by lazy { activityVM(PaymentVM::class) }
 
-    private val pinVM by lazy { activityVM(PinVM::class) }
-
-    private val faceVM by lazy {activityVM(FaceVM::class)}
 
     private val pinView by lazy { PinView(this) }
 
@@ -80,13 +71,13 @@ class PinFragment : Main.Dialog() {
         it ?: return
         dismiss()
         when {
+            // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
             it.hasDefaultAccount -> {
-                // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
-                navigate(MainDirections.actionGlobalOtpFragment())
+                navigate(Main.otp)
             }
+            // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
             else -> {
-                // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
-                navigate(MainDirections.actionGlobalCardFragment())
+                navigate(Main.card)
             }
         }
     }
@@ -102,15 +93,15 @@ class PinFragment : Main.Dialog() {
         progressVM.arg.postValue(null)
         paymentVM.arg.postValue(null)
         timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-        activityVM(MessageVM::class).arg.value = it
-        navigate(MainDirections.actionGlobalMessageFragment())
+        messageVM.arg.value = it
+        navigate(Main.message)
     }
 
     private fun onPaymentDeny() {
         dismiss()
         timeoutVM.stopTimeout()
         paymentVM.arg.postValue(null)
-        navigate(MainDirections.actionGlobalAdvFragment()) {
+        navigate(Main.adv) {
             setNoneAnim()
             setLaunchSingleTop()
         }

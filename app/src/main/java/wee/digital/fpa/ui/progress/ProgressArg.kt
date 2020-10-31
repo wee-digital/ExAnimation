@@ -5,7 +5,7 @@ import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 
 data class ProgressArg(
-        var direction : NavDirections = MainDirections.actionGlobalProgressFragment(),
+        var direction: NavDirections = MainDirections.actionGlobalProgressFragment(),
         var image: Int = R.mipmap.img_progress_small,
         var title: String,
         var message: String

@@ -5,6 +5,10 @@
     style="@style/MatchParent"
     android:background="@color/colorBackgroundPrimary">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHeader"
+        style="@style/Guideline.Header" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView2"
         android:layout_width="match_parent"
@@ -19,9 +23,11 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/connectViewLogo"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_18sdp"
-        android:layout_margin="@dimen/margin2"
+        android:layout_marginTop="@dimen/marginShadow"
+        android:layout_height="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/margin2"
         android:src="@mipmap/img_logo"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
         app:layout_constraintDimensionRatio="@string/logoRatio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
