@@ -41,6 +41,10 @@ class PinFragment : Main.Dialog() {
         pinVM.pinArg.observe {
             onPinVerifySuccess(it)
         }
+
+        pinVM.paymentResult.observe {
+            onPinPaymentResult(it)
+        }
     }
 
 
@@ -73,12 +77,19 @@ class PinFragment : Main.Dialog() {
         when {
             // Nếu user có thẻ mặc định: chuyển pop-up Napas_form (Webview Napas) với thẻ mặc
             it.hasDefaultAccount -> {
-                navigate(Main.otp)
+                //navigate(Main.otp)
             }
             // Nếu user không có thẻ mặc định: chuyển pop-up Card_select (Chọn thẻ)
             else -> {
-                navigate(Main.card)
+                //navigate(Main.card)
             }
+        }
+    }
+
+    private fun onPinPaymentResult(it: String) {
+        when(it){
+            "OK"-> navigate(Main.progressPay)
+            "Napas"-> navigate(Main.otp)
         }
     }
 

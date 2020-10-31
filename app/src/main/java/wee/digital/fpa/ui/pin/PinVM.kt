@@ -13,6 +13,7 @@ import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
+import wee.digital.fpa.ui.progress.ProgressArg
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
@@ -30,7 +31,7 @@ class PinVM : BaseViewModel() {
 
     val errorMessage = EventLiveData<MessageArg>()
 
-    val paymentResult = EventLiveData<Boolean>()
+    val paymentResult = EventLiveData<String>()
 
 
     fun onPinFilled(pinCode: String, paymentArg: PaymentArg?, faceArg: FaceArg?) {
@@ -64,23 +65,28 @@ class PinVM : BaseViewModel() {
     private fun onPinVerifySuccess(data: PinArg, paymentArg: PaymentArg, faceArg: FaceArg) {
         pinArg.postValue(data)
         val body = PaymentDTOReq(
-
+            paymentID = paymentArg.paymentId,clientIP = paymentArg.clientIp,accountID = null
         )
         PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentDTOResp> {
             override fun onSuccess(data: PaymentDTOResp) {
-
                 when {
                     data.code == 0 -> {
                         // show progress face paid
+                        paymentResult.postValue("OK")
                     }
                     data.haveOTP && !data.formOtp.isNullOrEmpty() -> {
                         //navigate napas
+                        paymentResult.postValue("Napas")
                     }
                     else -> {
                         // failed
+                        errorMessage.postValue(MessageArg(
+                                title = "Giao dịch bị hủy bỏ",
+                                message = "Lỗi thanh toán. Bạn vui lòng chọn thẻ khác".format()
+                        ))
                     }
                 }
-                paymentResult.postValue(true)
+                paymentResult.postValue("OK")
             }
 
         })

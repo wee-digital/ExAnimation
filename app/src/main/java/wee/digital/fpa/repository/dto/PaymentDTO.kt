@@ -41,7 +41,7 @@ data class PaymentDTOReq(
 
         @SerializedName("ClientIP")
         @Expose
-        var clientID: String = ""
+        var clientIP: String = ""
 
 )
 

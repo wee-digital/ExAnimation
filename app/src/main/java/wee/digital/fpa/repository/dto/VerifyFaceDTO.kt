@@ -16,7 +16,7 @@ data class VerifyFaceDTOReq(
 
         @SerializedName("ClientIP")
         @Expose
-        var clientID: String = ""
+        var clientIP: String = ""
 
 )
 
