@@ -5,11 +5,10 @@ import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.mainVM
-import wee.digital.fpa.ui.timeoutVM
-import kotlin.reflect.KClass
+import wee.digital.fpa.ui.MainDialog
+import wee.digital.fpa.ui.onPaymentCancel
 
-class PaymentFragment : Main.Dialog<PaymentVM>() {
+class PaymentFragment : MainDialog() {
 
     private val paymentView by lazy { PaymentView(this) }
 
@@ -17,50 +16,37 @@ class PaymentFragment : Main.Dialog<PaymentVM>() {
         return R.layout.payment
     }
 
-    override fun localViewModel(): KClass<PaymentVM> {
-        return PaymentVM::class
-    }
-
     override fun onViewCreated() {
         paymentView.onViewInit()
     }
 
     override fun onLiveDataObserve() {
-        localVM.arg.observe {
+        sharedVM.payment.observe {
             paymentView.onPaymentDataChanged(it)
         }
-        timeoutVM.startTimeout(Timeout.PAYMENT_CONFIRM)
-        timeoutVM.inTheEnd.observe {
+        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM)
+        sharedVM.timeoutEnd.observe {
             it ?: return@observe
-            onPaymentDeny()
+            onPaymentCancel()
         }
-        mainVM.deviceInfo.observe {
+        sharedVM.deviceInfo.observe {
             paymentView.onDeviceInfoChanged(it)
         }
-    }
-
-    override fun onLiveEventChanged(event: Int) {
     }
 
     override fun onViewClick(v: View?) {
         when (v) {
             paymentViewAccept -> onPaymentAccept()
-            paymentViewDeny -> onPaymentDeny()
+            paymentViewDeny -> onPaymentCancel()
         }
     }
 
     private fun onPaymentAccept() {
-        timeoutVM.stopTimeout()
+        sharedVM.stopTimeout()
         dismiss()
         navigate(Main.face) {
             setLaunchSingleTop()
         }
-    }
-
-    private fun onPaymentDeny() {
-        dismiss()
-        timeoutVM.stopTimeout()
-        localVM.arg.postValue(null)
     }
 
 

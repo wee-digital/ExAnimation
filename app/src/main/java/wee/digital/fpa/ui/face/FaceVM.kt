@@ -1,7 +1,6 @@
 package wee.digital.fpa.ui.face
 
 import android.util.Base64
-import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.data.local.Config
@@ -12,18 +11,16 @@ import wee.digital.fpa.repository.network.CollectionData
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
+import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.payment.PaymentArg
 import java.util.concurrent.atomic.AtomicInteger
 
 class FaceVM : BaseViewModel() {
 
-    private val retryCount = AtomicInteger()
-
-    var arg = MutableLiveData<FaceArg?>()
-
-    override fun onStart() {
-        retryCount.set(Config.FACE_RETRY_COUNT)
-    }
+    private val retryCount = AtomicInteger(Config.FACE_RETRY_COUNT)
+    val successLiveData = EventLiveData<FaceArg>()
+    val failureLiveData = EventLiveData<Boolean>()
+    val retriesLiveData = EventLiveData<Boolean>()
 
     fun verifyFace(bitmap: ByteArray, dataFace: FacePointData, dataColl: DataCollect, paymentArg: PaymentArg?) {
         paymentArg ?: throw Event.paymentArgError
@@ -32,31 +29,21 @@ class FaceVM : BaseViewModel() {
         PaymentRepository.ins.verifyFace(req, dataFace, object : Api.ClientListener<FaceResponse> {
             override fun onSuccess(response: FaceResponse) {
                 CollectionData.instance.encryptCollData(dataColl)
-                onVerifyFaceSuccess(response)
+                successLiveData.postValue(FaceArg(response))
             }
 
             override fun onFailed(code: Int, message: String) {
-                onVerifyFaceFailed()
+                when (retryCount.getAndDecrement()) {
+                    0 -> {
+                        failureLiveData.postValue(true)
+                    }
+                    else -> {
+                        retriesLiveData.postValue(true)
+                    }
+                }
             }
 
         })
-    }
-
-    fun onVerifyFaceSuccess(response: FaceResponse) {
-        arg.postValue(FaceArg(response))
-        eventLiveData.postValue(FaceEvent.VERIFY_SUCCESS)
-    }
-
-    fun onVerifyFaceFailed() {
-        when (retryCount.getAndDecrement()) {
-            0 -> {
-                eventLiveData.postValue(FaceEvent.VERIFY_FAILED)
-            }
-            else -> {
-                eventLiveData.postValue(FaceEvent.VERIFY_RETRY)
-            }
-        }
-
     }
 
 }

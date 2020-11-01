@@ -18,6 +18,8 @@ object Event {
 
     val pinDataError = NullPointerException("Pin data error")
 
+    val otpFormError = NullPointerException("OTP form data error")
+
     val qrError = NullPointerException("QR data error")
 
     fun initConsumer() {

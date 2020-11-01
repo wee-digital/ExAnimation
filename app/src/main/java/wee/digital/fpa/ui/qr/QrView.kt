@@ -5,6 +5,7 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.R
 import wee.digital.fpa.app.App
@@ -12,7 +13,6 @@ import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.util.observerCameraListener
-import wee.digital.fpa.util.startCamera
 import wee.digital.library.extension.clear
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.load
@@ -42,7 +42,7 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
         v.qrViewProgress.load(R.mipmap.img_progress)
         v.addClickListener(v.dialogViewClose)
         v.observerCameraListener(this)
-        imageLiveData.observe(v.viewLifecycleOwner, {
+        imageLiveData.observe(v.viewLifecycleOwner, Observer {
             v.qrImageViewCamera?.setImageBitmap(it)
         })
         scanQRCode.initListener(v)

@@ -2,58 +2,60 @@ package wee.digital.fpa.ui.card
 
 import kotlinx.android.synthetic.main.card.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.*
+import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.MainDialog
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
+import wee.digital.fpa.ui.onPaymentFailed
 import wee.digital.fpa.ui.progress.ProgressArg
-import kotlin.reflect.KClass
 
-class CardFragment : Main.Dialog<CardVM>() {
+class CardFragment : MainDialog() {
+
+    private val cardVM by lazy { activityVM(CardVM::class) }
 
     private val adapter = CardAdapter()
 
+    /**
+     * [MainDialog] override
+     */
     override fun layoutResource(): Int {
         return R.layout.card
-    }
-
-    override fun localViewModel(): KClass<CardVM> {
-        return CardVM::class
     }
 
     override fun onViewCreated() {
         adapter.bind(paymentRecyclerViewCard, 2)
         adapter.itemClick = { model, _ ->
-            localVM.postPayRequest(model.bankCode, paymentVM.arg.value)
+            cardVM.postPayRequest(model.bankCode, sharedVM.payment.value)
         }
     }
 
     override fun onLiveDataObserve() {
-        localVM.cardList.observe {
+        sharedVM.cardList.observe {
+            sharedVM.cardList.value = it
             adapter.set(it)
         }
-        localVM.otpForm.observe {
+        cardVM.otpFormLiveData.observe {
             onNavigateOTP(it)
         }
-    }
-
-    override fun onLiveEventChanged(event: Int) {
-        when (event) {
-            CardEvent.PAY_SUCCESS -> {
-                onPaymentSuccess()
-            }
-            CardEvent.PAY_FAILED -> {
-                onPaymentFailed(MessageArg.paymentCancel)
-            }
+        cardVM.paymentSuccess.observe {
+            onPaymentSuccess()
+        }
+        cardVM.paymentFailed.observe {
+            onPaymentFailed(MessageArg.paymentCancel)
         }
     }
 
+    /**
+     * [CardFragment] properties
+     */
     private fun onPaymentSuccess() {
         dismiss()
-        progressVM.arg.postValue(ProgressArg.paid)
+        sharedVM.progress.postValue(ProgressArg.paid)
     }
 
     private fun onNavigateOTP(otpForm: String) {
         dismiss()
-        otpVM.otpForm.value = otpForm
+        sharedVM.otpForm.value = otpForm
         navigate(Main.otp)
     }
 

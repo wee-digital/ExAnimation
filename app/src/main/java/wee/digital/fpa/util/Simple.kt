@@ -26,8 +26,6 @@ interface SimpleObserver<T> : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
-
-
         onComplete(null, e)
     }
 
@@ -98,7 +96,6 @@ interface SimplePageChangeListener : ViewPager.OnPageChangeListener {
     override fun onPageSelected(position: Int) {
     }
 }
-
 
 interface SimpleMotionTransitionListener : MotionLayout.TransitionListener {
     override fun onTransitionChange(layout: MotionLayout?, startId: Int, endId: Int, progress: Float) {

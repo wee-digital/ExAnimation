@@ -10,13 +10,9 @@ class QrVM : BaseViewModel() {
 
     private var isQRChecked = false
 
-    val message = EventLiveData<String?>()
+    val messageLiveData = EventLiveData<String>()
 
-    var qrCode = EventLiveData<JsonObject>()
-
-    override fun onStart() {
-
-    }
+    val qrLiveData = EventLiveData<JsonObject>()
 
     fun checkQRCode(text: String?) {
         if (isQRChecked) return
@@ -24,16 +20,16 @@ class QrVM : BaseViewModel() {
 
         if (text.isNullOrEmpty()) {
             isQRChecked = false
-            message.value = null
+            messageLiveData.value = null
             return
         }
         FrameUtil.decryptQRCode(text)?.also {
             log.d(text.jsonFormat())
-            qrCode.postValue(it)
+            qrLiveData.postValue(it)
             return
         }
         log.d("QR is wrong")
-        message.value = "Mã không đúng. Bạn vui\nlòng thử lại lần nữa"
+        messageLiveData.value = "Mã không đúng. Bạn vui\nlòng thử lại lần nữa"
         isQRChecked = false
     }
 

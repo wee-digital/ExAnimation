@@ -16,7 +16,7 @@ data class GetBankAccListDTOReq(
         var userID: String = ""
 )
 
-data class GetBankAccListDTOResp(
+data class CardListResponse(
         @SerializedName("Code")
         @Expose
         var code: Int = ErrCode.API_FAIL,

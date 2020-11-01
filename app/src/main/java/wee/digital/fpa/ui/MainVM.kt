@@ -7,7 +7,6 @@ import io.reactivex.disposables.Disposable
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
 import wee.digital.fpa.repository.dto.GetTokenDTOResp
-import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.utils.ErrCode
 import wee.digital.fpa.ui.base.BaseViewModel
@@ -19,16 +18,11 @@ class MainVM : BaseViewModel() {
 
     var tokenResponse = MutableLiveData<GetTokenDTOResp>()
 
-    val deviceInfo = MutableLiveData<DeviceInfo?>()
+
 
     val rootDirection get() = Main.mainDirection
 
-    override fun onStart() {
-    }
 
-    fun syncDeviceInfo() {
-        deviceInfo.postValue(BaseData.ins.getDeviceInfoPref())
-    }
 
     fun checkDeviceStatusOnTimer() {
         paymentRequest = Single.timer(500, TimeUnit.MILLISECONDS)
@@ -88,4 +82,6 @@ class MainVM : BaseViewModel() {
             }
         }
     }
+
+
 }

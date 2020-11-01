@@ -20,7 +20,7 @@ interface IBase {
         fun verifyFace(dataReq: FaceRequest, facePointData: FacePointData, listener: Api.ClientListener<FaceResponse>)
         fun verifyPINCode(dataReq: PinRequest, listener: Api.ClientListener<PinResponse>)
         fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentResponse>)
-        fun getBankAccList(dataReq: GetBankAccListDTOReq, listener: Api.ClientListener<GetBankAccListDTOResp>)
+        fun getBankAccList(dataReq: GetBankAccListDTOReq, listener: Api.ClientListener<CardListResponse>)
         fun updatePaymentStatus(dataReq: UpdatePaymentStatusDTOReq)
         fun updateCancelPayment(dataReq: UpdateCancelPaymentDTOReq)
     }

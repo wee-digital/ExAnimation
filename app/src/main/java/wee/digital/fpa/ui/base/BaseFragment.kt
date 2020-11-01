@@ -70,6 +70,13 @@ abstract class BaseFragment : Fragment(), BaseView {
         observe(viewLifecycleOwner, Observer(block))
     }
 
+    fun <T> NonNullLiveData<T?>.observe(block: (T) -> Unit) {
+        observe(viewLifecycleOwner, Observer {
+            it ?: return@Observer
+            block(it)
+        })
+    }
+
     open fun activity(): BaseActivity {
         if (activity !is BaseActivity) throw ClassCastException("BaseFragment must be owned in BaseActivity")
         return activity as BaseActivity

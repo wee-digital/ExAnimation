@@ -12,12 +12,9 @@ import wee.digital.library.extension.parse
 
 class SocketVM : BaseViewModel(), WebSocketControl.WebSocketMonitorListener {
 
-    val webSocket = EventLiveData<WebSocket?>()
+    val webSocketLiveData = EventLiveData<WebSocket?>()
 
-    val response = EventLiveData<SocketResponse>()
-
-    override fun onStart() {
-    }
+    val responseLiveData = EventLiveData<SocketResponse>()
 
     fun connectSocket(token: String) {
         Socket.action.connectWebSocketMonitor(token, this)
@@ -28,18 +25,18 @@ class SocketVM : BaseViewModel(), WebSocketControl.WebSocketMonitorListener {
      */
     override fun onConnected(socket: WebSocket, response: Response) {
         log.d("WebSocketMonitorListener.onConnected: ${socket.request().url}")
-        webSocket.postValue(socket)
+        webSocketLiveData.postValue(socket)
     }
 
     override fun onMessage(message: String) {
         val data = message.parse(SocketResponse::class.java) ?: return
         log.d("WebSocketMonitorListener.onMessage: ${message.jsonFormat()}")
-        response.postValue(data)
+        responseLiveData.postValue(data)
     }
 
     override fun onError(socket: WebSocket, t: Throwable) {
         log.d("WebSocketMonitorListener.onError: $${socket.request().url} ${t.message}")
-        webSocket.postValue(null)
+        webSocketLiveData.postValue(null)
     }
 
 }

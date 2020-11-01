@@ -1,151 +1,74 @@
 package wee.digital.fpa.ui
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.MainDirections
+import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
-import wee.digital.fpa.ui.base.*
-import wee.digital.fpa.ui.card.CardVM
-import wee.digital.fpa.ui.confirm.ConfirmVM
-import wee.digital.fpa.ui.connect.ConnectVM
-import wee.digital.fpa.ui.face.FaceVM
+import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.fpa.ui.message.MessageVM
-import wee.digital.fpa.ui.otp.OtpVM
-import wee.digital.fpa.ui.payment.PaymentVM
-import wee.digital.fpa.ui.pin.PinVM
-import wee.digital.fpa.ui.progress.ProgressVM
-import wee.digital.fpa.ui.vm.TimeoutVM
-import kotlin.reflect.KClass
+import wee.digital.fpa.ui.vm.SharedVM
 
-val Fragment.messageVM get() = activityVM(MessageVM::class)
-
-val Fragment.confirmVM get() = activityVM(ConfirmVM::class)
-
-val Fragment.progressVM get() = activityVM(ProgressVM::class)
 
 val Fragment.mainVM get() = activityVM(MainVM::class)
 
-val Fragment.timeoutVM get() = activityVM(TimeoutVM::class)
-
-val Fragment.connectVM get() = activityVM(ConnectVM::class)
-
-val Fragment.paymentVM get() = activityVM(PaymentVM::class)
-
-val Fragment.faceVM get() = activityVM(FaceVM::class)
-
-val Fragment.pinVM get() = activityVM(PinVM::class)
-
-val Fragment.cardVM get() = activityVM(CardVM::class)
-
-val Fragment.otpVM get() = activityVM(OtpVM::class)
-
-fun Main.Fragment<*>.onPaymentFailed(messageArg: MessageArg?) {
-    progressVM.arg.postValue(null)
-    paymentVM.arg.postValue(null)
-    timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-    messageVM.arg.value = messageArg
-    navigate(Main.message)
+fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
+    activityVM(SharedVM::class).apply {
+        progress.postValue(null)
+        payment.postValue(null)
+        message.value = messageArg
+        startTimeout(Timeout.PAYMENT_DENIED)
+    }
+    findNavController().navigate(Main.message)
 }
 
-fun Main.Dialog<*>.onPaymentFailed(messageArg: MessageArg?) {
-    progressVM.arg.postValue(null)
-    paymentVM.arg.postValue(null)
-    timeoutVM.startTimeout(Timeout.PAYMENT_DENIED)
-    messageVM.arg.value = messageArg
-    navigate(Main.message)
+fun Fragment.onPaymentCancel() {
+    activityVM(SharedVM::class).apply {
+        progress.postValue(null)
+        payment.postValue(null)
+        stopTimeout()
+    }
+    val options = NavOptions.Builder().apply {
+        setLaunchSingleTop(true)
+        setPopUpTo(R.id.main, false)
+    }
+    findNavController().navigate(Main.adv, options.build())
 }
 
-fun Main.Fragment<*>.onPaymentCancel() {
-    timeoutVM.stopTimeout()
-    paymentVM.arg.postValue(null)
-    navigate(Main.adv) {
-        setNoneAnim()
-        setLaunchSingleTop()
-    }
-}
+object Main {
 
-fun Main.Dialog<*>.onPaymentCancel() {
-    timeoutVM.stopTimeout()
-    paymentVM.arg.postValue(null)
-    navigate(Main.adv) {
-        setNoneAnim()
-        setLaunchSingleTop()
-    }
-}
-
-class Main {
-
-    abstract class Fragment<T : BaseViewModel> : BaseFragment() {
-
-        protected val localVM by lazy { activityVM(localViewModel()) }
-
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-            localVM.onStart()
-            localVM.eventLiveData.observe {
-                onLiveEventChanged(it)
-            }
-        }
-
-        abstract fun localViewModel(): KClass<T>
-
-        abstract fun onLiveEventChanged(event: Int)
-
+    val mainDirection by lazy {
+        EventLiveData<NavDirections>()
     }
 
-    abstract class Dialog<T : BaseViewModel> : BaseDialog() {
+    val pin = MainDirections.actionGlobalPinFragment()
 
-        protected val localVM by lazy { activityVM(localViewModel()) }
+    val adv = MainDirections.actionGlobalAdvFragment()
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-            localVM.onStart()
-            localVM.eventLiveData.observe {
-                onLiveEventChanged(it)
-            }
-        }
+    val otp = MainDirections.actionGlobalOtpFragment()
 
-        abstract fun localViewModel(): KClass<T>
+    val card = MainDirections.actionGlobalCardFragment()
 
-        abstract fun onLiveEventChanged(event: Int)
-    }
+    val splash = MainDirections.actionGlobalSplashFragment()
 
-    companion object {
+    val face = MainDirections.actionGlobalFaceFragment()
 
-        val mainDirection by lazy {
-            EventLiveData<NavDirections>()
-        }
+    val payment = MainDirections.actionGlobalPaymentFragment()
 
-        val pin = MainDirections.actionGlobalPinFragment()
+    val message = MainDirections.actionGlobalMessageFragment()
 
-        val adv = MainDirections.actionGlobalAdvFragment()
+    val confirm = MainDirections.actionGlobalConfirmFragment()
 
-        val otp = MainDirections.actionGlobalOtpFragment()
+    val connect = MainDirections.actionGlobalConnectFragment()
 
-        val card = MainDirections.actionGlobalCardFragment()
+    val device = MainDirections.actionGlobalDeviceFragment()
 
-        val splash = MainDirections.actionGlobalSplashFragment()
+    val qr = MainDirections.actionGlobalQrFragment()
 
-        val face = MainDirections.actionGlobalFaceFragment()
-
-        val payment = MainDirections.actionGlobalPaymentFragment()
-
-        val message = MainDirections.actionGlobalMessageFragment()
-
-        val confirm = MainDirections.actionGlobalConfirmFragment()
-
-        val connect = MainDirections.actionGlobalConnectFragment()
-
-        val device = MainDirections.actionGlobalDeviceFragment()
-
-        val qr = MainDirections.actionGlobalQrFragment()
-
-        val progress = MainDirections.actionGlobalProgressFragment()
-    }
-
+    val progress = MainDirections.actionGlobalProgressFragment()
 }
 
 

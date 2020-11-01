@@ -1,25 +1,26 @@
 package wee.digital.fpa.ui.otp
 
-import androidx.lifecycle.MutableLiveData
+import wee.digital.fpa.repository.dto.CardListResponse
+import wee.digital.fpa.repository.dto.GetBankAccListDTOReq
+import wee.digital.fpa.repository.network.Api
+import wee.digital.fpa.repository.payment.PaymentRepository
+import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
 import java.util.concurrent.atomic.AtomicInteger
 
 class OtpVM : BaseViewModel() {
 
-    val retryCount = AtomicInteger()
+    private val retryCount = AtomicInteger(1)
 
-    val otpForm = MutableLiveData<String>()
+    val cardList = EventLiveData<List<CardItem>>()
 
-    val retryMessage = EventLiveData<ConfirmArg>()
+    val retryMessageLiveData = EventLiveData<ConfirmArg>()
 
-    val errorMessage = EventLiveData<MessageArg>()
-
-    override fun onStart() {
-        retryCount.set(1)
-    }
+    val errorMessageLiveData = EventLiveData<MessageArg>()
 
     fun onTransactionFailed(data: String) {
         if (retryCount.getAndDecrement() > 0) {
@@ -33,19 +34,19 @@ class OtpVM : BaseViewModel() {
     private fun onPaymentRetry(data: String) {
         when (data) {
             "INSUFFICIENT_FUNDS" -> {
-                retryMessage.postValue(ConfirmArg(
+                retryMessageLiveData.postValue(ConfirmArg(
                         title = "Giao dịch thất bại",
                         message = "Không đủ số dư thanh toán. Bạn vui lòng chọn thẻ khác"
                 ))
             }
             "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
-                retryMessage.postValue(ConfirmArg(
+                retryMessageLiveData.postValue(ConfirmArg(
                         title = "Giao dịch thất bại",
                         message = "Quá hạn mức giao dịch. Bạn vui lòng chọn thẻ khác"
                 ))
             }
             else -> {
-                errorMessage.postValue(MessageArg.paymentCancel)
+                errorMessageLiveData.postValue(MessageArg.paymentCancel)
             }
         }
     }
@@ -53,22 +54,38 @@ class OtpVM : BaseViewModel() {
     private fun onPaymentError(data: String) {
         when (data) {
             "INSUFFICIENT_FUNDS" -> {
-                errorMessage.postValue(MessageArg(
+                errorMessageLiveData.postValue(MessageArg(
                         title = "Giao dịch thất bại",
                         message = "Quá hạn mức giao dịch.",
                         button = null
                 ))
             }
             "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
-                errorMessage.postValue(MessageArg(
+                errorMessageLiveData.postValue(MessageArg(
                         title = "Giao dịch thất bại",
                         message = "Quá hạn mức giao dịch.",
                         button = null
                 ))
             }
             else -> {
-                errorMessage.postValue(MessageArg.paymentCancel)
+                errorMessageLiveData.postValue(MessageArg.paymentCancel)
             }
         }
+    }
+
+    fun fetchCardList(userId: String?) {
+        val body = GetBankAccListDTOReq(
+                userID = userId ?: throw Event.pinDataError
+        )
+        PaymentRepository.ins.getBankAccList(body, object : Api.ClientListener<CardListResponse> {
+            override fun onSuccess(response: CardListResponse) {
+                cardList.postValue(CardItem.getList(response))
+            }
+
+            override fun onFailed(code: Int, message: String) {
+                cardList.postValue(null)
+            }
+
+        })
     }
 }

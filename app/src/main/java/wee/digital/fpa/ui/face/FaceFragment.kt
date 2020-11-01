@@ -2,87 +2,84 @@ package wee.digital.fpa.ui.face
 
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
-import wee.digital.fpa.ui.*
+import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.MainFragment
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
-import kotlin.reflect.KClass
+import wee.digital.fpa.ui.onPaymentCancel
+import wee.digital.fpa.ui.onPaymentFailed
 
-class FaceFragment : Main.Fragment<FaceVM>() {
+class FaceFragment : MainFragment() {
+
+    private val faceVM by lazy { activityVM(FaceVM::class) }
 
     private val faceView by lazy { FaceView(this) }
 
     /**
-     * [Main.Fragment] override
+     * [MainFragment] override
      */
     override fun layoutResource(): Int {
         return R.layout.face
     }
 
-    override fun localViewModel(): KClass<FaceVM> {
-        return FaceVM::class
-    }
-
     override fun onViewCreated() {
         faceView.onViewInit()
         faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
-            timeoutVM.stopTimeout()
-            localVM.verifyFace(bitmap, pointData, dataCollect, paymentVM.arg.value)
-        }
-    }
-
-    override fun onLiveEventChanged(event: Int) {
-        when (event) {
-            FaceEvent.VERIFY_SUCCESS -> {
-                onFaceVerifySuccess()
-            }
-            FaceEvent.VERIFY_RETRY -> {
-                onRetryVerify()
-            }
-            FaceEvent.VERIFY_FAILED -> {
-                onPaymentFailed(MessageArg.paymentCancel)
-
-            }
+            sharedVM.stopTimeout()
+            faceVM.verifyFace(bitmap, pointData, dataCollect, sharedVM.payment.value)
         }
     }
 
     override fun onLiveDataObserve() {
-        timeoutVM.startTimeout(Timeout.FACE_VERIFY)
-        timeoutVM.second.observe {
+
+        sharedVM.startTimeout(Timeout.FACE_VERIFY)
+        sharedVM.timeoutSecond.observe {
             faceView.onBindRemainingText(it)
         }
-        timeoutVM.inTheEnd.observe {
+        sharedVM.timeoutEnd.observe {
             it ?: return@observe
             onPaymentCancel()
+        }
+
+        faceVM.successLiveData.observe {
+            onFaceVerifySuccess(it)
+        }
+        faceVM.failureLiveData.observe {
+            onPaymentFailed(MessageArg.paymentCancel)
+        }
+        faceVM.retriesLiveData.observe {
+            onRetryVerify()
         }
     }
 
     /**
      * [FaceFragment] properties
      */
-    private fun onFaceVerifySuccess() {
-        timeoutVM.stopTimeout()
+    private fun onFaceVerifySuccess(it: FaceArg) {
+        sharedVM.stopTimeout()
+        sharedVM.face.value = it
         faceView.animateOnFaceCaptured()
         navigate(Main.pin)
     }
 
     private fun onRetryVerify() {
-        val arg = ConfirmArg(
+        faceView.animateOnFaceCaptured()
+        sharedVM.startTimeout(Timeout.FACE_VERIFY)
+        sharedVM.confirm.value = ConfirmArg(
                 headerGuideline = R.id.guidelineFace,
                 title = "Tài khoản không tồn tại",
                 message = "Bạn vui lòng đăng ký tài khoản Facepay trước khi thực hiện thanh toán",
                 buttonAccept = "Thử lại",
                 onAccept = {
                     faceView.animateOnStartFaceReg()
-                    timeoutVM.startTimeout(Timeout.FACE_VERIFY)
+                    sharedVM.startTimeout(Timeout.FACE_VERIFY)
                 },
                 buttonDeny = "Hủy bỏ giao dịch",
                 onDeny = {
                     onPaymentCancel()
                 }
         )
-        faceView.animateOnFaceCaptured()
-        timeoutVM.startTimeout(Timeout.FACE_VERIFY)
-        confirmVM.arg.value = arg
         navigate(Main.confirm)
     }
 

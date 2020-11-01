@@ -1,39 +1,59 @@
 package wee.digital.fpa.ui.message
 
-import android.view.View
+import androidx.constraintlayout.widget.ConstraintSet
+import kotlinx.android.synthetic.main.message.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.Main
-import kotlin.reflect.KClass
+import wee.digital.fpa.ui.MainDialog
+import wee.digital.library.extension.hide
+import wee.digital.library.extension.setHyperText
+import wee.digital.library.extension.show
+import wee.digital.library.extension.string
 
-class MessageFragment : Main.Dialog<MessageVM>() {
-
-    private val messageView by lazy { MessageView(this) }
+class MessageFragment : MainDialog() {
 
     override fun layoutResource(): Int {
         return R.layout.message
-    }
-
-    override fun localViewModel(): KClass<MessageVM> {
-        return MessageVM::class
     }
 
     override fun onViewCreated() {
     }
 
     override fun onLiveDataObserve() {
-        localVM.arg.observe {
-            messageView.onBindArg(it)
+        sharedVM.message.observe {
+            onBindArg(it)
         }
     }
 
-    override fun onLiveEventChanged(event: Int) {
-    }
+    private fun onBindArg(arg: MessageArg?) {
+        arg ?: return
+        onBindDialogSize(arg.headerGuideline)
+        messageImageViewIcon.setImageResource(arg.icon)
+        messageTextViewTitle.text = arg.title ?: string(R.string.app_name)
+        messageTextViewMessage.setHyperText(arg.message)
 
+        if (arg.button.isNullOrEmpty()) {
+            messageViewClose.hide()
+        } else {
+            messageViewClose.show()
+            messageViewClose.text = arg.button
+        }
 
-    override fun onViewClick(v: View?) {
-        when (v) {
+        messageViewClose.setOnClickListener {
+            dismiss()
+            arg.onClose(this)
         }
     }
 
+    private fun onBindDialogSize(guidelineId: Int) {
+        if (guidelineId == 0) return
+        val viewId = messageDialogContent.id
+        ConstraintSet().apply {
+            clone(viewContent)
+            constrainHeight(viewId, ConstraintSet.MATCH_CONSTRAINT)
+            constrainDefaultHeight(viewId, ConstraintSet.MATCH_CONSTRAINT)
+            connect(viewId, ConstraintSet.TOP, guidelineId, ConstraintSet.TOP)
+            applyTo(viewContent)
+        }
+    }
 
 }

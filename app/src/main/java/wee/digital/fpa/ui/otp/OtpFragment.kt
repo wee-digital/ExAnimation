@@ -7,19 +7,24 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.*
+import wee.digital.fpa.ui.Event
+import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.MainDialog
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
+import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
-import kotlin.reflect.KClass
 
-class OtpFragment : Main.Dialog<OtpVM>() {
+class OtpFragment : MainDialog() {
 
     companion object {
         private const val NAPAS_STATIC_URL = "https://napas-qc.facepay.vn/v1/static"
     }
+
+    private val otpVM by lazy { activityVM(OtpVM::class) }
 
     private val otpView by lazy { OtpView(this) }
 
@@ -27,31 +32,26 @@ class OtpFragment : Main.Dialog<OtpVM>() {
         return R.layout.otp
     }
 
-    override fun localViewModel(): KClass<OtpVM> {
-        return OtpVM::class
-    }
-
     override fun onViewCreated() {
         otpView.onViewInit()
     }
 
     override fun onLiveDataObserve() {
-        localVM.otpForm.observe {
+        sharedVM.otpForm.observe {
+            it ?: throw Event.otpFormError
             loadOtpWebView(it)
         }
-        localVM.retryMessage.observe {
+        otpVM.retryMessageLiveData.observe {
             onRetryMessage(it)
         }
-        localVM.errorMessage.observe {
+        otpVM.errorMessageLiveData.observe {
             onErrorMessage(it)
         }
-        cardVM.cardList.observe {
+        otpVM.cardList.observe {
             onCardListChanged(it)
         }
     }
 
-    override fun onLiveEventChanged(event: Int) {
-    }
 
     /**
      * load webView Otp
@@ -73,24 +73,13 @@ class OtpFragment : Main.Dialog<OtpVM>() {
         navigate(Main.progress)
     }
 
-    private fun onRetryMessage(it: ConfirmArg?) {
-        it ?: return
-        it.apply {
-            buttonAccept = "Thử lại"
-            onAccept = {
-
-            }
-            buttonDeny = "Hủy bỏ giao dịch"
-            onDeny = {
-                timeoutVM.stopTimeout()
-                paymentVM.arg.postValue(null)
-                navigate(Main.adv) {
-                    setNoneAnim()
-                    setLaunchSingleTop()
-                }
-            }
+    private fun onRetryMessage(it: ConfirmArg) {
+        sharedVM.confirm.value = it.also {
+            it.buttonDeny = "Hủy bỏ giao dịch"
+            it.onDeny = { it.onPaymentCancel() }
+            it.buttonAccept = "Thử lại"
+            it.onAccept = { otpVM.fetchCardList(sharedVM.pin.value?.userId) }
         }
-        confirmVM.arg.value = it
         dismiss()
         navigate(Main.confirm)
     }
@@ -98,21 +87,12 @@ class OtpFragment : Main.Dialog<OtpVM>() {
     private fun onErrorMessage(it: MessageArg?) {
         it ?: return
         //messageVM.arg = it
-
-    }
-
-    private fun onCardRequired() {
-        val cardList = cardVM.cardList.value
-        if (cardList.isNullOrEmpty()) {
-            cardVM.fetchCardList(pinVM.arg.value)
-        } else {
-
-        }
     }
 
     private fun onCardListChanged(it: List<CardItem>?) {
         it ?: return
-        progressVM.arg.postValue(null)
+        sharedVM.progress.postValue(null)
+        sharedVM.cardList.value = it
         dismiss()
         navigate(Main.card)
     }

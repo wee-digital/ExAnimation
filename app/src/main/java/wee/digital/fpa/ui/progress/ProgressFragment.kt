@@ -3,20 +3,14 @@ package wee.digital.fpa.ui.progress
 import kotlinx.android.synthetic.main.progress.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.paymentVM
+import wee.digital.fpa.ui.MainDialog
 import wee.digital.library.extension.*
 import wee.digital.library.util.Media
-import kotlin.reflect.KClass
 
-class ProgressFragment : Main.Dialog<ProgressVM>() {
+class ProgressFragment : MainDialog() {
 
     override fun layoutResource(): Int {
         return R.layout.progress
-    }
-
-    override fun localViewModel(): KClass<ProgressVM> {
-        return ProgressVM::class
-
     }
 
     override fun onViewCreated() {
@@ -24,16 +18,13 @@ class ProgressFragment : Main.Dialog<ProgressVM>() {
     }
 
     override fun onLiveDataObserve() {
-        localVM.arg.observe {
+        sharedVM.progress.observe {
             when (it) {
                 null -> dismiss()
                 ProgressArg.paid -> onBindPaid()
                 else -> onBindProgress(it)
             }
         }
-    }
-
-    override fun onLiveEventChanged(event: Int) {
     }
 
     private fun onBindProgress(it: ProgressArg) {
@@ -50,7 +41,7 @@ class ProgressFragment : Main.Dialog<ProgressVM>() {
         }
         post(6000) {
             dismiss()
-            paymentVM.arg.postValue(null)
+            sharedVM.progress.postValue(null)
             navigate(Main.adv) {
                 setNoneAnim()
                 setLaunchSingleTop()

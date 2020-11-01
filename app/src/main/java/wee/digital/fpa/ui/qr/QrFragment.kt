@@ -5,10 +5,12 @@ import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.R
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.connectVM
-import kotlin.reflect.KClass
+import wee.digital.fpa.ui.MainDialog
+import wee.digital.fpa.ui.base.activityVM
 
-class QrFragment : Main.Dialog<QrVM>(), ScanQRCode.QRCodeProcessingListener {
+class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
+
+    private val qrVM by lazy { activityVM(QrVM::class) }
 
     private val qrView by lazy { QrView(this) }
 
@@ -16,26 +18,19 @@ class QrFragment : Main.Dialog<QrVM>(), ScanQRCode.QRCodeProcessingListener {
         return R.layout.qr
     }
 
-    override fun localViewModel(): KClass<QrVM> {
-        return QrVM::class
-    }
-
     override fun onViewCreated() {
         qrView.onViewInit()
     }
 
     override fun onLiveDataObserve() {
-        localVM.message.observe {
+        qrVM.messageLiveData.observe {
             qrView.onBindMessage(it)
         }
-        localVM.qrCode.observe {
+        qrVM.qrLiveData.observe {
+            sharedVM.qrCode.value = it
             dismiss()
-            connectVM.objQRCode.value = it
             navigate(Main.device)
         }
-    }
-
-    override fun onLiveEventChanged(event: Int) {
     }
 
     override fun onViewClick(v: View?) {
@@ -50,7 +45,7 @@ class QrFragment : Main.Dialog<QrVM>(), ScanQRCode.QRCodeProcessingListener {
      * [ScanQRCode.QRCodeProcessingListener] implement
      */
     override fun onResult(result: String) {
-        localVM.checkQRCode(result)
+        qrVM.checkQRCode(result)
     }
 
 

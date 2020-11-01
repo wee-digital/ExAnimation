@@ -74,6 +74,13 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         observe(this@BaseActivity, Observer(block))
     }
 
+    fun <T> NonNullLiveData<T?>.observe(block: (T) -> Unit) {
+        observe(this@BaseActivity, Observer {
+            it ?: return@Observer
+            block(it)
+        })
+    }
+
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             hideSystemUI()

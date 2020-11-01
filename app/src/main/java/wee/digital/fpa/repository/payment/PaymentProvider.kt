@@ -133,13 +133,13 @@ class PaymentProvider : IBase.Payment {
 
     override fun getBankAccList(
             dataReq: GetBankAccListDTOReq,
-            listener: Api.ClientListener<GetBankAccListDTOResp>
+            listener: Api.ClientListener<CardListResponse>
     ) {
         Api.instance.postApi(url = "get-bank-accounts", data = dataReq, listener = object : Api.ApiCallBack {
 
             override fun onSuccess(data: JsonObject) {
                 Log.d("getBankAccList", "$data")
-                val resp = data.parse(GetBankAccListDTOResp::class.java)!!
+                val resp = data.parse(CardListResponse::class.java)!!
 
                 listener.onSuccess(resp)
             }

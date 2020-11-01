@@ -1,41 +1,39 @@
 package wee.digital.fpa.ui.pin
 
 import android.util.Base64
-import androidx.lifecycle.MutableLiveData
 import crypto.Crypto
 import wee.digital.fpa.data.local.Config
-import wee.digital.fpa.repository.dto.PaymentDTOReq
-import wee.digital.fpa.repository.dto.PaymentResponse
-import wee.digital.fpa.repository.dto.PinRequest
-import wee.digital.fpa.repository.dto.PinResponse
+import wee.digital.fpa.repository.dto.*
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.face.FaceArg
 import wee.digital.fpa.ui.payment.PaymentArg
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
 
-    val arg = MutableLiveData<PinArg?>()
-
-    var hasCardError = false
-
-    var hasPayRequest: Boolean = false
-
     private val restRetriesAtomic = AtomicInteger(Config.PIN_RETRY_COUNT)
 
-    val restRetriesPin = EventLiveData<Int>()
+    val pinVerifySuccess = EventLiveData<PinArg>()
+
+    val pinVerifyFailed = EventLiveData<Boolean>()
+
+    val pinVerifyRetries = EventLiveData<Int>()
+
+    val payRequestSuccess = EventLiveData<Boolean>()
+
+    val payRequestFailed = EventLiveData<Boolean>()
+
+    val cardList = EventLiveData<List<CardItem>>()
+
+    val cardError = EventLiveData<Boolean>()
 
     val otpForm = EventLiveData<String>()
 
-    override fun onStart() {
-        hasPayRequest = false
-        hasCardError = false
-        restRetriesAtomic.set(Config.PIN_RETRY_COUNT)
-    }
 
     /**
      * Pin verify
@@ -57,36 +55,20 @@ class PinVM : BaseViewModel() {
     private fun onPinVerify(req: PinRequest) {
         PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<PinResponse> {
             override fun onSuccess(response: PinResponse) {
-                onPinVerifySuccess(response)
+                pinVerifySuccess.postValue(PinArg(response))
             }
 
             override fun onFailed(code: Int, message: String) {
-                onPinVerifyFailed(code)
+                when {
+                    code == 1 && restRetriesAtomic.getAndDecrement() > 0 -> {
+                        pinVerifyRetries.postValue(restRetriesAtomic.get())
+                    }
+                    else -> {
+                        pinVerifyFailed.postValue(true)
+                    }
+                }
             }
         })
-    }
-
-    private fun onPinVerifySuccess(response: PinResponse) {
-        arg.postValue(PinArg(response))
-        when {
-            response.hasDefaultAccount -> {
-                eventLiveData.postValue(PinEvent.PAY_REQUEST)
-            }
-            else -> {
-                eventLiveData.postValue(PinEvent.CARD_REQUIRED)
-            }
-        }
-    }
-
-    private fun onPinVerifyFailed(code: Int) {
-        when {
-            code == 1 && restRetriesAtomic.getAndDecrement() > 0 -> {
-                restRetriesPin.postValue(restRetriesAtomic.get())
-            }
-            else -> {
-                eventLiveData.postValue(PinEvent.PIN_VERIFY_FAILED)
-            }
-        }
     }
 
     /**
@@ -105,7 +87,7 @@ class PinVM : BaseViewModel() {
             }
 
             override fun onFailed(response: PaymentResponse) {
-                onPayRequestFailed()
+                payRequestFailed.postValue(true)
             }
         })
     }
@@ -113,21 +95,30 @@ class PinVM : BaseViewModel() {
     private fun onPayRequestSuccess(response: PaymentResponse) {
         when {
             response.code == 0 -> {
-                eventLiveData.postValue(PinEvent.PAY_REQUEST_SUCCESS)
+                payRequestSuccess.postValue(true)
             }
             response.haveOTP && !response.formOtp.isNullOrEmpty() -> {
                 otpForm.postValue(response.formOtp)
             }
             else -> {
-                hasCardError = true
-                eventLiveData.postValue(PinEvent.CARD_ERROR)
+                cardError.postValue(true)
             }
         }
     }
 
-    private fun onPayRequestFailed() {
-        eventLiveData.postValue(PinEvent.PAY_REQUEST_FAILED)
+    fun fetchCardList(userId: String?) {
+        val body = GetBankAccListDTOReq(
+                userID = userId ?: throw Event.pinDataError
+        )
+        PaymentRepository.ins.getBankAccList(body, object : Api.ClientListener<CardListResponse> {
+            override fun onSuccess(response: CardListResponse) {
+                cardList.postValue(CardItem.getList(response))
+            }
+
+            override fun onFailed(code: Int, message: String) {
+                cardList.postValue(null)
+            }
+
+        })
     }
-
-
 }

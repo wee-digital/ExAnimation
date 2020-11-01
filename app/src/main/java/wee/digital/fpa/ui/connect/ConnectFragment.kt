@@ -4,29 +4,27 @@ import android.view.View
 import kotlinx.android.synthetic.main.connect.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
-import kotlin.reflect.KClass
+import wee.digital.fpa.ui.MainFragment
+import wee.digital.fpa.util.observerCameraStream
+import wee.digital.library.extension.addFastClickListener
+import kotlin.system.exitProcess
 
-class ConnectFragment : Main.Fragment<ConnectVM>() {
-
-    private val connectView by lazy { ConnectView(this) }
+class ConnectFragment : MainFragment() {
 
     override fun layoutResource(): Int {
         return R.layout.connect
     }
 
-    override fun localViewModel(): KClass<ConnectVM> {
-        return ConnectVM::class
-    }
-
     override fun onViewCreated() {
-        connectView.onViewInit()
+        observerCameraStream()
+        addClickListener(connectViewScanQR)
+        connectViewLogo.addFastClickListener(7) {
+            exitProcess(0)
+        }
     }
 
     override fun onLiveDataObserve() {
 
-    }
-
-    override fun onLiveEventChanged(event: Int) {
     }
 
     override fun onViewClick(v: View?) {
@@ -36,6 +34,5 @@ class ConnectFragment : Main.Fragment<ConnectVM>() {
             }
         }
     }
-
 
 }

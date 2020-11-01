@@ -9,10 +9,4 @@ abstract class BaseViewModel : ViewModel() {
         Logger(this::class)
     }
 
-    val eventLiveData by lazy {
-        EventLiveData<Int>()
-    }
-
-    abstract fun onStart()
-
 }

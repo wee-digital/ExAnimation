@@ -1,6 +1,5 @@
-package wee.digital.fpa.ui.payment
+package wee.digital.fpa.ui.vm
 
-import androidx.lifecycle.MutableLiveData
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.SocketResponse
 import wee.digital.fpa.repository.dto.UpdateCancelPaymentDTOReq
@@ -10,13 +9,12 @@ import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.ui.base.BaseViewModel
+import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.payment.PaymentArg
 
-class PaymentVM : BaseViewModel() {
+class NapasVM : BaseViewModel() {
 
-    val arg = MutableLiveData<PaymentArg?>()
-
-    override fun onStart() {
-    }
+    val paymentLiveData = EventLiveData<PaymentArg>()
 
     fun getNapasClient(socketRes: SocketResponse) {
         PaymentRepository.ins.getClientId(object : Api.ClientListener<ClientResponse> {
@@ -28,12 +26,12 @@ class PaymentVM : BaseViewModel() {
                     Shared.paymentProcessing = true
                     return
                 }
-                arg.postValue(PaymentArg(socketRes, response))
+                paymentLiveData.postValue(PaymentArg(socketRes, response))
             }
 
             override fun onFailed(code: Int, message: String) {
                 log.d("getNapasClient: $code $message")
-                arg.postValue(null)
+                paymentLiveData.postValue(null)
             }
 
         })

@@ -2,16 +2,13 @@ package wee.digital.fpa.ui.plash
 
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.MainFragment
 import wee.digital.fpa.ui.base.BaseFragment
 import wee.digital.fpa.ui.payment.PaymentArg
-import wee.digital.fpa.ui.paymentVM
-import wee.digital.fpa.ui.timeoutVM
 import wee.digital.fpa.util.startCamera
 import wee.digital.fpa.util.stopCamera
-import kotlin.reflect.KClass
 
-class SplashFragment : Main.Fragment<SplashVM>() {
-
+class SplashFragment : MainFragment() {
 
     private val splashView by lazy { SplashView(this) }
 
@@ -22,24 +19,17 @@ class SplashFragment : Main.Fragment<SplashVM>() {
         return R.layout.splash
     }
 
-    override fun localViewModel(): KClass<SplashVM> {
-        return SplashVM::class
-    }
-
     override fun onViewCreated() {
         splashView.onViewInit()
     }
 
     override fun onLiveDataObserve() {
-        timeoutVM.second.observe {
+        sharedVM.timeoutSecond.observe {
             splashView.onBindRemainingText(it)
         }
-        paymentVM.arg.observe {
+        sharedVM.payment.observe {
             onPaymentArgChanged(it)
         }
-    }
-
-    override fun onLiveEventChanged(event: Int) {
     }
 
     /**

@@ -49,7 +49,7 @@ class PaymentRepository : IBase.Payment {
 
     override fun getBankAccList(
             dataReq: GetBankAccListDTOReq,
-            listener: Api.ClientListener<GetBankAccListDTOResp>
+            listener: Api.ClientListener<CardListResponse>
     ) {
         mPaymentProvider.getBankAccList(dataReq, listener)
     }

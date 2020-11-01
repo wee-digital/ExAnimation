@@ -7,15 +7,19 @@ import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
+import wee.digital.fpa.ui.base.EventLiveData
 
 class DeviceVM : BaseViewModel() {
 
-    override fun onStart() {
-    }
+    val nameErrorLiveData = EventLiveData<Boolean>()
+
+    val successLiveData = EventLiveData<Boolean>()
+
+    val failureLiveData = EventLiveData<Boolean>()
 
     fun registerDevice(sName: String?, qr: JsonObject?) {
         if (sName?.length ?: 0 < 5) {
-            eventLiveData.postValue(DeviceEvent.REGISTER_SUCCESS)
+            nameErrorLiveData.postValue(true)
             return
         }
         registerDevice(DeviceInfoStore(
@@ -27,11 +31,11 @@ class DeviceVM : BaseViewModel() {
     private fun registerDevice(deviceInfo: DeviceInfoStore) {
         DeviceSystemRepository.ins.register(deviceInfo, object : Api.ClientListener<Any> {
             override fun onSuccess(response: Any) {
-                eventLiveData.postValue(DeviceEvent.REGISTER_SUCCESS)
+                successLiveData.postValue(true)
             }
 
             override fun onFailed(code: Int, message: String) {
-                eventLiveData.postValue(DeviceEvent.REGISTER_ERROR)
+                failureLiveData.postValue(true)
                 BaseData.ins.resetDeviceInfo()
             }
 

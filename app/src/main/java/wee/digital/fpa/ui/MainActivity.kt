@@ -15,15 +15,11 @@ import wee.digital.fpa.repository.utils.SocketEvent
 import wee.digital.fpa.ui.base.BaseActivity
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.base.viewModel
-import wee.digital.fpa.ui.card.CardVM
-import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.payment.PaymentArg
-import wee.digital.fpa.ui.payment.PaymentVM
-import wee.digital.fpa.ui.pin.PinVM
 import wee.digital.fpa.ui.progress.ProgressArg
-import wee.digital.fpa.ui.progress.ProgressVM
+import wee.digital.fpa.ui.vm.NapasVM
+import wee.digital.fpa.ui.vm.SharedVM
 import wee.digital.fpa.ui.vm.SocketVM
-import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
 
 class MainActivity : BaseActivity() {
@@ -45,38 +41,42 @@ class MainActivity : BaseActivity() {
 
     override fun onLiveDataObserve() {
         mainVM.checkDeviceStatus()
-        mainVM.syncDeviceInfo()
         mainVM.rootDirection.observe {
             onRootDirectionChanged(it)
-        }
-        mainVM.deviceInfo.observe {
-            onDeviceInfoChanged(it)
         }
         mainVM.tokenResponse.observe {
             onTokenResponseChanged(it)
         }
-        socketVM.webSocket.observe {
+
+        socketVM.webSocketLiveData.observe {
             onWebSocketChanged(it)
         }
-        socketVM.response.observe {
+        socketVM.responseLiveData.observe {
             onSocketResponseChanged(it)
         }
-        paymentVM.arg.observe {
+
+        napasVM.paymentLiveData.observe {
+            sharedVM.payment.value = it
             onPaymentArgChanged(it)
         }
-        progressVM.arg.observe {
+
+        sharedVM.syncDeviceInfo()
+        sharedVM.progress.observe {
             onProgressArgChanged(it)
+        }
+        sharedVM.deviceInfo.observe {
+            onDeviceInfoChanged(it)
         }
     }
 
     /**
      * [MainActivity] properties
      */
-    private val paymentVM by lazy { activityVM(PaymentVM::class) }
+    private val sharedVM by lazy { activityVM(SharedVM::class) }
 
     private val socketVM by lazy { viewModel(SocketVM::class) }
 
-    private val progressVM by lazy { activityVM(ProgressVM::class) }
+    private val napasVM by lazy { viewModel(NapasVM::class) }
 
     private val mainVM by lazy { viewModel(MainVM::class) }
 
@@ -106,7 +106,7 @@ class MainActivity : BaseActivity() {
     private fun onSocketResponseChanged(it: SocketResponse) {
         when (it.event) {
             SocketEvent.HAS_PAYMENT -> {
-                paymentVM.getNapasClient(it)
+                napasVM.getNapasClient(it)
             }
             SocketEvent.DIMISS_PAYMENT -> {
                 val calledFacePay = Shared.calledFacePay.value ?: false
@@ -117,10 +117,10 @@ class MainActivity : BaseActivity() {
                     paying && !calledFacePay -> CancelPaymentCode.CANCEL_SUCCESS
                     else -> 0
                 }
-                paymentVM.requestCancelPayment(code)
+                napasVM.requestCancelPayment(code)
                 if (paying) {
-                    val paymentID = paymentVM.arg.value?.paymentId ?: ""
-                    paymentVM.updateStatusPayment(paymentID, PaymentStatusCode.CANCEL_PAYMENT)
+                    val paymentID = napasVM.paymentLiveData.value?.paymentId ?: ""
+                    napasVM.updateStatusPayment(paymentID, PaymentStatusCode.CANCEL_PAYMENT)
                 }
                 if (paying && calledFacePay) return
             }
@@ -154,10 +154,7 @@ class MainActivity : BaseActivity() {
                 return
             }
             else -> {
-                activityVM(TimeoutVM::class).inTheEnd.value = null
-                activityVM(FaceVM::class).arg.value = null
-                activityVM(PinVM::class).arg.value = null
-                activityVM(CardVM::class).cardList.value = null
+                activityVM(SharedVM::class).clearData()
                 navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()
@@ -178,7 +175,7 @@ class MainActivity : BaseActivity() {
         if (webSocket == null) {
             onCheckDeviceStatus()
         }
-        val isDisconnected = mainVM.deviceInfo != null && webSocket == null
+        val isDisconnected = sharedVM.deviceInfo != null && webSocket == null
         mainView.showDisconnectDialog(isDisconnected)
     }
 
