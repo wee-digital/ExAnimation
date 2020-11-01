@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.*
+import wee.digital.fpa.ui.base.event
 import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.card.CardVM
 import wee.digital.fpa.ui.confirm.ConfirmArg
@@ -48,7 +49,7 @@ class PinFragment : Main.Dialog<PinVM>() {
             it ?: return@observe
             onPaymentCancel()
         }
-        cardVM.cardList.observe {
+        cardVM.cardList.event().observe {
             onCardListChanged(it)
         }
     }
