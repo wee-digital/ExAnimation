@@ -49,4 +49,5 @@ class CardFragment : Main.Dialog() {
         otpVM.otpForm.value = it.formOtp
         navigate(Main.otp)
     }
+
 }
