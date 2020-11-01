@@ -24,7 +24,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/splashTextViewRemaining"
-        style="@style/BodyRegular"
+        style="@style/Remaining.Text"
         android:textColor="@color/color_notification"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
         app:layout_constraintEnd_toEndOf="parent"

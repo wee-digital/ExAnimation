@@ -255,15 +255,15 @@
     </style>
 
     <style name="Guideline.Header" parent="Guideline.Horizontal">
-        <item name="layout_constraintGuide_percent">0.078</item>
+        <item name="layout_constraintGuide_percent">0.076</item>
     </style>
 
     <style name="Guideline.Face" parent="Guideline.Horizontal">
-        <item name="layout_constraintGuide_percent">0.40</item>
+        <item name="layout_constraintGuide_percent">0.39</item>
     </style>
 
     <style name="Guideline.Splash" parent="Guideline.Horizontal">
-        <item name="layout_constraintGuide_percent">0.20</item>
+        <item name="layout_constraintGuide_percent">0.19</item>
     </style>
 
     <style name="Widget.App.Theme.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
@@ -278,8 +278,8 @@
     <!--GUIDELINE-->
     <style name="Remaining" />
 
-    <style name="Remaining.Text" parent="TextView">
-        <item name="android:layout_marginTop">@dimen/margin</item>
+    <style name="Remaining.Text" parent="BodyRegular">
+        <item name="android:layout_marginTop">@dimen/_8sdp</item>
         <item name="android:gravity">center</item>
         <item name="layout_constraintEnd_toEndOf">parent</item>
         <item name="layout_constraintStart_toStartOf">parent</item>

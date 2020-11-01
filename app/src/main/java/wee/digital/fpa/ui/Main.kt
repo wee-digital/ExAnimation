@@ -131,7 +131,7 @@ class Main {
 
         val face = MainDirections.actionGlobalFaceFragment()
 
-        val payment = MainDirections.actionGlobalFaceFragment()
+        val payment = MainDirections.actionGlobalPaymentFragment()
 
         val message = MainDirections.actionGlobalMessageFragment()
 
