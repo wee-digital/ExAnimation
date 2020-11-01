@@ -49,7 +49,7 @@ class PinFragment : Main.Dialog<PinVM>() {
             it ?: return@observe
             onPaymentCancel()
         }
-        cardVM.cardList.event().observe {
+        cardVM.cardList.observe {
             onCardListChanged(it)
         }
     }
@@ -116,14 +116,16 @@ class PinFragment : Main.Dialog<PinVM>() {
 
     private fun onFetchCardList() {
         progressVM.arg.postValue(ProgressArg.pay)
-
         cardVM.fetchCardList(pinVM.arg.value)
     }
 
     private fun onCardListChanged(it: List<CardItem>?) {
         progressVM.arg.postValue(null)
         when {
-            it.isNullOrEmpty() -> {
+            it == null->{
+                return
+            }
+            it.isEmpty() -> {
                 onPaymentCancel()
             }
             else -> {

@@ -50,10 +50,10 @@ class FaceVM : BaseViewModel() {
     fun onVerifyFaceFailed() {
         when (retryCount.getAndDecrement()) {
             0 -> {
-                eventLiveData.postValue(FaceEvent.VERIFY_SUCCESS)
+                eventLiveData.postValue(FaceEvent.VERIFY_FAILED)
             }
             else -> {
-                eventLiveData.postValue(FaceEvent.VERIFY_FAILED)
+                eventLiveData.postValue(FaceEvent.VERIFY_RETRY)
             }
         }
 

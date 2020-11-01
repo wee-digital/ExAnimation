@@ -111,8 +111,8 @@ class OtpFragment : Main.Dialog<OtpVM>() {
     }
 
     private fun onCardListChanged(it: List<CardItem>?) {
-        progressVM.arg.postValue(null)
         it ?: return
+        progressVM.arg.postValue(null)
         dismiss()
         navigate(Main.card)
     }

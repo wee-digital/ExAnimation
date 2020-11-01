@@ -67,7 +67,7 @@ class PinVM : BaseViewModel() {
     }
 
     private fun onPinVerifySuccess(response: PinResponse) {
-        arg.value = PinArg(response)
+        arg.postValue(PinArg(response))
         when {
             response.hasDefaultAccount -> {
                 eventLiveData.postValue(PinEvent.PAY_REQUEST)
