@@ -2,8 +2,9 @@ package wee.digital.fpa.ui.confirm
 
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
+import kotlin.reflect.KClass
 
-class ConfirmFragment : Main.Dialog() {
+class ConfirmFragment : Main.Dialog<ConfirmVM>() {
 
     private val confirmView by lazy { ConfirmView(this) }
 
@@ -11,14 +12,21 @@ class ConfirmFragment : Main.Dialog() {
         return R.layout.confirm
     }
 
+    override fun localViewModel(): KClass<ConfirmVM> {
+        return ConfirmVM::class
+    }
+
     override fun onViewCreated() {
     }
 
     override fun onLiveDataObserve() {
-        confirmVM.arg.observe {
+        localVM.arg.observe {
             it ?: return@observe
             confirmView.onBindArg(it)
         }
+    }
+
+    override fun onLiveEventChanged(event: Int) {
     }
 
 

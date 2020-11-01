@@ -16,7 +16,7 @@
     <string name="device_register_failed">Đăng ký thiết bị không thành công</string>
     <string name="device_register_finish">Hoàn tất</string>
     <string name="device_register_fail">Quét lại mã QR</string>
-
+    <string name="pin_retry_msg">Mã PIN không đúng, bạn còn %s lần thử lại</string>
 
 
 </resources>

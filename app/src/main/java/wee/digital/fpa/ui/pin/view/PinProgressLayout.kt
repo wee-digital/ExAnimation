@@ -1,4 +1,4 @@
-package wee.digital.fpa.ui.pin
+package wee.digital.fpa.ui.pin.view
 
 import android.content.Context
 import android.graphics.Color

@@ -1,21 +1,16 @@
 package wee.digital.fpa.ui.base
 
 import android.view.View
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import wee.digital.fpa.R
 import wee.digital.library.extension.ViewClickListener
 import wee.digital.log.Logger
-import kotlin.reflect.KClass
 
 interface BaseView {
 
     val className: String get() = this::class.simpleName.toString()
-
 
     val log: Logger
 
@@ -41,10 +36,6 @@ interface BaseView {
         nav.navigate(directions, options.build())
     }
 
-    fun navigate(directions: NavDirections, options: NavOptions.Builder) {
-        nav.navigate(directions, options.build())
-    }
-
     fun navigateUp() {
         nav.navigateUp()
     }
@@ -66,10 +57,5 @@ interface BaseView {
         setPopUpTo(nav.graph.id, false)
         return this
     }
-
-    fun <T : ViewModel> ViewModelStoreOwner.viewModel(cls: KClass<T>): T =
-            ViewModelProvider(this).get(cls.java)
-
-
 }
 

@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.repository.base.IBase
 import wee.digital.fpa.repository.dto.*
-import wee.digital.fpa.repository.model.ClientIDResp
+import wee.digital.fpa.repository.model.ClientResponse
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.network.LogGrafana
 import wee.digital.fpa.repository.network.MyApiService
@@ -21,7 +21,7 @@ import wee.digital.library.extension.parse
 
 class PaymentProvider : IBase.Payment {
 
-    override fun getClientId(listener: Api.ClientListener<ClientIDResp>) {
+    override fun getClientId(listener: Api.ClientListener<ClientResponse>) {
         val restApi =
                 RestUrl(SystemUrl.BASE_URL_CLIENT_ID).getClient().create(MyApiService::class.java)
         restApi.getClientId()
@@ -38,7 +38,7 @@ class PaymentProvider : IBase.Payment {
 
                     override fun onSuccess(t: JsonObject) {
                         Log.d("getClientId", "success : $t")
-                        val data = Gson().fromJson(t, ClientIDResp::class.java)
+                        val data = Gson().fromJson(t, ClientResponse::class.java)
                         listener.onSuccess(data)
                     }
 
@@ -53,7 +53,7 @@ class PaymentProvider : IBase.Payment {
             override fun onSuccess(data: JsonObject) {
                 Log.d("requestPayment", "success : $data")
                 val resp = data.parse(RequestPaymentDTOResp::class.java)!!
-                listener.onSuccess(data = resp)
+                listener.onSuccess(response = resp)
             }
 
             override fun onFail(code: Int, mess: String, data: JsonObject?) {
@@ -64,9 +64,9 @@ class PaymentProvider : IBase.Payment {
     }
 
     override fun verifyFace(
-            dataReq: VerifyFaceDTOReq,
+            dataReq: FaceRequest,
             facePointData: FacePointData,
-            listener: Api.ClientListener<FaceArg>
+            listener: Api.ClientListener<FaceResponse>
     ) {
         Api.instance.postApi(
                 url = "verifyFace",
@@ -76,7 +76,7 @@ class PaymentProvider : IBase.Payment {
 
                     override fun onSuccess(data: JsonObject) {
                         Log.d("verifyFace", "$data")
-                        val resp = data.parse(FaceArg::class.java)!!
+                        val resp = data.parse(FaceResponse::class.java)!!
                         resp.code = ErrCode.SUCCESS
 
                         listener.onSuccess(resp)
@@ -91,13 +91,13 @@ class PaymentProvider : IBase.Payment {
     }
 
     override fun verifyPINCode(
-            dataReq: VerifyPINCodeDTOReq,
-            listener: Api.ClientListener<PinArg>
+            dataReq: PinRequest,
+            listener: Api.ClientListener<PinResponse>
     ) {
         Api.instance.postApi(url = "verifyPinCode", data = dataReq, listener = object : Api.ApiCallBack {
             override fun onSuccess(data: JsonObject) {
                 Log.d("verifyPINCode", "$data")
-                val resp = data.parse(PinArg::class.java)!!
+                val resp = data.parse(PinResponse::class.java)!!
                 resp.code = ErrCode.SUCCESS
 
                 listener.onSuccess(resp)
@@ -112,12 +112,12 @@ class PaymentProvider : IBase.Payment {
         })
     }
 
-    override fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentDTOResp>) {
+    override fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentResponse>) {
         Api.instance.postApi(url = "facepay", data = dataReq, listener = object : Api.ApiCallBack {
 
             override fun onSuccess(data: JsonObject) {
                 Log.d("payment", "$data")
-                val resp = data.parse(PaymentDTOResp::class.java)!!
+                val resp = data.parse(PaymentResponse::class.java)!!
                 resp.code = ErrCode.SUCCESS
 
                 listener.onSuccess(resp)
@@ -201,10 +201,10 @@ class PaymentProvider : IBase.Payment {
         }
     }
 
-    private fun paymentFailed(code: Int, mess: String, data: JsonObject?): PaymentDTOResp {
+    private fun paymentFailed(code: Int, mess: String, data: JsonObject?): PaymentResponse {
         Log.d("payment", "$code - $mess - $data")
 
-        val resp = PaymentDTOResp()
+        val resp = PaymentResponse()
         if (code == ErrCode.INSUFFICIENT_ACC_BALANCE) {
             resp.isRetry = data.bool("ReTry", false)
             resp.code = code

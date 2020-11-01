@@ -2,19 +2,20 @@ package wee.digital.fpa.ui
 
 
 import androidx.navigation.NavDirections
-import kotlinx.android.synthetic.main.main.*
 import okhttp3.WebSocket
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.GetTokenDTOResp
-import wee.digital.fpa.repository.dto.SocketResultResp
+import wee.digital.fpa.repository.dto.SocketResponse
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.utils.CancelPaymentCode
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.repository.utils.SocketEvent
 import wee.digital.fpa.ui.base.BaseActivity
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.base.viewModel
+import wee.digital.fpa.ui.card.CardVM
 import wee.digital.fpa.ui.face.FaceVM
 import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.payment.PaymentVM
@@ -24,7 +25,6 @@ import wee.digital.fpa.ui.progress.ProgressVM
 import wee.digital.fpa.ui.vm.SocketVM
 import wee.digital.fpa.ui.vm.TimeoutVM
 import wee.digital.fpa.util.Utils
-import wee.digital.library.extension.post
 
 class MainActivity : BaseActivity() {
 
@@ -78,12 +78,6 @@ class MainActivity : BaseActivity() {
 
     private val progressVM by lazy { activityVM(ProgressVM::class) }
 
-    private val faceVM by lazy { activityVM(FaceVM::class) }
-
-    private val pinVM by lazy { activityVM(PinVM::class) }
-
-    private val timeoutVM by lazy { activityVM(TimeoutVM::class) }
-
     private val mainVM by lazy { viewModel(MainVM::class) }
 
     private val mainView by lazy { MainView(this) }
@@ -100,8 +94,8 @@ class MainActivity : BaseActivity() {
 
     private fun onTokenResponseChanged(it: GetTokenDTOResp) {
         when (it.Code) {
-            0 -> it.Token?.let { token ->
-                socketVM.connectSocket(token)
+            0 -> {
+                socketVM.connectSocket(it.Token)
             }
             else -> {
                 onCheckDeviceStatus()
@@ -109,7 +103,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun onSocketResponseChanged(it: SocketResultResp) {
+    private fun onSocketResponseChanged(it: SocketResponse) {
         when (it.event) {
             SocketEvent.HAS_PAYMENT -> {
                 paymentVM.getNapasClient(it)
@@ -160,9 +154,10 @@ class MainActivity : BaseActivity() {
                 return
             }
             else -> {
-                timeoutVM.inTheEnd.value = null
-                faceVM.faceArg.value = null
-                pinVM.pinArg.value = null
+                activityVM(TimeoutVM::class).inTheEnd.value = null
+                activityVM(FaceVM::class).arg.value = null
+                activityVM(PinVM::class).arg.value = null
+                activityVM(CardVM::class).cardList.value = null
                 navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()

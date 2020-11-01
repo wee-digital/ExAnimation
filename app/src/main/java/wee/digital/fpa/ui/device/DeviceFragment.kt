@@ -6,14 +6,14 @@ import kotlinx.android.synthetic.main.device.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.base.BaseDialog
+import wee.digital.fpa.ui.connectVM
+import wee.digital.fpa.ui.mainVM
 import wee.digital.fpa.ui.message.MessageArg
-import wee.digital.library.extension.addEditorActionListener
-import wee.digital.library.extension.hideKeyboard
-import wee.digital.library.extension.trimText
+import wee.digital.fpa.ui.messageVM
+import wee.digital.library.extension.*
+import kotlin.reflect.KClass
 
-class DeviceFragment : Main.Dialog() {
-
-    private val deviceVM by lazy { viewModel(DeviceVM::class) }
+class DeviceFragment : Main.Dialog<DeviceVM>() {
 
     private val deviceView by lazy { DeviceView(this) }
 
@@ -24,29 +24,36 @@ class DeviceFragment : Main.Dialog() {
         return R.layout.device
     }
 
+    override fun localViewModel(): KClass<DeviceVM> {
+        return DeviceVM::class
+    }
+
     override fun onViewCreated() {
         deviceView.onViewInit()
         deviceEditTextName.addEditorActionListener(EditorInfo.IME_ACTION_DONE) {
             deviceEditTextName.clearFocus()
+            deviceView.showProgress()
             onRegisterDevice()
+        }
+    }
+
+    override fun onLiveEventChanged(event: Int) {
+        when (event) {
+            DeviceEvent.NAME_INVALID -> {
+                deviceView.onNameError()
+            }
+            DeviceEvent.REGISTER_SUCCESS -> {
+                onRegisterSuccess()
+            }
+            DeviceEvent.REGISTER_ERROR -> {
+                onRegisterError()
+            }
         }
     }
 
     override fun onLiveDataObserve() {
         connectVM.objQRCode.observe {
             deviceView.onBindStation(it)
-        }
-        deviceVM.nameError.observe {
-            deviceView.onNameError(it)
-        }
-        deviceVM.registerError.observe {
-            onRegisterError(it)
-        }
-        deviceVM.registerSuccess.observe {
-            onRegisterSuccess(it)
-        }
-        deviceVM.progressVisible.observe {
-            deviceView.onProgressChanged(it)
         }
     }
 
@@ -72,22 +79,36 @@ class DeviceFragment : Main.Dialog() {
         hideKeyboard()
         deviceTextViewError.text = null
         val s = deviceEditTextName.trimText
-        deviceVM.registerDevice(s, connectVM.objQRCode.value)
+        localVM.registerDevice(s, connectVM.objQRCode.value)
     }
 
-    private fun onRegisterSuccess(arg: MessageArg) {
-        arg.onClose = {
-            it.mainVM.syncDeviceInfo()
-        }
+    private fun onRegisterSuccess() {
+        deviceView.hideProgress()
         dismiss()
-        messageVM.arg.value = arg
+        messageVM.arg.value = MessageArg(
+                icon = R.mipmap.img_checked_flat,
+                title = string(R.string.device_register_success),
+                button = string(R.string.device_register_finish),
+                message = string(R.string.register_success)
+                        .format("pos.facepay.vn".bold().color("#378AE1")),
+                onClose = {
+                    it.mainVM.syncDeviceInfo()
+                }
+        )
         navigate(Main.message)
     }
 
-    private fun onRegisterError(arg: MessageArg) {
+    private fun onRegisterError() {
+        deviceView.hideProgress()
         dismiss()
-        messageVM.arg.value = arg
+        messageVM.arg.value = MessageArg(
+                title = string(R.string.device_register_failed),
+                button = string(R.string.device_register_fail),
+                message = string(R.string.register_failed)
+                        .format("Hotline: 1900 2323".bold().color("#212121"))
+        )
         navigate(Main.message)
     }
+
 
 }

@@ -308,9 +308,9 @@ class Api {
     }
 
     interface ClientListener<T> {
-        fun onSuccess(data: T)
+        fun onSuccess(response: T)
         fun onFailed(code: Int, message: String) {}
-        fun onFailed(data: T) {}
+        fun onFailed(response: T) {}
         fun onSuccess() {}
     }
 }

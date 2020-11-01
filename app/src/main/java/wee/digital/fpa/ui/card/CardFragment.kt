@@ -2,12 +2,12 @@ package wee.digital.fpa.ui.card
 
 import kotlinx.android.synthetic.main.card.*
 import wee.digital.fpa.R
-import wee.digital.fpa.repository.dto.PaymentDTOResp
-import wee.digital.fpa.ui.Main
+import wee.digital.fpa.ui.*
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.progress.ProgressArg
+import kotlin.reflect.KClass
 
-class CardFragment : Main.Dialog() {
+class CardFragment : Main.Dialog<CardVM>() {
 
     private val adapter = CardAdapter()
 
@@ -15,38 +15,45 @@ class CardFragment : Main.Dialog() {
         return R.layout.card
     }
 
+    override fun localViewModel(): KClass<CardVM> {
+        return CardVM::class
+    }
+
     override fun onViewCreated() {
         adapter.bind(paymentRecyclerViewCard, 2)
         adapter.itemClick = { model, _ ->
-            cardVM.postPayRequest(model.bankCode, paymentVM.arg.value)
+            localVM.postPayRequest(model.bankCode, paymentVM.arg.value)
         }
     }
 
     override fun onLiveDataObserve() {
-        cardVM.cardList.observe {
+        localVM.cardList.observe {
             adapter.set(it)
         }
-        cardVM.paymentSuccess.observe {
-            onPaymentSuccess(it)
-        }
-        cardVM.paymentError.observe {
-            if (it) onPaymentError(MessageArg.paymentCancel)
-        }
-        pinVM.otpRequired.observe {
-            onOtpRequired(it)
+        localVM.otpForm.observe {
+            onNavigateOTP(it)
         }
     }
 
-    private fun onPaymentSuccess(it: PaymentDTOResp?) {
-        it ?: return
+    override fun onLiveEventChanged(event: Int) {
+        when (event) {
+            CardEvent.PAY_SUCCESS -> {
+                onPaymentSuccess()
+            }
+            CardEvent.PAY_FAILED -> {
+                onPaymentFailed(MessageArg.paymentCancel)
+            }
+        }
+    }
+
+    private fun onPaymentSuccess() {
         dismiss()
         progressVM.arg.postValue(ProgressArg.paid)
     }
 
-    private fun onOtpRequired(it: PaymentDTOResp?) {
-        it ?: return
+    private fun onNavigateOTP(otpForm: String) {
         dismiss()
-        otpVM.otpForm.value = it.formOtp
+        otpVM.otpForm.value = otpForm
         navigate(Main.otp)
     }
 

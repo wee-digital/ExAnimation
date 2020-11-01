@@ -1,4 +1,4 @@
-package wee.digital.fpa.ui.pin
+package wee.digital.fpa.ui.pin.view
 
 import android.view.View
 import kotlinx.android.synthetic.main.pin_key_item_icon.view.*

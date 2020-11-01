@@ -3,27 +3,22 @@ package wee.digital.fpa.repository.dto
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class VerifyPINCodeDTOReq(
+data class PinRequest(
 
         @SerializedName("UID")
-        @Expose
-        var uid: ArrayList<String> = arrayListOf(),
+        var uid: List<String>,
 
         @SerializedName("PaymentID")
-        @Expose
         var paymentID: String,
 
         @SerializedName("PinCode")
-        @Expose
         var pinCode: String,
 
         @SerializedName("ClientIP")
-        @Expose
-        var clientIP: String = ""
-
+        var clientIP: String
 )
 
-data class PinArg(
+data class PinResponse(
 
         @SerializedName("Code")
         @Expose

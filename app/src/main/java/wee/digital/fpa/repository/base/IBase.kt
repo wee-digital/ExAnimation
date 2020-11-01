@@ -2,7 +2,7 @@ package wee.digital.fpa.repository.base
 
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.repository.dto.*
-import wee.digital.fpa.repository.model.ClientIDResp
+import wee.digital.fpa.repository.model.ClientResponse
 import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.repository.network.Api
 
@@ -15,11 +15,11 @@ interface IBase {
     }
 
     interface Payment {
-        fun getClientId(listener: Api.ClientListener<ClientIDResp>)
+        fun getClientId(listener: Api.ClientListener<ClientResponse>)
         fun requestPayment(data: RequestPaymentDTOReq, listener: Api.ClientListener<RequestPaymentDTOResp>)
-        fun verifyFace(dataReq: VerifyFaceDTOReq, facePointData: FacePointData, listener: Api.ClientListener<FaceArg>)
-        fun verifyPINCode(dataReq: VerifyPINCodeDTOReq, listener: Api.ClientListener<PinArg>)
-        fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentDTOResp>)
+        fun verifyFace(dataReq: FaceRequest, facePointData: FacePointData, listener: Api.ClientListener<FaceResponse>)
+        fun verifyPINCode(dataReq: PinRequest, listener: Api.ClientListener<PinResponse>)
+        fun payment(dataReq: PaymentDTOReq, listener: Api.ClientListener<PaymentResponse>)
         fun getBankAccList(dataReq: GetBankAccListDTOReq, listener: Api.ClientListener<GetBankAccListDTOResp>)
         fun updatePaymentStatus(dataReq: UpdatePaymentStatusDTOReq)
         fun updateCancelPayment(dataReq: UpdateCancelPaymentDTOReq)

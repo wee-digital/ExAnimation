@@ -7,6 +7,7 @@ object Event {
 
     val liveData = MutableLiveData<Throwable>()
 
+
     val paymentArgError = NullPointerException("PaymentVM.paymentArg is null value")
 
     val deviceInfoError = NullPointerException("MainVM.deviceInfo is null value")
@@ -16,6 +17,8 @@ object Event {
     val bankDataError = NullPointerException("Bank data error")
 
     val pinDataError = NullPointerException("Pin data error")
+
+    val qrError = NullPointerException("QR data error")
 
     fun initConsumer() {
         return

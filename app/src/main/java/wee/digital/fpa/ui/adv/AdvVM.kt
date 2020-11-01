@@ -23,7 +23,11 @@ class AdvVM : BaseViewModel() {
             AdvItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_water).toString())
     )
 
-    fun fetchAdvList() {
+    override fun onStart() {
+        fetchAdvList()
+    }
+
+    private fun fetchAdvList() {
         imageList.postValue(listOf(
                 AdvItem(null, R.mipmap.img_adv1),
                 AdvItem(null, R.mipmap.img_adv2),

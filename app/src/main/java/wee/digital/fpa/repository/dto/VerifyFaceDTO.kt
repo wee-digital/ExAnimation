@@ -2,25 +2,20 @@ package wee.digital.fpa.repository.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import wee.digital.fpa.repository.model.FaceInfo
 
-data class VerifyFaceDTOReq(
+data class FaceRequest(
 
         @SerializedName("Face")
-        @Expose
-        var face: String? = "",
+        var face: String,
 
         @SerializedName("PaymentID")
-        @Expose
-        var paymentID: String = "",
+        var paymentID: String,
 
         @SerializedName("ClientIP")
-        @Expose
-        var clientIP: String = ""
-
+        var clientIP: String
 )
 
-data class FaceArg(
+data class FaceResponse(
         @SerializedName("Code")
         @Expose
         var code: Int = 0,
@@ -31,10 +26,8 @@ data class FaceArg(
 
         @SerializedName("UserID")
         @Expose
-        var userID: ArrayList<String> = arrayListOf(),
+        var userID: List<String> = listOf(),
 
-        @SerializedName("FullName")
-        @Expose
         var fullName: String? = "",
 
         @SerializedName("IsSkipPinCode")
@@ -52,13 +45,4 @@ data class FaceArg(
         @SerializedName("Form")
         @Expose
         var formOtp: String = ""
-) {
-    fun getFaceInfo(): FaceInfo {
-        return FaceInfo(
-                userID = this.userID,
-                fullName = this.fullName,
-                isSkipPinCode = this.isSkipPinCode,
-                isRetry = this.isRetry
-        )
-    }
-}
+)

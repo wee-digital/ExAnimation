@@ -60,8 +60,8 @@ class DeviceView(private val v: DeviceFragment) {
         v.deviceTextViewStation.setHyperText(text)
     }
 
-    fun onNameError(s: String?) {
-        v.deviceTextViewError.text = s
+    fun onNameError() {
+        v.deviceTextViewError.text = "Tên thiết bị phải từ 5 đến 20 ký tự"
     }
 
 
@@ -74,14 +74,14 @@ class DeviceView(private val v: DeviceFragment) {
         v.deviceEditTextName.requestFocus()
     }
 
-    fun onProgressChanged(isVisibility: Boolean) {
-        if (isVisibility) {
-            v.deviceViewRegister.hide()
-            v.deviceViewProgress.show()
-        } else {
-            v.deviceViewRegister.show()
-            v.deviceViewProgress.hide()
-        }
+    fun showProgress() {
+        v.deviceViewRegister.show()
+        v.deviceViewProgress.hide()
+    }
+
+    fun hideProgress() {
+        v.deviceViewRegister.hide()
+        v.deviceViewProgress.show()
     }
 
 }
