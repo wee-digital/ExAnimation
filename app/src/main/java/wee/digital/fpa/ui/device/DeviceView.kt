@@ -61,6 +61,7 @@ class DeviceView(private val v: DeviceFragment) {
     }
 
     fun onNameError() {
+        v.deviceTextViewError.show()
         v.deviceTextViewError.text = "Tên thiết bị phải từ 5 đến 20 ký tự"
     }
 
@@ -72,6 +73,7 @@ class DeviceView(private val v: DeviceFragment) {
         configTermText()
         v.addClickListener(v.deviceViewBack, v.deviceViewClose, v.deviceViewRegister)
         v.deviceEditTextName.requestFocus()
+        v.deviceTextViewError.hide()
     }
 
     fun showProgress() {

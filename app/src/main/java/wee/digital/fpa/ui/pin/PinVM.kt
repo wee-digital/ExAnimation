@@ -61,7 +61,7 @@ class PinVM : BaseViewModel() {
             }
 
             override fun onFailed(code: Int, message: String) {
-                onPinVerifyFailed(code, )
+                onPinVerifyFailed(code)
             }
         })
     }
