@@ -19,6 +19,8 @@ import wee.digital.library.extension.toObject
 
 class CardVM : BaseViewModel() {
 
+    val arg = MutableLiveData<String?>()
+
     val cardList = MutableLiveData<List<CardItem>?>()
 
     val otpForm = EventLiveData<String>()

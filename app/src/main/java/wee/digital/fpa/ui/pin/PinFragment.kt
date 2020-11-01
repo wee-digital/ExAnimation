@@ -6,6 +6,7 @@ import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.*
 import wee.digital.fpa.ui.card.CardItem
+import wee.digital.fpa.ui.card.CardVM
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.face.FaceFragment
 import wee.digital.fpa.ui.message.MessageArg
@@ -68,7 +69,7 @@ class PinFragment : Main.Dialog<PinVM>() {
                 onFetchCardList()
             }
             PinEvent.CARD_ERROR -> {
-                onCardError()
+                onFetchCardList()
             }
         }
     }
@@ -112,26 +113,9 @@ class PinFragment : Main.Dialog<PinVM>() {
         navigate(Main.otp)
     }
 
-    private fun onCardError() {
-        progressVM.arg.postValue(null)
-        val arg = ConfirmArg(
-                headerGuideline = R.id.guidelineFace,
-                title = "Giao dịch bị hủy bỏ",
-                message = "Lỗi thanh toán. Bạn vui lòng chọn thẻ khác".format(),
-                buttonAccept = "Đồng ý",
-                onAccept = {
-                    cardVM.fetchCardList(pinVM.arg.value)
-                },
-                buttonDeny = "Huỷ bỏ",
-                onDeny = {
-                    onPaymentCancel()
-                },
-        )
-        confirmVM.arg.postValue(arg)
-    }
-
     private fun onFetchCardList() {
         progressVM.arg.postValue(ProgressArg.pay)
+
         cardVM.fetchCardList(pinVM.arg.value)
     }
 
@@ -143,6 +127,10 @@ class PinFragment : Main.Dialog<PinVM>() {
             }
             else -> {
                 dismiss()
+                val s = "Lỗi thanh toán. Bạn vui lòng chọn thẻ khác"
+                if (localVM.hasCardError){
+                    cardVM.arg.postValue(s)
+                }
                 navigate(Main.card)
             }
         }

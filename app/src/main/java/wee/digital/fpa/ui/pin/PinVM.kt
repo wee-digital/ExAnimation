@@ -21,6 +21,8 @@ class PinVM : BaseViewModel() {
 
     val arg = MutableLiveData<PinArg?>()
 
+    var hasCardError = false
+
     var hasPayRequest: Boolean = false
 
     private val restRetriesAtomic = AtomicInteger(Config.PIN_RETRY_COUNT)
@@ -31,6 +33,7 @@ class PinVM : BaseViewModel() {
 
     override fun onStart() {
         hasPayRequest = false
+        hasCardError = false
         restRetriesAtomic.set(Config.PIN_RETRY_COUNT)
     }
 
@@ -116,6 +119,7 @@ class PinVM : BaseViewModel() {
                 otpForm.postValue(response.formOtp)
             }
             else -> {
+                hasCardError = true
                 eventLiveData.postValue(PinEvent.CARD_ERROR)
             }
         }
