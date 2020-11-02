@@ -1,5 +1,6 @@
 package wee.digital.fpa.ui.qr
 
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.qr.*
 import wee.digital.fpa.R
@@ -7,10 +8,11 @@ import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.base.viewModel
 
 class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
 
-    private val qrVM by lazy { activityVM(QrVM::class) }
+    private val qrVM by lazy { viewModel(QrVM::class) }
 
     private val qrView by lazy { QrView(this) }
 

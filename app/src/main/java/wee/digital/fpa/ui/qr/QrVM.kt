@@ -19,12 +19,14 @@ class QrVM : BaseViewModel() {
         isQRChecked = true
 
         if (text.isNullOrEmpty()) {
+            log.d("QR is empty")
             isQRChecked = false
             messageLiveData.value = null
             return
         }
         FrameUtil.decryptQRCode(text)?.also {
             log.d(text.jsonFormat())
+            log.d("QR captured")
             qrLiveData.postValue(it)
             return
         }
