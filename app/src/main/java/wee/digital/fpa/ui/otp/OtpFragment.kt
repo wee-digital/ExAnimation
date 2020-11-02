@@ -10,7 +10,6 @@ import wee.digital.fpa.R
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
-import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.confirm.ConfirmArg

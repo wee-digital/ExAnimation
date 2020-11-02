@@ -7,7 +7,6 @@ import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
 import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.fpa.ui.vm.SharedVM
 
 class PaymentFragment : MainDialog() {
@@ -26,8 +25,7 @@ class PaymentFragment : MainDialog() {
         sharedVM.payment.observe {
             paymentView.onPaymentDataChanged(it)
         }
-        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM)
-        sharedVM.timeoutEnd.observe {
+        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM).observe {
             it ?: return@observe
             onPaymentDenied()
         }

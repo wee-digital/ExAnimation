@@ -88,17 +88,13 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun onCheckDeviceStatus() {
-        mainVM.checkDeviceStatusOnTimer()
-    }
-
     private fun onTokenResponseChanged(it: GetTokenDTOResp) {
         when (it.Code) {
             0 -> {
                 socketVM.connectSocket(it.Token)
             }
             else -> {
-                onCheckDeviceStatus()
+                mainVM.checkDeviceStatusOnTimer()
             }
         }
     }
@@ -175,7 +171,7 @@ class MainActivity : BaseActivity() {
 
     private fun onWebSocketChanged(webSocket: WebSocket?) {
         if (webSocket == null) {
-            onCheckDeviceStatus()
+            mainVM.checkDeviceStatusOnTimer()
         }
         val isDisconnected = sharedVM.deviceInfo != null && webSocket == null
         mainView.showDisconnectDialog(isDisconnected)

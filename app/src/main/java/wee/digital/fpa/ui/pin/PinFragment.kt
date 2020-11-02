@@ -5,7 +5,6 @@ import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.*
-import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.face.FaceFragment
 import wee.digital.fpa.ui.message.MessageArg
@@ -34,10 +33,6 @@ class PinFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         sharedVM.startTimeout(Timeout.PIN_VERIFY)
-        sharedVM.timeoutSecond.observe {
-            onPaymentCancel()
-        }
-
         pinVM.pinVerifySuccess.observe {
             onPinVerifySuccess(it)
         }

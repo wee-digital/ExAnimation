@@ -4,7 +4,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import kotlinx.android.synthetic.main.confirm.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.MainDialog
-import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.library.extension.setHyperText
 import wee.digital.library.extension.string
 
@@ -24,7 +23,10 @@ class ConfirmFragment : MainDialog() {
     }
 
     private fun onBindArg(arg: ConfirmArg?) {
-        arg ?: return
+        if (arg == null) {
+            dismiss()
+            return
+        }
         onBindDialogSize(arg.headerGuideline)
         confirmImageViewIcon.setImageResource(arg.icon)
         confirmTextViewTitle.text = arg.title ?: string(R.string.app_name)

@@ -40,8 +40,8 @@ fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
 
 fun Fragment.onPaymentTimeout() {
     onPaymentFailed(MessageArg(
-            title = "",
-            message = "",
+            title = "Hết thời gian thanh toán",
+            message = "Giao dịch của bạn đã quá thời gian thanh toán. Bạn vui lòng thực hiện lại giao dịch."
     ))
 }
 

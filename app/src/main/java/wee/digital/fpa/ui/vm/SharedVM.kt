@@ -6,6 +6,7 @@ import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.ui.base.EventLiveData
@@ -65,7 +66,7 @@ class SharedVM : ViewModel() {
 
     private var disposable: Disposable? = null
 
-    fun startTimeout(intervalInSecond: Int) {
+    fun startTimeout(intervalInSecond: Int = Timeout.DEFAULT): MutableLiveData<Boolean?> {
         val waitingCounter = AtomicInteger(intervalInSecond + 1)
         disposable?.dispose()
         disposable = Observable
@@ -84,7 +85,7 @@ class SharedVM : ViewModel() {
                         }
                     }
                 }, {})
-
+        return timeoutEnd
     }
 
     fun stopTimeout() {

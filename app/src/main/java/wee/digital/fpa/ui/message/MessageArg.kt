@@ -58,10 +58,6 @@ data class MessageArg(
                         message = "Chủ shop không thể thanh toán, bạn vui lòng thử lại"
                 )
 
-                ErrCode.TIMEOUT_ERROR -> MessageArg(
-                        title = "Hết thời gian thanh toán",
-                        message = "Giao dịch của bạn đã quá thời gian thanh toán. Bạn vui lòng thực hiện lại giao dịch."
-                )
 
                 ErrCode.TRANS_EXCEED_LIMIT -> MessageArg(
                         title = "Quá hạn mức giao dịch",

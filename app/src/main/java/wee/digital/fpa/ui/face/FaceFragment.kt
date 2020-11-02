@@ -2,13 +2,9 @@ package wee.digital.fpa.ui.face
 
 import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
-import wee.digital.fpa.ui.Main
-import wee.digital.fpa.ui.MainFragment
-import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.*
 import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.confirm.ConfirmArg
-import wee.digital.fpa.ui.onPaymentCancel
-import wee.digital.fpa.ui.onPaymentFailed
 
 class FaceFragment : MainFragment() {
 
@@ -32,9 +28,12 @@ class FaceFragment : MainFragment() {
     }
 
     override fun onLiveDataObserve() {
-        sharedVM.startTimeout(Timeout.FACE_VERIFY)
         sharedVM.timeoutSecond.observe {
             faceView.onBindRemainingText(it)
+        }
+        sharedVM.startTimeout(Timeout.FACE_VERIFY).observe {
+            it ?: return@observe
+            onPaymentTimeout()
         }
         faceVM.successLiveData.observe {
             onFaceVerifySuccess(it)

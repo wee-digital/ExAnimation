@@ -3,7 +3,6 @@ package wee.digital.fpa.ui.adv
 import kotlinx.android.synthetic.main.adv.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.MainFragment
-import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.base.viewModel
 
 class AdvFragment : MainFragment() {
