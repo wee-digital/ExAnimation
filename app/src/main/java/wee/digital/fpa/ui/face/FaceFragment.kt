@@ -31,7 +31,6 @@ class FaceFragment : MainFragment() {
     }
 
     override fun onLiveDataObserve() {
-
         sharedVM.startTimeout(Timeout.FACE_VERIFY)
         sharedVM.timeoutSecond.observe {
             faceView.onBindRemainingText(it)

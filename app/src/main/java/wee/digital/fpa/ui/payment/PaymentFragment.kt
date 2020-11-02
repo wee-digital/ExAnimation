@@ -6,7 +6,9 @@ import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
+import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.onPaymentCancel
+import wee.digital.fpa.ui.vm.SharedVM
 
 class PaymentFragment : MainDialog() {
 
@@ -27,7 +29,7 @@ class PaymentFragment : MainDialog() {
         sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM)
         sharedVM.timeoutEnd.observe {
             it ?: return@observe
-            onPaymentCancel()
+            onPaymentDenied()
         }
         sharedVM.deviceInfo.observe {
             paymentView.onDeviceInfoChanged(it)
@@ -37,7 +39,7 @@ class PaymentFragment : MainDialog() {
     override fun onViewClick(v: View?) {
         when (v) {
             paymentViewAccept -> onPaymentAccept()
-            paymentViewDeny -> onPaymentCancel()
+            paymentViewDeny -> onPaymentDenied()
         }
     }
 
@@ -47,6 +49,15 @@ class PaymentFragment : MainDialog() {
         navigate(Main.face) {
             setLaunchSingleTop()
         }
+    }
+
+    private fun onPaymentDenied() {
+        activityVM(SharedVM::class).apply {
+            progress.postValue(null)
+            payment.postValue(null)
+            stopTimeout()
+        }
+        dismiss()
     }
 
 

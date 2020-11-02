@@ -5,8 +5,6 @@ import android.provider.Settings
 import android.util.Log
 import wee.digital.fpa.app.app
 import wee.digital.fpa.camera.FacePointData
-import wee.digital.fpa.repository.model.DataContentFail
-import wee.digital.fpa.repository.utils.ErrCode
 import java.io.File
 
 object Utils {

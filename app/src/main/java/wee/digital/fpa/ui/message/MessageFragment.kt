@@ -20,7 +20,7 @@ class MessageFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
-        sharedVM.timeoutSecond.observe {
+        sharedVM.timeoutEnd.observe {
             onPaymentCancel()
         }
         sharedVM.message.observe {
