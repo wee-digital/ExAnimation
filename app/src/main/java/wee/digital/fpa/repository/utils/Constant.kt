@@ -126,5 +126,7 @@ object SystemUrl {
     var URL_BANK_IC_WHITE = "https://dev.facepay.vn/v1/images/bank_iconic_white/"
     var URL_GET_BANKS = "https://dev.facepay.vn/v1/resources/"
 
+    // STB, TPB, MSB
+
     const val BASE_URL_LOG = "http://logs.wee.vn:3100/loki/api/v1/"
 }

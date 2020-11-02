@@ -1,0 +1,32 @@
+[
+  {
+    "id": "5f9f7f6679531110d40adc21",
+    "bankCode": "STB",
+    "name": "Ngân hàng TMCP Sài Gòn Thương Tín",
+    "shortName": "Sacombank",
+    "colors": [
+      "#165FBF",
+      "#0C4DA2"
+    ]
+  },
+  {
+    "id": "",
+    "bankCode": "TPB",
+    "name": "Ngân hàng TMCP Tiên Phong",
+    "shortName": "TPBank",
+    "colors": [
+      "#512879",
+      "#0C4DA2"
+    ]
+  },
+  {
+    "id": "",
+    "bankCode": "MSB",
+    "name": "Ngân hàng TMCP Hàng Hải Việt Nam",
+    "shortName": "MSB",
+    "colors": [
+      "#165FBF",
+      "#0C4DA2"
+    ]
+  }
+]

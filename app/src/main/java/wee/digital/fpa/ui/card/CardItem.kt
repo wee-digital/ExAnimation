@@ -3,6 +3,7 @@ package wee.digital.fpa.ui.card
 import wee.digital.fpa.data.local.Event
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.CardListResponse
+import wee.digital.fpa.repository.utils.SystemUrl
 import wee.digital.library.extension.listString
 import wee.digital.library.extension.str
 import wee.digital.library.extension.toObject
@@ -25,6 +26,7 @@ data class CardItem(
                     val obj = banks.get(i).toObject() ?: continue
                     val accBanks = accBanks[j]
                     if (obj.str("BankCode") != accBanks.BankCode) continue
+
                     val item = CardItem(
                             id = accBanks.id,
                             bankCode = obj.str("BankCode") ?: continue,

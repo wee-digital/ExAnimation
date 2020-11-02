@@ -63,19 +63,14 @@ data class MessageArg(
                         title = "Quá hạn mức giao dịch",
                         message = "Giao dịch không thể thực hiện do số tiền yêu cầu thanh toán vượt quá hạn mức giao dịch của tài khoản."
                 )
-                ErrCode.FACE_PAY_ERROR -> MessageArg(
-                        title = "Thanh toán không thành công",
-                        message = "Phát hiện lỗi, Vui lòng thử lại"
-                )
-
                 ErrCode.BILL_PAID -> MessageArg(
                         title = "Thanh toán không thành công",
                         message = "Giao dịch của bạn đã được thanh toán trước đó"
                 )
 
                 else -> MessageArg(
-                        title = "Giao dịch bị hủy bỏ",
-                        message = "Yêu cầu thanh toán của bạn đã bị hủy. Vui lòng liên hệ với nhân viên để biết thêm thông tin"
+                        title = "Thanh toán không thành công",
+                        message = "Phát hiện lỗi, Vui lòng thử lại"
                 )
             }
         }

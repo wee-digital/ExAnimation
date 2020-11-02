@@ -70,6 +70,7 @@ class MainActivity : BaseActivity() {
             onDeviceInfoChanged(it)
         }
         sharedVM.timeoutEnd.observe {
+            it?:return@observe
             onPaymentTimeout()
         }
     }

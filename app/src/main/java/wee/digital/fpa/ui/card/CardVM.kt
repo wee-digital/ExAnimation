@@ -7,6 +7,7 @@ import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
 
 class CardVM : BaseViewModel() {
@@ -15,7 +16,7 @@ class CardVM : BaseViewModel() {
 
     val paymentSuccess = EventLiveData<Boolean>()
 
-    val paymentFailed = EventLiveData<Boolean>()
+    val paymentFailed = EventLiveData<MessageArg>()
 
     fun postPayRequest(bankCode: String, paymentArg: PaymentArg?) {
         paymentArg ?: throw Event.paymentArgError
@@ -34,9 +35,13 @@ class CardVM : BaseViewModel() {
                         otpFormLiveData.postValue(response.formOtp)
                     }
                     else -> {
-                        paymentFailed.postValue(true)
+                        paymentFailed.postValue(MessageArg.fromCode(response.code))
                     }
                 }
+            }
+
+            override fun onFailed(code: Int, message: String) {
+                paymentFailed.postValue(MessageArg.fromCode(0))
             }
         })
     }

@@ -67,6 +67,7 @@ class PinFragment : MainDialog() {
     }
 
     private fun onPinVerifySuccess(it: PinArg) {
+        sharedVM.pin.value = it
         when {
             it.hasDefaultAccount -> {
                 pinVM.onPayRequest(sharedVM.payment.value)

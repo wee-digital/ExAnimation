@@ -25,9 +25,10 @@ class CardAdapter : BaseRecyclerAdapter<CardItem>() {
                 GradientDrawable.Orientation.LEFT_RIGHT, colors)
         gd.cornerRadius = 15f
         paymentImageViewCard.background = gd
-        cardItemLogo.load("${SystemUrl.URL_BANK_LOGO_WHITE}${model.name}.png")
-        cardItemIcon.load("${SystemUrl.URL_BANK_IC_WHITE}${model.name}.png")
-
+        val logo1 = "${SystemUrl.URL_BANK_LOGO_WHITE}${model.bankCode}.png"
+        cardItemLogo.load(logo1)
+        val logo2 = "${SystemUrl.URL_BANK_IC_WHITE}${model.bankCode}.png"
+        cardItemIcon.load(logo2)
     }
 
     private fun View.flipAnimation() {
