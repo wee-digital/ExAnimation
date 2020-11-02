@@ -1,10 +1,10 @@
 package wee.digital.fpa.ui.card
 
+import wee.digital.fpa.data.local.Event
 import wee.digital.fpa.repository.dto.PaymentDTOReq
 import wee.digital.fpa.repository.dto.PaymentResponse
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.payment.PaymentRepository
-import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.payment.PaymentArg

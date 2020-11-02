@@ -1,8 +1,8 @@
 package wee.digital.fpa.ui.card
 
+import wee.digital.fpa.data.local.Event
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.CardListResponse
-import wee.digital.fpa.ui.Event
 import wee.digital.library.extension.listString
 import wee.digital.library.extension.str
 import wee.digital.library.extension.toObject

@@ -6,11 +6,11 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
+import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.vm.SharedVM
-
 
 fun Fragment.onPaymentCancel() {
     activityVM(SharedVM::class).apply {
@@ -30,6 +30,7 @@ fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
         progress.postValue(null)
         payment.postValue(null)
         message.value = messageArg
+        startTimeout(Timeout.PAYMENT_DISMISS)
     }
     val options = NavOptions.Builder().apply {
         setEnterAnim(R.anim.vertical_reserved_enter)

@@ -66,7 +66,7 @@ class SharedVM : ViewModel() {
 
     private var disposable: Disposable? = null
 
-    fun startTimeout(intervalInSecond: Int = Timeout.DEFAULT): MutableLiveData<Boolean?> {
+    fun startTimeout(intervalInSecond: Int = Timeout.PAYMENT_DISMISS): MutableLiveData<Boolean?> {
         val waitingCounter = AtomicInteger(intervalInSecond + 1)
         disposable?.dispose()
         disposable = Observable

@@ -4,12 +4,12 @@ import android.util.Base64
 import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.data.local.Config
+import wee.digital.fpa.data.local.Event
 import wee.digital.fpa.repository.dto.FaceRequest
 import wee.digital.fpa.repository.dto.FaceResponse
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.network.CollectionData
 import wee.digital.fpa.repository.payment.PaymentRepository
-import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.message.MessageArg

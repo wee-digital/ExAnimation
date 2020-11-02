@@ -1,4 +1,4 @@
-package wee.digital.fpa.ui
+package wee.digital.fpa.data.local
 
 import androidx.lifecycle.MutableLiveData
 
