@@ -4,10 +4,11 @@ import kotlinx.android.synthetic.main.adv.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.MainFragment
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.base.viewModel
 
 class AdvFragment : MainFragment() {
 
-    private val advVM by lazy { activityVM(AdvVM::class) }
+    private val advVM by lazy { viewModel(AdvVM::class) }
 
     private val advAdapter = AdvAdapter()
 

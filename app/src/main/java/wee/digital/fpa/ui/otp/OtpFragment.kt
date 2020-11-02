@@ -11,6 +11,7 @@ import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.message.MessageArg
@@ -20,7 +21,7 @@ import wee.digital.library.extension.post
 
 class OtpFragment : MainDialog() {
 
-    private val otpVM by lazy { activityVM(OtpVM::class) }
+    private val otpVM by lazy { viewModel(OtpVM::class) }
 
     private val otpView by lazy { OtpView(this) }
 

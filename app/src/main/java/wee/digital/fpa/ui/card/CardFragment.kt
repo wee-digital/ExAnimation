@@ -5,13 +5,14 @@ import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.onPaymentFailed
 import wee.digital.fpa.ui.progress.ProgressArg
 
 class CardFragment : MainDialog() {
 
-    private val cardVM by lazy { activityVM(CardVM::class) }
+    private val cardVM by lazy { viewModel(CardVM::class) }
 
     private val adapter = CardAdapter()
 

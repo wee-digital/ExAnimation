@@ -5,13 +5,14 @@ import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainFragment
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.confirm.ConfirmArg
 import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.fpa.ui.onPaymentFailed
 
 class FaceFragment : MainFragment() {
 
-    private val faceVM by lazy { activityVM(FaceVM::class) }
+    private val faceVM by lazy { viewModel(FaceVM::class) }
 
     private val faceView by lazy { FaceView(this) }
 

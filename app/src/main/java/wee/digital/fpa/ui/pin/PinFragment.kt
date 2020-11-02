@@ -6,6 +6,7 @@ import wee.digital.fpa.R
 import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.*
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.face.FaceFragment
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.progress.ProgressArg
@@ -13,7 +14,7 @@ import wee.digital.library.extension.string
 
 class PinFragment : MainDialog() {
 
-    private val pinVM by lazy { activityVM(PinVM::class) }
+    private val pinVM by lazy { viewModel(PinVM::class) }
 
     private val pinView by lazy { PinView(this) }
 

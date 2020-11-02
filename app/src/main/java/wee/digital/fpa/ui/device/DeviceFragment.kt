@@ -8,6 +8,7 @@ import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
 import wee.digital.fpa.ui.base.BaseDialog
 import wee.digital.fpa.ui.base.activityVM
+import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.library.extension.*
 
@@ -15,7 +16,7 @@ class DeviceFragment : MainDialog() {
 
     private val deviceView by lazy { DeviceView(this) }
 
-    private val deviceVM by lazy { activityVM(DeviceVM::class) }
+    private val deviceVM by lazy { viewModel(DeviceVM::class) }
 
     /**
      * [BaseDialog] override
