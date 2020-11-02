@@ -1,4 +1,4 @@
-package wee.digital.fpa.data.local
+package wee.digital.fpa.shared
 
 object Timeout {
 

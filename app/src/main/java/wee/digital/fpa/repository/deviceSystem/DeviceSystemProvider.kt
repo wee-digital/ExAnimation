@@ -3,8 +3,8 @@ package wee.digital.fpa.repository.deviceSystem
 import com.google.gson.JsonObject
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.base.IBase
-import wee.digital.fpa.repository.dto.GetTokenDTOResp
 import wee.digital.fpa.repository.dto.RegisterDTOResp
+import wee.digital.fpa.repository.dto.TokenResponse
 import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.utils.ErrCode
@@ -44,10 +44,10 @@ class DeviceSystemProvider : IBase.DeviceSystem {
         })
     }
 
-    override fun getToken(listener: Api.ClientListener<GetTokenDTOResp>) {
+    override fun getToken(listener: Api.ClientListener<TokenResponse>) {
         Api.instance.postApi(url = "getToken", data = null, listener = object : Api.ApiCallBack {
             override fun onSuccess(data: JsonObject) {
-                val resp = data.parse(GetTokenDTOResp::class.java)!!
+                val resp = data.parse(TokenResponse::class.java)!!
                 listener.onSuccess(resp)
             }
 

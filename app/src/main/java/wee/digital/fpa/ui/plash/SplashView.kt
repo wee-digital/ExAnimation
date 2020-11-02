@@ -4,9 +4,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
 import kotlinx.android.synthetic.main.splash.*
 import wee.digital.library.extension.beginTransition
-import wee.digital.library.extension.bold
 import wee.digital.library.extension.onEndTransition
-import wee.digital.library.extension.setHyperText
 
 class SplashView(private val v: SplashFragment) {
 
@@ -14,15 +12,7 @@ class SplashView(private val v: SplashFragment) {
         duration = 400
     }
 
-    fun onBindRemainingText(second: Int) {
-        if (second < 0) {
-            v.splashTextViewRemaining.text = null
-            return
-        }
-        val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
-        val sRemaining = "Thời gian còn lại: %s".format(sHour)
-        v.splashTextViewRemaining.setHyperText(sRemaining)
-    }
+
 
     fun animateOnHasPayment() {
         v.splashImageViewLogo?.post {
@@ -32,9 +22,9 @@ class SplashView(private val v: SplashFragment) {
                 val logoId = v.splashImageViewLogo.id
                 viewTransition.beginTransition(v.viewContent) {
                     constrainHeight(logoId, height)
-                    connect(logoId, ConstraintSet.TOP, v.splashTextViewRemaining.id, ConstraintSet.BOTTOM)
+                    connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
                     connect(logoId, ConstraintSet.BOTTOM, v.guidelineSplash.id, ConstraintSet.BOTTOM)
-                    setVerticalBias(logoId, 0.55f)
+                    setVerticalBias(logoId, 0.6f)
                 }
             } catch (ignore: Exception) {
             }

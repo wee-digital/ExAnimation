@@ -11,7 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import wee.digital.fpa.R
-import wee.digital.fpa.data.local.Config
+import wee.digital.fpa.shared.Config
 import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 

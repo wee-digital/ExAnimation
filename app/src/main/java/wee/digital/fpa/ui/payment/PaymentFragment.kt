@@ -3,11 +3,9 @@ package wee.digital.fpa.ui.payment
 import android.view.View
 import kotlinx.android.synthetic.main.payment.*
 import wee.digital.fpa.R
-import wee.digital.fpa.data.local.Timeout
+import wee.digital.fpa.shared.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
-import wee.digital.fpa.ui.base.activityVM
-import wee.digital.fpa.ui.vm.SharedVM
 
 class PaymentFragment : MainDialog() {
 
@@ -25,9 +23,7 @@ class PaymentFragment : MainDialog() {
         sharedVM.payment.observe {
             paymentView.onPaymentDataChanged(it)
         }
-        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM) {
-            onPaymentDenied()
-        }
+        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM)
         sharedVM.deviceInfo.observe {
             paymentView.onDeviceInfoChanged(it)
         }
@@ -49,7 +45,7 @@ class PaymentFragment : MainDialog() {
     }
 
     private fun onPaymentDenied() {
-        activityVM(SharedVM::class).apply {
+        sharedVM.apply {
             progress.postValue(null)
             payment.postValue(null)
             stopTimeout()

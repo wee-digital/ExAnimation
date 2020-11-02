@@ -1,7 +1,7 @@
 package wee.digital.fpa.repository.deviceSystem
 
 import wee.digital.fpa.repository.base.IBase
-import wee.digital.fpa.repository.dto.GetTokenDTOResp
+import wee.digital.fpa.repository.dto.TokenResponse
 import wee.digital.fpa.repository.model.DeviceInfoStore
 import wee.digital.fpa.repository.network.Api
 
@@ -23,7 +23,7 @@ class DeviceSystemRepository : IBase.DeviceSystem {
         mDeviceSystemProvider.checkDeviceStatus(listener = listener)
     }
 
-    override fun getToken(listener: Api.ClientListener<GetTokenDTOResp>) {
+    override fun getToken(listener: Api.ClientListener<TokenResponse>) {
         mDeviceSystemProvider.getToken(listener = listener)
     }
 }

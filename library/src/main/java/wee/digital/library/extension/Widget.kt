@@ -3,6 +3,7 @@ package wee.digital.library.extension
 import android.app.Activity
 import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.content.res.Resources
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.Color
@@ -13,7 +14,6 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -85,7 +85,11 @@ fun NestedScrollView.scrollToCenter(view: View) {
 }
 
 fun TextView.color(@ColorRes colorRes: Int) {
-    setTextColor(ContextCompat.getColor(context, colorRes))
+    try {
+        setTextColor(ContextCompat.getColor(context, colorRes))
+    } catch (ignore: Resources.NotFoundException) {
+
+    }
 }
 
 fun TextView.color(colorStr: String) {

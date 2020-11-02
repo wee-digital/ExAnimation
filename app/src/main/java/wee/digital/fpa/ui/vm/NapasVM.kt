@@ -46,4 +46,5 @@ class NapasVM : BaseViewModel() {
         val dataReq = UpdateCancelPaymentDTOReq(type = type)
         PaymentRepository.ins.updateCancelPayment(dataReq)
     }
+
 }

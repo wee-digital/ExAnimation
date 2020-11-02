@@ -20,6 +20,7 @@ import wee.digital.fpa.repository.model.*
 import wee.digital.fpa.repository.utils.Key
 import wee.digital.fpa.repository.utils.SharedPrefUtil
 import wee.digital.fpa.util.Utils
+import wee.digital.fpa.util.deviceId
 import wee.digital.library.extension.str
 
 class EncryptData {
@@ -40,10 +41,9 @@ class EncryptData {
                 val sessionId = dataReq.qrCode.str("SessionID").toString()
                 val rsaKey = Crypto.rsaGenerateKey()
                 SharedPrefUtil.savePriKey(rsaKey.privateKey)
-                val androidId = Utils.getIdDevice()
                 val bodyJson = Gson().toJson(
                         RegisterDTOReq(
-                                uid = androidId,
+                                uid = deviceId,
                                 pubKey = Base64.encodeToString(rsaKey.publicKey, Base64.NO_WRAP),
                                 name = dataReq.name,
                                 modelDevice = Build.MODEL

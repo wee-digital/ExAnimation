@@ -6,7 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.deviceSystem.DeviceSystemRepository
-import wee.digital.fpa.repository.dto.GetTokenDTOResp
+import wee.digital.fpa.repository.dto.TokenResponse
 import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.repository.utils.ErrCode
 import wee.digital.fpa.ui.base.BaseViewModel
@@ -16,7 +16,7 @@ class MainVM : BaseViewModel() {
 
     private var paymentRequest: Disposable? = null
 
-    var tokenResponse = MutableLiveData<GetTokenDTOResp>()
+    var tokenResponse = MutableLiveData<TokenResponse>()
 
 
     val rootDirection get() = Main.mainDirection
@@ -50,16 +50,16 @@ class MainVM : BaseViewModel() {
     }
 
     private fun getToken() {
-        DeviceSystemRepository.ins.getToken(object : Api.ClientListener<GetTokenDTOResp> {
+        DeviceSystemRepository.ins.getToken(object : Api.ClientListener<TokenResponse> {
 
-            override fun onSuccess(response: GetTokenDTOResp) {
+            override fun onSuccess(response: TokenResponse) {
                 log.d("getToken: $response")
                 tokenResponse.postValue(response)
             }
 
             override fun onFailed(code: Int, message: String) {
                 log.d("getToken: $code - $message")
-                val dataFail = GetTokenDTOResp(ErrCode.GET_TOKEN_SOCKET_FAIL, "", "")
+                val dataFail = TokenResponse(ErrCode.GET_TOKEN_SOCKET_FAIL, "", "")
                 tokenResponse.postValue(dataFail)
             }
 

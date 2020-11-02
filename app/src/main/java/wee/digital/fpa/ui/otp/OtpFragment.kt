@@ -7,7 +7,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.fpa.R
-import wee.digital.fpa.data.local.Event
+import wee.digital.fpa.shared.Event
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
 import wee.digital.fpa.ui.base.viewModel

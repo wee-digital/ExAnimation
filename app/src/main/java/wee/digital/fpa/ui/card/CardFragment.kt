@@ -2,7 +2,7 @@ package wee.digital.fpa.ui.card
 
 import kotlinx.android.synthetic.main.card.*
 import wee.digital.fpa.R
-import wee.digital.fpa.data.local.Timeout
+import wee.digital.fpa.shared.Timeout
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
 import wee.digital.fpa.ui.base.viewModel
@@ -24,14 +24,6 @@ class CardFragment : MainDialog() {
     }
 
     override fun onViewCreated() {
-    /*    sharedVM.cards.json.value = listOf(CardItem(
-                id = "1",
-                bankCode = "1",
-                name = "1",
-                shortName = "1",
-                id = "1",
-
-        ))*/
         adapter.bind(paymentRecyclerViewCard, 2)
         adapter.itemClick = { model, _ ->
             cardVM.postPayRequest(model.bankCode, sharedVM.payment.value)
@@ -39,7 +31,6 @@ class CardFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
-
         sharedVM.startTimeout(Timeout.CARD_SELECT)
         sharedVM.timeoutEnd.observe {
             it ?: return@observe

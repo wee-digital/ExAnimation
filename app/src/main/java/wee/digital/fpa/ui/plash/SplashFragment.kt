@@ -4,6 +4,7 @@ import wee.digital.fpa.R
 import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainFragment
 import wee.digital.fpa.ui.base.BaseFragment
+import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.util.startCamera
 import wee.digital.fpa.util.stopCamera
@@ -24,9 +25,7 @@ class SplashFragment : MainFragment() {
     }
 
     override fun onLiveDataObserve() {
-        sharedVM.timeoutSecond.observe {
-            splashView.onBindRemainingText(it)
-        }
+        sharedVM.timeoutColor.value = R.color.colorTimeoutSplash
         sharedVM.payment.observe {
             onPaymentArgChanged(it)
         }
@@ -40,10 +39,7 @@ class SplashFragment : MainFragment() {
             null -> {
                 stopCamera()
                 splashView.animateOnDismissPayment {
-                    navigate(Main.adv) {
-                        setNoneAnim()
-                        setLaunchSingleTop()
-                    }
+                    onPaymentCancel()
                 }
             }
             else -> {

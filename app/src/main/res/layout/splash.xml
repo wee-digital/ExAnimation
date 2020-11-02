@@ -22,15 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/splashTextViewRemaining"
-        style="@style/Remaining.Text"
-        android:textColor="@color/color_notification"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Time remaining: 00:30" />
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/splashImageViewLogo"

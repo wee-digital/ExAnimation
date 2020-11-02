@@ -7,7 +7,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.fpa.R
 import wee.digital.fpa.util.SimpleLifecycleObserver
-import wee.digital.fpa.util.Utils
+import wee.digital.fpa.util.screenHeight
 import wee.digital.library.extension.load
 import wee.digital.library.extension.post
 
@@ -56,7 +56,7 @@ class OtpView(private val v: OtpFragment) {
 
     private fun settingWebView() {
         v.otpImageViewProgress.load(R.drawable.loading)
-        v.otpWebView.layoutParams.height = Utils.getScreenHeight() + 320
+        v.otpWebView.layoutParams.height = screenHeight + 320
         v.otpWebView.setOnTouchListener { v, event -> event.action === MotionEvent.ACTION_MOVE }
         v.otpWebView.isScrollContainer = false
         v.otpWebView.isVerticalScrollBarEnabled = false

@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.R
-import wee.digital.fpa.data.local.Config
+import wee.digital.fpa.shared.Config
 import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 

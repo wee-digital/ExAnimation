@@ -9,6 +9,9 @@
     <color name="colorBlue">#378AE1</color>
     <color name="colorLightBlue">#419DF2</color>
 
+    <color name="colorTimeoutSplash">@color/colorWhite</color>
+    <color name="colorTimeoutFace">#747474</color>
+
     <color name="gray_1">#EAEAEA</color>
     <color name="gray">#8F8F8F</color>
     <color name="bg_face">#FAFAFA</color>
@@ -29,7 +32,7 @@
     <color name="gradient_blue_end2">#82F5FA</color>
     <color name="gradient_red_start">#F24141</color>
     <color name="gradient_red_end">#D22222</color>
-    <color name="color_notification">#FFFFFF</color>
+
 
 
 

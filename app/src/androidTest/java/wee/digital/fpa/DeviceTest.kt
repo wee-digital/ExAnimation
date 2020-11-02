@@ -9,9 +9,7 @@ class DeviceTest(private val v: DeviceFragment,
 
 
     fun onTestInit() {
-        v.viewTest.setOnClickListener {
-            vm.registerError.value = null//"test error"
-        }
+
     }
 
 

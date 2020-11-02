@@ -1,4 +1,4 @@
-package wee.digital.fpa.data.local
+package wee.digital.fpa.shared
 
 import androidx.lifecycle.MutableLiveData
 
@@ -7,25 +7,23 @@ object Event {
 
     val liveData = MutableLiveData<Throwable>()
 
+    val paymentArgError = NullPointerException("SharedVM.paymentArg is null")
 
-    val paymentArgError = NullPointerException("PaymentVM.paymentArg is null value")
+    val deviceInfoError = NullPointerException("SharedVM.deviceInfo is null")
 
-    val deviceInfoError = NullPointerException("MainVM.deviceInfo is null value")
-
-    val faceArgError = NullPointerException("FaceVM.faceArg is null value")
+    val faceArgError = NullPointerException("SharedVM.faceArg is null value")
 
     val bankDataError = NullPointerException("Bank data error")
 
-    val pinDataError = NullPointerException("Pin data error")
+    val pinDataError = NullPointerException("SharedVM.deviceInfo is null")
 
-    val otpFormError = NullPointerException("OTP form data error")
+    val otpFormError = NullPointerException("SharedVM.deviceInfo is null")
 
-    val qrError = NullPointerException("QR data error")
+    val qrError = NullPointerException("SharedVM.deviceInfo is null")
 
     fun initConsumer() {
         return
         Thread.setDefaultUncaughtExceptionHandler { _, e ->
-
             liveData.postValue(e)
             when (e) {
                 paymentArgError -> {

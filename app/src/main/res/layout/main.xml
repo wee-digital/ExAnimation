@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchParent"
     android:background="@color/colorWhite"
     android:focusable="true"
@@ -20,63 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/main_graph" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/mainTextViewDeviceInfo"
-        style="@style/TextView"
-        android:layout_margin="@dimen/_2sdp"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_4ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="DeviceInfo" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/mainTextViewVersion"
-        style="@style/TextView"
-        android:layout_margin="@dimen/_2sdp"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_4ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="1.0.0" />
-
-    <View
-        android:id="@+id/mainViewTest"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/mainViewExit"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHeader"
-        style="@style/Guideline.Header" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/mainViewDisconnect"
-        style="@style/BodyRegular"
-        android:background="@drawable/drw_alert"
-        android:drawableStart="@drawable/ic_x_mark_outline"
-        android:drawablePadding="@dimen/_4sdp"
-        android:drawableTint="@color/colorWhite"
-        android:elevation="1dp"
-        android:paddingStart="@dimen/margin"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingEnd="@dimen/margin"
-        android:paddingBottom="@dimen/_4sdp"
-        android:text="Disconnnected..."
-        android:textColor="@color/colorWhite"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+    <include layout="@layout/main_widgets"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

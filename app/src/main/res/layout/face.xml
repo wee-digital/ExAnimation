@@ -20,16 +20,6 @@
         style="@style/Guideline.Horizontal"
         app:layout_constraintGuide_percent="0.28" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/faceTextViewRemaining"
-        style="@style/Remaining.Text"
-        android:textColor="@color/color_gray_1"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Time remaining: 00:30" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bgFaceLogo"
         android:layout_width="0dp"
@@ -68,6 +58,8 @@
         app:riv_oval="true"
         tools:src="@mipmap/img_placeholder" />
 
+
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle1"
         style="@style/Headline1SemiBold"
@@ -86,10 +78,9 @@
         android:textColor="@color/gradient_blue_end"
         app:layout_constraintBottom_toTopOf="@+id/faceGuidelineCameraTop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/faceTextViewRemaining"
-        app:layout_constraintVertical_bias="0.421" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/faceTextViewTitle3"

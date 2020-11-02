@@ -3,7 +3,7 @@ package wee.digital.fpa.ui.pin
 import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
-import wee.digital.fpa.data.local.Timeout
+import wee.digital.fpa.shared.Timeout
 import wee.digital.fpa.ui.*
 import wee.digital.fpa.ui.base.viewModel
 import wee.digital.fpa.ui.face.FaceFragment

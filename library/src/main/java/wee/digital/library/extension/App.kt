@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.provider.Settings
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.annotation.*
@@ -17,6 +18,7 @@ import java.io.InputStreamReader
 private val app: Application get() = Library.app
 
 val packageName: String get() = app.applicationContext.packageName
+
 
 fun open(file: File) {
     try {

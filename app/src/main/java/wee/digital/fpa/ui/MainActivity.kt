@@ -5,14 +5,14 @@ import androidx.navigation.NavDirections
 import okhttp3.WebSocket
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.data.repository.Shared
-import wee.digital.fpa.repository.dto.GetTokenDTOResp
 import wee.digital.fpa.repository.dto.SocketResponse
+import wee.digital.fpa.repository.dto.TokenResponse
 import wee.digital.fpa.repository.model.DeviceInfo
 import wee.digital.fpa.repository.utils.CancelPaymentCode
 import wee.digital.fpa.repository.utils.PaymentStatusCode
 import wee.digital.fpa.repository.utils.SocketEvent
+import wee.digital.fpa.shared.Timeout
 import wee.digital.fpa.ui.base.BaseActivity
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.base.viewModel
@@ -22,7 +22,7 @@ import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.fpa.ui.vm.NapasVM
 import wee.digital.fpa.ui.vm.SharedVM
 import wee.digital.fpa.ui.vm.SocketVM
-import wee.digital.fpa.util.Utils
+import wee.digital.fpa.util.deleteCache
 
 class MainActivity : BaseActivity() {
 
@@ -69,8 +69,14 @@ class MainActivity : BaseActivity() {
         sharedVM.deviceInfo.observe {
             onDeviceInfoChanged(it)
         }
+        sharedVM.timeoutColor.observe {
+            mainView.onTimeoutColorChanged(it)
+        }
+        sharedVM.timeoutSecond.observe {
+            mainView.onTimeoutSecondChanged(it)
+        }
         sharedVM.timeoutEnd.observe {
-            it?:return@observe
+            it ?: return@observe
             onPaymentTimeout()
         }
     }
@@ -94,7 +100,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun onTokenResponseChanged(it: GetTokenDTOResp) {
+    private fun onTokenResponseChanged(it: TokenResponse) {
         when (it.Code) {
             0 -> {
                 socketVM.connectSocket(it.Token)
@@ -127,7 +133,7 @@ class MainActivity : BaseActivity() {
                 if (paying && calledFacePay) return
             }
             SocketEvent.DELETE_CACHE -> {
-                Utils.deleteCache()
+                deleteCache()
                 mainVM.resetDeviceData()
                 Main.mainDirection.postValue(MainDirections.actionGlobalConnectFragment())
             }
@@ -143,7 +149,7 @@ class MainActivity : BaseActivity() {
             }
             else -> {
                 mainVM.checkDeviceStatus()
-                mainView.onBindDeviceInfo(it)
+                mainView.onDeviceInfoChanged(it)
                 navigate(Main.adv) {
                     setLaunchSingleTop()
                 }
@@ -152,11 +158,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onPaymentArgChanged(it: PaymentArg?) {
-        when (it) {
-            null -> {
-                return
-            }
-            else -> {
+        when {
+            it != null -> {
                 activityVM(SharedVM::class).clearData()
                 sharedVM.payment.value = it
                 navigate(Main.splash) {

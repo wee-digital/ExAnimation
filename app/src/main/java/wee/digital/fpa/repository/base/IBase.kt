@@ -11,7 +11,7 @@ interface IBase {
     interface DeviceSystem {
         fun register(data: DeviceInfoStore, listener: Api.ClientListener<Any>)
         fun checkDeviceStatus(listener: Api.ClientListener<Int>)
-        fun getToken(listener: Api.ClientListener<GetTokenDTOResp>)
+        fun getToken(listener: Api.ClientListener<TokenResponse>)
     }
 
     interface Payment {

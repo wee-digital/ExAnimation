@@ -13,7 +13,10 @@ import wee.digital.fpa.camera.Detection
 import wee.digital.fpa.camera.FacePointData
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.util.observerCameraListener
-import wee.digital.library.extension.*
+import wee.digital.library.extension.beginTransition
+import wee.digital.library.extension.load
+import wee.digital.library.extension.loadGif
+import wee.digital.library.extension.onEndTransition
 import java.util.concurrent.atomic.AtomicInteger
 
 
@@ -124,16 +127,6 @@ class FaceView(private val v: FaceFragment) :
         onConfigFaceReg()
     }
 
-    fun onBindRemainingText(second: Int) {
-        if (second < 0) {
-            v.faceTextViewRemaining.text = null
-            return
-        }
-        val sHour = "%02d:%02d".format(second / 60, second % 60).bold()
-        val sRemaining = "Thời gian còn lại: %s".format(sHour)
-        v.faceTextViewRemaining.setHyperText(sRemaining)
-    }
-
     fun animateOnFaceCaptured() {
 
         val view = v.faceImageViewCamera
@@ -147,7 +140,8 @@ class FaceView(private val v: FaceFragment) :
             setAlpha(v.faceTextViewTitle1.id, 0f)
             setAlpha(v.faceTextViewTitle2.id, 0f)
             setAlpha(v.faceTextViewTitle3.id, 0f)
-            connect(viewId, ConstraintSet.TOP, v.faceTextViewRemaining.id, ConstraintSet.BOTTOM)
+            setVerticalBias(viewId, 0.06f)
+            connect(viewId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
             connect(viewId, ConstraintSet.BOTTOM, v.guidelineFace.id, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
             connect(viewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
@@ -169,6 +163,7 @@ class FaceView(private val v: FaceFragment) :
         }
         viewTransition.beginTransition(v.viewContent, {
             clear(viewId, ConstraintSet.BOTTOM)
+            setVerticalBias(viewId, 0f)
             connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
             connect(viewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)

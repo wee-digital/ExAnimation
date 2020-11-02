@@ -6,9 +6,9 @@ import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.repository.base.BaseData
 import wee.digital.fpa.repository.model.DeviceInfo
+import wee.digital.fpa.shared.Timeout
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.confirm.ConfirmArg
@@ -44,10 +44,11 @@ class SharedVM : ViewModel() {
 
     val otpForm = MutableLiveData<String?>()
 
+    val timeoutColor = MutableLiveData<Int>()
+
     val timeoutSecond = MutableLiveData<Int>()
 
     val timeoutEnd = MutableLiveData<Boolean?>()
-
 
     fun syncDeviceInfo() {
         deviceInfo.postValue(BaseData.ins.getDeviceInfoPref())

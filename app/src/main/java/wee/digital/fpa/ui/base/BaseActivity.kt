@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import wee.digital.fpa.data.local.Config
+import wee.digital.fpa.shared.Config
 import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 
@@ -74,12 +74,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         observe(this@BaseActivity, Observer(block))
     }
 
-    fun <T> NonNullLiveData<T?>.observe(block: (T) -> Unit) {
-        observe(this@BaseActivity, Observer {
-            it ?: return@Observer
-            block(it)
-        })
-    }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {

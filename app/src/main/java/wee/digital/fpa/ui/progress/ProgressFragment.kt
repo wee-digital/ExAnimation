@@ -2,8 +2,8 @@ package wee.digital.fpa.ui.progress
 
 import kotlinx.android.synthetic.main.progress.*
 import wee.digital.fpa.R
-import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainDialog
+import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.library.extension.*
 import wee.digital.library.util.Media
 
@@ -42,10 +42,7 @@ class ProgressFragment : MainDialog() {
         post(6000) {
             dismiss()
             sharedVM.progress.postValue(null)
-            navigate(Main.adv) {
-                setNoneAnim()
-                setLaunchSingleTop()
-            }
+            onPaymentCancel()
         }
 
     }
