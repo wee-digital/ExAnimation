@@ -33,13 +33,13 @@ class OtpVM : BaseViewModel() {
 
     private fun onPaymentRetry(data: String) {
         when (data) {
-            "INSUFFICIENT_FUNDS" -> {
+            Napas.INSUFFICIENT_FUNDS -> {
                 retryMessageLiveData.postValue(ConfirmArg(
                         title = "Giao dịch thất bại",
                         message = "Không đủ số dư thanh toán. Bạn vui lòng chọn thẻ khác"
                 ))
             }
-            "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
+            Napas.BELOW_LIMIT, Napas.OUT_OF_LIMIT_BANK -> {
                 retryMessageLiveData.postValue(ConfirmArg(
                         title = "Giao dịch thất bại",
                         message = "Quá hạn mức giao dịch. Bạn vui lòng chọn thẻ khác"
@@ -53,14 +53,14 @@ class OtpVM : BaseViewModel() {
 
     private fun onPaymentError(data: String) {
         when (data) {
-            "INSUFFICIENT_FUNDS" -> {
+            Napas.INSUFFICIENT_FUNDS -> {
                 errorMessageLiveData.postValue(MessageArg(
                         title = "Giao dịch thất bại",
                         message = "Quá hạn mức giao dịch.",
                         button = null
                 ))
             }
-            "TRANSACTION_BELOW_LIMIT", "TRANSACTION_OUT_OF_LIMIT_BANK" -> {
+            Napas.BELOW_LIMIT, Napas.OUT_OF_LIMIT_BANK -> {
                 errorMessageLiveData.postValue(MessageArg(
                         title = "Giao dịch thất bại",
                         message = "Quá hạn mức giao dịch.",

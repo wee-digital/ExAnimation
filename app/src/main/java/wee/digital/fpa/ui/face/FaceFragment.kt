@@ -6,7 +6,6 @@ import wee.digital.fpa.ui.Main
 import wee.digital.fpa.ui.MainFragment
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.confirm.ConfirmArg
-import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.fpa.ui.onPaymentFailed
 

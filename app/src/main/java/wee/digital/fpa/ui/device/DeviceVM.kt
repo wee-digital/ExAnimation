@@ -8,7 +8,6 @@ import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
-import wee.digital.fpa.ui.message.MessageArg
 
 class DeviceVM : BaseViewModel() {
 

@@ -19,9 +19,7 @@ class MainVM : BaseViewModel() {
     var tokenResponse = MutableLiveData<GetTokenDTOResp>()
 
 
-
     val rootDirection get() = Main.mainDirection
-
 
 
     fun checkDeviceStatusOnTimer() {

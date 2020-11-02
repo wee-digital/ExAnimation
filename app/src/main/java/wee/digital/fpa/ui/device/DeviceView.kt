@@ -60,7 +60,7 @@ class DeviceView(private val v: DeviceFragment) {
         v.deviceTextViewStation.setHyperText(text)
     }
 
-    fun onNameError(s : String?) {
+    fun onNameError(s: String?) {
         v.deviceTextViewError.text = s
     }
 

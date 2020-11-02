@@ -20,10 +20,6 @@ import wee.digital.library.extension.post
 
 class OtpFragment : MainDialog() {
 
-    companion object {
-        private const val NAPAS_STATIC_URL = "https://napas-qc.facepay.vn/v1/static"
-    }
-
     private val otpVM by lazy { activityVM(OtpVM::class) }
 
     private val otpView by lazy { OtpView(this) }
@@ -51,7 +47,6 @@ class OtpFragment : MainDialog() {
             onCardListChanged(it)
         }
     }
-
 
     /**
      * load webView Otp
@@ -114,11 +109,11 @@ class OtpFragment : MainDialog() {
                 val listUrl = url?.split("=") ?: return
                 if (listUrl.size < 2) return
                 when (listUrl[0]) {
-                    "$NAPAS_STATIC_URL/payment-fail?reason" -> {
+                    "${Napas.STATIC_URL}/payment-fail?reason" -> {
                         val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
                         otpVM.onTransactionFailed(reason)
                     }
-                    "$NAPAS_STATIC_URL/payment-success?facepayRef" -> {
+                    "${Napas.STATIC_URL}/payment-success?facepayRef" -> {
                         onTransactionSuccess()
                     }
                 }

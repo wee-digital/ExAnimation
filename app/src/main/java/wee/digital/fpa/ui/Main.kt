@@ -6,7 +6,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
-import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
