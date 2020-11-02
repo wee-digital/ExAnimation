@@ -119,14 +119,12 @@ class PaymentProvider : IBase.Payment {
                 Log.d("payment", "$data")
                 val resp = data.parse(PaymentResponse::class.java)!!
                 resp.code = ErrCode.SUCCESS
-
                 listener.onSuccess(resp)
             }
 
             override fun onFail(code: Int, mess: String, data: JsonObject?) {
                 Log.d("payment", "$code - $mess - $data")
-                val resp = paymentFailed(code, mess, data)
-                listener.onFailed(resp)
+                listener.onFailed(code, mess)
             }
         })
     }

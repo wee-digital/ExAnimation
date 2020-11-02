@@ -12,15 +12,11 @@ import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.vm.SharedVM
 
-
-val Fragment.mainVM get() = activityVM(MainVM::class)
-
 fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
     activityVM(SharedVM::class).apply {
         progress.postValue(null)
         payment.postValue(null)
         message.value = messageArg
-        startTimeout(Timeout.PAYMENT_DENIED)
     }
     findNavController().navigate(Main.message)
 }

@@ -46,11 +46,11 @@ class PinFragment : MainDialog() {
             dismiss()
             sharedVM.progress.postValue(ProgressArg.paid)
         }
-        pinVM.payRequestFailed.observe {
+        pinVM.payRequestError.observe {
             onPaymentFailed(MessageArg.paymentCancel)
         }
 
-        pinVM.cardError.observe {
+        pinVM.payRequestCardError.observe {
             onPaymentCardError()
         }
         pinVM.otpForm.observe {

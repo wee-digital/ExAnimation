@@ -4,6 +4,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import kotlinx.android.synthetic.main.message.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.MainDialog
+import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.library.extension.hide
 import wee.digital.library.extension.setHyperText
 import wee.digital.library.extension.show
@@ -19,6 +20,9 @@ class MessageFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
+        sharedVM.timeoutSecond.observe {
+            onPaymentCancel()
+        }
         sharedVM.message.observe {
             onBindArg(it)
         }

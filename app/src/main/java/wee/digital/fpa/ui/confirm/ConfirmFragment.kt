@@ -4,6 +4,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import kotlinx.android.synthetic.main.confirm.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.MainDialog
+import wee.digital.fpa.ui.onPaymentCancel
 import wee.digital.library.extension.setHyperText
 import wee.digital.library.extension.string
 
@@ -17,6 +18,9 @@ class ConfirmFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
+        sharedVM.timeoutSecond.observe {
+            onPaymentCancel()
+        }
         sharedVM.confirm.observe {
             onBindArg(it)
         }

@@ -8,10 +8,11 @@ import wee.digital.fpa.repository.network.Api
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.message.MessageArg
 
 class DeviceVM : BaseViewModel() {
 
-    val nameErrorLiveData = EventLiveData<Boolean>()
+    val nameErrorLiveData = EventLiveData<String>()
 
     val successLiveData = EventLiveData<Boolean>()
 
@@ -19,7 +20,7 @@ class DeviceVM : BaseViewModel() {
 
     fun registerDevice(sName: String?, qr: JsonObject?) {
         if (sName?.length ?: 0 < 5) {
-            nameErrorLiveData.postValue(true)
+            nameErrorLiveData.postValue("Tên thiết bị phải từ 5 đến 20 ký tự")
             return
         }
         registerDevice(DeviceInfoStore(

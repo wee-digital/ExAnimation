@@ -12,14 +12,18 @@ import wee.digital.fpa.repository.payment.PaymentRepository
 import wee.digital.fpa.ui.Event
 import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
 import java.util.concurrent.atomic.AtomicInteger
 
 class FaceVM : BaseViewModel() {
 
     private val retryCount = AtomicInteger(Config.FACE_RETRY_COUNT)
+
     val successLiveData = EventLiveData<FaceArg>()
-    val failureLiveData = EventLiveData<Boolean>()
+
+    val failureLiveData = EventLiveData<MessageArg>()
+
     val retriesLiveData = EventLiveData<Boolean>()
 
     fun verifyFace(bitmap: ByteArray, dataFace: FacePointData, dataColl: DataCollect, paymentArg: PaymentArg?) {
@@ -35,7 +39,11 @@ class FaceVM : BaseViewModel() {
             override fun onFailed(code: Int, message: String) {
                 when (retryCount.getAndDecrement()) {
                     0 -> {
-                        failureLiveData.postValue(true)
+                        val message = MessageArg(
+                                title = "Nhận diện khuôn mặt không thành công",
+                                message = "Bạn đã quá số lần nhận diện khuôn mặt cho phép, giao dịch không thể thực hiện."
+                        )
+                        failureLiveData.postValue(message)
                     }
                     else -> {
                         retriesLiveData.postValue(true)

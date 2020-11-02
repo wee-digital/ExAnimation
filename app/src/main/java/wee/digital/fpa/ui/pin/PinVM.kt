@@ -11,6 +11,7 @@ import wee.digital.fpa.ui.base.BaseViewModel
 import wee.digital.fpa.ui.base.EventLiveData
 import wee.digital.fpa.ui.card.CardItem
 import wee.digital.fpa.ui.face.FaceArg
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -20,17 +21,17 @@ class PinVM : BaseViewModel() {
 
     val pinVerifySuccess = EventLiveData<PinArg>()
 
-    val pinVerifyFailed = EventLiveData<Boolean>()
+    val pinVerifyFailed = EventLiveData<MessageArg>()
 
     val pinVerifyRetries = EventLiveData<Int>()
 
     val payRequestSuccess = EventLiveData<Boolean>()
 
-    val payRequestFailed = EventLiveData<Boolean>()
+    val payRequestError = EventLiveData<MessageArg>()
+
+    val payRequestCardError = EventLiveData<MessageArg>()
 
     val cardList = EventLiveData<List<CardItem>>()
-
-    val cardError = EventLiveData<Boolean>()
 
     val otpForm = EventLiveData<String>()
 
@@ -64,7 +65,10 @@ class PinVM : BaseViewModel() {
                         pinVerifyRetries.postValue(restRetriesAtomic.get())
                     }
                     else -> {
-                        pinVerifyFailed.postValue(true)
+                        pinVerifyFailed.postValue(MessageArg(
+                                title = "Quá số lần nhập mã PIN",
+                                message = "Bạn đã nhập sai mã PIN quá số lần cho phép, giao dịch không thể thực hiện."
+                        ))
                     }
                 }
             }
@@ -86,8 +90,8 @@ class PinVM : BaseViewModel() {
                 onPayRequestSuccess(response)
             }
 
-            override fun onFailed(response: PaymentResponse) {
-                payRequestFailed.postValue(true)
+            override fun onFailed(code: Int, message: String) {
+                payRequestError.postValue(MessageArg.fromCode(code))
             }
         })
     }
@@ -101,7 +105,7 @@ class PinVM : BaseViewModel() {
                 otpForm.postValue(response.formOtp)
             }
             else -> {
-                cardError.postValue(true)
+                payRequestError.postValue(MessageArg.fromCode(response.code))
             }
         }
     }
@@ -121,4 +125,5 @@ class PinVM : BaseViewModel() {
 
         })
     }
+
 }

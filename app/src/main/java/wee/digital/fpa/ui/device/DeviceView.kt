@@ -60,9 +60,8 @@ class DeviceView(private val v: DeviceFragment) {
         v.deviceTextViewStation.setHyperText(text)
     }
 
-    fun onNameError() {
-        v.deviceTextViewError.show()
-        v.deviceTextViewError.text = "Tên thiết bị phải từ 5 đến 20 ký tự"
+    fun onNameError(s : String?) {
+        v.deviceTextViewError.text = s
     }
 
 

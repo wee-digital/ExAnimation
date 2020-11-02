@@ -39,7 +39,7 @@ class DeviceFragment : MainDialog() {
             deviceView.onBindStation(it)
         }
         deviceVM.nameErrorLiveData.observe {
-            deviceView.onNameError()
+            deviceView.onNameError(it)
         }
         deviceVM.successLiveData.observe {
             onRegisterSuccess()
@@ -69,7 +69,7 @@ class DeviceFragment : MainDialog() {
      */
     private fun onRegisterDevice() {
         hideKeyboard()
-        deviceTextViewError.text = null
+        deviceView.onNameError(null)
         val s = deviceEditTextName.trimText
         deviceVM.registerDevice(s, sharedVM.qrCode.value)
     }

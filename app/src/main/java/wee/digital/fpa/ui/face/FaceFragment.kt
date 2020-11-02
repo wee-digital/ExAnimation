@@ -46,7 +46,7 @@ class FaceFragment : MainFragment() {
             onFaceVerifySuccess(it)
         }
         faceVM.failureLiveData.observe {
-            onPaymentFailed(MessageArg.paymentCancel)
+            onPaymentFailed(it)
         }
         faceVM.retriesLiveData.observe {
             onRetryVerify()
