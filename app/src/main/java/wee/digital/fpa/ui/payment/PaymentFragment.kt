@@ -25,8 +25,7 @@ class PaymentFragment : MainDialog() {
         sharedVM.payment.observe {
             paymentView.onPaymentDataChanged(it)
         }
-        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM).observe {
-            it ?: return@observe
+        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM) {
             onPaymentDenied()
         }
         sharedVM.deviceInfo.observe {

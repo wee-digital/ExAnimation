@@ -5,6 +5,7 @@ import androidx.navigation.NavDirections
 import okhttp3.WebSocket
 import wee.digital.fpa.MainDirections
 import wee.digital.fpa.R
+import wee.digital.fpa.data.local.Timeout
 import wee.digital.fpa.data.repository.Shared
 import wee.digital.fpa.repository.dto.GetTokenDTOResp
 import wee.digital.fpa.repository.dto.SocketResponse
@@ -15,6 +16,7 @@ import wee.digital.fpa.repository.utils.SocketEvent
 import wee.digital.fpa.ui.base.BaseActivity
 import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.base.viewModel
+import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.payment.PaymentArg
 import wee.digital.fpa.ui.progress.ProgressArg
 import wee.digital.fpa.ui.vm.NapasVM
@@ -66,6 +68,9 @@ class MainActivity : BaseActivity() {
         }
         sharedVM.deviceInfo.observe {
             onDeviceInfoChanged(it)
+        }
+        sharedVM.timeoutEnd.observe {
+            onPaymentTimeout()
         }
     }
 
@@ -177,5 +182,21 @@ class MainActivity : BaseActivity() {
         mainView.showDisconnectDialog(isDisconnected)
     }
 
+    private fun onPaymentTimeout() {
+        sharedVM.apply {
+            progress.postValue(null)
+            payment.postValue(null)
+            message.value = MessageArg(
+                    title = "Hết thời gian thanh toán",
+                    message = "Giao dịch của bạn đã quá thời gian thanh toán. Bạn vui lòng thực hiện lại giao dịch."
+            )
+            startTimeout(Timeout.PAYMENT_DISMISS) {
+                navigate(Main.adv) {
+                    setLaunchSingleTop()
+                }
+            }
+        }
+        navigate(Main.message)
+    }
 
 }

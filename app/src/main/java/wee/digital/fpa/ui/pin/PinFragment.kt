@@ -33,6 +33,10 @@ class PinFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         sharedVM.startTimeout(Timeout.PIN_VERIFY)
+        sharedVM.timeoutEnd.observe {
+            it ?: return@observe
+            dismiss()
+        }
         pinVM.pinVerifySuccess.observe {
             onPinVerifySuccess(it)
         }

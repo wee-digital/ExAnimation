@@ -48,6 +48,7 @@ class SharedVM : ViewModel() {
 
     val timeoutEnd = MutableLiveData<Boolean?>()
 
+
     fun syncDeviceInfo() {
         deviceInfo.postValue(BaseData.ins.getDeviceInfoPref())
     }
@@ -66,7 +67,7 @@ class SharedVM : ViewModel() {
 
     private var disposable: Disposable? = null
 
-    fun startTimeout(intervalInSecond: Int = Timeout.PAYMENT_DISMISS): MutableLiveData<Boolean?> {
+    fun startTimeout(intervalInSecond: Int = Timeout.PAYMENT_DISMISS, block: (() -> Unit)? = null) {
         val waitingCounter = AtomicInteger(intervalInSecond + 1)
         disposable?.dispose()
         disposable = Observable
@@ -76,16 +77,16 @@ class SharedVM : ViewModel() {
                 .subscribe({
                     timeoutSecond.value = it
                     when {
-                        it == 0 -> {
+                        it == 0 -> if (block != null) {
+                            block()
+                        } else {
                             timeoutEnd.postValue(true)
-                            timeoutEnd.value = null
                         }
                         it < 0 -> {
                             disposable?.dispose()
                         }
                     }
                 }, {})
-        return timeoutEnd
     }
 
     fun stopTimeout() {

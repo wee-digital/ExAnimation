@@ -18,11 +18,7 @@ fun Fragment.onPaymentCancel() {
         payment.postValue(null)
         stopTimeout()
     }
-    val options = NavOptions.Builder().apply {
-        setLaunchSingleTop(true)
-        setPopUpTo(R.id.main, false)
-    }
-    findNavController().navigate(Main.adv, options.build())
+    navigateAdv()
 }
 
 fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
@@ -30,7 +26,9 @@ fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
         progress.postValue(null)
         payment.postValue(null)
         message.value = messageArg
-        startTimeout(Timeout.PAYMENT_DISMISS)
+        startTimeout(Timeout.PAYMENT_DISMISS) {
+            navigateAdv()
+        }
     }
     val options = NavOptions.Builder().apply {
         setEnterAnim(R.anim.vertical_reserved_enter)
@@ -39,11 +37,13 @@ fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
     findNavController().navigate(Main.message, options.build())
 }
 
-fun Fragment.onPaymentTimeout() {
-    onPaymentFailed(MessageArg(
-            title = "Hết thời gian thanh toán",
-            message = "Giao dịch của bạn đã quá thời gian thanh toán. Bạn vui lòng thực hiện lại giao dịch."
-    ))
+
+fun Fragment.navigateAdv() {
+    val options = NavOptions.Builder().apply {
+        setLaunchSingleTop(true)
+        setPopUpTo(R.id.main, false)
+    }
+    findNavController().navigate(Main.adv, options.build())
 }
 
 object Main {
