@@ -44,7 +44,7 @@
             app:layout_constraintVertical_bias="0.605"
             tools:hint="CHÚNG TÔI ĐANG XỬ LÝ THANH TOÁN," />
 
-        <wee.digital.fpa.widget.GradientTextWidget
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/progressTextViewMessage"
             style="@style/BodySemibold"
             android:layout_marginTop="@dimen/_4sdp"

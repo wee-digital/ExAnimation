@@ -65,7 +65,7 @@
         style="@style/Headline1SemiBold"
         android:includeFontPadding="false"
         android:text="Selfie time !"
-        android:textColor="@color/color_black"
+        android:textColor="@color/colorTextPrimary"
         app:layout_constraintBottom_toTopOf="@id/faceTextViewTitle2"
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2" />
 
@@ -75,7 +75,7 @@
         android:fontFamily="@font/inter_semibold"
         android:includeFontPadding="false"
         android:text="Đưa khuôn mặt"
-        android:textColor="@color/gradient_blue_end"
+        android:textColor="@color/colorPrimaryEnd"
         app:layout_constraintBottom_toTopOf="@+id/faceGuidelineCameraTop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +86,7 @@
         android:id="@+id/faceTextViewTitle3"
         style="@style/Headline3"
         android:text="vào giữa vùng nhận diện"
-        android:textColor="@color/color_black"
+        android:textColor="@color/colorTextPrimary"
         app:layout_constraintStart_toStartOf="@+id/faceTextViewTitle2"
         app:layout_constraintTop_toBottomOf="@+id/faceTextViewTitle2" />
 

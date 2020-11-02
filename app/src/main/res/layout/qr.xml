@@ -35,7 +35,7 @@
             android:layout_height="@dimen/_272sdp"
             app:frameAspectRatioHeight="10"
             app:frameAspectRatioWidth="10"
-            app:frameColor="@color/gradient_blue_end"
+            app:frameColor="@color/colorPrimaryEnd"
             app:frameCornersSize="@dimen/_24sdp"
             app:frameSize="0.9"
             app:frameThickness="@dimen/_4sdp"

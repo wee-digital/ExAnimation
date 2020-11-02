@@ -1,9 +1,6 @@
 package wee.digital.fpa.ui.qr
 
 import android.graphics.Bitmap
-import android.graphics.LinearGradient
-import android.graphics.Shader
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.qr.*
@@ -13,10 +10,7 @@ import wee.digital.fpa.camera.DataCollect
 import wee.digital.fpa.camera.RealSenseControl
 import wee.digital.fpa.camera.ScanQRCode
 import wee.digital.fpa.util.observerCameraListener
-import wee.digital.library.extension.clear
-import wee.digital.library.extension.gone
-import wee.digital.library.extension.load
-import wee.digital.library.extension.show
+import wee.digital.library.extension.*
 
 class QrView(private val v: QrFragment) : RealSenseControl.Listener {
 
@@ -50,16 +44,10 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
 
     fun onBindMessage(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.qrTextViewHint.paint.shader = LinearGradient(0F, 0F, v.qrTextViewHint.width.toFloat(), 0F,
-                    ContextCompat.getColor(v.requireContext(), R.color.color_black),
-                    ContextCompat.getColor(v.requireContext(), R.color.color_black),
-                    Shader.TileMode.CLAMP)
+            v.qrTextViewHint.gradientHorizontal(R.color.colorTextPrimary)
             v.qrTextViewHint.text = "Vui lòng đưa mã vào\nvùng nhận diện"
         } else {
-            v.qrTextViewHint.paint.shader = LinearGradient(0F, 0F, v.qrTextViewHint.width.toFloat(), 0F,
-                    ContextCompat.getColor(v.requireContext(), R.color.gradient_red_start),
-                    ContextCompat.getColor(v.requireContext(), R.color.gradient_red_end),
-                    Shader.TileMode.CLAMP)
+            v.qrTextViewHint.gradientHorizontal(R.color.colorAlertStart, R.color.colorAlertEnd)
             v.qrTextViewHint.text = s
         }
     }

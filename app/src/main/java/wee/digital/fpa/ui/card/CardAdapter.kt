@@ -20,15 +20,16 @@ class CardAdapter : BaseRecyclerAdapter<CardItem>() {
 
     override fun View.onBindModel(model: CardItem, position: Int, layout: Int) {
         paymentViewCard.flipAnimation()
+        onBindBackground(model)
+        cardItemLogo.load("%s%s.png".format(SystemUrl.URL_BANK_LOGO_WHITE, model.bankCode))
+        cardItemIcon.load("%s%s.png".format(SystemUrl.URL_BANK_IC_WHITE, model.bankCode))
+    }
+
+    private fun View.onBindBackground(model: CardItem) {
         val colors = intArrayOf(Color.parseColor(model.colors[0]), Color.parseColor(model.colors[1]))
-        val gd = GradientDrawable(
-                GradientDrawable.Orientation.LEFT_RIGHT, colors)
+        val gd = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
         gd.cornerRadius = 15f
         paymentImageViewCard.background = gd
-        val logo1 = "${SystemUrl.URL_BANK_LOGO_WHITE}${model.bankCode}.png"
-        cardItemLogo.load(logo1)
-        val logo2 = "${SystemUrl.URL_BANK_IC_WHITE}${model.bankCode}.png"
-        cardItemIcon.load(logo2)
     }
 
     private fun View.flipAnimation() {

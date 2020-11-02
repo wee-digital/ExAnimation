@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorPrimary">#3082D8</color>
+    <color name="colorSecondary">#3082D8</color>
+    <color name="colorAccent">#F24141</color>
+
     <color name="colorDialogBackground">#2FC8C8C8</color>
     <color name="colorBackgroundPrimary">#FFFFFF</color>
-    <color name="colorTextPrimary">#1E1E1E</color>
+    <color name="colorTextPrimary">#232323</color>
     <color name="colorTextSecondary">#747474</color>
     <color name="colorGray">#B6B6B6</color>
     <color name="colorBlue">#378AE1</color>
@@ -12,10 +16,17 @@
     <color name="colorTimeoutSplash">@color/colorWhite</color>
     <color name="colorTimeoutFace">#747474</color>
 
+    <color name="colorAlert">#F24141</color>
+    <color name="colorAlertStart">#F24141</color>
+    <color name="colorAlertEnd">#D22222</color>
+
+    <color name="colorPrimaryStart">#3082D8</color>
+    <color name="colorPrimaryEnd">#419DF2</color>
+
     <color name="gray_1">#EAEAEA</color>
     <color name="gray">#8F8F8F</color>
     <color name="bg_face">#FAFAFA</color>
-    <color name="colorAlert">#F24141</color>
+
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>
@@ -23,17 +34,7 @@
     <color name="black_overlay">#66000000</color>
 
     <!--Universal colors-->
-    <color name="color_black">#232323</color>
     <color name="color_gray_1">#747474</color>
     <color name="color_gray_2">#A0A0A0</color>
-    <color name="gradient_blue_start">#3082D8</color>
-    <color name="gradient_blue_end">#419DF2</color>
-    <color name="gradient_blue_start2">#439EFB</color>
-    <color name="gradient_blue_end2">#82F5FA</color>
-    <color name="gradient_red_start">#F24141</color>
-    <color name="gradient_red_end">#D22222</color>
-
-
-
 
 </resources>

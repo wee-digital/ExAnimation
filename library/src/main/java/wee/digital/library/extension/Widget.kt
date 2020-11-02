@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.res.Resources
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.Color
-import android.graphics.PorterDuff
+import android.graphics.*
 import android.os.Build
 import android.text.Html
 import android.view.KeyEvent
@@ -106,6 +103,20 @@ fun TextView.setHyperText(s: String?) {
             Html.fromHtml(s)
         }
     }
+}
+
+fun TextView.gradientHorizontal(@ColorRes color1: Int, @ColorRes color2: Int= color1) {
+    paint.shader = LinearGradient(0f, 0f, this.width.toFloat(), 0f,
+            ContextCompat.getColor(context, color1),
+            ContextCompat.getColor(context, color2),
+            Shader.TileMode.CLAMP)
+}
+
+fun TextView.gradientVertical(@ColorRes color1: Int, @ColorRes color2: Int = color1) {
+    paint.shader = LinearGradient(0f, 0f, 0f, this.height.toFloat(),
+            ContextCompat.getColor(context, color1),
+            ContextCompat.getColor(context, color2),
+            Shader.TileMode.CLAMP)
 }
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View {

@@ -1,11 +1,10 @@
 package wee.digital.fpa.ui.pin
 
-import android.graphics.LinearGradient
-import android.graphics.Shader
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.fpa.R
 import wee.digital.fpa.ui.pin.view.PinKeyAdapter
 import wee.digital.library.extension.color
+import wee.digital.library.extension.gradientVertical
 
 class PinView(private val v: PinFragment) {
 
@@ -57,16 +56,10 @@ class PinView(private val v: PinFragment) {
 
     fun onBindErrorText(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.pinTextViewTitle.paint.shader = LinearGradient(0F, 0F, v.pinTextViewTitle.width.toFloat(), 0F,
-                    color(R.color.color_black),
-                    color(R.color.color_black),
-                    Shader.TileMode.CLAMP)
+            v.pinTextViewTitle.gradientVertical(R.color.colorTextPrimary)
             v.pinTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
         } else {
-            v.pinTextViewTitle.paint.shader = LinearGradient(0F, 0F, v.pinTextViewTitle.width.toFloat(), 0F,
-                    color(R.color.gradient_red_start),
-                    color(R.color.gradient_red_end),
-                    Shader.TileMode.CLAMP)
+            v.pinTextViewTitle.gradientVertical(R.color.colorAlertStart, R.color.colorAlertEnd)
             v.pinTextViewTitle.text = s
         }
     }

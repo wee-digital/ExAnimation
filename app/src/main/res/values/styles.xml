@@ -78,7 +78,7 @@
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:maxLines">1</item>
         <item name="android:inputType">textEmailAddress</item>
-        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColorHint">@color/color_gray_2</item>
         <item name="android:drawablePadding">14dp</item>
@@ -134,7 +134,7 @@
         <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:background">@drawable/drw_dialog_bottom</item>
         <item name="android:backgroundTint">#fff</item>
-        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="android:textSize">@dimen/_9ssp</item>
         <item name="android:gravity">center</item>
         <item name="android:text">Dialog title</item>
