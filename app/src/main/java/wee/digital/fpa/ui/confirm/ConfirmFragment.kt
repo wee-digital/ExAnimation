@@ -18,9 +18,6 @@ class ConfirmFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
-        sharedVM.timeoutEnd.observe {
-            onPaymentCancel()
-        }
         sharedVM.confirm.observe {
             onBindArg(it)
         }

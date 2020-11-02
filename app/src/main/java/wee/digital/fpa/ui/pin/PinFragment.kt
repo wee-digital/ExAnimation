@@ -33,6 +33,11 @@ class PinFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
+        sharedVM.startTimeout(Timeout.PIN_VERIFY)
+        sharedVM.timeoutSecond.observe {
+            onPaymentCancel()
+        }
+
         pinVM.pinVerifySuccess.observe {
             onPinVerifySuccess(it)
         }
@@ -42,7 +47,6 @@ class PinFragment : MainDialog() {
         pinVM.pinVerifyRetries.observe {
             onRestRetriesPinChanged(it)
         }
-
         pinVM.payRequestSuccess.observe {
             dismiss()
             sharedVM.progress.postValue(ProgressArg.paid)
@@ -50,20 +54,12 @@ class PinFragment : MainDialog() {
         pinVM.payRequestError.observe {
             onPaymentFailed(MessageArg.paymentCancel)
         }
-
         pinVM.payRequestCardError.observe {
             onPaymentCardError()
         }
         pinVM.otpForm.observe {
             onOtpRequired(it)
         }
-
-        sharedVM.startTimeout(Timeout.PIN_VERIFY)
-        sharedVM.timeoutEnd.observe {
-            it ?: return@observe
-            onPaymentCancel()
-        }
-
     }
 
     private fun onPaymentCardError() {

@@ -36,11 +36,6 @@ class FaceFragment : MainFragment() {
         sharedVM.timeoutSecond.observe {
             faceView.onBindRemainingText(it)
         }
-        sharedVM.timeoutEnd.observe {
-            it ?: return@observe
-            onPaymentCancel()
-        }
-
         faceVM.successLiveData.observe {
             onFaceVerifySuccess(it)
         }

@@ -40,7 +40,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onLiveDataObserve() {
-        mainVM.checkDeviceStatus()
+
         mainVM.rootDirection.observe {
             onRootDirectionChanged(it)
         }
@@ -140,6 +140,7 @@ class MainActivity : BaseActivity() {
                 }
             }
             else -> {
+                mainVM.checkDeviceStatus()
                 mainView.onBindDeviceInfo(it)
                 navigate(Main.adv) {
                     setLaunchSingleTop()

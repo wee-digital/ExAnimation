@@ -61,7 +61,6 @@ class SharedVM : ViewModel() {
         cardList.value = null
         otpForm.value = null
         qrCode.value = null
-        timeoutEnd.value = null
     }
 
     private var disposable: Disposable? = null

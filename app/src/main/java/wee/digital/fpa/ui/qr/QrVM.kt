@@ -17,7 +17,6 @@ class QrVM : BaseViewModel() {
     fun checkQRCode(text: String?) {
         if (isQRChecked) return
         isQRChecked = true
-
         if (text.isNullOrEmpty()) {
             log.d("QR is empty")
             isQRChecked = false

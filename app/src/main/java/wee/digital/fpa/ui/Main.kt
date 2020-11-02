@@ -11,14 +11,6 @@ import wee.digital.fpa.ui.base.activityVM
 import wee.digital.fpa.ui.message.MessageArg
 import wee.digital.fpa.ui.vm.SharedVM
 
-fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
-    activityVM(SharedVM::class).apply {
-        progress.postValue(null)
-        payment.postValue(null)
-        message.value = messageArg
-    }
-    findNavController().navigate(Main.message)
-}
 
 fun Fragment.onPaymentCancel() {
     activityVM(SharedVM::class).apply {
@@ -31,6 +23,26 @@ fun Fragment.onPaymentCancel() {
         setPopUpTo(R.id.main, false)
     }
     findNavController().navigate(Main.adv, options.build())
+}
+
+fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
+    activityVM(SharedVM::class).apply {
+        progress.postValue(null)
+        payment.postValue(null)
+        message.value = messageArg
+    }
+    val options = NavOptions.Builder().apply {
+        setEnterAnim(R.anim.vertical_reserved_enter)
+        setPopEnterAnim(R.anim.vertical_reserved_pop_enter)
+    }
+    findNavController().navigate(Main.message, options.build())
+}
+
+fun Fragment.onPaymentTimeout() {
+    onPaymentFailed(MessageArg(
+            title = "",
+            message = "",
+    ))
 }
 
 object Main {
