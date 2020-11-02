@@ -56,7 +56,7 @@ class MainActivity : BaseActivity() {
         }
 
         napasVM.paymentLiveData.observe {
-            sharedVM.payment.value = it
+
             onPaymentArgChanged(it)
         }
 
@@ -155,6 +155,7 @@ class MainActivity : BaseActivity() {
             }
             else -> {
                 activityVM(SharedVM::class).clearData()
+                sharedVM.payment.value = it
                 navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()
