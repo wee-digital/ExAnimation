@@ -33,12 +33,12 @@ class CardFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         sharedVM.startTimeout(Timeout.CARD_SELECT)
-        sharedVM.timeoutEnd.observe {
-            it ?: return@observe
-            dismiss()
-        }
         sharedVM.cardList.observe {
-            adapter.set(it)
+            if (it == null) {
+                dismiss()
+            } else {
+                adapter.set(it)
+            }
         }
         cardVM.otpFormLiveData.observe {
             onNavigateOTP(it)

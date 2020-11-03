@@ -36,6 +36,7 @@ class App : Application() {
         app.onModulesInject()
         Event.initConsumer()
         baseSharedPref = BaseSharedPref().also {
+            // TODO: loi khi config release
             it.init(this)
         }
         getBanksJson()

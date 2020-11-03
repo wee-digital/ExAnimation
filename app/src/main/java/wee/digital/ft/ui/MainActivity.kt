@@ -160,7 +160,7 @@ class MainActivity : BaseActivity() {
     private fun onPaymentArgChanged(it: PaymentArg?) {
         when {
             it != null -> {
-                activityVM(SharedVM::class).clearData()
+                sharedVM.clearData()
                 sharedVM.payment.value = it
                 navigate(Main.splash) {
                     setNoneAnim()
@@ -188,13 +188,13 @@ class MainActivity : BaseActivity() {
 
     private fun onPaymentTimeout() {
         sharedVM.apply {
-            progress.postValue(null)
-            payment.postValue(null)
+            clearData()
             message.value = MessageArg(
                     title = "Hết thời gian thanh toán",
                     message = "Giao dịch của bạn đã quá thời gian thanh toán. Bạn vui lòng thực hiện lại giao dịch."
             )
             startTimeout(Timeout.PAYMENT_DISMISS) {
+                clearData()
                 navigate(Main.adv) {
                     setLaunchSingleTop()
                 }
