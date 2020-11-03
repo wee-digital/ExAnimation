@@ -194,7 +194,9 @@ class PaymentProvider : IBase.Payment {
         Log.d("verifyPin", "$code - $mess - $data")
 
         return when (code) {
-            ErrCode.API_FAIL -> ErrCode.WRONG_PIN_CODE
+            ErrCode.WRONG_PIN_CODE -> ErrCode.PIN_WRONG
+            ErrCode.MAX_PIN_CODE_VERIFICATION -> ErrCode.PIN_LIMIT
+            ErrCode.PAYMENT_ID_NOT_FOUND -> ErrCode.TIMEOUT_ERROR
             else -> code
         }
     }

@@ -51,7 +51,6 @@ class App : Application() {
     /**
      * get banks json when open app
      */
-    @SuppressLint("CheckResult")
     fun getBanksJson() {
         val restApi = RestUrl(SystemUrl.URL_GET_BANKS).getClient().create(MyApiService::class.java)
         restApi.getBanksJson()
