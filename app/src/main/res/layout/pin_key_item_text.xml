@@ -15,7 +15,7 @@
         android:background="@drawable/drw_pin_bg"
         android:gravity="center"
         android:text="1"
-        android:fontFamily="@font/inter_light"
+        android:fontFamily="@font/inter_200"
         android:textColor="@drawable/drw_pin_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="w,1:1"
