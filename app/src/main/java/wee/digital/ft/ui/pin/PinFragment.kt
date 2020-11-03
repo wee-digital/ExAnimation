@@ -102,7 +102,7 @@ class PinFragment : MainDialog() {
 
     private fun onRestRetriesPinChanged(restRetries: Int) {
         sharedVM.progress.postValue(null)
-        pinProgressLayout.notifyInputRemoved()
+        pinProgressLayout.clear()
         sharedVM.startTimeout(Timeout.PIN_VERIFY)
         pinView.onBindErrorText(string(R.string.pin_retry_msg).format(restRetries))
     }

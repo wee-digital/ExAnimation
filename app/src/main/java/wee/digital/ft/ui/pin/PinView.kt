@@ -28,22 +28,7 @@ class PinView(private val v: PinFragment) {
             set(keyListItem)
             bind(v.pinRecyclerViewKey, 4)
             onItemClick { any, _ ->
-                when (any) {
-                    is String -> onNumKeyEvent(any)
-                    is Int -> onIconKeyEvent(any)
-                }
-            }
-        }
-    }
-
-    private fun onNumKeyEvent(s: String) {
-        v.pinProgressLayout.addKey(s)
-    }
-
-    private fun onIconKeyEvent(i: Int) {
-        when (i) {
-            R.drawable.drw_pin_del -> {
-                v.pinProgressLayout.delKey()
+                v.pinProgressLayout.pushKey(any)
             }
         }
     }

@@ -15,16 +15,9 @@ import androidx.core.graphics.red
 import androidx.transition.ChangeBounds
 import androidx.transition.Transition
 import wee.digital.ft.R
-import wee.digital.library.extension.SimpleTransitionListener
-import wee.digital.library.extension.backgroundTint
-import wee.digital.library.extension.beginTransition
-import wee.digital.library.extension.tint
+import wee.digital.library.extension.*
 
 class PinProgressLayout : ConstraintLayout {
-
-    companion object {
-        private const val DEL = "DEL"
-    }
 
     constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
@@ -36,8 +29,6 @@ class PinProgressLayout : ConstraintLayout {
 
     private val keyList = mutableListOf<String>()
 
-    private val keyEvent = mutableListOf<String>()
-
     private var stepWidth: Int = 0
 
     private lateinit var progressView: View
@@ -46,33 +37,10 @@ class PinProgressLayout : ConstraintLayout {
         duration = 100
     }
 
-    private var isTransition = false
-
-    private val extraKeyCount: Int
-        get() {
-            val addKey = keyEvent.filter { it != DEL }.size
-            val delKey = keyEvent.filter { it == DEL }.size
-            return keyList.size + addKey - delKey
-        }
-
     var onItemFilled: (String) -> Unit = {}
 
     fun build(block: Builder.() -> Unit) {
         builder.block()
-        build()
-    }
-
-    fun addKey(key: String) {
-        if (extraKeyCount == builder.itemCount) return
-        pushKey(key)
-    }
-
-    fun delKey() {
-        if (extraKeyCount == 0) return
-        pushKey(DEL)
-    }
-
-    private fun build() {
         this.post {
             val rangeWidth = this.measuredWidth - this.measuredHeight
             stepWidth = rangeWidth / (builder.itemCount - 1)
@@ -86,31 +54,13 @@ class PinProgressLayout : ConstraintLayout {
             }
             addProgressView()
         }
-        progressTransition.addListener(object : SimpleTransitionListener {
-            override fun onTransitionStart(transition: Transition) {
-                isTransition = true
-            }
-
-            override fun onTransitionCancel(transition: Transition) {
-                isTransition = false
-            }
-
-            override fun onTransitionEnd(transition: Transition) {
-
-                isTransition = false
-                if (keyEvent.isEmpty()) {
-                    notifyInputChanged()
-                }
-                updateKeyEvent()
-            }
-        })
     }
 
     private fun addIndicator(step: Int) {
         val dotView = View(context).also {
             it.id = View.generateViewId()
             it.setBackgroundResource(R.drawable.bg_oval)
-            it.backgroundTint(ContextCompat.getColor(context, R.color.colorGray))
+            it.backgroundTint(color(R.color.colorGray))
             addView(it, this.childCount)
         }
         val dotId = dotView.id
@@ -207,22 +157,6 @@ class PinProgressLayout : ConstraintLayout {
         return roundViewList[index].id
     }
 
-    private fun updateKeyEvent() {
-        if (keyEvent.isEmpty()) return
-        when (val key = keyEvent[0]) {
-            DEL -> {
-                keyList.removeAt(keyList.lastIndex)
-                transformProgressView(false)
-            }
-            else -> {
-                keyList.add(key)
-                transformProgressView(true)
-            }
-        }
-        keyEvent.removeAt(0)
-
-    }
-
     private fun notifyInputChanged() {
         when (keyList.size) {
             builder.itemCount -> {
@@ -233,45 +167,40 @@ class PinProgressLayout : ConstraintLayout {
         }
     }
 
-    fun notifyInputRemoved() {
-        keyList.clear()
-
-        progressTransition.beginTransition(this) {
-            setVisibility(progressView.id, View.INVISIBLE)
-            constrainDefaultWidth(progressView.id, 0)
-            constrainWidth(progressView.id, 0)
-            connect(progressView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
-            roundViewList.forEach {
-                setVisibility(it.id, View.INVISIBLE)
+    fun pushKey(key: Any?) {
+        when (key) {
+            R.drawable.drw_pin_del -> if (keyList.size > 0) {
+                keyList.removeAt(keyList.lastIndex)
+                notifyInputChanged()
+                transformProgressView(false)
+            }
+            is String -> if (keyList.size < builder.itemCount) {
+                keyList.add(key)
+                notifyInputChanged()
+                transformProgressView(true)
             }
         }
+    }
 
-        /*
+    fun clear() {
+        keyList.clear()
+        this.clearAnimation()
+        transformProgressView(false)
         val viewId = progressView.id
-        progressTransition.beginTransition(this, {
+        progressTransition.beginTransition(this) {
+            setVisibility(viewId, View.INVISIBLE)
+            constrainDefaultWidth(viewId, measuredHeight)
+            constrainWidth(viewId, measuredHeight)
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
             roundViewList.forEach {
                 setVisibility(it.id, View.INVISIBLE)
             }
-        }, {
-            connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
-        }, {
-            constrainDefaultWidth(viewId, 1)
-            constrainWidth(viewId, 1)
-        }, {
-            setVisibility(viewId, View.INVISIBLE)
-        })*/
-    }
-
-    private fun pushKey(key: String) {
-        keyEvent.add(key)
-        if (!isTransition) {
-            updateKeyEvent()
         }
     }
 
     class Builder {
         var itemCount = 3
-        var progressColor: Int = Color.BLUE
+        var progressColor: Int = Color.BLACK
     }
+
 }
