@@ -62,6 +62,10 @@ object ErrCode {
     //code verifyFace
     const val FACE_NOT_FOUND = 109
 
+    //code pin
+    const val PIN_WRONG = 110
+    const val PIN_LIMIT = 111
+
     //code payment
     const val TIMEOUT_ERROR = 112
     const val FACE_PAY_ERROR = 113

@@ -2,8 +2,8 @@ package wee.digital.ft.ui
 
 
 import androidx.navigation.NavDirections
-import kotlinx.android.synthetic.main.main_widgets.*
 import okhttp3.WebSocket
+import wee.digital.ft.BuildConfig
 import wee.digital.ft.R
 import wee.digital.ft.data.repository.Shared
 import wee.digital.ft.repository.dto.SocketResponse
@@ -38,6 +38,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onViewCreated() {
+        val s = BuildConfig.APPLICATION_ID
         mainView.onViewInit()
     }
 
