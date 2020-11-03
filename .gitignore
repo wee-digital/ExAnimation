@@ -16,3 +16,5 @@ dist/
 
 *.properties
 local.properties
+/app/dev/debug/output-metadata.json
+/app/prod/release/output-metadata.json
