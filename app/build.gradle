@@ -61,7 +61,7 @@ android {
 
         signingConfigs {
             release {
-                storeFile file("keys")
+                storeFile file("key")
                 storePassword 'weezi.biz'
                 keyAlias 'key_ft'
                 keyPassword 'weezi.biz'

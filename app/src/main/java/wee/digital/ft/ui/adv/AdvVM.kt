@@ -18,11 +18,6 @@ class AdvVM : BaseViewModel() {
 
     private var disposable: Disposable? = null
 
-    private val videoList = listOf(
-            AdvItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_tree).toString()),
-            AdvItem(RawResourceDataSource.buildRawResourceUri(R.raw.video_water).toString())
-    )
-
     fun fetchAdvList() {
         imagesLiveData.postValue(listOf(
                 AdvItem(null, R.mipmap.img_adv1),
