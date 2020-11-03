@@ -8,7 +8,7 @@ import wee.digital.library.extension.str
 import wee.digital.library.extension.toObject
 
 data class CardItem(
-        val id: String,
+        val accountId: String,
         val bankCode: String,
         val name: String,
         val shortName: String,
@@ -27,7 +27,7 @@ data class CardItem(
                     if (obj.str("BankCode") != accBanks.BankCode) continue
 
                     val item = CardItem(
-                            id = accBanks.id,
+                            accountId = accBanks.id,
                             bankCode = obj.str("BankCode") ?: continue,
                             name = obj.str("BankName") ?: continue,
                             shortName = obj.str("BankShortName") ?: continue,

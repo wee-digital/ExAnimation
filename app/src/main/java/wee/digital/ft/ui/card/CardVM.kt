@@ -18,12 +18,12 @@ class CardVM : BaseViewModel() {
 
     val paymentFailed = EventLiveData<MessageArg>()
 
-    fun postPayRequest(bankCode: String, paymentArg: PaymentArg?) {
+    fun postPayRequest(accountId: String, paymentArg: PaymentArg?) {
         paymentArg ?: throw Event.paymentArgError
         val body = PaymentDTOReq(
                 paymentID = paymentArg.paymentId,
                 clientIP = paymentArg.clientIp,
-                accountID = bankCode
+                accountID = accountId
         )
         PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentResponse> {
             override fun onSuccess(response: PaymentResponse) {

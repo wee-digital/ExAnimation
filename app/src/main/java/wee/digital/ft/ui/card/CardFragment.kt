@@ -26,7 +26,8 @@ class CardFragment : MainDialog() {
     override fun onViewCreated() {
         adapter.bind(paymentRecyclerViewCard, 2)
         adapter.itemClick = { model, _ ->
-            cardVM.postPayRequest(model.bankCode, sharedVM.payment.value)
+            sharedVM.stopTimeout()
+            cardVM.postPayRequest(model.accountId, sharedVM.payment.value)
         }
     }
 
