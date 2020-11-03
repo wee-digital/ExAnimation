@@ -2,6 +2,7 @@ package wee.digital.ft.ui
 
 
 import androidx.navigation.NavDirections
+import kotlinx.android.synthetic.main.main_widgets.*
 import okhttp3.WebSocket
 import wee.digital.ft.R
 import wee.digital.ft.data.repository.Shared

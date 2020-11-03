@@ -61,7 +61,8 @@ class PinVM : BaseViewModel() {
 
             override fun onFailed(code: Int, message: String) {
                 when {
-                    code == 1 && restRetriesAtomic.getAndDecrement() > 0 -> {
+                    restRetriesAtomic.getAndDecrement() > 1 -> {
+                        log.d("onFailed ${restRetriesAtomic.get()}")
                         pinVerifyRetries.postValue(restRetriesAtomic.get())
                     }
                     else -> {

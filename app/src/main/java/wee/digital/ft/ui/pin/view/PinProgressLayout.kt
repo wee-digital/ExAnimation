@@ -238,6 +238,9 @@ class PinProgressLayout : ConstraintLayout {
 
         progressTransition.beginTransition(this) {
             setVisibility(progressView.id, View.INVISIBLE)
+            constrainDefaultWidth(progressView.id, 0)
+            constrainWidth(progressView.id, 0)
+            connect(progressView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0)
             roundViewList.forEach {
                 setVisibility(it.id, View.INVISIBLE)
             }

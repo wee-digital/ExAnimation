@@ -9,6 +9,7 @@ import wee.digital.ft.ui.base.viewModel
 import wee.digital.ft.ui.face.FaceFragment
 import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.progress.ProgressArg
+import wee.digital.library.extension.post
 import wee.digital.library.extension.string
 
 class PinFragment : MainDialog() {
@@ -33,15 +34,12 @@ class PinFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         sharedVM.startTimeout(Timeout.PIN_VERIFY)
-        sharedVM.timeoutEnd.observe {
-            it ?: return@observe
-            dismiss()
-        }
         pinVM.pinVerifySuccess.observe {
             onPinVerifySuccess(it)
         }
         pinVM.pinVerifyFailed.observe {
-            onPaymentFailed(MessageArg.paymentCancel)
+            dismiss()
+            onPaymentFailed(it)
         }
         pinVM.pinVerifyRetries.observe {
             onRestRetriesPinChanged(it)
@@ -93,11 +91,13 @@ class PinFragment : MainDialog() {
     private fun onPinCodeFilled(pinCode: String) {
         sharedVM.stopTimeout()
         sharedVM.progress.postValue(ProgressArg.pay)
-        pinVM.onPinVerify(
-                pinCode = pinCode,
-                paymentArg = sharedVM.payment.value,
-                faceArg = sharedVM.face.value
-        )
+        post(1000){
+            pinVM.onPinVerify(
+                    pinCode = pinCode,
+                    paymentArg = sharedVM.payment.value,
+                    faceArg = sharedVM.face.value
+            )
+        }
     }
 
     private fun onRestRetriesPinChanged(restRetries: Int) {
