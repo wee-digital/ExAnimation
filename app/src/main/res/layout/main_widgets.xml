@@ -26,24 +26,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-
     <View
         android:id="@+id/mainViewExit"
-        tools:background="@color/colorPrimary"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/colorPrimary" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/mainTextViewTimeout"
         style="@style/Remaining.Text"
-        android:text="Time remaining: 00:30"
         android:textColor="@color/colorTimeoutFace"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Time remaining: 00:30" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHeader"

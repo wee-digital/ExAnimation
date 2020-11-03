@@ -57,7 +57,6 @@ class MainActivity : BaseActivity() {
         }
 
         napasVM.paymentLiveData.observe {
-
             onPaymentArgChanged(it)
         }
 

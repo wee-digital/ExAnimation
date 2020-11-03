@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/viewContent"
+    android:id="@+id/slashViewContent"
     style="@style/MatchParent">
 
     <androidx.constraintlayout.widget.Guideline
@@ -22,6 +22,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/splashImageViewLogo1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        android:src="@mipmap/img_logo"
+        android:tint="@color/colorWhite"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineSplash"
+        app:layout_constraintDimensionRatio="@string/logoRatio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.72"
+        tools:visibility="visible" />
 
 
     <androidx.appcompat.widget.AppCompatImageView

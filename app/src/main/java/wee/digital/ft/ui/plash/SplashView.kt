@@ -12,19 +12,20 @@ class SplashView(private val v: SplashFragment) {
         duration = 400
     }
 
-
-
     fun animateOnHasPayment() {
         v.splashImageViewLogo?.post {
             try {
                 val height = v.splashImageViewLogo.height / 2
                 if (v.splashImageViewLogo.height == height) return@post
                 val logoId = v.splashImageViewLogo.id
-                viewTransition.beginTransition(v.viewContent) {
+                viewTransition.beginTransition(v.slashViewContent) {
                     constrainHeight(logoId, height)
-                    connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
+                    setVerticalBias(logoId, 0.72f)
+                    connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                     connect(logoId, ConstraintSet.BOTTOM, v.guidelineSplash.id, ConstraintSet.BOTTOM)
-                    setVerticalBias(logoId, 0.6f)
+                    connect(logoId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+                    connect(logoId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+
                 }
             } catch (ignore: Exception) {
             }
@@ -40,17 +41,18 @@ class SplashView(private val v: SplashFragment) {
                 viewTransition.onEndTransition {
                     onEndTransition()
                 }
-                viewTransition.beginTransition(v.viewContent) {
+                viewTransition.beginTransition(v.slashViewContent) {
                     constrainHeight(logoId, height)
+                    setVerticalBias(logoId, 0.5f)
                     connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                     connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-                    setVerticalBias(logoId, 0.5f)
+                    connect(logoId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+                    connect(logoId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
                 }
             } catch (ignore: Exception) {
             }
         }
     }
-
 
     fun onViewInit() {
 
