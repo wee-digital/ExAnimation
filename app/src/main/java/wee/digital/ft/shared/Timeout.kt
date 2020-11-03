@@ -2,7 +2,7 @@ package wee.digital.ft.shared
 
 object Timeout {
 
-    private const val EXTRA = 10
+    private const val EXTRA = 0
     const val PAYMENT_DISMISS = 5
     const val PAYMENT_CONFIRM = 15 + EXTRA
     const val FACE_VERIFY = 25 + EXTRA
