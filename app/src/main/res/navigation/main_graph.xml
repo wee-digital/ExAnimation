@@ -12,7 +12,7 @@
 
     <dialog
         android:id="@+id/cardFragment"
-        android:name="wee.digital.fpa.ui.card.CardFragment"
+        android:name="wee.digital.ft.ui.card.CardFragment"
         android:label="CardFragment"
         tools:layout="@layout/card">
         <action
@@ -24,7 +24,7 @@
         app:destination="@id/cardFragment" />
     <dialog
         android:id="@+id/paymentFragment"
-        android:name="wee.digital.fpa.ui.payment.PaymentFragment"
+        android:name="wee.digital.ft.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
         tools:layout="@layout/payment">
         <action
@@ -36,7 +36,7 @@
         app:destination="@id/paymentFragment" />
     <fragment
         android:id="@+id/connectFragment"
-        android:name="wee.digital.fpa.ui.connect.ConnectFragment"
+        android:name="wee.digital.ft.ui.connect.ConnectFragment"
         android:label="ConnectFragment"
         tools:layout="@layout/connect">
         <action
@@ -48,7 +48,7 @@
         app:destination="@id/connectFragment" />
     <dialog
         android:id="@+id/messageFragment"
-        android:name="wee.digital.fpa.ui.message.MessageFragment"
+        android:name="wee.digital.ft.ui.message.MessageFragment"
         android:label="MessageFragment"
         tools:layout="@layout/message" />
     <action
@@ -56,7 +56,7 @@
         app:destination="@id/messageFragment" />
     <fragment
         android:id="@+id/advFragment"
-        android:name="wee.digital.fpa.ui.adv.AdvFragment"
+        android:name="wee.digital.ft.ui.adv.AdvFragment"
         android:label="AdvFragment"
         tools:layout="@layout/adv" />
     <action
@@ -64,7 +64,7 @@
         app:destination="@id/advFragment" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="wee.digital.fpa.ui.plash.SplashFragment"
+        android:name="wee.digital.ft.ui.plash.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/splash" />
     <action
@@ -72,7 +72,7 @@
         app:destination="@id/splashFragment" />
     <dialog
         android:id="@+id/confirmFragment"
-        android:name="wee.digital.fpa.ui.confirm.ConfirmFragment"
+        android:name="wee.digital.ft.ui.confirm.ConfirmFragment"
         android:label="ConfirmFragment"
         tools:layout="@layout/confirm" />
     <action
@@ -80,7 +80,7 @@
         app:destination="@id/confirmFragment" />
     <dialog
         android:id="@+id/progressFragment"
-        android:name="wee.digital.fpa.ui.progress.ProgressFragment"
+        android:name="wee.digital.ft.ui.progress.ProgressFragment"
         android:label="ProgressFragment"
         tools:layout="@layout/progress" />
     <action
@@ -88,7 +88,7 @@
         app:destination="@id/progressFragment" />
     <dialog
         android:id="@+id/pinFragment"
-        android:name="wee.digital.fpa.ui.pin.PinFragment"
+        android:name="wee.digital.ft.ui.pin.PinFragment"
         android:label="PinFragment"
         tools:layout="@layout/pin">
         <action
@@ -100,7 +100,7 @@
         app:destination="@id/pinFragment" />
     <dialog
         android:id="@+id/qrFragment"
-        android:name="wee.digital.fpa.ui.qr.QrFragment"
+        android:name="wee.digital.ft.ui.qr.QrFragment"
         android:label="QrFragment"
         tools:layout="@layout/qr">
         <action
@@ -112,7 +112,7 @@
         app:destination="@id/qrFragment" />
     <dialog
         android:id="@+id/deviceFragment"
-        android:name="wee.digital.fpa.ui.device.DeviceFragment"
+        android:name="wee.digital.ft.ui.device.DeviceFragment"
         android:label="DeviceFragment"
         tools:layout="@layout/device" />
     <action
@@ -120,7 +120,7 @@
         app:destination="@id/deviceFragment" />
     <fragment
         android:id="@+id/faceFragment"
-        android:name="wee.digital.fpa.ui.face.FaceFragment"
+        android:name="wee.digital.ft.ui.face.FaceFragment"
         android:label="FaceFragment"
         tools:layout="@layout/face">
         <action
@@ -132,7 +132,7 @@
         app:destination="@id/faceFragment" />
     <fragment
         android:id="@+id/otpFragment"
-        android:name="wee.digital.fpa.ui.otp.OtpFragment"
+        android:name="wee.digital.ft.ui.otp.OtpFragment"
         android:label="OtpFragment"
         tools:layout="@layout/otp" />
     <action

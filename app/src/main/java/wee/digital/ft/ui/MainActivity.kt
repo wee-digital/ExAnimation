@@ -3,7 +3,6 @@ package wee.digital.ft.ui
 
 import androidx.navigation.NavDirections
 import okhttp3.WebSocket
-import wee.digital.ft.MainDirections
 import wee.digital.ft.R
 import wee.digital.ft.data.repository.Shared
 import wee.digital.ft.repository.dto.SocketResponse
@@ -135,7 +134,7 @@ class MainActivity : BaseActivity() {
             SocketEvent.DELETE_CACHE -> {
                 deleteCache()
                 mainVM.resetDeviceData()
-                Main.mainDirection.postValue(MainDirections.actionGlobalConnectFragment())
+                Main.mainDirection.postValue(Main.connect)
             }
         }
     }

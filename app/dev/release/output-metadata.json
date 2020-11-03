@@ -5,14 +5,14 @@
     "kind": "Directory"
   },
   "applicationId": "wee.digital.ft.dev",
-  "variantName": "processDevDebugResources",
+  "variantName": "processDevReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "versionCode": 1,
       "versionName": "1.0.0",
-      "outputFile": "app-dev-debug.apk"
+      "outputFile": "app-dev-release.apk"
     }
   ]
 }
