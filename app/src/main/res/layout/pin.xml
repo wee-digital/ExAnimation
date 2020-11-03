@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <wee.digital.fpa.ui.pin.view.PinProgressLayout
+        <wee.digital.ft.ui.pin.view.PinProgressLayout
             android:id="@+id/pinProgressLayout"
             android:layout_width="0dp"
             android:layout_height="@dimen/indicatorSize"

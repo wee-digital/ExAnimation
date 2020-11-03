@@ -63,6 +63,64 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749587705162:android:7c8dcad46fe7d5c050e5b3",
+        "android_client_info": {
+          "package_name": "wee.digital.ft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749587705162-lm8uogjvnjnq378d6evitkp8oqlujlqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCizq3w34zxjLF52qsUgCO5NM0UKEyoFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "749587705162-lm8uogjvnjnq378d6evitkp8oqlujlqg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749587705162:android:cdad6c20dcf593ba50e5b3",
+        "android_client_info": {
+          "package_name": "wee.digital.ft.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749587705162-lm8uogjvnjnq378d6evitkp8oqlujlqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCizq3w34zxjLF52qsUgCO5NM0UKEyoFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "749587705162-lm8uogjvnjnq378d6evitkp8oqlujlqg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

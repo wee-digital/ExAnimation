@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <wee.digital.fpa.ui.adv.MediaView
+    <wee.digital.ft.ui.adv.MediaView
         android:id="@+id/customMediaView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

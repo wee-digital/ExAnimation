@@ -9,7 +9,7 @@ plugins {
 android {
     compileSdkVersion builds.compile_sdk
     defaultConfig {
-        applicationId "wee.digital.fpa"
+        applicationId "wee.digital.ft"
         minSdkVersion builds.min_sdk
         targetSdkVersion builds.target_sdk
         versionCode builds.version_code
@@ -63,7 +63,7 @@ android {
             release {
                 storeFile file("keys")
                 storePassword 'weezi.biz'
-                keyAlias 'key_fpa'
+                keyAlias 'key_ft'
                 keyPassword 'weezi.biz'
             }
         }
