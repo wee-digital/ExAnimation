@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "wee.digital.ft.dev",
-  "variantName": "processDevDebugResources",
+  "applicationId": "wee.digital.ft",
+  "variantName": "processProdDebugResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "versionCode": 1,
       "versionName": "1.0.0",
-      "outputFile": "app-dev-debug.apk"
+      "outputFile": "app-prod-debug.apk"
     }
   ]
 }

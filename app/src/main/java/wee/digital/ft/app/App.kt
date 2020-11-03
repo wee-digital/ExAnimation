@@ -1,6 +1,5 @@
 package wee.digital.ft.app
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
@@ -36,8 +35,9 @@ class App : Application() {
         app = this
         app.onModulesInject()
         Event.initConsumer()
-        baseSharedPref = BaseSharedPref()
-        baseSharedPref!!.init(this)
+        baseSharedPref = BaseSharedPref().also {
+            it.init(this)
+        }
         getBanksJson()
 
     }
@@ -51,7 +51,7 @@ class App : Application() {
     /**
      * get banks json when open app
      */
-    fun getBanksJson() {
+    private fun getBanksJson() {
         val restApi = RestUrl(SystemUrl.URL_GET_BANKS).getClient().create(MyApiService::class.java)
         restApi.getBanksJson()
                 .subscribeOn(Schedulers.io())

@@ -73,15 +73,15 @@ android {
             }
             release {
                 signingConfig signingConfigs.release
-//                debuggable false
-//                minifyEnabled true
-//                shrinkResources true
+                debuggable true
+                minifyEnabled false
+                shrinkResources false
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             }
             debug {
                 debuggable true
-//                minifyEnabled false
-//                shrinkResources false
+                minifyEnabled false
+                shrinkResources false
             }
         }
 
@@ -90,11 +90,11 @@ android {
                 buildConfigField("int", "DB_VERSION", "1")
             }
             dev {
-                resValue "string", "app_name", "FacePay"
+                resValue "string", "app_name", "FacePay Terminal Dev"
                 applicationIdSuffix ".dev"
             }
             prod {
-                resValue "string", "app_name", "FacePay"
+                resValue "string", "app_name", "FacePay Terminal"
                 //buildConfigField("String", "SERVICE_URL", "\"http://192.168.1.108:8081/\"")
             }
         }
