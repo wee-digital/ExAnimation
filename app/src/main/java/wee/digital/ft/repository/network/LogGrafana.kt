@@ -69,7 +69,7 @@ class LogGrafana {
     }
 
     @SuppressLint("CheckResult")
-    fun postHttp(url: String, time: Long, code: Int, fail: String? = "") {
+    fun postHttp(url: String, time: String, code: Int, fail: String? = "") {
         if (BaseData.deviceInfo.shopName.isEmpty()) return
         val apiService = getClient().create(MyApiService::class.java)
         val dataString = "URL : $url - timeCallApi : [$time] - code : $code , $fail"

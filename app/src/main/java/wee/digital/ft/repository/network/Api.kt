@@ -27,8 +27,6 @@ class Api {
 
     companion object {
         val instance: Api by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { Api() }
-
-        var timeIn = 0L
     }
 
     /**
@@ -66,9 +64,9 @@ class Api {
                     override fun onSuccess(response: Response<ResponseBody>) {
                         Log.d("dataApi", "$response")
 
-//                        val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
-//                        val timeSend = response.raw().sentRequestAtMillis().toDouble()
-//                        val time = timeReceiver - timeSend
+                        val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
+                        val timeSend = response.raw().sentRequestAtMillis().toDouble()
+                        val time = timeReceiver - timeSend
 
                         when (response.code()) {
 
@@ -86,12 +84,12 @@ class Api {
                                     val errorCode = parseData.str("Message") ?: ""
                                     listener.onFail(parseData.int("Code"), errorCode, parseData)
                                 }
-                                /*LogGrafana.instance.postHttp(
-                                    url,
-                                    timeCall,
-                                    parseData.int("Code"),
-                                    parseData.string("Message")
-                                )*/
+                                LogGrafana.instance.postHttp(
+                                        url,
+                                        time.toString(),
+                                        parseData.int("Code"),
+                                        parseData.str("Message")
+                                )
                             }
                             400 -> {
                                 val parseData = EncryptData.instance.decryptResponseBadRequest(response)
@@ -103,12 +101,12 @@ class Api {
                                 }
                             }
                             else -> {
-                                /* LogGrafana.instance.postHttp(
-                                     url,
-                                     timeCall,
-                                     response.code(),
-                                     response.message()
-                                 )*/
+                                LogGrafana.instance.postHttp(
+                                        url,
+                                        time.toString(),
+                                        response.code(),
+                                        response.message()
+                                )
 
                                 listener.onFail(response.code(), response.message(), null)
                             }
@@ -117,9 +115,7 @@ class Api {
 
                     override fun onError(e: Throwable) {
                         Log.d("CallApiLog", "$e")
-
-                        val timeCall = System.currentTimeMillis() - timeIn
-                        /*LogGrafana.instance.postHttp(url, timeCall, 404, "${e.message}")*/
+                        LogGrafana.instance.postHttp(url, "0", 404, "${e.message}")
 
                         listener.onFail(ErrCode.API_FAIL, e.message.toString(), null)
                     }
@@ -132,8 +128,6 @@ class Api {
      */
     @SuppressLint("CheckResult")
     fun <T> postApi(url: String, data: T?, header: FacePointData? = null, listener: ApiCallBack) {
-        timeIn = System.currentTimeMillis()
-
         val strData = if (data != null) Gson().toJson(data) else null
         EncryptData.instance.encryptDataString(data = strData, dataPoint = header)
                 .subscribeOn(Schedulers.io())
@@ -192,9 +186,11 @@ class Api {
                     override fun onSuccess(response: Response<ResponseBody>) {
                         Log.d("dataApi", "$response")
 
-                        val timeCall = System.currentTimeMillis() - timeIn
+                        val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
+                        val timeSend = response.raw().sentRequestAtMillis().toDouble()
+                        val time = timeReceiver - timeSend
 
-                        Log.d("timeCallApi", "$url - [${System.currentTimeMillis() - timeIn}]")
+                        Log.d("timeCallApi", "$url - [$time]")
 
                         when (response.code()) {
 
@@ -216,20 +212,20 @@ class Api {
                                     val errorCode = parseData.str("Message") ?: ""
                                     listener.onFail(parseData.int("Code"), errorCode, parseData)
                                 }
-                                /*LogGrafana.instance.postHttp(
-                                    url,
-                                    timeCall,
-                                    parseData.int("Code"),
-                                    parseData.string("Message")
-                                )*/
+                                LogGrafana.instance.postHttp(
+                                        url,
+                                        time.toString(),
+                                        parseData.int("Code"),
+                                        parseData.str("Message")
+                                )
                             }
                             else -> {
-                                /*LogGrafana.instance.postHttp(
-                                    url,
-                                    timeCall,
-                                    response.code(),
-                                    response.message()
-                                )*/
+                                LogGrafana.instance.postHttp(
+                                        url,
+                                        time.toString(),
+                                        response.code(),
+                                        response.message()
+                                )
 
                                 listener.onFail(response.code(), response.message(), null)
                             }
@@ -238,10 +234,7 @@ class Api {
 
                     override fun onError(e: Throwable) {
                         Log.d("CallApiLog", "$e")
-
-                        val timeCall = System.currentTimeMillis() - timeIn
-                        /*LogGrafana.instance.postHttp(url, timeCall, 404, "${e.message}")*/
-
+                        LogGrafana.instance.postHttp(url, "0", 404, "${e.message}")
                         listener.onFail(ErrCode.API_FAIL, e.message.toString(), null)
                     }
 
@@ -252,7 +245,7 @@ class Api {
     /**
      * for api upload Video
      */
-    fun encryptDataVideo(dataReq: VideoRecordData, listener: ApiCallBack) {
+    fun encryptDataVideo(dataReq: VideoRecordData) {
         val strData = Gson().toJson(dataReq.data)
         EncryptData.instance.encryptDataString(strData, null)
                 .subscribeOn(Schedulers.io())
@@ -267,18 +260,17 @@ class Api {
                                 Base64.encodeToString(dataReq.face, Base64.NO_WRAP),
                                 Base64.encodeToString(encryptResp.body, Base64.NO_WRAP)
                         )
-                        postVideo(encryptResp.headers, data, listener)
+                        postVideo(encryptResp.headers, data)
                     }
 
                     override fun onError(e: Throwable) {
-                        listener.onFail(ErrCode.API_FAIL, e.message.toString(), null)
                         Log.d("callUpLoadVideo", "onError : ${e.message}")
                     }
 
                 })
     }
 
-    private fun postVideo(headers: HashMap<String, Any>, data: VideoRecordReq, listener: ApiCallBack) {
+    private fun postVideo(headers: HashMap<String, Any>, data: VideoRecordReq) {
         val restApi = RestUrl(SystemUrl.BASE_URL_VIDEO).getClient().create(MyApiService::class.java)
         restApi.postVideo("v2", headers, data)
                 .subscribeOn(Schedulers.io())
@@ -291,12 +283,15 @@ class Api {
 
                     override fun onSuccess(t: Response<ResponseBody>) {
                         Log.d("callUpLoadVideo", "${t.code()}")
-                        listener.onSuccess(JsonObject())
+                        val timeReceiver = t.raw().receivedResponseAtMillis().toDouble()
+                        val timeSend = t.raw().sentRequestAtMillis().toDouble()
+                        val time = timeReceiver - timeSend
+                        LogGrafana.instance.postHttp("postVideo", time.toString(), t.code(), "${t.body()}")
                     }
 
                     override fun onError(e: Throwable) {
                         Log.d("callUpLoadVideo", e.message.toString())
-                        listener.onFail(ErrCode.API_FAIL, "${e.message}", null)
+                        LogGrafana.instance.postHttp("postVideo", "0", ErrCode.API_FAIL, e.message.toString())
                     }
 
                 })

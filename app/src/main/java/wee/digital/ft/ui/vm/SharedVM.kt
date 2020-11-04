@@ -59,7 +59,6 @@ class SharedVM : ViewModel() {
         message.value = null
         confirm.value = null
         progress.value = null
-        payment.value = null
         cardError.value = null
         cardList.value = null
         otpForm.value = null

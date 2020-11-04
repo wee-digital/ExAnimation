@@ -161,10 +161,18 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onPaymentArgChanged(it: PaymentArg?) {
-        when {
-            it != null -> {
+        when (it) {
+            null -> {
+                App.recordVideo?.onDoneVideo(object : MyVideo.MyVideoCallBack {
+                    override fun onResult(path: String) {
+                        mainVM.pushVideo(path, sharedVM.payment.value.toString())
+                    }
+                })
+            }
+            else -> {
                 activityVM(SharedVM::class).clearData()
                 sharedVM.payment.value = it
+                App.recordVideo?.startVideo()
                 navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()
@@ -192,7 +200,7 @@ class MainActivity : BaseActivity() {
     private fun onPaymentTimeout() {
         sharedVM.apply {
             progress.postValue(null)
-            payment.postValue(null)
+            //payment.postValue(null)
             message.value = MessageArg(
                     title = "Hết thời gian thanh toán",
                     message = "Giao dịch của bạn đã quá thời gian thanh toán. Bạn vui lòng thực hiện lại giao dịch."
