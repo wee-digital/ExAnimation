@@ -9,8 +9,6 @@ import wee.digital.ft.ui.base.viewModel
 import wee.digital.ft.ui.confirm.ConfirmArg
 import wee.digital.ft.ui.onPaymentCancel
 import wee.digital.ft.ui.onPaymentFailed
-import wee.digital.ft.ui.payment.PaymentArg
-import wee.digital.ft.ui.progress.ProgressArg
 import wee.digital.library.extension.post
 
 class FaceFragment : MainFragment() {

@@ -34,7 +34,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/faceImageViewAnim"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_298sdp"
+        android:layout_height="@dimen/_300sdp"
         android:alpha="0.0"
         app:layout_constraintBottom_toBottomOf="@+id/faceImageViewCamera"
         app:layout_constraintDimensionRatio="w,1:1"

@@ -1,32 +1,33 @@
 package wee.digital.ft.ui.plash
 
+import android.content.Context
+import android.util.AttributeSet
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
-import kotlinx.android.synthetic.main.splash.*
-import wee.digital.ft.util.startCamera
+import kotlinx.android.synthetic.main.splash.view.*
 import wee.digital.library.extension.beginTransition
 import wee.digital.library.extension.onEndTransition
 
-class SplashView(private val v: SplashFragment) {
+class SplashView : ConstraintLayout {
+
+    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
     private val viewTransition = ChangeBounds().apply {
         duration = 400
     }
 
     fun animateOnHasPayment() {
-        v.splashImageViewLogo?.post {
+        splashImageViewLogo?.post {
             try {
-                val height = v.splashImageViewLogo.height / 2
-                if (v.splashImageViewLogo.height == height) return@post
-                val logoId = v.splashImageViewLogo.id
-                viewTransition.beginTransition(v.slashViewContent) {
+                val height = splashImageViewLogo.height / 2
+                if (splashImageViewLogo.height == height) return@post
+                val logoId = splashImageViewLogo.id
+                viewTransition.beginTransition(this) {
                     constrainHeight(logoId, height)
                     setVerticalBias(logoId, 0.72f)
                     connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
-                    connect(logoId, ConstraintSet.BOTTOM, v.guidelineSplash.id, ConstraintSet.BOTTOM)
-                    connect(logoId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-                    connect(logoId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-
+                    connect(logoId, ConstraintSet.BOTTOM, guidelineSplash.id, ConstraintSet.BOTTOM)
                 }
             } catch (ignore: Exception) {
             }
@@ -34,21 +35,19 @@ class SplashView(private val v: SplashFragment) {
     }
 
     fun animateOnDismissPayment(onEndTransition: () -> Unit) {
-        v.splashImageViewLogo?.post {
+        splashImageViewLogo?.post {
             try {
-                val height = v.splashImageViewLogo.height * 2
-                if (v.splashImageViewLogo.height == height) return@post
-                val logoId = v.splashImageViewLogo.id
+                val height = splashImageViewLogo.height * 2
+                if (splashImageViewLogo.height == height) return@post
+                val logoId = splashImageViewLogo.id
                 viewTransition.onEndTransition {
                     onEndTransition()
                 }
-                viewTransition.beginTransition(v.slashViewContent) {
+                viewTransition.beginTransition(this) {
                     constrainHeight(logoId, height)
                     setVerticalBias(logoId, 0.5f)
                     connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                     connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-                    connect(logoId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-                    connect(logoId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
                 }
             } catch (ignore: Exception) {
             }
@@ -57,6 +56,5 @@ class SplashView(private val v: SplashFragment) {
 
     fun onViewInit() {
     }
-
 
 }

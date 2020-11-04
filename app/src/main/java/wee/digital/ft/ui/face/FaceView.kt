@@ -14,9 +14,9 @@ import wee.digital.ft.camera.FacePointData
 import wee.digital.ft.camera.RealSenseControl
 import wee.digital.ft.util.observerCameraListener
 import wee.digital.library.extension.beginTransition
+import wee.digital.library.extension.beginTransitions
 import wee.digital.library.extension.load
 import wee.digital.library.extension.loadGif
-import wee.digital.library.extension.onEndTransition
 import java.util.concurrent.atomic.AtomicInteger
 
 
@@ -134,10 +134,7 @@ class FaceView(private val v: FaceFragment) :
         val viewId = view.id
         val scale = 0.525f
 
-        viewTransition.onEndTransition {
-            view.setBackgroundResource(0)
-        }
-        viewTransition.beginTransition(v.viewContent) {
+        viewTransition.beginTransitions(v.viewContent, {
             setAlpha(v.faceTextViewTitle1.id, 0f)
             setAlpha(v.faceTextViewTitle2.id, 0f)
             setAlpha(v.faceTextViewTitle3.id, 0f)
@@ -146,9 +143,10 @@ class FaceView(private val v: FaceFragment) :
             connect(viewId, ConstraintSet.BOTTOM, v.guidelineFace.id, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
             connect(viewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-        }
-        animateImageScale(scale)
-
+            animateImageScale(scale)
+        }, {
+            view.setBackgroundResource(0)
+        })
     }
 
     fun animateOnStartFaceReg() {
@@ -156,13 +154,7 @@ class FaceView(private val v: FaceFragment) :
         val view = v.faceImageViewCamera
         val viewId = view.id
         val scale = 1f
-        viewTransition.onEndTransition {
-            view.setBackgroundResource(R.drawable.drw_face)
-            view.postDelayed({
-                hasFaceReg = true
-            }, 600)
-        }
-        viewTransition.beginTransition(v.viewContent, {
+        viewTransition.beginTransitions(v.viewContent, {
             clear(viewId, ConstraintSet.BOTTOM)
             setVerticalBias(viewId, 0f)
             connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
@@ -172,6 +164,11 @@ class FaceView(private val v: FaceFragment) :
             setAlpha(v.faceTextViewTitle1.id, 1f)
             setAlpha(v.faceTextViewTitle2.id, 1f)
             setAlpha(v.faceTextViewTitle3.id, 1f)
+        }, {
+            view.setBackgroundResource(R.drawable.drw_face)
+            view.postDelayed({
+                hasFaceReg = true
+            }, 600)
         })
         animateImageScale(scale)
 

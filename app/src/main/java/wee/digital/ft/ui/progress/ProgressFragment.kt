@@ -63,4 +63,5 @@ class ProgressFragment : MainDialog() {
             applyTo(viewContent)
         }
     }
+
 }

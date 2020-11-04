@@ -95,26 +95,36 @@ interface SimpleAnimatorListener : Animator.AnimatorListener {
     }
 }
 
-fun Transition.beginTransition(layout: ConstraintLayout, vararg blocks: ConstraintSet.() -> Unit): Transition {
-    if (blocks.isEmpty()) return this
-    for (i in 0 until blocks.lastIndex) {
+private fun Transition.beginTransitions(layout: ConstraintLayout, index: Int, vararg blocks: ConstraintSet.() -> Unit) {
+    layout?.post {
         this.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
-                this@beginTransition.removeListener(this)
-                beginTransition(layout, blocks[i + 1])
+                this@beginTransitions.removeListener(this)
+                if (index < blocks.lastIndex) {
+                    beginTransitions(layout, index + 1, *blocks)
+                }
             }
         })
+        TransitionManager.beginDelayedTransition(layout, this)
+        val set = ConstraintSet()
+        set.clone(layout)
+        blocks[index](set)
+        set.applyTo(layout)
     }
-    beginTransition(layout, blocks[0])
-    return this
+}
+
+fun Transition.beginTransitions(layout: ConstraintLayout, vararg blocks: ConstraintSet.() -> Unit) {
+    beginTransitions(layout, 0, *blocks)
 }
 
 fun Transition.beginTransition(layout: ConstraintLayout, block: ConstraintSet.() -> Unit): Transition {
-    TransitionManager.beginDelayedTransition(layout, this@beginTransition)
-    val set = ConstraintSet()
-    set.clone(layout)
-    set.block()
-    set.applyTo(layout)
+    layout?.post {
+        TransitionManager.beginDelayedTransition(layout, this@beginTransition)
+        val set = ConstraintSet()
+        set.clone(layout)
+        set.block()
+        set.applyTo(layout)
+    }
     return this
 }
 

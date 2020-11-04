@@ -1,5 +1,6 @@
 package wee.digital.ft.ui.plash
 
+import kotlinx.android.synthetic.main.splash.*
 import wee.digital.ft.R
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainFragment
@@ -10,8 +11,6 @@ import wee.digital.ft.util.startCamera
 import wee.digital.ft.util.stopCamera
 
 class SplashFragment : MainFragment() {
-
-    private val splashView by lazy { SplashView(this) }
 
     /**
      * [BaseFragment] override

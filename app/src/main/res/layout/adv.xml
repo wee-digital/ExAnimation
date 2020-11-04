@@ -6,7 +6,7 @@
     android:background="@color/colorPrimary">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/splashViewBackground"
+        android:id="@+id/advViewBackground"
         style="@style/MatchParent"
         android:scaleType="centerCrop"
         android:src="@mipmap/img_splash"
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/splashImageViewLogo"
+        android:id="@+id/advImageViewLogo"
         android:layout_width="0dp"
         android:layout_height="@dimen/_40sdp"
         android:src="@mipmap/img_logo"

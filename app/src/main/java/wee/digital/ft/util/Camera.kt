@@ -32,9 +32,9 @@ fun Fragment.observerCameraListener(listener: RealSenseControl.Listener) {
 }
 
 fun startCamera() {
-    App.realSenseControl?.startStreamThread()
+    //App.realSenseControl?.startStreamThread()
 }
 
 fun stopCamera() {
-    App.realSenseControl?.stopStreamThread()
+    //App.realSenseControl?.stopStreamThread()
 }

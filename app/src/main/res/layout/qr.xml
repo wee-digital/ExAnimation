@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<wee.digital.ft.ui.qr.QrView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/viewContent"
+    android:id="@+id/qrView"
     style="@style/MatchParent"
     android:background="@color/colorDialogBackground">
 
@@ -12,7 +12,7 @@
         style="@style/Guideline.Header" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/qvViewContent"
+        android:id="@+id/qrViewContent"
         style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,53 +27,103 @@
             app:layout_constraintDimensionRatio="w,64:48"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/confirmTextViewTitle"
-            tools:src="@color/colorBlack" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/qrViewScanAnim"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_34sdp"
-            android:adjustViewBounds="true"
-            android:src="@mipmap/img_qr_scan"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/qrImageViewCamera" />
-
-        <wee.digital.ft.widget.ScannerLayout
-            android:id="@+id/frgQRLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_272sdp"
-            app:frameAspectRatioHeight="10"
-            app:frameAspectRatioWidth="10"
-            app:frameColor="@color/colorPrimaryEnd"
-            app:frameCornersSize="@dimen/_24sdp"
-            app:frameSize="0.9"
-            app:frameThickness="@dimen/_4sdp"
-            app:layout_constraintBottom_toBottomOf="@id/qrImageViewCamera"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/qrImageViewCamera"
-            app:maskColor="@color/colorWhite" />
+            android:src="@color/colorBlack"
+            app:layout_constraintTop_toBottomOf="@id/qrTextViewTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/confirmTextViewTitle"
+            android:id="@+id/qrTextViewTitle"
             style="@style/Dialog.Title"
             android:text="Quét mã thiết bị"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/dialogViewClose"
+            android:id="@+id/qrViewClose"
             style="@style/Dialog.TitleIcon"
             android:src="@drawable/ic_arrow_down"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/qrScannerLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_8sdp"
+            android:src="@mipmap/img_qr_frame"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintBottom_toBottomOf="@id/qrImageViewCamera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/qrImageViewCamera"
+            app:maskColor="@color/colorWhite" />
+
+        <View
+            android:id="@+id/qrViewBorder1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/qrImageViewCamera"
+            app:layout_constraintEnd_toStartOf="@+id/qrScannerLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/qrImageViewCamera" />
+
+        <View
+            android:id="@+id/qrViewBorder2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/qrImageViewCamera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/qrScannerLayout"
+            app:layout_constraintTop_toTopOf="@+id/qrImageViewCamera" />
+
+        <View
+            android:id="@+id/qrViewBorder3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toTopOf="@+id/qrScannerLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/qrImageViewCamera" />
+
+        <View
+            android:id="@+id/qrViewBorder4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/qrImageViewCamera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qrScannerLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/qrLayoutAnim"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/qrScannerLayout"
+            app:layout_constraintEnd_toEndOf="@+id/qrScannerLayout"
+            app:layout_constraintStart_toStartOf="@+id/qrScannerLayout"
+            app:layout_constraintTop_toTopOf="@+id/qrScannerLayout">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/qrViewScanAnim"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@mipmap/img_qr_scan"
+                app:layout_constraintDimensionRatio="h,66:18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/qrTextViewHint"
             style="@style/Headline2"
-            android:layout_margin="@dimen/margin4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
             android:gravity="center"
             android:text="Vui lòng đưa mã vào\nvùng nhận diện"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -88,10 +138,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frgQRLayout"
+            app:layout_constraintTop_toBottomOf="@+id/qrImageViewCamera"
             tools:src="@mipmap/img_progress_small"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</wee.digital.ft.ui.qr.QrView>

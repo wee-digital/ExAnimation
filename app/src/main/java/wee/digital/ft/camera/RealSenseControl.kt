@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
 import com.intel.realsense.librealsense.*
+import kotlin.jvm.Throws
 
 class RealSenseControl : DeviceListener {
 
@@ -267,7 +268,11 @@ class RealSenseControl : DeviceListener {
     private fun configAndStart() {
         mHandler?.post {
             val now = System.currentTimeMillis()
-            mPipelineProfile = mPipeline!!.start(config)
+            mPipelineProfile = try {
+                mPipeline?.start(config)
+            } catch (e: Throwable) {
+                return@post
+            }
             val time = System.currentTimeMillis() - now
             Log.d("startCamera", "$time")
             mDevice = mPipelineProfile?.device

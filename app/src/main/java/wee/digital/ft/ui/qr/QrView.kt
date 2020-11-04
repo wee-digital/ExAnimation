@@ -1,22 +1,26 @@
 package wee.digital.ft.ui.qr
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.util.AttributeSet
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.qr.*
+import androidx.transition.ChangeBounds
+import kotlinx.android.synthetic.main.qr.view.*
 import wee.digital.ft.R
 import wee.digital.ft.app.App
 import wee.digital.ft.camera.DataCollect
 import wee.digital.ft.camera.RealSenseControl
 import wee.digital.ft.camera.ScanQRCode
 import wee.digital.ft.util.observerCameraListener
-import wee.digital.library.extension.gradientHorizontal
-import wee.digital.library.extension.hide
-import wee.digital.library.extension.load
-import wee.digital.library.extension.show
+import wee.digital.library.extension.*
 
-class QrView(private val v: QrFragment) : RealSenseControl.Listener {
+class QrView : ConstraintLayout, RealSenseControl.Listener {
 
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     /**
      * [RealSenseControl.Listener] implement
@@ -35,36 +39,62 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
 
     private val imageLiveData = MutableLiveData<Bitmap>()
 
-    fun onViewInit() {
-        v.qrViewProgress.load(R.mipmap.img_progress)
-        v.addClickListener(v.dialogViewClose)
-        v.observerCameraListener(this)
-        imageLiveData.observe(v.viewLifecycleOwner, Observer {
-            v.qrImageViewCamera?.setImageBitmap(it)
+    private val viewTransition = ChangeBounds().apply {
+        duration = 1600
+    }
+
+    fun onViewInit(fragment: Fragment, qrListener: ScanQRCode.QRCodeProcessingListener) {
+        qrViewProgress.load(R.mipmap.img_progress)
+        animateUp()
+        fragment.observerCameraListener(this)
+        imageLiveData.observe(fragment.viewLifecycleOwner, Observer {
+            qrImageViewCamera?.setImageBitmap(it)
         })
-        scanQRCode.initListener(v)
+        scanQRCode.initListener(qrListener)
     }
 
     fun onBindMessage(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.qrTextViewHint.gradientHorizontal(R.color.colorTextPrimary)
-            v.qrTextViewHint.text = "Vui lòng đưa mã vào\nvùng nhận diện"
+            qrTextViewHint.gradientHorizontal(R.color.colorTextPrimary)
+            qrTextViewHint.text = "Vui lòng đưa mã vào\nvùng nhận diện"
         } else {
-            v.qrTextViewHint.gradientHorizontal(R.color.colorAlertStart, R.color.colorAlertEnd)
-            v.qrTextViewHint.text = s
+            qrTextViewHint.gradientHorizontal(R.color.colorAlertStart, R.color.colorAlertEnd)
+            qrTextViewHint.text = s
         }
     }
 
     fun onBindProgress(isShow: Boolean) {
-        v.view?.post {
+        post {
             if (isShow) {
-                v.qrTextViewHint?.hide()
-                v.qrViewProgress?.show()
+                qrTextViewHint?.hide()
+                qrViewProgress?.show()
             } else {
-                v.qrTextViewHint?.show()
-                v.qrViewProgress?.hide()
+                qrTextViewHint?.show()
+                qrViewProgress?.hide()
             }
         }
+    }
+
+    private fun animateUp() {
+        val viewId = qrViewScanAnim.id
+        viewTransition.beginTransitions(qrLayoutAnim, {
+            clear(viewId, ConstraintSet.TOP)
+            connect(viewId, ConstraintSet.BOTTOM, qrLayoutAnim.id, ConstraintSet.TOP)
+        }, {
+            setRotationX(viewId, 180f)
+            animateDown()
+        })
+    }
+
+    private fun animateDown() {
+        val viewId = qrViewScanAnim.id
+        viewTransition.beginTransitions(qrLayoutAnim, {
+            clear(viewId, ConstraintSet.BOTTOM)
+            connect(viewId, ConstraintSet.TOP, qrLayoutAnim.id, ConstraintSet.BOTTOM)
+        }, {
+            setRotationX(viewId, 0f)
+            animateUp()
+        })
     }
 
 }

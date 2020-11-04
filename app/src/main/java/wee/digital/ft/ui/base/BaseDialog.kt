@@ -28,12 +28,6 @@ abstract class BaseDialog : DialogFragment(), BaseView {
         dialog?.window?.attributes?.windowAnimations = R.style.App_DialogAnim
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        log.d("onViewDestroy")
-        dialog?.window?.attributes?.windowAnimations = 0
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(layoutResource(), container, false)
         view.setOnTouchListener { _, _ -> true }
@@ -42,14 +36,15 @@ abstract class BaseDialog : DialogFragment(), BaseView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (Config.VIEW_ENABLE) {
-            log.d("onViewCreated")
-            onViewCreated()
-        }
-        if (Config.VM_ENABLE) {
-            log.d("onLiveDataObserve")
-            onLiveDataObserve()
-        }
+        log.d("onViewCreated")
+        onViewCreated()
+        onLiveDataObserve()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        log.d("onViewDestroy")
+        dialog?.window?.attributes?.windowAnimations = 0
     }
 
     override fun onStart() {
@@ -71,6 +66,7 @@ abstract class BaseDialog : DialogFragment(), BaseView {
     override fun onPause() {
         super.onPause()
         log.d("onPause")
+        view?.clearAnimation()
     }
 
     /**

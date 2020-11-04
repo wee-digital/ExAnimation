@@ -11,7 +11,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import wee.digital.ft.R
-import wee.digital.ft.shared.Config
 import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 
@@ -34,14 +33,9 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment(), BaseView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (Config.VIEW_ENABLE) {
-            log.d("onViewCreated")
-            onViewCreated()
-        }
-        if (Config.VM_ENABLE) {
-            log.d("onLiveDataObserve")
-            onLiveDataObserve()
-        }
+        log.d("onViewCreated")
+        onViewCreated()
+        onLiveDataObserve()
     }
 
     override fun onResume() {
@@ -53,6 +47,7 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment(), BaseView {
     override fun onPause() {
         super.onPause()
         log.d("onPause")
+        view?.clearAnimation()
     }
 
     /**
