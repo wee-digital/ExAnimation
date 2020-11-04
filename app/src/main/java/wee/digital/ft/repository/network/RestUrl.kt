@@ -51,13 +51,14 @@ class RestUrl(url: String) {
             val request = requestBuilder.build()
             chain.proceed(request)
         }
-        val trustManager = HttpsTrustManager.trustManager as X509TrustManager
+        /*val trustManager = HttpsTrustManager.trustManager as X509TrustManager
         val sslSocketFactory = HttpsTrustManager.sslContext!!.socketFactory
         okHttpClient = httpClient
-                .sslSocketFactory(sslSocketFactory, trustManager)
+                .sslSocketFactory(sslSocketFactory,trustManager)
                 .hostnameVerifier(HostnameVerifier { _, _ -> true })
                 .connectionSpecs(listOf(ConnectionSpec.COMPATIBLE_TLS))
-                .build()
+                .build()*/
+        okHttpClient = httpClient.build()
     }
 
 
