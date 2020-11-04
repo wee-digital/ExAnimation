@@ -8,14 +8,15 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import androidx.transition.ChangeBounds
-import androidx.transition.Transition
 import wee.digital.ft.R
-import wee.digital.library.extension.*
+import wee.digital.library.extension.backgroundTint
+import wee.digital.library.extension.beginTransition
+import wee.digital.library.extension.color
+import wee.digital.library.extension.tint
 
 class PinProgressLayout : ConstraintLayout {
 

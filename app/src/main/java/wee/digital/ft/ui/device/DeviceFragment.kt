@@ -28,7 +28,6 @@ class DeviceFragment : MainDialog() {
         deviceView.onViewInit()
         deviceEditTextName.addEditorActionListener(EditorInfo.IME_ACTION_DONE) {
             deviceEditTextName.clearFocus()
-            deviceView.showProgress()
             hideKeyboard()
             //onRegisterDevice()
         }
@@ -69,7 +68,7 @@ class DeviceFragment : MainDialog() {
      * [DeviceFragment] properties
      */
     private fun onRegisterDevice() {
-
+        deviceView.showProgress()
         deviceView.onNameError(null)
         val s = deviceEditTextName.trimText
         deviceVM.registerDevice(s, sharedVM.qrCode.value)

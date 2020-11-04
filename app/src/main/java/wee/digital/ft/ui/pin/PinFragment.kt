@@ -91,7 +91,7 @@ class PinFragment : MainDialog() {
     private fun onPinCodeFilled(pinCode: String) {
         sharedVM.stopTimeout()
         sharedVM.progress.postValue(ProgressArg.pay)
-        post(1000){
+        post(1000) {
             pinVM.onPinVerify(
                     pinCode = pinCode,
                     paymentArg = sharedVM.payment.value,
