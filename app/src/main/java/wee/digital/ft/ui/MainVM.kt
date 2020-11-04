@@ -17,6 +17,7 @@ import wee.digital.ft.repository.dto.VideoRecordData
 import wee.digital.ft.repository.network.Api
 import wee.digital.ft.repository.utils.ErrCode
 import wee.digital.ft.ui.base.BaseViewModel
+import wee.digital.library.extension.restartApp
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -74,6 +75,7 @@ class MainVM : BaseViewModel() {
 
     fun resetDeviceData() {
         BaseData.ins.resetDeviceInfo()
+        restartApp()
     }
 
     private fun onDeviceStatus(status: Int) {
