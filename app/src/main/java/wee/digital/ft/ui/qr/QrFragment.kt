@@ -1,5 +1,7 @@
 package wee.digital.ft.ui.qr
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.view.View
 import kotlinx.android.synthetic.main.qr.*
 import wee.digital.ft.R
@@ -20,6 +22,47 @@ class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
 
     override fun onViewCreated() {
         qrView.onViewInit()
+        animationBot()
+    }
+
+    private fun animationBot() {
+        val animation = ObjectAnimator.ofFloat(frgQrImgAnimBot, "translationY", 0f, 500f)
+        animation.duration = 1000
+        animation.start()
+        animation.addListener(object : Animator.AnimatorListener {
+
+            override fun onAnimationEnd(animation: Animator?) {
+                frgQrImgAnimBot?.post { frgQrImgAnimBot.rotationX = 180f }
+                animationTop()
+            }
+
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationCancel(animation: Animator?) {}
+
+            override fun onAnimationRepeat(animation: Animator?) {}
+
+        })
+    }
+
+    private fun animationTop() {
+        val animation = ObjectAnimator.ofFloat(frgQrImgAnimBot, "translationY", 500f, 0f)
+        animation.duration = 1000
+        animation.start()
+        animation.addListener(object : Animator.AnimatorListener {
+
+            override fun onAnimationEnd(animation: Animator?) {
+                frgQrImgAnimBot?.post { frgQrImgAnimBot.rotationX = 0f }
+                animationBot()
+            }
+
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationCancel(animation: Animator?) {}
+
+            override fun onAnimationRepeat(animation: Animator?) {}
+
+        })
     }
 
     override fun onLiveDataObserve() {
@@ -50,6 +93,5 @@ class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
         qrView.showProgress()
         qrVM.checkQRCode(result)
     }
-
 
 }

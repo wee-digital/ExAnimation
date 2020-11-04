@@ -29,6 +29,18 @@
             app:layout_constraintTop_toBottomOf="@id/confirmTextViewTitle"
             tools:src="@color/colorBlack" />
 
+        <ImageView
+            android:id="@+id/frgQrImgAnimBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/_35sdp"
+            app:layout_constraintTop_toTopOf="@+id/qrImageViewCamera"
+            android:src="@mipmap/img_qr_scan"
+            tools:layout_editor_absoluteY="7dp" />
+
         <wee.digital.ft.widget.ScannerLayout
             android:id="@+id/frgQRLayout"
             android:layout_width="match_parent"
