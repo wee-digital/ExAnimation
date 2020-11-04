@@ -1,5 +1,6 @@
 package wee.digital.ft.repository.network
 
+import android.annotation.SuppressLint
 import android.util.Log
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
@@ -23,46 +24,56 @@ class CollectionData {
         }
     }
 
-    private val apiClient by lazy {
-        Retrofit.Builder()
+    private var retrofit: Retrofit? = null
+
+    private fun getClient(): Retrofit {
+
+        if (retrofit != null) return retrofit as Retrofit
+
+        retrofit = Retrofit.Builder()
                 .baseUrl(SystemUrl.BASE_URL_COLLECT)
                 .client(OkHttpClient().newBuilder().callTimeout(10, TimeUnit.SECONDS).build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(MyApiService::class.java)
+        return retrofit as Retrofit
     }
 
-    fun encryptCollData(dataCollect: DataCollect) {
+    @SuppressLint("CheckResult")
+    fun encryptCollData(dataCollect: DataCollect){
         EncryptData.instance.encryptCollectData(dataCollect)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.computation())
-                .subscribe(
+                .subscribe (
                         {
-                            Log.d("encryptCollectData", "success")
-                            postCollectData(it.headers, it.body)
+                            Log.e("encryptCollectData","success")
+                            postCollectData(it.headers,it.body)
                         },
                         {
-                            Log.d("encryptCollectData", "${it.message}")
+                            Log.e("encryptCollectData","${it.message}")
                         }
                 )
     }
 
-    private fun postCollectData(headers: HashMap<String, Any>, data: String) {
-        headers["FacePOSCollectData"] = "POS_${BaseData.deviceInfo.posName}"
-        apiClient.postCollData(headers, data)
+    @SuppressLint("CheckResult")
+    private fun postCollectData(headers: HashMap<String,Any>, data: String) {
+        val apiService = getClient().create(MyApiService::class.java)
+        headers["FacePOSCollectData"] = "POS${BaseData.deviceInfo.shopName}_${BaseData.deviceInfo.posName}"
+        apiService.postCollData(headers, data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(object : SingleObserver<Response<ResponseBody>> {
+
                     override fun onSubscribe(d: Disposable) {}
 
                     override fun onSuccess(t: Response<ResponseBody>) {
-                        Log.d("facePosCollectData", "onSuccess")
+                        Log.e("facePosCollectData", "onSuccess")
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.d("facePosCollectData", "onError")
+                        Log.e("facePosCollectData", "onError")
                     }
+
                 })
     }
 }

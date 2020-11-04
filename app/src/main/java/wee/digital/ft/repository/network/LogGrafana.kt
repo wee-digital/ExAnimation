@@ -44,8 +44,12 @@ class LogGrafana {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
-                        { data -> },
-                        { e -> }
+                        { data ->
+                            print("")
+                        },
+                        { e ->
+                            print("")
+                        }
                 )
     }
 
@@ -63,8 +67,12 @@ class LogGrafana {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
-                        { data -> },
-                        { e -> }
+                        { data ->
+                            print("")
+                        },
+                        { e ->
+                            print("")
+                        }
                 )
     }
 
@@ -82,8 +90,12 @@ class LogGrafana {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
-                        { data -> },
-                        { e -> }
+                        { data ->
+                            print("")
+                        },
+                        { e ->
+                            print("")
+                        }
                 )
     }
 
