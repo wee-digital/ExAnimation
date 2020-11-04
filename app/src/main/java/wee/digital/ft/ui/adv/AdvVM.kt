@@ -1,7 +1,6 @@
 package wee.digital.ft.ui.adv
 
 import androidx.lifecycle.MutableLiveData
-import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

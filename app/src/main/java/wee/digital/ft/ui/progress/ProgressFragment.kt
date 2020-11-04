@@ -30,7 +30,7 @@ class ProgressFragment : MainDialog() {
     private fun onBindProgress(it: ProgressArg) {
         progressImageView.load(it.image)
         progressTextViewTitle.text = it.title
-        progressTextViewMessage.gradientHorizontal(R.color.colorPrimaryStart,R.color.colorPrimaryEnd)
+        progressTextViewMessage.gradientHorizontal(R.color.colorPrimaryStart, R.color.colorPrimaryEnd)
         progressTextViewMessage.text = it.message
     }
 
