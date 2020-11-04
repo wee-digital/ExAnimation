@@ -13,8 +13,6 @@ import wee.digital.library.extension.*
 
 class DeviceFragment : MainDialog() {
 
-    private val deviceView by lazy { DeviceView(this) }
-
     private val deviceVM by lazy { viewModel(DeviceVM::class) }
 
     /**
@@ -25,6 +23,7 @@ class DeviceFragment : MainDialog() {
     }
 
     override fun onViewCreated() {
+        addClickListener(deviceViewBack, deviceViewClose, deviceViewRegister)
         deviceView.onViewInit()
         deviceEditTextName.addEditorActionListener(EditorInfo.IME_ACTION_DONE) {
             deviceEditTextName.clearFocus()
@@ -71,38 +70,35 @@ class DeviceFragment : MainDialog() {
     private fun onRegisterDevice() {
         deviceView.showProgress()
         deviceView.onNameError(null)
-        val s = deviceEditTextName.trimText
-        deviceVM.registerDevice(s, sharedVM.qrCode.value)
+        deviceVM.registerDevice(deviceEditTextName.trimText, sharedVM.qrCode.value)
     }
 
     private fun onRegisterSuccess() {
         deviceView.hideProgress()
-        sharedVM.message.value = MessageArg(
-                icon = R.mipmap.img_checked_flat,
-                title = "Đăng ký thiết bị thành công",
-                message = "Xem thông tin các thiết bị đã liên kết trong phần\nquản lý thiết bị tại %s"
-                        .format("pos.facepay.vn".bold().color("#378AE1")),
-                button = "Hoàn tất",
-                onClose = {
-                    sharedVM.syncDeviceInfo()
-                }
-        )
-        dismiss()
-        navigate(Main.message)
+        dismissAllowingStateLoss()
+        sharedVM.message.value = MessageArg().apply {
+            icon = R.mipmap.img_checked_flat
+            title = "Đăng ký thiết bị thành công"
+            message = "Xem thông tin các thiết bị đã liên kết trong phần\nquản lý thiết bị tại %s"
+                    .format("pos.facepay.vn".bold().color("#378AE1"))
+            buttonClose = "Hoàn tất"
+            onClose = {
+                sharedVM.syncDeviceInfo()
+            }
+        }
     }
 
     private fun onRegisterError() {
         deviceView.hideProgress()
-        sharedVM.message.value = MessageArg(
-                title = "Đăng ký thiết bị không\nthành công",
-                message = "Có lỗi phát sinh, bạn vui lòng thử lại lần nữa",
-                button = "Quét lại mã QR",
-                onClose = {
-                    it.navigate(Main.qr)
-                }
-        )
-        dismiss()
-        navigate(Main.message)
+        dismissAllowingStateLoss()
+        sharedVM.message.value = MessageArg().apply {
+            title = "Đăng ký thiết bị không\nthành công"
+            message = "Có lỗi phát sinh, bạn vui lòng thử lại lần nữa"
+            buttonClose = "Quét lại mã QR"
+            onClose = {
+                it.navigate(Main.qr)
+            }
+        }
     }
 
 }

@@ -1,13 +1,9 @@
 package wee.digital.ft.ui.message
 
-import androidx.constraintlayout.widget.ConstraintSet
+import android.view.View
 import kotlinx.android.synthetic.main.message.*
 import wee.digital.ft.R
 import wee.digital.ft.ui.MainDialog
-import wee.digital.library.extension.hide
-import wee.digital.library.extension.setHyperText
-import wee.digital.library.extension.show
-import wee.digital.library.extension.string
 
 class MessageFragment : MainDialog() {
 
@@ -16,45 +12,26 @@ class MessageFragment : MainDialog() {
     }
 
     override fun onViewCreated() {
+        addClickListener(messageViewClose)
     }
 
     override fun onLiveDataObserve() {
         sharedVM.message.observe {
-            onBindArg(it)
-        }
-    }
-
-    private fun onBindArg(arg: MessageArg?) {
-        if (arg == null) {
+            it?.also {
+                messageView.onBindArg(it)
+                return@observe
+            }
             dismissAllowingStateLoss()
-            return
-        }
-        onBindDialogSize(arg.headerGuideline)
-        messageImageViewIcon.setImageResource(arg.icon)
-        messageTextViewTitle.text = arg.title ?: string(R.string.app_name)
-        messageTextViewMessage.setHyperText(arg.message)
-        if (arg.button.isNullOrEmpty()) {
-            messageViewClose.hide()
-        } else {
-            messageViewClose.show()
-            messageViewClose.text = arg.button
-        }
-        messageViewClose.setOnClickListener {
-            dismissAllowingStateLoss()
-            arg.onClose(this)
+            sharedVM.onPaymentCancel()
         }
     }
 
-    private fun onBindDialogSize(guidelineId: Int) {
-        if (guidelineId == 0) return
-        val viewId = messageDialogContent.id
-        ConstraintSet().apply {
-            clone(viewContent)
-            constrainHeight(viewId, ConstraintSet.MATCH_CONSTRAINT)
-            constrainDefaultHeight(viewId, ConstraintSet.MATCH_CONSTRAINT)
-            connect(viewId, ConstraintSet.TOP, guidelineId, ConstraintSet.TOP)
-            applyTo(viewContent)
+    override fun onViewClick(v: View?) {
+        when (v) {
+            messageViewClose -> {
+                dismiss()
+                sharedVM.message.value?.onClose?.also { it(this) }
+            }
         }
     }
-
 }

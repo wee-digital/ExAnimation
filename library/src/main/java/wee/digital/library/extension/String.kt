@@ -1,5 +1,6 @@
 package wee.digital.library.extension
 
+import android.util.Base64
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import org.json.JSONObject
@@ -158,6 +159,8 @@ fun Long.cashToText(): String {
 
     return text.substring(0, 1).toUpperCase() + text.substring(1, text.length)
 }
+
+val String.encodedFromBase64: String get() = String(Base64.decode(this, Base64.NO_WRAP))
 
 private fun cashText(numText: String): String {
 

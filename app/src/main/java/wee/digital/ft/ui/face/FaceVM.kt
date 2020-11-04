@@ -33,25 +33,31 @@ class FaceVM : BaseViewModel() {
         PaymentRepository.ins.verifyFace(req, dataFace, object : Api.ClientListener<FaceResponse> {
             override fun onSuccess(response: FaceResponse) {
                 CollectionData.instance.encryptCollData(dataColl)
-                successLiveData.postValue(FaceArg(response))
-            }
-
-            override fun onFailed(code: Int, message: String) {
-                when (retryCount.getAndDecrement()) {
+                when (response.code) {
                     0 -> {
-                        val message = MessageArg(
-                                title = "Giao dịch đã hủy bỏ",
-                                message = "Yêu cầu thanh toán của bạn đã bị huỷ. Vui lòng\nliên hệ với nhân viên để biết thêm thông tin"
-                        )
-                        failureLiveData.postValue(message)
+                        successLiveData.postValue(FaceArg(response))
                     }
                     else -> {
-                        retriesLiveData.postValue(true)
+                        onVerifyFailed(MessageArg.faceNotExistedError)
                     }
                 }
             }
 
+            override fun onFailed(code: Int, message: String) {
+                onVerifyFailed(MessageArg.systemError)
+            }
         })
+    }
+
+    fun onVerifyFailed(messageArg: MessageArg) {
+        when (retryCount.getAndDecrement()) {
+            0 -> {
+                failureLiveData.postValue(messageArg)
+            }
+            else -> {
+                retriesLiveData.postValue(true)
+            }
+        }
     }
 
 }

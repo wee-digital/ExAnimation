@@ -1,12 +1,17 @@
 package wee.digital.ft.ui.pin
 
-import kotlinx.android.synthetic.main.pin.*
+import android.content.Context
+import android.util.AttributeSet
+import androidx.constraintlayout.widget.ConstraintLayout
+import kotlinx.android.synthetic.main.pin.view.*
 import wee.digital.ft.R
 import wee.digital.ft.ui.pin.view.PinKeyAdapter
 import wee.digital.library.extension.color
 import wee.digital.library.extension.gradientVertical
 
-class PinView(private val v: PinFragment) {
+class PinView : ConstraintLayout {
+
+    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
     private val pinAdapter = PinKeyAdapter()
 
@@ -17,7 +22,7 @@ class PinView(private val v: PinFragment) {
     )
 
     private fun configPinProgressView() {
-        v.pinProgressLayout.build {
+        pinProgressLayout.build {
             progressColor = color(R.color.colorPrimary)
             itemCount = 6
         }
@@ -26,26 +31,25 @@ class PinView(private val v: PinFragment) {
     private fun configNumPadKeyView() {
         pinAdapter.apply {
             set(keyListItem)
-            bind(v.pinRecyclerViewKey, 4)
+            bind(pinRecyclerViewKey, 4)
             onItemClick { any, _ ->
-                v.pinProgressLayout.pushKey(any)
+                pinProgressLayout.pushKey(any)
             }
         }
     }
 
     fun onViewInit() {
-        v.addClickListener(v.pinViewClose)
         configNumPadKeyView()
         configPinProgressView()
     }
 
     fun onBindErrorText(s: String?) {
         if (s.isNullOrEmpty()) {
-            v.pinTextViewTitle.gradientVertical(R.color.colorTextPrimary)
-            v.pinTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
+            pinTextViewTitle.gradientVertical(R.color.colorTextPrimary)
+            pinTextViewTitle.text = "Vui lòng nhập PIN code thanh toán"
         } else {
-            v.pinTextViewTitle.gradientVertical(R.color.colorAlertStart, R.color.colorAlertEnd)
-            v.pinTextViewTitle.text = s
+            pinTextViewTitle.gradientVertical(R.color.colorAlertStart, R.color.colorAlertEnd)
+            pinTextViewTitle.text = s
         }
     }
 }

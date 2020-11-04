@@ -1,7 +1,5 @@
 package wee.digital.ft.ui
 
-
-import androidx.navigation.NavDirections
 import okhttp3.WebSocket
 import wee.digital.ft.BuildConfig
 import wee.digital.ft.R
@@ -13,13 +11,10 @@ import wee.digital.ft.repository.utils.PaymentStatusCode
 import wee.digital.ft.repository.utils.SocketEvent
 import wee.digital.ft.shared.Config
 import wee.digital.ft.shared.Shared
-import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.base.BaseActivity
 import wee.digital.ft.ui.base.activityVM
 import wee.digital.ft.ui.base.viewModel
-import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.payment.PaymentArg
-import wee.digital.ft.ui.progress.ProgressArg
 import wee.digital.ft.ui.vm.NapasVM
 import wee.digital.ft.ui.vm.SharedVM
 import wee.digital.ft.ui.vm.SocketVM
@@ -50,9 +45,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onLiveDataObserve() {
-        mainVM.rootDirection.observe {
-            onRootDirectionChanged(it)
-        }
         mainVM.tokenResponse.observe {
             onTokenResponseChanged(it)
         }
@@ -66,8 +58,20 @@ class MainActivity : BaseActivity() {
             onPaymentArgChanged(it)
         }
         sharedVM.syncDeviceInfo()
+        sharedVM.direction.observe {
+            navigate(it) { setLaunchSingleTop() }
+        }
+        sharedVM.message.observe {
+            it ?: return@observe
+            navigate(Main.message)
+        }
+        sharedVM.confirm.observe {
+            it ?: return@observe
+            navigate(Main.confirm)
+        }
         sharedVM.progress.observe {
-            onProgressArgChanged(it)
+            it ?: return@observe
+            navigate(Main.progress)
         }
         sharedVM.deviceInfo.observe {
             onDeviceInfoChanged(it)
@@ -77,10 +81,6 @@ class MainActivity : BaseActivity() {
         }
         sharedVM.timeoutSecond.observe {
             mainView.onTimeoutSecondChanged(it)
-        }
-        sharedVM.timeoutEnd.observe {
-            it ?: return@observe
-            onPaymentTimeout()
         }
     }
 
@@ -96,12 +96,6 @@ class MainActivity : BaseActivity() {
     private val mainVM by lazy { viewModel(MainVM::class) }
 
     private val mainView by lazy { MainView(this) }
-
-    private fun onRootDirectionChanged(it: NavDirections) {
-        navigate(it) {
-            setLaunchSingleTop()
-        }
-    }
 
     private fun onTokenResponseChanged(it: TokenResponse) {
         when (it.Code) {
@@ -138,7 +132,7 @@ class MainActivity : BaseActivity() {
             SocketEvent.DELETE_CACHE -> {
                 deleteCache()
                 mainVM.resetDeviceData()
-                Main.mainDirection.postValue(Main.connect)
+                sharedVM.direction.postValue(Main.connect)
             }
         }
     }
@@ -147,16 +141,12 @@ class MainActivity : BaseActivity() {
         post(500) {
             when {
                 it?.uid.isNullOrEmpty() -> {
-                    navigate(Main.connect) {
-                        setLaunchSingleTop()
-                    }
+                    sharedVM.direction.postValue(Main.connect)
                 }
                 else -> {
                     mainVM.checkDeviceStatus()
                     mainView.onDeviceInfoChanged(it)
-                    navigate(Main.adv) {
-                        setLaunchSingleTop()
-                    }
+                    sharedVM.direction.postValue(Main.adv)
                 }
             }
         }
@@ -176,20 +166,12 @@ class MainActivity : BaseActivity() {
                 if (sharedVM.isSplashing) return
                 sharedVM.isSplashing = true
                 startCamera()
-                sharedVM.clearData()
+                sharedVM.onPaymentCancel()
                 navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()
                 }
                 /*App.recordVideo?.startVideo()*/
-            }
-        }
-    }
-
-    private fun onProgressArgChanged(it: ProgressArg?) {
-        when {
-            it != null -> {
-                navigate(Main.progress)
             }
         }
     }
@@ -202,22 +184,5 @@ class MainActivity : BaseActivity() {
         mainView.showDisconnectDialog(isDisconnected)
     }
 
-    private fun onPaymentTimeout() {
-        sharedVM.apply {
-            progress.postValue(null)
-            clearData()
-            message.value = MessageArg(
-                    title = "Hết thời gian thanh toán",
-                    message = "Giao dịch của bạn đã quá thời gian thanh toán. Bạn vui lòng thực hiện lại giao dịch."
-            )
-            startTimeout(Timeout.PAYMENT_DISMISS) {
-                clearData()
-                navigate(Main.adv) {
-                    setLaunchSingleTop()
-                }
-            }
-        }
-        navigate(Main.message)
-    }
 
 }

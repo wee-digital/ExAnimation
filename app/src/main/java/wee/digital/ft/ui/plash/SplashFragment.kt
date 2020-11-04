@@ -5,9 +5,8 @@ import wee.digital.ft.R
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainFragment
 import wee.digital.ft.ui.base.BaseFragment
-import wee.digital.ft.ui.onPaymentCancel
 import wee.digital.ft.ui.payment.PaymentArg
-import wee.digital.ft.util.startCamera
+
 import wee.digital.ft.util.stopCamera
 
 class SplashFragment : MainFragment() {
@@ -38,7 +37,7 @@ class SplashFragment : MainFragment() {
             null -> {
                 stopCamera()
                 splashView.animateOnDismissPayment {
-                    onPaymentCancel()
+                    sharedVM.onPaymentCancel()
                 }
             }
             else -> {

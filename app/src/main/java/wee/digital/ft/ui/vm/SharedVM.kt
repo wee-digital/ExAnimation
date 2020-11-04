@@ -2,6 +2,7 @@ package wee.digital.ft.ui.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavDirections
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,6 +10,7 @@ import io.reactivex.disposables.Disposable
 import wee.digital.ft.repository.base.BaseData
 import wee.digital.ft.repository.model.DeviceInfo
 import wee.digital.ft.shared.Timeout
+import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.base.EventLiveData
 import wee.digital.ft.ui.card.CardItem
 import wee.digital.ft.ui.confirm.ConfirmArg
@@ -23,6 +25,10 @@ import java.util.concurrent.atomic.AtomicInteger
 class SharedVM : ViewModel() {
 
     var isSplashing = false
+
+    val direction by lazy {
+        EventLiveData<NavDirections>()
+    }
 
     val deviceInfo = MutableLiveData<DeviceInfo?>()
 
@@ -50,26 +56,61 @@ class SharedVM : ViewModel() {
 
     val timeoutSecond = MutableLiveData<Int>()
 
-    val timeoutEnd = MutableLiveData<Boolean?>()
-
     fun syncDeviceInfo() {
         deviceInfo.postValue(BaseData.ins.getDeviceInfoPref())
     }
 
-    fun clearData() {
-        qrCode.value = null
-        message.value = null
-        confirm.value = null
-        progress.value = null
+    fun onPaymentCancel() {
         cardError.value = null
         cardList.value = null
         otpForm.value = null
         qrCode.value = null
+        message.value = null
+        confirm.value = null
+        pin.value = null
+        face.value = null
+        progress.value = null
+        qrCode.value = null
+        payment.value = null
+        direction.postValue(Main.adv)
     }
 
     private var disposable: Disposable? = null
 
-    fun startTimeout(intervalInSecond: Int = Timeout.PAYMENT_DISMISS, block: (() -> Unit)? = null) {
+    fun startTimeout(messageArg: MessageArg) {
+        hideProgress()
+        message.value = messageArg
+        startTimeout(Timeout.ALERT_DIALOG) {
+            message.value = null
+        }
+    }
+
+    fun startTimeout(intervalInSecond: Int, messageArg: MessageArg = MessageArg.timedOutError) {
+        hideProgress()
+        message.value = messageArg
+        startTimeout(intervalInSecond) {
+            message.value = null
+        }
+    }
+
+    fun startTimeout(intervalInSecond: Int, confirmArg: ConfirmArg) {
+        hideProgress()
+        confirm.value = confirmArg
+        startTimeout(intervalInSecond) {
+            confirm.value = null
+        }
+    }
+
+    fun showProgress(progressArg: ProgressArg) {
+        stopTimeout()
+        progress.postValue(progressArg)
+    }
+
+    fun hideProgress() {
+        progress.postValue(null)
+    }
+
+    private fun startTimeout(intervalInSecond: Int, block: () -> Unit) {
         val waitingCounter = AtomicInteger(intervalInSecond + 1)
         disposable?.dispose()
         disposable = Observable
@@ -79,10 +120,8 @@ class SharedVM : ViewModel() {
                 .subscribe({
                     timeoutSecond.value = it
                     when {
-                        it == 0 -> if (block != null) {
+                        it == 0 -> {
                             block()
-                        } else {
-                            timeoutEnd.postValue(true)
                         }
                         it < 0 -> {
                             disposable?.dispose()
@@ -94,9 +133,7 @@ class SharedVM : ViewModel() {
     fun stopTimeout() {
         disposable?.dispose()
         timeoutSecond.postValue(-1)
-        timeoutEnd.value = null
     }
-
 
 
 }

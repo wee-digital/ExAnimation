@@ -1,13 +1,12 @@
 package wee.digital.ft.ui.card
 
+import android.view.View
 import kotlinx.android.synthetic.main.card.*
 import wee.digital.ft.R
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainDialog
 import wee.digital.ft.ui.base.viewModel
-import wee.digital.ft.ui.message.MessageArg
-import wee.digital.ft.ui.onPaymentFailed
 import wee.digital.ft.ui.progress.ProgressArg
 
 class CardFragment : MainDialog() {
@@ -24,9 +23,9 @@ class CardFragment : MainDialog() {
     }
 
     override fun onViewCreated() {
+        addClickListener(cardViewClose)
         adapter.bind(paymentRecyclerViewCard, 2)
         adapter.itemClick = { model, _ ->
-
             sharedVM.stopTimeout()
             cardVM.postPayRequest(model.accountId, sharedVM.payment.value)
         }
@@ -35,10 +34,10 @@ class CardFragment : MainDialog() {
     override fun onLiveDataObserve() {
         sharedVM.startTimeout(Timeout.CARD_SELECT)
         sharedVM.cardList.observe {
-            if (it == null) {
-                dismiss()
-            } else {
+            if (it != null) {
                 adapter.set(it)
+            } else {
+                dismissAllowingStateLoss()
             }
         }
         cardVM.otpFormLiveData.observe {
@@ -48,8 +47,17 @@ class CardFragment : MainDialog() {
             onPaymentSuccess()
         }
         cardVM.paymentFailed.observe {
-            dismiss()
-            onPaymentFailed(MessageArg.paymentCancel)
+            dismissAllowingStateLoss()
+            sharedVM.startTimeout(it)
+        }
+    }
+
+    override fun onViewClick(v: View?) {
+        when (v) {
+            cardViewClose -> {
+                dismissAllowingStateLoss()
+                sharedVM.onPaymentCancel()
+            }
         }
     }
 
@@ -57,12 +65,12 @@ class CardFragment : MainDialog() {
      * [CardFragment] properties
      */
     private fun onPaymentSuccess() {
-        dismiss()
-        sharedVM.progress.postValue(ProgressArg.paid)
+        dismissAllowingStateLoss()
+        sharedVM.showProgress(ProgressArg.paid)
     }
 
     private fun onNavigateOTP(otpForm: String) {
-        dismiss()
+        dismissAllowingStateLoss()
         sharedVM.otpForm.value = otpForm
         navigate(Main.otp)
     }

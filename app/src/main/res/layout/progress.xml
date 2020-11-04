@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<wee.digital.ft.ui.progress.ProgressView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/viewContent"
+    android:id="@+id/progressView"
     style="@style/MatchParent"
     tools:background="@color/colorDialogBackground">
 
@@ -75,4 +75,4 @@
         tools:layout_constraintVertical_bias="0.1"
         tools:src="@mipmap/img_face_paid" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</wee.digital.ft.ui.progress.ProgressView>

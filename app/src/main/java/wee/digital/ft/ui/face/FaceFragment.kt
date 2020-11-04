@@ -7,8 +7,6 @@ import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainFragment
 import wee.digital.ft.ui.base.viewModel
 import wee.digital.ft.ui.confirm.ConfirmArg
-import wee.digital.ft.ui.onPaymentCancel
-import wee.digital.ft.ui.onPaymentFailed
 import wee.digital.library.extension.post
 
 class FaceFragment : MainFragment() {
@@ -38,12 +36,11 @@ class FaceFragment : MainFragment() {
     override fun onLiveDataObserve() {
         sharedVM.timeoutColor.value = R.color.colorTimeoutFace
         sharedVM.startTimeout(Timeout.FACE_VERIFY)
-
         faceVM.successLiveData.observe {
             onFaceVerifySuccess(it)
         }
         faceVM.failureLiveData.observe {
-            onPaymentFailed(it)
+            sharedVM.message.value = it
         }
         faceVM.retriesLiveData.observe {
             onRetryVerify()
@@ -62,11 +59,10 @@ class FaceFragment : MainFragment() {
 
     private fun onRetryVerify() {
         faceView.animateOnFaceCaptured()
-        sharedVM.startTimeout(Timeout.FACE_VERIFY)
-        sharedVM.confirm.value = ConfirmArg(
+        val confirmArg = ConfirmArg(
                 headerGuideline = R.id.guidelineFace,
-                title = "Tài khoản không tồn tại",
-                message = "Bạn vui lòng đăng ký tài khoản Facepay\ntrước khi thực hiện thanh toán",
+                title = "Bạn chưa đăng ký tài khoản Facepay",
+                message = "Bạn vui lòng thử lại hoặc tải ứng dụng Facepay\nđể đăng ký tài khoản",
                 buttonAccept = "Thử lại",
                 onAccept = {
                     faceView.animateOnStartFaceReg()
@@ -74,10 +70,10 @@ class FaceFragment : MainFragment() {
                 },
                 buttonDeny = "Hủy bỏ giao dịch",
                 onDeny = {
-                    onPaymentCancel()
+                    sharedVM.onPaymentCancel()
                 }
         )
-        navigate(Main.confirm)
+        sharedVM.startTimeout(Timeout.FACE_VERIFY, confirmArg)
     }
 
 

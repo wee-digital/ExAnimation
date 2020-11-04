@@ -1,11 +1,9 @@
 package wee.digital.ft.ui.confirm
 
-import androidx.constraintlayout.widget.ConstraintSet
+import android.view.View
 import kotlinx.android.synthetic.main.confirm.*
 import wee.digital.ft.R
 import wee.digital.ft.ui.MainDialog
-import wee.digital.library.extension.setHyperText
-import wee.digital.library.extension.string
 
 class ConfirmFragment : MainDialog() {
 
@@ -14,44 +12,31 @@ class ConfirmFragment : MainDialog() {
     }
 
     override fun onViewCreated() {
+        addClickListener(confirmViewAccept, confirmViewDeny)
     }
 
     override fun onLiveDataObserve() {
         sharedVM.confirm.observe {
-            onBindArg(it)
+            it?.also {
+                confirmView.onBindArg(it)
+                return@observe
+            }
+            dismissAllowingStateLoss()
+            sharedVM.onPaymentCancel()
         }
     }
 
-    private fun onBindArg(arg: ConfirmArg?) {
-        if (arg == null) {
-            dismiss()
-            return
-        }
-        onBindDialogSize(arg.headerGuideline)
-        confirmImageViewIcon.setImageResource(arg.icon)
-        confirmTextViewTitle.text = arg.title ?: string(R.string.app_name)
-        confirmTextViewMessage.setHyperText(arg.message)
-        confirmViewAccept.text = arg.buttonAccept ?: "Xác nhận"
-        confirmViewDeny.text = arg.buttonDeny ?: "Đóng"
-        confirmViewAccept.setOnClickListener {
-            dismiss()
-            arg.onAccept(this)
-        }
-        confirmViewDeny.setOnClickListener {
-            dismiss()
-            arg.onDeny(this)
+    override fun onViewClick(v: View?) {
+        when (v) {
+            confirmViewAccept -> {
+                dismiss()
+                sharedVM.confirm.value?.onAccept?.also { it(this) }
+            }
+            confirmViewDeny -> {
+                dismiss()
+                sharedVM.confirm.value?.onDeny?.also { it(this) }
+            }
         }
     }
 
-    private fun onBindDialogSize(guidelineId: Int) {
-        if (guidelineId == 0) return
-        val viewId = confirmDialogContent.id
-        ConstraintSet().apply {
-            clone(viewContent)
-            constrainHeight(viewId, ConstraintSet.MATCH_CONSTRAINT)
-            constrainDefaultHeight(viewId, ConstraintSet.MATCH_CONSTRAINT)
-            connect(viewId, ConstraintSet.TOP, guidelineId, ConstraintSet.TOP)
-            applyTo(viewContent)
-        }
-    }
 }

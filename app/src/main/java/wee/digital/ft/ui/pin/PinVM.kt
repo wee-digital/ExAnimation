@@ -62,14 +62,10 @@ class PinVM : BaseViewModel() {
             override fun onFailed(code: Int, message: String) {
                 when {
                     restRetriesAtomic.getAndDecrement() > 1 -> {
-                        log.d("onFailed ${restRetriesAtomic.get()}")
                         pinVerifyRetries.postValue(restRetriesAtomic.get())
                     }
                     else -> {
-                        pinVerifyFailed.postValue(MessageArg(
-                                title = "Quá số lần nhập mã PIN",
-                                message = "Bạn đã nhập sai mã PIN quá số lần cho phép, giao dịch không thể thực hiện."
-                        ))
+                        pinVerifyFailed.postValue(MessageArg.wrongPinManyTimes)
                     }
                 }
             }
@@ -92,12 +88,10 @@ class PinVM : BaseViewModel() {
             }
 
             override fun onFailed(code: Int, message: String) {
-                //code 29
                 payRequestError.postValue(MessageArg.fromCode(code))
             }
         })
     }
-
 
     fun fetchCardList(userId: String?) {
         val body = GetBankAccListDTOReq(

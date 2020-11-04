@@ -8,7 +8,6 @@ import wee.digital.ft.shared.Event
 import wee.digital.ft.ui.base.BaseViewModel
 import wee.digital.ft.ui.base.EventLiveData
 import wee.digital.ft.ui.card.CardItem
-import wee.digital.ft.ui.confirm.ConfirmArg
 import wee.digital.ft.ui.message.MessageArg
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -18,60 +17,29 @@ class OtpVM : BaseViewModel() {
 
     val cardList = EventLiveData<List<CardItem>>()
 
-    val retryMessageLiveData = EventLiveData<ConfirmArg>()
+    val retryMessageLiveData = EventLiveData<MessageArg>()
 
     val errorMessageLiveData = EventLiveData<MessageArg>()
 
     fun onTransactionFailed(data: String) {
-        if (retryCount.getAndDecrement() > 0) {
-            onPaymentRetry(data)
+        val liveData = if (retryCount.getAndDecrement() > 0) {
+            retryMessageLiveData
         } else {
-            onPaymentError(data)
+            errorMessageLiveData
         }
-
-    }
-
-    private fun onPaymentRetry(data: String) {
         when (data) {
             Napas.INSUFFICIENT_FUNDS -> {
-                retryMessageLiveData.postValue(ConfirmArg(
-                        title = "Giao dịch thất bại",
-                        message = "Không đủ số dư thanh toán. Bạn vui lòng chọn thẻ khác"
-                ))
+                liveData.postValue(MessageArg.insufficient)
             }
             Napas.BELOW_LIMIT, Napas.OUT_OF_LIMIT_BANK -> {
-                retryMessageLiveData.postValue(ConfirmArg(
-                        title = "Giao dịch thất bại",
-                        message = "Quá hạn mức giao dịch. Bạn vui lòng chọn thẻ khác"
-                ))
+                liveData.postValue(MessageArg.paymentLimitError)
             }
             else -> {
-                errorMessageLiveData.postValue(MessageArg.paymentCancel)
+                liveData.postValue(MessageArg.paymentError)
             }
         }
     }
 
-    private fun onPaymentError(data: String) {
-        when (data) {
-            Napas.INSUFFICIENT_FUNDS -> {
-                errorMessageLiveData.postValue(MessageArg(
-                        title = "Giao dịch thất bại",
-                        message = "Quá hạn mức giao dịch.",
-                        button = null
-                ))
-            }
-            Napas.BELOW_LIMIT, Napas.OUT_OF_LIMIT_BANK -> {
-                errorMessageLiveData.postValue(MessageArg(
-                        title = "Giao dịch thất bại",
-                        message = "Quá hạn mức giao dịch.",
-                        button = null
-                ))
-            }
-            else -> {
-                errorMessageLiveData.postValue(MessageArg.paymentCancel)
-            }
-        }
-    }
 
     fun fetchCardList(userId: String?) {
         val body = GetBankAccListDTOReq(

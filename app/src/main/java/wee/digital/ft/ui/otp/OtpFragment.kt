@@ -17,8 +17,6 @@ import wee.digital.ft.ui.base.viewModel
 import wee.digital.ft.ui.card.CardItem
 import wee.digital.ft.ui.confirm.ConfirmArg
 import wee.digital.ft.ui.message.MessageArg
-import wee.digital.ft.ui.onPaymentCancel
-import wee.digital.ft.ui.onPaymentFailed
 import wee.digital.ft.ui.progress.ProgressArg
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
@@ -27,22 +25,21 @@ class OtpFragment : MainDialog() {
 
     private val otpVM by lazy { viewModel(OtpVM::class) }
 
-    private val otpView by lazy { OtpView(this) }
-
     override fun layoutResource(): Int {
         return R.layout.otp
     }
 
     override fun onViewCreated() {
-        otpView.onViewInit()
+        addClickListener(otpViewClose)
+        otpView.onViewInit(this)
         if (Config.TESTING) post(2000) {
             onTransactionSuccess()
-           //otpVM.onTransactionFailed(Napas.INSUFFICIENT_FUNDS)
+            //otpVM.onTransactionFailed(Napas.INSUFFICIENT_FUNDS)
         }
     }
 
     override fun onLiveDataObserve() {
-        addClickListener(otpViewClose)
+
         sharedVM.startTimeout(Timeout.OTP)
         sharedVM.otpForm.observe {
             it ?: throw Event.otpFormError
@@ -62,7 +59,8 @@ class OtpFragment : MainDialog() {
     override fun onViewClick(v: View?) {
         when (v) {
             otpViewClose -> {
-                onPaymentCancel()
+                dismissAllowingStateLoss()
+                sharedVM.onPaymentCancel()
             }
         }
     }
@@ -89,26 +87,25 @@ class OtpFragment : MainDialog() {
         sharedVM.progress.postValue(arg)
     }
 
-    private fun onRetryMessage(it: ConfirmArg?) {
-        it ?: return
+    private fun onRetryMessage(it: MessageArg) {
         dismissAllowingStateLoss()
         sharedVM.startTimeout(Timeout.OTP)
-        sharedVM.confirm.value = it.also {
-            it.buttonDeny = "Hủy bỏ giao dịch"
-            it.onDeny = { it.onPaymentCancel() }
-            it.buttonAccept = "Thử lại"
-            it.onAccept = {
+        sharedVM.confirm.value = ConfirmArg().apply {
+            title = it.title
+            message = it.message
+            buttonDeny = "Hủy bỏ giao dịch"
+            onDeny = { it.sharedVM.onPaymentCancel() }
+            buttonAccept = "Thử lại"
+            onAccept = {
                 sharedVM.stopTimeout()
                 otpVM.fetchCardList(sharedVM.pin.value?.userId)
             }
         }
-        navigate(Main.confirm)
     }
 
-    private fun onErrorMessage(it: MessageArg?) {
-        it ?: return
+    private fun onErrorMessage(it: MessageArg) {
         dismissAllowingStateLoss()
-        onPaymentFailed(it)
+        sharedVM.startTimeout(it)
     }
 
     private fun onCardListChanged(it: List<CardItem>?) {

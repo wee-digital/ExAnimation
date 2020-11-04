@@ -9,6 +9,7 @@ import wee.digital.ft.ui.base.BaseViewModel
 import wee.digital.ft.ui.base.EventLiveData
 import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.payment.PaymentArg
+import wee.digital.library.extension.notNullOrEmpty
 
 class CardVM : BaseViewModel() {
 
@@ -28,11 +29,11 @@ class CardVM : BaseViewModel() {
         PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentResponse> {
             override fun onSuccess(response: PaymentResponse) {
                 when {
+                    response.otpForm.notNullOrEmpty() -> {
+                        otpFormLiveData.postValue(response.otpForm)
+                    }
                     response.code == 0 -> {
                         paymentSuccess.postValue(true)
-                    }
-                    response.haveOTP && !response.otpForm.isNullOrEmpty() -> {
-                        otpFormLiveData.postValue(response.otpForm)
                     }
                     else -> {
                         paymentFailed.postValue(MessageArg.fromCode(response.code))
@@ -41,7 +42,7 @@ class CardVM : BaseViewModel() {
             }
 
             override fun onFailed(code: Int, message: String) {
-                paymentFailed.postValue(MessageArg.fromCode(0))
+                paymentFailed.postValue(MessageArg.systemError)
             }
         })
     }

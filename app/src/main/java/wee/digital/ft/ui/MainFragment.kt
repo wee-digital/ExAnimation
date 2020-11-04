@@ -6,6 +6,6 @@ import wee.digital.ft.ui.vm.SharedVM
 
 abstract class MainFragment : BaseFragment() {
 
-    protected val sharedVM by lazy { activityVM(SharedVM::class) }
+    val sharedVM by lazy { activityVM(SharedVM::class) }
 
 }

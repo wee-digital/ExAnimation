@@ -9,24 +9,20 @@ import wee.digital.ft.ui.MainDialog
 
 class PaymentFragment : MainDialog() {
 
-    private val paymentView by lazy { PaymentView(this) }
-
     override fun layoutResource(): Int {
         return R.layout.payment
     }
 
     override fun onViewCreated() {
-        paymentView.onViewInit()
+        addClickListener(paymentViewAccept, paymentViewDeny)
     }
 
     override fun onLiveDataObserve() {
+        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM)
+        sharedVM.isSplashing = false
         sharedVM.payment.observe {
-            it ?: return@observe
-            sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM)
-            sharedVM.isSplashing = false
             paymentView.onPaymentDataChanged(it)
         }
-
         sharedVM.deviceInfo.observe {
             paymentView.onDeviceInfoChanged(it)
         }
@@ -48,12 +44,11 @@ class PaymentFragment : MainDialog() {
     }
 
     private fun onPaymentDenied() {
+        dismissAllowingStateLoss()
         sharedVM.apply {
-            payment.postValue(null)
-            progress.postValue(null)
             stopTimeout()
+            payment.postValue(null)
         }
-        dismiss()
     }
 
 

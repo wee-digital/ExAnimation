@@ -27,8 +27,6 @@ class MainVM : BaseViewModel() {
 
     var tokenResponse = MutableLiveData<TokenResponse>()
 
-    val rootDirection get() = Main.mainDirection
-
     fun checkDeviceStatusOnTimer() {
         paymentRequest = Single.timer(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

@@ -1,57 +1,62 @@
 package wee.digital.ft.ui.device
 
+import android.content.Context
 import android.text.Editable
+import android.util.AttributeSet
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.device.*
+import kotlinx.android.synthetic.main.device.view.*
 import wee.digital.ft.R
 import wee.digital.ft.shared.Config
 import wee.digital.ft.util.SimpleTextWatcher
 import wee.digital.library.extension.*
 
-class DeviceView(private val v: DeviceFragment) : SimpleTextWatcher {
+class DeviceView : ConstraintLayout, SimpleTextWatcher {
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
 
     private fun configTermText() {
         val sPolicy = string(R.string.device_policy).bold().color("#419DF2")
         val sTerm = string(R.string.device_term).format(sPolicy)
-        v.deviceTextViewTerm.setHyperText(sTerm)
+        deviceTextViewTerm.setHyperText(sTerm)
     }
 
     fun onBindStation(obj: JsonObject) {
         val s = obj.str("FullName")
         val text = string(R.string.device_hi).format(s.color("#419DF2").bold())
-        v.deviceTextViewStation.setHyperText(text)
+        deviceTextViewStation.setHyperText(text)
     }
 
     fun onNameError(s: String?) {
-        v.deviceTextViewError.text = s
+        deviceTextViewError.text = s
     }
 
 
     fun onViewInit() {
-        v.deviceEditTextName.filterChars(Config.DEVICE_NAME_FILTER)
-        v.deviceEditTextName.requestFocus()
-        v.deviceViewProgress.load(R.mipmap.img_progress_small)
+        deviceEditTextName.filterChars(Config.DEVICE_NAME_FILTER)
+        deviceEditTextName.requestFocus()
+        deviceViewProgress.load(R.mipmap.img_progress_small)
         configTermText()
-        v.addClickListener(v.deviceViewBack, v.deviceViewClose, v.deviceViewRegister)
-        v.deviceEditTextName.requestFocus()
-        v.deviceTextViewError.hide()
+
+        deviceEditTextName.requestFocus()
+        deviceTextViewError.hide()
     }
 
     fun showProgress() {
-        v.deviceViewRegister.hide()
-        v.deviceViewProgress.show()
+        deviceViewRegister.hide()
+        deviceViewProgress.show()
     }
 
     fun hideProgress() {
-        v.deviceViewRegister.show()
-        v.deviceViewProgress.hide()
+        deviceViewRegister.show()
+        deviceViewProgress.hide()
     }
 
     override fun afterTextChanged(s: Editable?) {
-        v.deviceEditTextName.removeTextChangedListener(this)
-        v.deviceEditTextName.trimIndentText
-        v.deviceEditTextName.addTextChangedListener(this)
+        deviceEditTextName.removeTextChangedListener(this)
+        deviceEditTextName.trimIndentText
+        deviceEditTextName.addTextChangedListener(this)
     }
 
 }

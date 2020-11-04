@@ -1,28 +1,30 @@
 package wee.digital.ft.ui.payment
 
-import kotlinx.android.synthetic.main.payment.*
+import android.content.Context
+import android.util.AttributeSet
+import androidx.constraintlayout.widget.ConstraintLayout
+import kotlinx.android.synthetic.main.payment.view.*
 import wee.digital.ft.repository.model.DeviceInfo
 import wee.digital.ft.repository.utils.SystemUrl
 import wee.digital.library.extension.load
 import wee.digital.library.extension.moneyFormat
 import wee.digital.library.extension.nowFormat
 
-class PaymentView(private val v: PaymentFragment) {
+class PaymentView : ConstraintLayout {
 
-    fun onViewInit() {
-        v.addClickListener(v.paymentViewAccept, v.paymentViewDeny)
-    }
+    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
 
     fun onPaymentDataChanged(it: PaymentArg?) {
-        v.paymentTextViewDate.text = "${nowFormat("dd")} tháng ${nowFormat("MM yyyy")}"
-        v.paymentTextViewAmount.text = it?.amount.moneyFormat()
+        it ?: return
+        paymentTextViewDate.text = "${nowFormat("dd")} tháng ${nowFormat("MM yyyy")}"
+        paymentTextViewAmount.text = it.amount.moneyFormat()
     }
 
     fun onDeviceInfoChanged(it: DeviceInfo?) {
         it?.apply {
-            v.paymentImageViewStation.load("%s%s".format(SystemUrl.LOGO_SHOP, shopID))
-            v.paymentTextViewStation.text = fullName
-            v.paymentTextViewStation2.text = fullName
+            paymentImageViewStation.load("%s%s".format(SystemUrl.LOGO_SHOP, shopID))
+            paymentTextViewStation.text = fullName
+            paymentTextViewStation2.text = fullName
         }
     }
 }

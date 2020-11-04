@@ -1,62 +1,8 @@
 package wee.digital.ft.ui
 
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavDirections
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import wee.digital.ft.MainDirections
-import wee.digital.ft.R
-import wee.digital.ft.shared.Timeout
-import wee.digital.ft.ui.base.EventLiveData
-import wee.digital.ft.ui.base.activityVM
-import wee.digital.ft.ui.message.MessageArg
-import wee.digital.ft.ui.vm.SharedVM
-
-fun Fragment.onPaymentCancel() {
-    try {
-        (requireActivity() as? MainActivity)?.activityVM(SharedVM::class)?.also {
-            it.progress.postValue(null)
-            it.stopTimeout()
-        }
-        Main.mainDirection.postValue(Main.adv)
-    }catch (ignore : Exception){
-
-    }
-}
-
-fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
-    try {
-        (requireActivity() as? MainActivity)?.activityVM(SharedVM::class)?.also {
-            it.progress.postValue(null)
-            it.message.value = messageArg
-            it.startTimeout(Timeout.PAYMENT_DISMISS) {
-                it.message.value = null
-                Main.mainDirection.postValue(Main.adv)
-            }
-        }
-        val options = NavOptions.Builder().apply {
-            setEnterAnim(R.anim.vertical_reserved_enter)
-            setPopEnterAnim(R.anim.vertical_reserved_pop_enter)
-        }
-        (requireActivity() as? MainActivity)?.navigate(Main.message, options.build())
-    }catch (ignore : Exception){
-
-    }
-}
-
-fun Fragment.navigateAdv() {
-    val options = NavOptions.Builder().apply {
-        setLaunchSingleTop(true)
-        setPopUpTo(R.id.main, false)
-    }
-    (requireActivity() as? MainActivity)?.navigate(Main.adv, options.build())
-}
 
 object Main {
-
-    val mainDirection by lazy {
-        EventLiveData<NavDirections>()
-    }
 
     val pin = MainDirections.actionGlobalPinFragment()
 
