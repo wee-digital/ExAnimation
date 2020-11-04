@@ -10,7 +10,10 @@ import wee.digital.ft.camera.DataCollect
 import wee.digital.ft.camera.RealSenseControl
 import wee.digital.ft.camera.ScanQRCode
 import wee.digital.ft.util.observerCameraListener
-import wee.digital.library.extension.*
+import wee.digital.library.extension.gradientHorizontal
+import wee.digital.library.extension.hide
+import wee.digital.library.extension.load
+import wee.digital.library.extension.show
 
 class QrView(private val v: QrFragment) : RealSenseControl.Listener {
 
@@ -53,13 +56,18 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
     }
 
     fun showProgress() {
-        v.qrTextViewHint?.hide()
-        v.qrViewProgress?.show()
+        v.view?.post {
+            v.qrTextViewHint?.hide()
+            v.qrViewProgress?.show()
+        }
+
     }
 
     fun hideProgress() {
-        v.qrTextViewHint.show()
-        v.qrViewProgress.hide()
+        v.view?.post {
+            v.qrTextViewHint?.show()
+            v.qrViewProgress?.hide()
+        }
     }
 
 }

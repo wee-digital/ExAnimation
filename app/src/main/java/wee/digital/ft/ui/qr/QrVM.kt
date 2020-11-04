@@ -5,6 +5,7 @@ import wee.digital.ft.camera.FrameUtil
 import wee.digital.ft.ui.base.BaseViewModel
 import wee.digital.ft.ui.base.EventLiveData
 import wee.digital.library.extension.jsonFormat
+import wee.digital.library.extension.post
 
 class QrVM : BaseViewModel() {
 
@@ -17,21 +18,23 @@ class QrVM : BaseViewModel() {
     fun checkQRCode(text: String?) {
         if (isQRChecked) return
         isQRChecked = true
-        if (text.isNullOrEmpty()) {
-            log.d("QR is empty")
+        post(300){
+            if (text.isNullOrEmpty()) {
+                log.d("QR is empty")
+                isQRChecked = false
+                messageLiveData.value = null
+                return@post
+            }
+            FrameUtil.decryptQRCode(text)?.also {
+                log.d(text.jsonFormat())
+                log.d("QR captured")
+                qrLiveData.postValue(it)
+                return@post
+            }
+            log.d("QR is wrong")
+            messageLiveData.value = "Mã không đúng. Bạn vui\nlòng thử lại lần nữa"
             isQRChecked = false
-            messageLiveData.value = null
-            return
         }
-        FrameUtil.decryptQRCode(text)?.also {
-            log.d(text.jsonFormat())
-            log.d("QR captured")
-            qrLiveData.postValue(it)
-            return
-        }
-        log.d("QR is wrong")
-        messageLiveData.value = "Mã không đúng. Bạn vui\nlòng thử lại lần nữa"
-        isQRChecked = false
     }
 
 }

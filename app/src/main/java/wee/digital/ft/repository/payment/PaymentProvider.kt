@@ -76,9 +76,12 @@ class PaymentProvider : IBase.Payment {
 
                     override fun onSuccess(data: JsonObject) {
                         Log.d("verifyFace", "$data")
-                        val resp = data.parse(FaceResponse::class.java)!!
+                        val resp = data.parse(FaceResponse::class.java)
+                        if (resp == null) {
+                            onFail(1, "", null)
+                            return
+                        }
                         resp.code = ErrCode.SUCCESS
-
                         listener.onSuccess(resp)
                     }
 

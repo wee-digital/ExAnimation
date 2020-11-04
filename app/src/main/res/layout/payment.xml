@@ -13,6 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/Dialog.BottomFragment"
+        android:background="@drawable/drw_dialog_bottom"
         android:paddingStart="@dimen/margin3"
         android:paddingEnd="@dimen/margin3"
         app:layout_constraintBottom_toBottomOf="parent"

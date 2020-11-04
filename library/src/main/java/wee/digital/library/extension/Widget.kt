@@ -7,10 +7,12 @@ import android.content.res.Resources
 import android.graphics.*
 import android.os.Build
 import android.text.Html
+import android.text.InputFilter
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -41,6 +43,24 @@ fun EditText.addEditorActionListener(actionId: Int, block: (String?) -> Unit) {
         }
     })
 }
+
+fun EditText.filterChars(chars : CharArray){
+    val arrayList = arrayListOf<InputFilter>()
+    this.filters?.apply { arrayList.addAll(this) }
+    arrayList.add(InputFilter { source, start, end, _, _, _ ->
+        when {
+            end > start -> for (index in start until end) {
+                if (!String(chars).contains(source[index].toString())) {
+                    return@InputFilter ""
+                }
+            }
+        }
+        return@InputFilter null
+    })
+    this.filters = arrayList.toArray(arrayOfNulls<InputFilter>(arrayList.size))
+    this.inputType = EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+}
+
 
 /**
  * Ex: "Kotlin   Language   Extension"
