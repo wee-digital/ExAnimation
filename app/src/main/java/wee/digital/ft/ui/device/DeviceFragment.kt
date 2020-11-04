@@ -81,7 +81,7 @@ class DeviceFragment : MainDialog() {
                 title = "Đăng ký thiết bị thành công",
                 message = "Xem thông tin các thiết bị đã liên kết trong phần\nquản lý thiết bị tại %s"
                         .format("pos.facepay.vn".bold().color("#378AE1")),
-                button = string(R.string.device_register_finish),
+                button = "Hoàn tất",
                 onClose = {
                     sharedVM.syncDeviceInfo()
                 }
@@ -95,7 +95,10 @@ class DeviceFragment : MainDialog() {
         sharedVM.message.value = MessageArg(
                 title = "Đăng ký thiết bị không\nthành công",
                 message = "Có lỗi phát sinh, bạn vui lòng thử lại lần nữa",
-                button = string(R.string.device_register_fail),
+                button = "Quét lại mã QR",
+                onClose = {
+                    navigate(Main.qr)
+                }
         )
         dismiss()
         navigate(Main.message)

@@ -15,6 +15,7 @@ import wee.digital.ft.camera.MyVideo
 import wee.digital.ft.camera.RealSenseControl
 import wee.digital.ft.data.repository.Shared
 import wee.digital.ft.repository.base.BaseSharedPref
+import wee.digital.ft.repository.network.HttpsTrustManager
 import wee.digital.ft.repository.network.MyApiService
 import wee.digital.ft.repository.network.RestUrl
 import wee.digital.ft.repository.utils.SystemUrl
@@ -36,6 +37,7 @@ class App : Application() {
         app = this
         app.onModulesInject()
         Event.initConsumer()
+        HttpsTrustManager.allowAllSSL()
         baseSharedPref = BaseSharedPref().also {
             // TODO: loi khi config release
             it.init(this)
