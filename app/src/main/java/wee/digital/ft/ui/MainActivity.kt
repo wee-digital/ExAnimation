@@ -5,6 +5,8 @@ import androidx.navigation.NavDirections
 import okhttp3.WebSocket
 import wee.digital.ft.BuildConfig
 import wee.digital.ft.R
+import wee.digital.ft.app.App
+import wee.digital.ft.camera.MyVideo
 import wee.digital.ft.data.repository.Shared
 import wee.digital.ft.repository.dto.SocketResponse
 import wee.digital.ft.repository.dto.TokenResponse
@@ -39,6 +41,7 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         val s = BuildConfig.APPLICATION_ID
+        App.recordVideo = MyVideo(this)
         mainView.onViewInit()
     }
 
