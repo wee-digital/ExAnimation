@@ -120,6 +120,7 @@ object SystemUrl {
     const val BASE_URL_CLIENT_ID = "http://weezi.biz:8481/"
     const val BASE_URL_COLLECT = "http://weezi.biz:8580/"
 
+    //  qc, beta
     var BASE_URL = "https://dev.facepay.vn/v1/"
     var BASE_URL_VIDEO = "https://dev.facepay.vn/"
     var SOCKET_URL = "wss://dev.facepay.vn/ws/transaction?token="
