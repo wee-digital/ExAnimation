@@ -2,18 +2,10 @@
     <!--    <string name="app_name">ExAnimation</string>-->
     <string name="logoRatio">w,480:103</string>
     <string name="paymentWaitingLogoRatio">w,630:236</string>
-
-    <string name="register_failed"><![CDATA[Bạn vui lòng thử lại mã khác. Trường hợp<br/>vẫn còn phát sinh lỗi xin vui lòng liên hệ đến<br/> %s]]></string>
-    <string name="register_success">Xem thông tin các thiết bị đã liên kết trong phần quản lý thiết bị tại %s</string>
     <string name="device_hi">Hi! %s</string>
     <string name="device_term">Bằng việc đăng ký thiết bị, bạn đã đồng ý với %s của Facepay</string>
     <string name="device_policy">Điều khoản sử dụng</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="bg_face_title">Selfie time !%s</string>
-    <string name="device_register_success">Đăng ký thiết bị thành công</string>
-    <string name="device_register_failed">Đăng ký thiết bị không thành công</string>
     <string name="device_register_finish">Hoàn tất</string>
     <string name="device_register_fail">Quét lại mã QR</string>
     <string name="pin_retry_msg">Mã PIN không đúng, bạn còn %s lần thử lại</string>

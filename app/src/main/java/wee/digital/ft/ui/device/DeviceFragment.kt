@@ -29,7 +29,7 @@ class DeviceFragment : MainDialog() {
         deviceEditTextName.addEditorActionListener(EditorInfo.IME_ACTION_DONE) {
             deviceEditTextName.clearFocus()
             hideKeyboard()
-            //onRegisterDevice()
+            onRegisterDevice()
         }
     }
 
@@ -78,10 +78,10 @@ class DeviceFragment : MainDialog() {
         deviceView.hideProgress()
         sharedVM.message.value = MessageArg(
                 icon = R.mipmap.img_checked_flat,
-                title = string(R.string.device_register_success),
-                button = string(R.string.device_register_finish),
-                message = string(R.string.register_success)
+                title = "Đăng ký thiết bị thành công",
+                message = "Xem thông tin các thiết bị đã liên kết trong phần\nquản lý thiết bị tại %s"
                         .format("pos.facepay.vn".bold().color("#378AE1")),
+                button = string(R.string.device_register_finish),
                 onClose = {
                     sharedVM.syncDeviceInfo()
                 }
@@ -93,10 +93,9 @@ class DeviceFragment : MainDialog() {
     private fun onRegisterError() {
         deviceView.hideProgress()
         sharedVM.message.value = MessageArg(
-                title = string(R.string.device_register_failed),
+                title = "Đăng ký thiết bị không\nthành công",
+                message = "Có lỗi phát sinh, bạn vui lòng thử lại lần nữa",
                 button = string(R.string.device_register_fail),
-                message = string(R.string.register_failed)
-                        .format("Hotline: 1900 2323".bold().color("#212121"))
         )
         dismiss()
         navigate(Main.message)

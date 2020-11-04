@@ -255,7 +255,7 @@
     </style>
 
     <style name="Guideline.Header" parent="Guideline.Horizontal">
-        <item name="layout_constraintGuide_percent">0.076</item>
+        <item name="layout_constraintGuide_percent">0.074</item>
     </style>
 
     <style name="Guideline.Face" parent="Guideline.Horizontal">
