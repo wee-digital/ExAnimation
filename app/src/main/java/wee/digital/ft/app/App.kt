@@ -51,7 +51,7 @@ class App : Application() {
 
         var baseSharedPref: BaseSharedPref? = null
 
-        var recordVideo : MyVideo? = null
+       /* var recordVideo : MyVideo? = null*/
     }
 
     /**

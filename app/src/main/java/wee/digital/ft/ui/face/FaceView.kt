@@ -34,7 +34,7 @@ class FaceView(private val v: FaceFragment) :
     override fun onCameraData(colorBitmap: Bitmap?, depthBitmap: ByteArray?, dataCollect: DataCollect?) {
         colorBitmap ?: return
         dataCollect ?: return
-        App.recordVideo?.pushFrame(colorBitmap)
+        /*App.recordVideo?.pushFrame(colorBitmap)*/
         if (hasStream) {
             imageLiveData.postValue(colorBitmap)
         }

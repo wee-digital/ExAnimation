@@ -41,7 +41,7 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         val s = BuildConfig.APPLICATION_ID
-        App.recordVideo = MyVideo(this)
+        /*App.recordVideo = MyVideo(this)*/
         mainView.onViewInit()
     }
 
@@ -163,16 +163,16 @@ class MainActivity : BaseActivity() {
     private fun onPaymentArgChanged(it: PaymentArg?) {
         when(it) {
             null -> {
-                App.recordVideo?.onDoneVideo(object : MyVideo.MyVideoCallBack {
+               /* App.recordVideo?.onDoneVideo(object : MyVideo.MyVideoCallBack {
                     override fun onResult(path: String) {
                         mainVM.pushVideo(path, sharedVM.payment.value.toString())
                     }
-                })
+                })*/
             }
             else -> {
                 sharedVM.clearData()
                 sharedVM.payment.value = it
-                App.recordVideo?.startVideo()
+                /*App.recordVideo?.startVideo()*/
                 navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()
