@@ -47,7 +47,7 @@ class PaymentFragment : MainDialog() {
     private fun onPaymentDenied() {
         sharedVM.apply {
             progress.postValue(null)
-            payment.postValue(null)
+            //payment.postValue(null)
             stopTimeout()
         }
         dismiss()

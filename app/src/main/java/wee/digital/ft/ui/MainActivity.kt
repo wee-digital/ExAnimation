@@ -5,6 +5,8 @@ import androidx.navigation.NavDirections
 import okhttp3.WebSocket
 import wee.digital.ft.BuildConfig
 import wee.digital.ft.R
+import wee.digital.ft.app.App
+import wee.digital.ft.camera.MyVideo
 import wee.digital.ft.data.repository.Shared
 import wee.digital.ft.repository.dto.SocketResponse
 import wee.digital.ft.repository.dto.TokenResponse
@@ -39,6 +41,7 @@ class MainActivity : BaseActivity() {
 
     override fun onViewCreated() {
         val s = BuildConfig.APPLICATION_ID
+        App.recordVideo = MyVideo(this)
         mainView.onViewInit()
     }
 
@@ -158,10 +161,18 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onPaymentArgChanged(it: PaymentArg?) {
-        when {
-            it != null -> {
-                activityVM(SharedVM::class).clearData()
+        when(it) {
+            null -> {
+                App.recordVideo?.onDoneVideo(object : MyVideo.MyVideoCallBack {
+                    override fun onResult(path: String) {
+                        mainVM.pushVideo(path, sharedVM.payment.value.toString())
+                    }
+                })
+            }
+            else -> {
+                sharedVM.clearData()
                 sharedVM.payment.value = it
+                App.recordVideo?.startVideo()
                 navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()
@@ -189,12 +200,14 @@ class MainActivity : BaseActivity() {
     private fun onPaymentTimeout() {
         sharedVM.apply {
             progress.postValue(null)
-            payment.postValue(null)
+            //payment.postValue(null)
+            clearData()
             message.value = MessageArg(
                     title = "Hết thời gian thanh toán",
                     message = "Giao dịch của bạn đã quá thời gian thanh toán. Bạn vui lòng thực hiện lại giao dịch."
             )
             startTimeout(Timeout.PAYMENT_DISMISS) {
+                clearData()
                 navigate(Main.adv) {
                     setLaunchSingleTop()
                 }

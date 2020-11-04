@@ -28,10 +28,6 @@ data class InfoVideoReq(
         @Expose
         var paymentID: String? = "",
 
-        @SerializedName("TransactionID")
-        @Expose
-        var transactionID: String? = "",
-
         @SerializedName("HashedFace")
         @Expose
         var hashedFace: String = ""

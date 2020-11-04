@@ -76,13 +76,13 @@ class DeviceView(private val v: DeviceFragment) {
     }
 
     fun showProgress() {
-        v.deviceViewRegister.show()
-        v.deviceViewProgress.hide()
+        v.deviceViewRegister.hide()
+        v.deviceViewProgress.show()
     }
 
     fun hideProgress() {
-        v.deviceViewRegister.hide()
-        v.deviceViewProgress.show()
+        v.deviceViewRegister.show()
+        v.deviceViewProgress.hide()
     }
 
 }

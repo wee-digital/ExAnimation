@@ -11,6 +11,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import wee.digital.ft.BuildConfig
+import wee.digital.ft.camera.MyVideo
 import wee.digital.ft.camera.RealSenseControl
 import wee.digital.ft.data.repository.Shared
 import wee.digital.ft.repository.base.BaseSharedPref
@@ -36,6 +37,7 @@ class App : Application() {
         app.onModulesInject()
         Event.initConsumer()
         baseSharedPref = BaseSharedPref().also {
+            // TODO: loi khi config release
             it.init(this)
         }
         getBanksJson()
@@ -46,6 +48,8 @@ class App : Application() {
         var realSenseControl: RealSenseControl? = null
 
         var baseSharedPref: BaseSharedPref? = null
+
+        var recordVideo : MyVideo? = null
     }
 
     /**

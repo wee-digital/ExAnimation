@@ -15,7 +15,7 @@ import wee.digital.ft.ui.vm.SharedVM
 fun Fragment.onPaymentCancel() {
     activityVM(SharedVM::class).apply {
         progress.postValue(null)
-        payment.postValue(null)
+        //payment.postValue(null)
         stopTimeout()
     }
     navigateAdv()
@@ -24,7 +24,7 @@ fun Fragment.onPaymentCancel() {
 fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
     activityVM(SharedVM::class).apply {
         progress.postValue(null)
-        payment.postValue(null)
+        //payment.postValue(null)
         message.value = messageArg
         startTimeout(Timeout.PAYMENT_DISMISS) {
             navigateAdv()
