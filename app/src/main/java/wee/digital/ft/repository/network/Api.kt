@@ -29,11 +29,14 @@ class Api {
         val instance: Api by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { Api() }
     }
 
+    private var timeIn = 0L
+
     /**
      * for register device
      */
     @SuppressLint("CheckResult")
     fun postLogin(url: String, data: DeviceInfoStore, listener: ApiCallBack) {
+        timeIn = System.currentTimeMillis()
         EncryptData.instance.encryptRegister(data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -64,9 +67,7 @@ class Api {
                     override fun onSuccess(response: Response<ResponseBody>) {
                         Log.d("dataApi", "$response")
 
-                        val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
-                        val timeSend = response.raw().sentRequestAtMillis().toDouble()
-                        val time = timeReceiver - timeSend
+                        val time : Long = System.currentTimeMillis() - timeIn
 
                         when (response.code()) {
 
@@ -115,7 +116,8 @@ class Api {
 
                     override fun onError(e: Throwable) {
                         Log.d("CallApiLog", "$e")
-                        LogGrafana.instance.postHttp(url, "0", 404, "${e.message}")
+                        val time = System.currentTimeMillis() - timeIn
+                        LogGrafana.instance.postHttp(url, "$time", 404, "${e.message}")
 
                         listener.onFail(ErrCode.API_FAIL, e.message.toString(), null)
                     }
@@ -128,6 +130,7 @@ class Api {
      */
     @SuppressLint("CheckResult")
     fun <T> postApi(url: String, data: T?, header: FacePointData? = null, listener: ApiCallBack) {
+        timeIn = System.currentTimeMillis()
         val strData = if (data != null) Gson().toJson(data) else null
         EncryptData.instance.encryptDataString(data = strData, dataPoint = header)
                 .subscribeOn(Schedulers.io())
@@ -151,6 +154,7 @@ class Api {
      * for api check device exist
      */
     fun postCheckDevice(url: String, listener: ApiCallBack) {
+        timeIn = System.currentTimeMillis()
         EncryptData.instance.encryptDataCheckDevice()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -186,9 +190,7 @@ class Api {
                     override fun onSuccess(response: Response<ResponseBody>) {
                         Log.d("dataApi", "$response")
 
-                        val timeReceiver = response.raw().receivedResponseAtMillis().toDouble()
-                        val timeSend = response.raw().sentRequestAtMillis().toDouble()
-                        val time = timeReceiver - timeSend
+                        val time = System.currentTimeMillis() - timeIn
 
                         Log.d("timeCallApi", "$url - [$time]")
 
@@ -234,7 +236,8 @@ class Api {
 
                     override fun onError(e: Throwable) {
                         Log.d("CallApiLog", "$e")
-                        LogGrafana.instance.postHttp(url, "0", 404, "${e.message}")
+                        val time = System.currentTimeMillis() - timeIn
+                        LogGrafana.instance.postHttp(url, "$time", 404, "${e.message}")
                         listener.onFail(ErrCode.API_FAIL, e.message.toString(), null)
                     }
 
@@ -283,15 +286,10 @@ class Api {
 
                     override fun onSuccess(t: Response<ResponseBody>) {
                         Log.d("callUpLoadVideo", "${t.code()}")
-                        val timeReceiver = t.raw().receivedResponseAtMillis().toDouble()
-                        val timeSend = t.raw().sentRequestAtMillis().toDouble()
-                        val time = timeReceiver - timeSend
-                        LogGrafana.instance.postHttp("postVideo", time.toString(), t.code(), "${t.body()}")
                     }
 
                     override fun onError(e: Throwable) {
                         Log.d("callUpLoadVideo", e.message.toString())
-                        LogGrafana.instance.postHttp("postVideo", "0", ErrCode.API_FAIL, e.message.toString())
                     }
 
                 })

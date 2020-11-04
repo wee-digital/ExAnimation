@@ -1,11 +1,14 @@
 package wee.digital.ft.repository.network
 
+import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.X509TrustManager
 
 class RestUrl(url: String) {
 
@@ -48,7 +51,13 @@ class RestUrl(url: String) {
             val request = requestBuilder.build()
             chain.proceed(request)
         }
-        okHttpClient = httpClient.build()
+        val trustManager = HttpsTrustManager.trustManager as X509TrustManager
+        val sslSocketFactory = HttpsTrustManager.sslContext!!.socketFactory
+        okHttpClient = httpClient
+                .sslSocketFactory(sslSocketFactory, trustManager)
+                .hostnameVerifier(HostnameVerifier { _, _ -> true })
+                .connectionSpecs(listOf(ConnectionSpec.COMPATIBLE_TLS))
+                .build()
     }
 
 
