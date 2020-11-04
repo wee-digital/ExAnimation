@@ -95,13 +95,13 @@ interface SimpleAnimatorListener : Animator.AnimatorListener {
     }
 }
 
-private fun Transition.beginTransitions(layout: ConstraintLayout, index: Int, vararg blocks: ConstraintSet.() -> Unit) {
+private fun Transition.beginTransition(layout: ConstraintLayout, index: Int, vararg blocks: ConstraintSet.() -> Unit) {
     layout?.post {
         this.addListener(object : SimpleTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
-                this@beginTransitions.removeListener(this)
+                this@beginTransition.removeListener(this)
                 if (index < blocks.lastIndex) {
-                    beginTransitions(layout, index + 1, *blocks)
+                    this@beginTransition.beginTransition(layout, index + 1, *blocks)
                 }
             }
         })
@@ -113,8 +113,8 @@ private fun Transition.beginTransitions(layout: ConstraintLayout, index: Int, va
     }
 }
 
-fun Transition.beginTransitions(layout: ConstraintLayout, vararg blocks: ConstraintSet.() -> Unit) {
-    beginTransitions(layout, 0, *blocks)
+fun Transition.beginTransition(layout: ConstraintLayout, vararg blocks: ConstraintSet.() -> Unit) {
+    this@beginTransition.beginTransition(layout, 0, *blocks)
 }
 
 fun Transition.beginTransition(layout: ConstraintLayout, block: ConstraintSet.() -> Unit): Transition {

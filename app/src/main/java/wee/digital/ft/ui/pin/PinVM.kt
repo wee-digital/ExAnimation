@@ -13,6 +13,7 @@ import wee.digital.ft.ui.card.CardItem
 import wee.digital.ft.ui.face.FaceArg
 import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.payment.PaymentArg
+import wee.digital.library.extension.post
 import java.util.concurrent.atomic.AtomicInteger
 
 class PinVM : BaseViewModel() {
@@ -54,22 +55,29 @@ class PinVM : BaseViewModel() {
     }
 
     private fun onPinVerify(req: PinRequest) {
+        if (Config.TESTING) post(2000) {
+            pinVerifySuccess.value = PinArg.testArg
+            return@post
+        }
         PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<PinResponse> {
             override fun onSuccess(response: PinResponse) {
                 pinVerifySuccess.postValue(PinArg(response))
             }
 
             override fun onFailed(code: Int, message: String) {
-                when {
-                    restRetriesAtomic.getAndDecrement() > 1 -> {
-                        pinVerifyRetries.postValue(restRetriesAtomic.get())
-                    }
-                    else -> {
-                        pinVerifyFailed.postValue(MessageArg.wrongPinManyTimes)
-                    }
-                }
+                onPinVerifyFailed(MessageArg.wrongPinManyTimes)
             }
         })
+    }
+    private fun onPinVerifyFailed(messageArg: MessageArg){
+        when {
+            restRetriesAtomic.getAndDecrement() > 1 -> {
+                pinVerifyRetries.postValue(restRetriesAtomic.get())
+            }
+            else -> {
+                pinVerifyFailed.postValue(messageArg)
+            }
+        }
     }
 
     /**

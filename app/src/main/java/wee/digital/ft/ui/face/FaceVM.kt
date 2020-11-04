@@ -14,6 +14,7 @@ import wee.digital.ft.ui.base.BaseViewModel
 import wee.digital.ft.ui.base.EventLiveData
 import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.payment.PaymentArg
+import wee.digital.library.extension.post
 import java.util.concurrent.atomic.AtomicInteger
 
 class FaceVM : BaseViewModel() {
@@ -27,6 +28,10 @@ class FaceVM : BaseViewModel() {
     val retriesLiveData = EventLiveData<Boolean>()
 
     fun verifyFace(bitmap: ByteArray, dataFace: FacePointData, dataColl: DataCollect, paymentArg: PaymentArg?) {
+        if (Config.TESTING) post(2000) {
+            successLiveData.value = FaceArg.testArg
+            return@post
+        }
         paymentArg ?: throw Event.paymentArgError
         val face = Base64.encodeToString(bitmap, Base64.NO_WRAP)
         val req = FaceRequest(face, paymentArg.paymentId, paymentArg.clientIp)

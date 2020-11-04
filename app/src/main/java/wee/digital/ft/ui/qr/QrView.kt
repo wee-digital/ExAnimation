@@ -77,7 +77,7 @@ class QrView : ConstraintLayout, RealSenseControl.Listener {
 
     private fun animateUp() {
         val viewId = qrViewScanAnim.id
-        viewTransition.beginTransitions(qrLayoutAnim, {
+        viewTransition.beginTransition(qrLayoutAnim, {
             clear(viewId, ConstraintSet.TOP)
             connect(viewId, ConstraintSet.BOTTOM, qrLayoutAnim.id, ConstraintSet.TOP)
         }, {
@@ -88,7 +88,7 @@ class QrView : ConstraintLayout, RealSenseControl.Listener {
 
     private fun animateDown() {
         val viewId = qrViewScanAnim.id
-        viewTransition.beginTransitions(qrLayoutAnim, {
+        viewTransition.beginTransition(qrLayoutAnim, {
             clear(viewId, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.TOP, qrLayoutAnim.id, ConstraintSet.BOTTOM)
         }, {

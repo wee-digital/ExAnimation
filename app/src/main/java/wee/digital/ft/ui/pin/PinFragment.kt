@@ -35,9 +35,6 @@ class PinFragment : MainDialog() {
         pinProgressLayout.onItemFilled = {
             onPinCodeFilled(it)
         }
-        if (Config.TESTING) post(2000) {
-            pinVM.pinVerifySuccess.value = PinArg.testArg
-        }
     }
 
     override fun onLiveDataObserve() {
@@ -86,7 +83,7 @@ class PinFragment : MainDialog() {
      */
     private fun onPinCodeFilled(pinCode: String) {
         sharedVM.showProgress(ProgressArg.pay)
-        post(1000) {
+        post(400) {
             pinVM.onPinVerify(
                     pinCode = pinCode,
                     paymentArg = sharedVM.payment.value,

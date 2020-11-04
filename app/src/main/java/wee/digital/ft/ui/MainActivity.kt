@@ -36,7 +36,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onViewCreated() {
-        val s = BuildConfig.APPLICATION_ID
         /*App.recordVideo = MyVideo(this)*/
         mainView.onViewInit()
         if (Config.TESTING) post(2000) {
@@ -138,7 +137,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onDeviceInfoChanged(it: DeviceInfo?) {
-        post(500) {
+        post(400) {
             when {
                 it?.uid.isNullOrEmpty() -> {
                     sharedVM.direction.postValue(Main.connect)

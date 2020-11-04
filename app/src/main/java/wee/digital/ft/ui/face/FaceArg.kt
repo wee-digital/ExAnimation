@@ -11,7 +11,7 @@ class FaceArg {
     }
 
     private constructor(){
-        userIdList = listOf("s")
+        userIdList = listOf("1")
     }
 
     companion object{

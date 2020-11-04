@@ -28,9 +28,6 @@ class FaceFragment : MainFragment() {
             sharedVM.stopTimeout()
             faceVM.verifyFace(bitmap, pointData, dataCollect, sharedVM.payment.value)
         }
-        if (Config.TESTING) post(2000) {
-            faceVM.successLiveData.value = FaceArg.testArg
-        }
     }
 
     override fun onLiveDataObserve() {
