@@ -39,6 +39,7 @@ class DeviceFragment : MainDialog() {
             deviceView.onBindStation(it)
         }
         deviceVM.nameErrorLiveData.observe {
+            deviceView.hideProgress()
             deviceView.onNameError(it)
         }
         deviceVM.successLiveData.observe {
