@@ -3,6 +3,7 @@ package wee.digital.ft.ui.plash
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.ChangeBounds
 import kotlinx.android.synthetic.main.splash.*
+import wee.digital.ft.util.startCamera
 import wee.digital.library.extension.beginTransition
 import wee.digital.library.extension.onEndTransition
 
@@ -55,7 +56,6 @@ class SplashView(private val v: SplashFragment) {
     }
 
     fun onViewInit() {
-
     }
 
 

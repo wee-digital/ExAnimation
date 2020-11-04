@@ -115,7 +115,7 @@ class MainVM : BaseViewModel() {
                 })
     }
 
-    private fun getVideoToPath(path : String) : ByteArray{
+    private fun getVideoToPath(path: String): ByteArray {
         return File(path).readBytes()
     }
 

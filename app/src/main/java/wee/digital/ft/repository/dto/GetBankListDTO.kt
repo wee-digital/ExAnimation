@@ -3,7 +3,7 @@ package wee.digital.ft.repository.dto
 import com.google.gson.Gson
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import wee.digital.ft.data.repository.Shared
+import wee.digital.ft.shared.Shared
 import wee.digital.ft.repository.model.BankAccInfo
 import wee.digital.ft.repository.model.BasicBankAcc
 import wee.digital.ft.repository.utils.ErrCode

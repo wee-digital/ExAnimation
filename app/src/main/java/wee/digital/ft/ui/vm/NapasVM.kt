@@ -1,6 +1,6 @@
 package wee.digital.ft.ui.vm
 
-import wee.digital.ft.data.repository.Shared
+import wee.digital.ft.shared.Shared
 import wee.digital.ft.repository.dto.SocketResponse
 import wee.digital.ft.repository.dto.UpdateCancelPaymentDTOReq
 import wee.digital.ft.repository.dto.UpdatePaymentStatusDTOReq

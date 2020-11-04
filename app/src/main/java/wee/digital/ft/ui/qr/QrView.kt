@@ -52,15 +52,14 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
         }
     }
 
-    fun onProgressChanged(isVisibility: Boolean) {
-        if (isVisibility) {
-            v.qrTextViewHint.gone()
-            v.qrViewProgress.load(R.mipmap.img_progress)
-        } else {
-            v.qrTextViewHint.show()
-            v.qrViewProgress.clear()
-        }
+    fun showProgress() {
+        v.qrTextViewHint.hide()
+        v.qrViewProgress.show()
     }
 
+    fun hideProgress() {
+        v.qrTextViewHint.show()
+        v.qrViewProgress.hide()
+    }
 
 }

@@ -51,13 +51,12 @@
         android:background="@drawable/drw_face"
         android:padding="@dimen/_3sdp"
         android:scaleType="centerCrop"
+        android:src="@color/colorBlack"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/faceGuidelineCameraTop"
-        app:riv_oval="true"
-        tools:src="@mipmap/img_placeholder" />
-
+        app:riv_oval="true" />
 
 
     <androidx.appcompat.widget.AppCompatTextView

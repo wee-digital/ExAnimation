@@ -21,9 +21,12 @@ class PaymentFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         sharedVM.payment.observe {
+            it ?: return@observe
+            sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM)
+            sharedVM.isSplashing = false
             paymentView.onPaymentDataChanged(it)
         }
-        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM)
+
         sharedVM.deviceInfo.observe {
             paymentView.onDeviceInfoChanged(it)
         }
@@ -47,7 +50,6 @@ class PaymentFragment : MainDialog() {
     private fun onPaymentDenied() {
         sharedVM.apply {
             progress.postValue(null)
-            //payment.postValue(null)
             stopTimeout()
         }
         dismiss()

@@ -22,6 +22,8 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class SharedVM : ViewModel() {
 
+    var isSplashing = false
+
     val deviceInfo = MutableLiveData<DeviceInfo?>()
 
     var qrCode = MutableLiveData<JsonObject?>()
@@ -94,5 +96,7 @@ class SharedVM : ViewModel() {
         timeoutSecond.postValue(-1)
         timeoutEnd.value = null
     }
+
+
 
 }

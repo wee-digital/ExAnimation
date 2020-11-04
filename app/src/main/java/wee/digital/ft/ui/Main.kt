@@ -13,20 +13,19 @@ import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.vm.SharedVM
 
 fun Fragment.onPaymentCancel() {
-    activityVM(SharedVM::class).apply {
-        progress.postValue(null)
-        //payment.postValue(null)
-        stopTimeout()
+    (requireActivity() as? MainActivity)?.activityVM(SharedVM::class)?.also {
+        it.progress.postValue(null)
+        it.stopTimeout()
     }
     navigateAdv()
 }
 
 fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
-    activityVM(SharedVM::class).apply {
-        progress.postValue(null)
-        //payment.postValue(null)
-        message.value = messageArg
-        startTimeout(Timeout.PAYMENT_DISMISS) {
+    (requireActivity() as? MainActivity)?.activityVM(SharedVM::class)?.also {
+        it.progress.postValue(null)
+        it.message.value = messageArg
+        it.startTimeout(Timeout.PAYMENT_DISMISS) {
+            it.message.value = null
             navigateAdv()
         }
     }
@@ -34,16 +33,15 @@ fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
         setEnterAnim(R.anim.vertical_reserved_enter)
         setPopEnterAnim(R.anim.vertical_reserved_pop_enter)
     }
-    findNavController().navigate(Main.message, options.build())
+    (requireActivity() as? MainActivity)?.navigate(Main.message, options.build())
 }
-
 
 fun Fragment.navigateAdv() {
     val options = NavOptions.Builder().apply {
         setLaunchSingleTop(true)
         setPopUpTo(R.id.main, false)
     }
-    findNavController().navigate(Main.adv, options.build())
+    (requireActivity() as? MainActivity)?.navigate(Main.adv, options.build())
 }
 
 object Main {

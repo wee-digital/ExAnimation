@@ -4,6 +4,7 @@ import kotlinx.android.synthetic.main.adv.*
 import wee.digital.ft.R
 import wee.digital.ft.ui.MainFragment
 import wee.digital.ft.ui.base.viewModel
+import wee.digital.ft.util.stopCamera
 
 class AdvFragment : MainFragment() {
 
@@ -16,6 +17,7 @@ class AdvFragment : MainFragment() {
     }
 
     override fun onViewCreated() {
+        stopCamera()
         advAdapter.onPageChanged = {
             val i = advViewPager.currentItem
             log.d(i)

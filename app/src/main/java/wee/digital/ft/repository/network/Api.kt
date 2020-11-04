@@ -67,7 +67,7 @@ class Api {
                     override fun onSuccess(response: Response<ResponseBody>) {
                         Log.d("dataApi", "$response")
 
-                        val time : Long = System.currentTimeMillis() - timeIn
+                        val time: Long = System.currentTimeMillis() - timeIn
 
                         when (response.code()) {
 

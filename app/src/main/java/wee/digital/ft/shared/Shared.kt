@@ -1,4 +1,4 @@
-package wee.digital.ft.data.repository
+package wee.digital.ft.shared
 
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonArray

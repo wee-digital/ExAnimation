@@ -29,6 +29,10 @@ interface BaseView {
 
     val nav: NavController
 
+    fun navigate(directions: NavDirections, option: NavOptions) {
+        nav.navigate(directions, option)
+    }
+
     fun navigate(directions: NavDirections, block: (NavOptions.Builder.() -> Unit) = {}) {
         val options = NavOptions.Builder()
                 .setDefaultAnim()

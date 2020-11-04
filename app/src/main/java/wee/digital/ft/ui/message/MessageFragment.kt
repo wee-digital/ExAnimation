@@ -26,7 +26,7 @@ class MessageFragment : MainDialog() {
 
     private fun onBindArg(arg: MessageArg?) {
         if (arg == null) {
-            dismiss()
+            dismissAllowingStateLoss()
             return
         }
         onBindDialogSize(arg.headerGuideline)
@@ -40,7 +40,7 @@ class MessageFragment : MainDialog() {
             messageViewClose.text = arg.button
         }
         messageViewClose.setOnClickListener {
-            dismiss()
+            dismissAllowingStateLoss()
             arg.onClose(this)
         }
     }

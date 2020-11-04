@@ -26,6 +26,7 @@ class CardFragment : MainDialog() {
     override fun onViewCreated() {
         adapter.bind(paymentRecyclerViewCard, 2)
         adapter.itemClick = { model, _ ->
+
             sharedVM.stopTimeout()
             cardVM.postPayRequest(model.accountId, sharedVM.payment.value)
         }
@@ -47,6 +48,7 @@ class CardFragment : MainDialog() {
             onPaymentSuccess()
         }
         cardVM.paymentFailed.observe {
+            dismiss()
             onPaymentFailed(MessageArg.paymentCancel)
         }
     }

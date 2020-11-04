@@ -17,11 +17,14 @@ class DeviceVM : BaseViewModel() {
 
     val failureLiveData = EventLiveData<Boolean>()
 
+    var onRequest: Boolean = false
+
     fun registerDevice(sName: String?, qr: JsonObject?) {
         if (sName?.length ?: 0 < 5) {
             nameErrorLiveData.postValue("Tên thiết bị phải từ 5 đến 20 ký tự")
             return
         }
+
         registerDevice(DeviceInfoStore(
                 qrCode = qr ?: throw Event.qrError,
                 name = sName!!
@@ -29,12 +32,16 @@ class DeviceVM : BaseViewModel() {
     }
 
     private fun registerDevice(deviceInfo: DeviceInfoStore) {
+        if (onRequest) return
+        onRequest = true
         DeviceSystemRepository.ins.register(deviceInfo, object : Api.ClientListener<Any> {
             override fun onSuccess(response: Any) {
+                onRequest = false
                 successLiveData.postValue(true)
             }
 
             override fun onFailed(code: Int, message: String) {
+                onRequest = false
                 failureLiveData.postValue(true)
                 BaseData.ins.resetDeviceInfo()
             }

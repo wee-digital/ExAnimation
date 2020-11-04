@@ -24,9 +24,11 @@ class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
 
     override fun onLiveDataObserve() {
         qrVM.messageLiveData.observe {
+            qrView.hideProgress()
             qrView.onBindMessage(it)
         }
         qrVM.qrLiveData.observe {
+            qrView.hideProgress()
             sharedVM.qrCode.value = it
             dismiss()
             navigate(Main.device)
@@ -45,6 +47,7 @@ class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
      * [ScanQRCode.QRCodeProcessingListener] implement
      */
     override fun onResult(result: String) {
+        qrView.showProgress()
         qrVM.checkQRCode(result)
     }
 

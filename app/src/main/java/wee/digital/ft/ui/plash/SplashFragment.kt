@@ -43,7 +43,6 @@ class SplashFragment : MainFragment() {
                 }
             }
             else -> {
-                startCamera()
                 navigate(Main.payment)
                 splashView.animateOnHasPayment()
             }

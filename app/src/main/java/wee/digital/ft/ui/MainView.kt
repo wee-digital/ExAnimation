@@ -41,7 +41,7 @@ class MainView(val v: MainActivity) {
     }
 
     fun onTimeoutSecondChanged(second: Int) {
-        if (second < 0) {
+        if (second < 1) {
             v.mainTextViewTimeout.text = null
             return
         }
