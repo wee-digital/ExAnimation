@@ -274,7 +274,7 @@ class Api {
     }
 
     private fun postVideo(headers: HashMap<String, Any>, data: VideoRecordReq) {
-        val restApi = RestUrl(SystemUrl.BASE_URL_VIDEO).getClient().create(MyApiService::class.java)
+        val restApi = RestUrl(SystemUrl.VIDEO_URL).getClient().create(MyApiService::class.java)
         restApi.postVideo("v2", headers, data)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())

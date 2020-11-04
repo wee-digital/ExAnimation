@@ -2,8 +2,8 @@ def builds = [:]
 builds.min_sdk = 24
 builds.compile_sdk = 30
 builds.target_sdk = 30
-builds.version_code = 1
-builds.version_name = "1.0.0"
+builds.version_code = 2
+builds.version_name = "1.0.01"
 ext.builds = builds
 
 

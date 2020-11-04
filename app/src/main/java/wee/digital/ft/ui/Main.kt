@@ -18,7 +18,7 @@ fun Fragment.onPaymentCancel() {
             it.progress.postValue(null)
             it.stopTimeout()
         }
-        navigateAdv()
+        Main.mainDirection.postValue(Main.adv)
     }catch (ignore : Exception){
 
     }
@@ -31,7 +31,7 @@ fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
             it.message.value = messageArg
             it.startTimeout(Timeout.PAYMENT_DISMISS) {
                 it.message.value = null
-                navigateAdv()
+                Main.mainDirection.postValue(Main.adv)
             }
         }
         val options = NavOptions.Builder().apply {

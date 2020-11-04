@@ -9,6 +9,7 @@ import wee.digital.ft.camera.ScanQRCode
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainDialog
 import wee.digital.ft.ui.base.viewModel
+import wee.digital.library.extension.SimpleAnimatorListener
 
 class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
 
@@ -26,55 +27,40 @@ class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
     }
 
     private fun animationBot() {
-        val animation = ObjectAnimator.ofFloat(frgQrImgAnimBot, "translationY", 0f, 500f)
-        animation.duration = 1000
+        val animation = ObjectAnimator.ofFloat(qrViewScanAnim, "translationY", 0f, 500f)
+        animation.duration = 1200
         animation.start()
-        animation.addListener(object : Animator.AnimatorListener {
-
+        animation.addListener(object : SimpleAnimatorListener {
             override fun onAnimationEnd(animation: Animator?) {
-                frgQrImgAnimBot?.post { frgQrImgAnimBot.rotationX = 180f }
+                qrViewScanAnim?.post { qrViewScanAnim.rotationX = 0f }
                 animationTop()
             }
-
-            override fun onAnimationStart(animation: Animator?) {}
-
-            override fun onAnimationCancel(animation: Animator?) {}
-
-            override fun onAnimationRepeat(animation: Animator?) {}
-
         })
     }
 
     private fun animationTop() {
-        val animation = ObjectAnimator.ofFloat(frgQrImgAnimBot, "translationY", 500f, 0f)
-        animation.duration = 1000
+        val animation = ObjectAnimator.ofFloat(qrViewScanAnim, "translationY", 500f, 0f)
+        animation.duration = 1200
         animation.start()
-        animation.addListener(object : Animator.AnimatorListener {
-
+        animation.addListener(object : SimpleAnimatorListener {
             override fun onAnimationEnd(animation: Animator?) {
-                frgQrImgAnimBot?.post { frgQrImgAnimBot.rotationX = 0f }
+                qrViewScanAnim?.post { qrViewScanAnim.rotationX = 180f }
                 animationBot()
             }
-
-            override fun onAnimationStart(animation: Animator?) {}
-
-            override fun onAnimationCancel(animation: Animator?) {}
-
-            override fun onAnimationRepeat(animation: Animator?) {}
-
         })
     }
 
     override fun onLiveDataObserve() {
         qrVM.messageLiveData.observe {
-            qrView.hideProgress()
             qrView.onBindMessage(it)
         }
         qrVM.qrLiveData.observe {
-            qrView.hideProgress()
             sharedVM.qrCode.value = it
             dismiss()
             navigate(Main.device)
+        }
+        qrVM.progressLiveData.observe {
+            qrView.onBindProgress(it)
         }
     }
 
@@ -90,7 +76,7 @@ class QrFragment : MainDialog(), ScanQRCode.QRCodeProcessingListener {
      * [ScanQRCode.QRCodeProcessingListener] implement
      */
     override fun onResult(result: String) {
-        qrView.showProgress()
+
         qrVM.checkQRCode(result)
     }
 

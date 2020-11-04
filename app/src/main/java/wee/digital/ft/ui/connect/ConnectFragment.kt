@@ -6,6 +6,7 @@ import wee.digital.ft.R
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainFragment
 import wee.digital.ft.util.observerCameraStream
+import wee.digital.ft.util.startCamera
 import wee.digital.library.extension.addFastClickListener
 import kotlin.system.exitProcess
 
@@ -16,6 +17,7 @@ class ConnectFragment : MainFragment() {
     }
 
     override fun onViewCreated() {
+        startCamera()
         observerCameraStream()
         addClickListener(connectViewScanQR)
         connectViewLogo.addFastClickListener(7) {

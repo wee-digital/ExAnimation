@@ -57,7 +57,7 @@ class LogGrafana {
     fun postNoAccount(valueData: String) {
         if (BaseData.deviceInfo.shopName.isEmpty()) return
         val apiService = getClient().create(MyApiService::class.java)
-        val data = "${SystemUrl.BASE_URL}_${BaseData.deviceInfo.posName}_POS($valueData)"
+        val data = "${SystemUrl.API_URL}_${BaseData.deviceInfo.posName}_POS($valueData)"
         val headers: HashMap<String, String> = HashMap()
         headers["facePOSWebSocket"] = "result_no_face"
         val arrValue = arrayOf("${System.currentTimeMillis()}000000", Gson().toJson(data))

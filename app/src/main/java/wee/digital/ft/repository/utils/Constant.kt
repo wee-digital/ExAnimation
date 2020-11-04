@@ -81,21 +81,6 @@ object Key {
     const val RSA_COLLECTDATA = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4t2A1nc1hQQWNj7q90PyRP1N+gX8ucD+fmGKeqi9cNb7uwSCVvpo/jaIWNVCcK0qAa0x6uJ3mmNWbispyXiJvRlxbeuNEzEpNgHZo8+GS4lWbuaSWxg0kWKc73dlM02Mz89IfWjIQuMlToE+SX9z19nelgQInX+k6uR121x+5/Dj6Z1tuFllE2DFtD1QBwriL2LreLrIkTxewYuIDj1WsdcRPOo5zq1aFi/bMIo33hBn8tRf6QDxWyVtAbtTSxlqUHCJtZvrsdePvQ6etrbA6+KtttSIpxYDeWUwqdcgfxXmsuxHJCofzWPLUld/DbBwmmMyFmC9hsPUNeaesl2AtQIDAQAB"
 }
 
-object URLType {
-    const val DEV = "URL_DEV"
-    const val QC = "URL_QC"
-    const val BETA = "URL_BETA"
-}
-
-object ADVType {
-    const val WEE = "ADV_WEE"
-    const val TCH = "ADV_TCH"
-    const val GS25 = "ADV_GS25"
-    const val SEVEN = "ADV_SEVEN"
-    const val TOUS = "ADV_TOUS"
-    const val FIREBASE = "ADV_FIREBASE"
-}
-
 object PaymentStatusCode {
     const val USER_REJECTED = 7
     const val OVER_LIMIT = 9
@@ -112,7 +97,7 @@ object CancelPaymentCode {
 
 object SocketEvent {
     const val HAS_PAYMENT = "POSPR"
-    const val DIMISS_PAYMENT = "POSCR"
+    const val DISMISS_PAYMENT = "POSCR"
     const val DELETE_CACHE = "POSD"
 }
 
@@ -121,15 +106,17 @@ object SystemUrl {
     const val BASE_URL_COLLECT = "http://weezi.biz:8580/"
 
     //  qc, beta
-    var BASE_URL = "https://qc.facepay.vn/v1/"
-    var BASE_URL_VIDEO = "https://qc.facepay.vn/"
-    var SOCKET_URL = "wss://qc.facepay.vn/ws/transaction?token="
-    var AVATAR_URL = "${BASE_URL}get/thumbnail?id="
+    private const val DOMAIN = "dev.facepay.vn"
+    var API_URL = "https://${DOMAIN}/v1/"
+    var VIDEO_URL = "https://${DOMAIN}/"
+    var SOCKET_URL = "wss://${DOMAIN}/ws/transaction?token="
+
+    var AVATAR_URL = "${API_URL}get/thumbnail?id="
     var LOGO_SHOP = "https://dev.facepay.vn/v1/shop/avatar?id="
 
-    var URL_BANK_LOGO_WHITE = "https://dev.facepay.vn/v1/images/bank_logo_white/3.0x/"
-    var URL_BANK_IC_WHITE = "https://dev.facepay.vn/v1/images/bank_iconic_white/"
-    var URL_GET_BANKS = "https://dev.facepay.vn/v1/resources/"
+    var URL_BANK_LOGO_WHITE = "https://${DOMAIN}/v1/images/bank_logo_white/3.0x/"
+    var URL_BANK_IC_WHITE = "https://${DOMAIN}/v1/images/bank_iconic_white/"
+    var URL_GET_BANKS = "https://${DOMAIN}/v1/resources/"
 
     // STB, TPB, MSB
 

@@ -55,18 +55,15 @@ class QrView(private val v: QrFragment) : RealSenseControl.Listener {
         }
     }
 
-    fun showProgress() {
+    fun onBindProgress(isShow: Boolean) {
         v.view?.post {
-            v.qrTextViewHint?.hide()
-            v.qrViewProgress?.show()
-        }
-
-    }
-
-    fun hideProgress() {
-        v.view?.post {
-            v.qrTextViewHint?.show()
-            v.qrViewProgress?.hide()
+            if (isShow) {
+                v.qrTextViewHint?.hide()
+                v.qrViewProgress?.show()
+            } else {
+                v.qrTextViewHint?.show()
+                v.qrViewProgress?.hide()
+            }
         }
     }
 

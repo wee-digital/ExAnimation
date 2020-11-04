@@ -31,7 +31,7 @@ class RestClient {
         if (retrofit == null) initOkHttp()
 
         retrofit = Retrofit.Builder()
-                .baseUrl(SystemUrl.BASE_URL)
+                .baseUrl(SystemUrl.API_URL)
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

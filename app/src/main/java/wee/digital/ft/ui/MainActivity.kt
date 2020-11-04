@@ -119,7 +119,7 @@ class MainActivity : BaseActivity() {
             SocketEvent.HAS_PAYMENT -> {
                 napasVM.getNapasClient(it)
             }
-            SocketEvent.DIMISS_PAYMENT -> {
+            SocketEvent.DISMISS_PAYMENT -> {
                 val calledFacePay = Shared.calledFacePay.value ?: false
                 val paying = Shared.paymentProcessing
                 val code = when {
