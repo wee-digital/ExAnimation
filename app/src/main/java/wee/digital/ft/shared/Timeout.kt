@@ -8,4 +8,5 @@ object Timeout {
     const val FACE_VERIFY = 15 + EXTRA
     const val PIN_VERIFY = 10 + EXTRA
     const val CARD_SELECT = 10 + EXTRA
+    const val OTP = 20 + EXTRA
 }

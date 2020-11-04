@@ -1,8 +1,11 @@
 package wee.digital.ft.ui.pin
 
+import android.util.Base64
 import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.ft.R
+import wee.digital.ft.repository.dto.PaymentResponse
+import wee.digital.ft.shared.Config
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.*
 import wee.digital.ft.ui.base.viewModel
@@ -30,6 +33,9 @@ class PinFragment : MainDialog() {
         pinProgressLayout.onItemFilled = {
             onPinCodeFilled(it)
         }
+        if (Config.TESTING) post(2000) {
+            pinVM.pinVerifySuccess.value = PinArg.testArg
+        }
     }
 
     override fun onLiveDataObserve() {
@@ -38,18 +44,18 @@ class PinFragment : MainDialog() {
             onPinVerifySuccess(it)
         }
         pinVM.pinVerifyFailed.observe {
-            dismiss()
+            dismissAllowingStateLoss()
             onPaymentFailed(it)
         }
         pinVM.pinVerifyRetries.observe {
             onRestRetriesPinChanged(it)
         }
         pinVM.payRequestSuccess.observe {
-            dismiss()
-            sharedVM.progress.postValue(ProgressArg.paid)
+            onPayRequestSuccess(it)
         }
         pinVM.payRequestError.observe {
-            onPaymentFailed(MessageArg.paymentCancel)
+            dismissAllowingStateLoss()
+            onPaymentFailed(it)
         }
         pinVM.payRequestCardError.observe {
             onPaymentCardError()
@@ -62,19 +68,6 @@ class PinFragment : MainDialog() {
     private fun onPaymentCardError() {
         sharedVM.cardError.postValue("Lỗi thanh toán. Bạn vui lòng chọn thẻ khác")
         onFetchCardList()
-    }
-
-    private fun onPinVerifySuccess(it: PinArg) {
-        sharedVM.pin.value = it
-        when {
-            it.hasDefaultAccount -> {
-                pinVM.onPayRequest(sharedVM.payment.value)
-            }
-            else -> {
-                sharedVM.cardError.value = null
-                onFetchCardList()
-            }
-        }
     }
 
     override fun onViewClick(v: View?) {
@@ -108,7 +101,7 @@ class PinFragment : MainDialog() {
     }
 
     private fun onOtpRequired(otpForm: String) {
-        dismiss()
+        dismissAllowingStateLoss()
         sharedVM.otpForm.value = otpForm
         navigate(Main.otp)
     }
@@ -119,8 +112,41 @@ class PinFragment : MainDialog() {
         pinVM.cardList.observe {
             sharedVM.progress.value = null
             sharedVM.cardList.value = it
-            dismiss()
+            dismissAllowingStateLoss()
             navigate(Main.card)
+        }
+    }
+
+    private fun onPinVerifySuccess(it: PinArg) {
+        sharedVM.pin.value = it
+        when {
+            it.haveOTP && !it.otpForm.isNullOrEmpty() -> {
+                val s = String(Base64.decode(it.otpForm, Base64.NO_WRAP))
+                pinVM.otpForm.postValue(s)
+            }
+            it.hasDefaultAccount -> {
+                pinVM.onPayRequest(sharedVM.payment.value)
+            }
+            else -> {
+                sharedVM.cardError.value = null
+                onFetchCardList()
+            }
+        }
+    }
+
+    private fun onPayRequestSuccess(it: PaymentResponse) {
+        when {
+            it.haveOTP && !it.otpForm.isNullOrEmpty() -> {
+                val s = String(Base64.decode(it.otpForm, Base64.NO_WRAP))
+                pinVM.otpForm.postValue(s)
+            }
+            it.code == 0 -> {
+                dismissAllowingStateLoss()
+                sharedVM.progress.postValue(ProgressArg.paid)
+            }
+            else -> {
+                pinVM.payRequestError.postValue(MessageArg.fromCode(it.code))
+            }
         }
     }
 

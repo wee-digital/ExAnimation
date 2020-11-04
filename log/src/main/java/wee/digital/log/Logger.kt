@@ -13,7 +13,7 @@ open class Logger {
 
     constructor(string: String, enable: Boolean = BuildConfig.DEBUG) {
         this.tag = if (string.length > 23) string.substring(0, 22) else string
-        this.enable = enable
+        this.enable = true
     }
 
     constructor(cls: KClass<*>, enable: Boolean = BuildConfig.DEBUG) : this(cls.java.simpleName, enable)

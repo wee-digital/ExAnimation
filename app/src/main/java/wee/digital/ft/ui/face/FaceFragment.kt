@@ -1,6 +1,7 @@
 package wee.digital.ft.ui.face
 
 import wee.digital.ft.R
+import wee.digital.ft.shared.Config
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainFragment
@@ -8,6 +9,9 @@ import wee.digital.ft.ui.base.viewModel
 import wee.digital.ft.ui.confirm.ConfirmArg
 import wee.digital.ft.ui.onPaymentCancel
 import wee.digital.ft.ui.onPaymentFailed
+import wee.digital.ft.ui.payment.PaymentArg
+import wee.digital.ft.ui.progress.ProgressArg
+import wee.digital.library.extension.post
 
 class FaceFragment : MainFragment() {
 
@@ -27,6 +31,9 @@ class FaceFragment : MainFragment() {
         faceView.onFaceEligible = { bitmap, pointData, dataCollect ->
             sharedVM.stopTimeout()
             faceVM.verifyFace(bitmap, pointData, dataCollect, sharedVM.payment.value)
+        }
+        if (Config.TESTING) post(2000) {
+            faceVM.successLiveData.value = FaceArg.testArg
         }
     }
 
@@ -61,7 +68,7 @@ class FaceFragment : MainFragment() {
         sharedVM.confirm.value = ConfirmArg(
                 headerGuideline = R.id.guidelineFace,
                 title = "Tài khoản không tồn tại",
-                message = "Bạn vui lòng đăng ký tài khoản Facepay trước khi thực hiện thanh toán",
+                message = "Bạn vui lòng đăng ký tài khoản Facepay\ntrước khi thực hiện thanh toán",
                 buttonAccept = "Thử lại",
                 onAccept = {
                     faceView.animateOnStartFaceReg()

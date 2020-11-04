@@ -40,8 +40,8 @@ class FaceVM : BaseViewModel() {
                 when (retryCount.getAndDecrement()) {
                     0 -> {
                         val message = MessageArg(
-                                title = "Nhận diện khuôn mặt không thành công",
-                                message = "Bạn đã quá số lần nhận diện khuôn mặt cho phép, giao dịch không thể thực hiện."
+                                title = "Giao dịch đã hủy bỏ",
+                                message = "Yêu cầu thanh toán của bạn đã bị huỷ. Vui lòng\nliên hệ với nhân viên để biết thêm thông tin"
                         )
                         failureLiveData.postValue(message)
                     }

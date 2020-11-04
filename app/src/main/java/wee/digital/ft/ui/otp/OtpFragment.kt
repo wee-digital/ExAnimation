@@ -3,11 +3,14 @@ package wee.digital.ft.ui.otp
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.UrlQuerySanitizer
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.ft.R
+import wee.digital.ft.shared.Config
 import wee.digital.ft.shared.Event
+import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainDialog
 import wee.digital.ft.ui.base.viewModel
@@ -15,6 +18,8 @@ import wee.digital.ft.ui.card.CardItem
 import wee.digital.ft.ui.confirm.ConfirmArg
 import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.onPaymentCancel
+import wee.digital.ft.ui.onPaymentFailed
+import wee.digital.ft.ui.progress.ProgressArg
 import wee.digital.library.extension.gone
 import wee.digital.library.extension.post
 
@@ -30,9 +35,15 @@ class OtpFragment : MainDialog() {
 
     override fun onViewCreated() {
         otpView.onViewInit()
+        if (Config.TESTING) post(2000) {
+            onTransactionSuccess()
+           //otpVM.onTransactionFailed(Napas.INSUFFICIENT_FUNDS)
+        }
     }
 
     override fun onLiveDataObserve() {
+        addClickListener(otpViewClose)
+        sharedVM.startTimeout(Timeout.OTP)
         sharedVM.otpForm.observe {
             it ?: throw Event.otpFormError
             loadOtpWebView(it)
@@ -45,6 +56,14 @@ class OtpFragment : MainDialog() {
         }
         otpVM.cardList.observe {
             onCardListChanged(it)
+        }
+    }
+
+    override fun onViewClick(v: View?) {
+        when (v) {
+            otpViewClose -> {
+                onPaymentCancel()
+            }
         }
     }
 
@@ -64,31 +83,39 @@ class OtpFragment : MainDialog() {
     }
 
     private fun onTransactionSuccess() {
-        dismiss()
-        navigate(Main.progress)
+        dismissAllowingStateLoss()
+        val arg = ProgressArg.paid.also {
+        }
+        sharedVM.progress.postValue(arg)
     }
 
-    private fun onRetryMessage(it: ConfirmArg) {
+    private fun onRetryMessage(it: ConfirmArg?) {
+        it ?: return
+        dismissAllowingStateLoss()
+        sharedVM.startTimeout(Timeout.OTP)
         sharedVM.confirm.value = it.also {
             it.buttonDeny = "Hủy bỏ giao dịch"
             it.onDeny = { it.onPaymentCancel() }
             it.buttonAccept = "Thử lại"
-            it.onAccept = { otpVM.fetchCardList(sharedVM.pin.value?.userId) }
+            it.onAccept = {
+                sharedVM.stopTimeout()
+                otpVM.fetchCardList(sharedVM.pin.value?.userId)
+            }
         }
-        dismiss()
         navigate(Main.confirm)
     }
 
     private fun onErrorMessage(it: MessageArg?) {
         it ?: return
-        //messageVM.arg = it
+        dismissAllowingStateLoss()
+        onPaymentFailed(it)
     }
 
     private fun onCardListChanged(it: List<CardItem>?) {
         it ?: return
         sharedVM.progress.postValue(null)
         sharedVM.cardList.value = it
-        dismiss()
+        dismissAllowingStateLoss()
         navigate(Main.card)
     }
 
@@ -96,11 +123,11 @@ class OtpFragment : MainDialog() {
 
         override fun onPageCommitVisible(view: WebView?, url: String?) {
             super.onPageCommitVisible(view, url)
-            post(3000) {
-                if (otpImageViewProgress.isShown) {
-                    otpImageViewProgress.gone()
+            this@OtpFragment.view?.postDelayed({
+                if (otpImageViewProgress?.isShown == true) {
+                    otpImageViewProgress?.gone()
                 }
-            }
+            }, 2000)
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -111,9 +138,11 @@ class OtpFragment : MainDialog() {
                 when (listUrl[0]) {
                     "${Napas.STATIC_URL}/payment-fail?reason" -> {
                         val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
+                        sharedVM.stopTimeout()
                         otpVM.onTransactionFailed(reason)
                     }
                     "${Napas.STATIC_URL}/payment-success?facepayRef" -> {
+                        sharedVM.stopTimeout()
                         onTransactionSuccess()
                     }
                 }

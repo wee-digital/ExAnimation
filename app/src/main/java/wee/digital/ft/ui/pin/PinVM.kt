@@ -25,7 +25,7 @@ class PinVM : BaseViewModel() {
 
     val pinVerifyRetries = EventLiveData<Int>()
 
-    val payRequestSuccess = EventLiveData<Boolean>()
+    val payRequestSuccess = EventLiveData<PaymentResponse>()
 
     val payRequestError = EventLiveData<MessageArg>()
 
@@ -88,28 +88,16 @@ class PinVM : BaseViewModel() {
         )
         PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentResponse> {
             override fun onSuccess(response: PaymentResponse) {
-                onPayRequestSuccess(response)
+               payRequestSuccess.postValue(response)
             }
 
             override fun onFailed(code: Int, message: String) {
+                //code 29
                 payRequestError.postValue(MessageArg.fromCode(code))
             }
         })
     }
 
-    private fun onPayRequestSuccess(response: PaymentResponse) {
-        when {
-            response.code == 0 -> {
-                payRequestSuccess.postValue(true)
-            }
-            response.haveOTP && !response.formOtp.isNullOrEmpty() -> {
-                otpForm.postValue(response.formOtp)
-            }
-            else -> {
-                payRequestError.postValue(MessageArg.fromCode(response.code))
-            }
-        }
-    }
 
     fun fetchCardList(userId: String?) {
         val body = GetBankAccListDTOReq(

@@ -3,11 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MatchParent">
+    style="@style/MatchParent"
+    tools:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHeader"
         style="@style/Guideline.Header" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineFace"
+        style="@style/Guideline.Face" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/otpViewFragment"
@@ -15,19 +20,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHeader">
+        app:layout_constraintTop_toTopOf="@+id/guidelineFace">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/otpTextViewTitle"
             style="@style/Dialog.Title"
             android:text="Verify OTP"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/otpViewBack"
-            style="@style/Dialog.TitleIcon"
-            android:src="@drawable/ic_arrow_left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

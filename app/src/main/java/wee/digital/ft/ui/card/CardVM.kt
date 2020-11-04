@@ -31,8 +31,8 @@ class CardVM : BaseViewModel() {
                     response.code == 0 -> {
                         paymentSuccess.postValue(true)
                     }
-                    response.haveOTP && !response.formOtp.isNullOrEmpty() -> {
-                        otpFormLiveData.postValue(response.formOtp)
+                    response.haveOTP && !response.otpForm.isNullOrEmpty() -> {
+                        otpFormLiveData.postValue(response.otpForm)
                     }
                     else -> {
                         paymentFailed.postValue(MessageArg.fromCode(response.code))

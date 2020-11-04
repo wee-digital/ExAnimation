@@ -18,4 +18,15 @@ class PaymentArg {
         timeout = socket.timeOut
     }
 
+    private constructor() {
+        clientIp = "as"
+        paymentId = "aa"
+        amount = "10000"
+        timeout = 10
+    }
+
+    companion object {
+        val testArg = PaymentArg()
+    }
+
 }

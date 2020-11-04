@@ -8,11 +8,15 @@
     tools:background="@color/colorDialogBackground">
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHeader"
+        style="@style/Guideline.Header" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineFace"
         style="@style/Guideline.Face" />
-
+    s
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/progressViewContent"
         style="@style/Dialog.BottomFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

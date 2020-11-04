@@ -97,7 +97,7 @@ data class PaymentResponse(
         // [haveOTP] = true
         @SerializedName("Form")
         @Expose
-        var formOtp: String = ""
+        var otpForm: String = ""
 ) {
     fun getFacePayInfo(): FacePayInfo {
         return FacePayInfo(

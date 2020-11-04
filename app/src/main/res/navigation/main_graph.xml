@@ -130,7 +130,7 @@
     <action
         android:id="@+id/action_global_faceFragment"
         app:destination="@id/faceFragment" />
-    <fragment
+    <dialog
         android:id="@+id/otpFragment"
         android:name="wee.digital.ft.ui.otp.OtpFragment"
         android:label="OtpFragment"

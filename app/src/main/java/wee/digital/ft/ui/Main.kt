@@ -13,27 +13,35 @@ import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.vm.SharedVM
 
 fun Fragment.onPaymentCancel() {
-    (requireActivity() as? MainActivity)?.activityVM(SharedVM::class)?.also {
-        it.progress.postValue(null)
-        it.stopTimeout()
+    try {
+        (requireActivity() as? MainActivity)?.activityVM(SharedVM::class)?.also {
+            it.progress.postValue(null)
+            it.stopTimeout()
+        }
+        navigateAdv()
+    }catch (ignore : Exception){
+
     }
-    navigateAdv()
 }
 
 fun Fragment.onPaymentFailed(messageArg: MessageArg?) {
-    (requireActivity() as? MainActivity)?.activityVM(SharedVM::class)?.also {
-        it.progress.postValue(null)
-        it.message.value = messageArg
-        it.startTimeout(Timeout.PAYMENT_DISMISS) {
-            it.message.value = null
-            navigateAdv()
+    try {
+        (requireActivity() as? MainActivity)?.activityVM(SharedVM::class)?.also {
+            it.progress.postValue(null)
+            it.message.value = messageArg
+            it.startTimeout(Timeout.PAYMENT_DISMISS) {
+                it.message.value = null
+                navigateAdv()
+            }
         }
+        val options = NavOptions.Builder().apply {
+            setEnterAnim(R.anim.vertical_reserved_enter)
+            setPopEnterAnim(R.anim.vertical_reserved_pop_enter)
+        }
+        (requireActivity() as? MainActivity)?.navigate(Main.message, options.build())
+    }catch (ignore : Exception){
+
     }
-    val options = NavOptions.Builder().apply {
-        setEnterAnim(R.anim.vertical_reserved_enter)
-        setPopEnterAnim(R.anim.vertical_reserved_pop_enter)
-    }
-    (requireActivity() as? MainActivity)?.navigate(Main.message, options.build())
 }
 
 fun Fragment.navigateAdv() {

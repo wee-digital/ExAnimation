@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "wee.digital.ft.dev",
+  "applicationId": "wee.digital.ft",
   "variantName": "processDevReleaseResources",
   "elements": [
     {

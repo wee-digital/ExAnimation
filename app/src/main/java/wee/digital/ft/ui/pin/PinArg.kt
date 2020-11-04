@@ -16,4 +16,15 @@ class PinArg {
         userId = response.userId
     }
 
+    private constructor() {
+        haveOTP = true
+        otpForm = "asas"
+        hasDefaultAccount = true
+        userId = "s"
+    }
+
+    companion object {
+        val testArg = PinArg()
+    }
+
 }

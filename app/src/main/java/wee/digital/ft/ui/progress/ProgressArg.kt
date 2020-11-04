@@ -3,6 +3,7 @@ package wee.digital.ft.ui.progress
 import wee.digital.ft.R
 
 data class ProgressArg(
+        var headerGuideline: Int = R.id.guidelineFace,
         var image: Int,
         var title: String,
         var message: String

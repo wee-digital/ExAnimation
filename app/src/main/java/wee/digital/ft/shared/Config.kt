@@ -5,11 +5,13 @@ object Config {
 
     const val FACE_RETRY_COUNT = 1
 
-    const val PIN_RETRY_COUNT = 5
+    const val PIN_RETRY_COUNT = 3
 
     var VIEW_ENABLE = true
 
     var VM_ENABLE = true
+
+    var TESTING = false
 
     val DEVICE_NAME_FILTER = charArrayOf(
             'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M',

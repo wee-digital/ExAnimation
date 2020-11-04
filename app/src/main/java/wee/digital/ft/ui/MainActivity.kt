@@ -5,13 +5,14 @@ import androidx.navigation.NavDirections
 import okhttp3.WebSocket
 import wee.digital.ft.BuildConfig
 import wee.digital.ft.R
-import wee.digital.ft.shared.Shared
 import wee.digital.ft.repository.dto.SocketResponse
 import wee.digital.ft.repository.dto.TokenResponse
 import wee.digital.ft.repository.model.DeviceInfo
 import wee.digital.ft.repository.utils.CancelPaymentCode
 import wee.digital.ft.repository.utils.PaymentStatusCode
 import wee.digital.ft.repository.utils.SocketEvent
+import wee.digital.ft.shared.Config
+import wee.digital.ft.shared.Shared
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.base.BaseActivity
 import wee.digital.ft.ui.base.activityVM
@@ -43,28 +44,27 @@ class MainActivity : BaseActivity() {
         val s = BuildConfig.APPLICATION_ID
         /*App.recordVideo = MyVideo(this)*/
         mainView.onViewInit()
+        if (Config.TESTING) post(2000) {
+            napasVM.paymentLiveData.value = PaymentArg.testArg
+        }
     }
 
     override fun onLiveDataObserve() {
-
         mainVM.rootDirection.observe {
             onRootDirectionChanged(it)
         }
         mainVM.tokenResponse.observe {
             onTokenResponseChanged(it)
         }
-
         socketVM.webSocketLiveData.observe {
             onWebSocketChanged(it)
         }
         socketVM.responseLiveData.observe {
             onSocketResponseChanged(it)
         }
-
         napasVM.paymentLiveData.observe {
             onPaymentArgChanged(it)
         }
-
         sharedVM.syncDeviceInfo()
         sharedVM.progress.observe {
             onProgressArgChanged(it)
@@ -144,7 +144,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onDeviceInfoChanged(it: DeviceInfo?) {
-        post(500){
+        post(500) {
             when {
                 it?.uid.isNullOrEmpty() -> {
                     navigate(Main.connect) {
