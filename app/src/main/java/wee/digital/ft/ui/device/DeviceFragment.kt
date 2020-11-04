@@ -97,7 +97,7 @@ class DeviceFragment : MainDialog() {
                 message = "Có lỗi phát sinh, bạn vui lòng thử lại lần nữa",
                 button = "Quét lại mã QR",
                 onClose = {
-                    navigate(Main.qr)
+                    it.navigate(Main.qr)
                 }
         )
         dismiss()

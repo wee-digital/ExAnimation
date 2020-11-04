@@ -6,7 +6,6 @@
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/textSize</item>
         <item name="android:fontFamily">@font/inter_regular</item>
-        <item name="android:text">TextView</item>
     </style>
 
     <style name="TextView2" parent="TextView">
@@ -255,7 +254,7 @@
     </style>
 
     <style name="Guideline.Header" parent="Guideline.Horizontal">
-        <item name="layout_constraintGuide_percent">0.074</item>
+        <item name="layout_constraintGuide_percent">0.06</item>
     </style>
 
     <style name="Guideline.Face" parent="Guideline.Horizontal">
