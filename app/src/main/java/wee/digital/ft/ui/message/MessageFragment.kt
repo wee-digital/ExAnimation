@@ -17,12 +17,11 @@ class MessageFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         sharedVM.message.observe {
-            it?.also {
+            if (it != null) {
                 messageView.onBindArg(it)
-                return@observe
+            } else {
+                dismissAllowingStateLoss()
             }
-            dismissAllowingStateLoss()
-            sharedVM.onPaymentCancel()
         }
     }
 

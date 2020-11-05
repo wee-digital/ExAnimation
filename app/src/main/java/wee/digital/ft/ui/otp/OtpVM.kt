@@ -13,29 +13,20 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class OtpVM : BaseViewModel() {
 
-    private val retryCount = AtomicInteger(1)
-
     val cardList = EventLiveData<List<CardItem>>()
-
-    val retryMessageLiveData = EventLiveData<MessageArg>()
 
     val errorMessageLiveData = EventLiveData<MessageArg>()
 
-    fun onTransactionFailed(data: String) {
-        val liveData = if (retryCount.getAndDecrement() > 0) {
-            retryMessageLiveData
-        } else {
-            errorMessageLiveData
-        }
+    fun onTransactionFailed(data: String? = null) {
         when (data) {
             Napas.INSUFFICIENT_FUNDS -> {
-                liveData.postValue(MessageArg.insufficient)
+                errorMessageLiveData.postValue(MessageArg.insufficient)
             }
             Napas.BELOW_LIMIT, Napas.OUT_OF_LIMIT_BANK -> {
-                liveData.postValue(MessageArg.paymentLimitError)
+                errorMessageLiveData.postValue(MessageArg.paymentLimitError)
             }
             else -> {
-                liveData.postValue(MessageArg.paymentError)
+                errorMessageLiveData.postValue(MessageArg.paymentError)
             }
         }
     }
@@ -47,11 +38,12 @@ class OtpVM : BaseViewModel() {
         )
         PaymentRepository.ins.getBankAccList(body, object : Api.ClientListener<CardListResponse> {
             override fun onSuccess(response: CardListResponse) {
-                cardList.postValue(CardItem.getList(response))
+                val cards = CardItem.getList(response)
+                cardList.postValue(cards)
             }
 
             override fun onFailed(code: Int, message: String) {
-                cardList.postValue(null)
+                errorMessageLiveData.postValue(MessageArg.paymentError)
             }
 
         })

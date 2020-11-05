@@ -43,21 +43,21 @@ class FaceVM : BaseViewModel() {
                         successLiveData.postValue(FaceArg(response))
                     }
                     else -> {
-                        onVerifyFailed(MessageArg.faceNotExistedError)
+                        onVerifyFailed()
                     }
                 }
             }
 
             override fun onFailed(code: Int, message: String) {
-                onVerifyFailed(MessageArg.systemError)
+                onVerifyFailed()
             }
         })
     }
 
-    fun onVerifyFailed(messageArg: MessageArg) {
+    fun onVerifyFailed() {
         when (retryCount.getAndDecrement()) {
             0 -> {
-                failureLiveData.postValue(messageArg)
+                failureLiveData.postValue(MessageArg.faceNotExistedError)
             }
             else -> {
                 retriesLiveData.postValue(true)

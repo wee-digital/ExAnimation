@@ -2,14 +2,15 @@ package wee.digital.ft.ui.message
 
 import wee.digital.ft.R
 import wee.digital.ft.repository.utils.ErrCode
-import wee.digital.library.extension.bold
-import wee.digital.library.extension.color
+import wee.digital.ft.shared.Shared
+import wee.digital.ft.shared.Timeout
 
 open class MessageArg {
 
     var headerGuideline: Int = R.id.guidelineHeader
     var icon: Int = R.mipmap.img_x_mark_flat
     var title: String? = null
+    var timeout: Int = Timeout.ALERT_DIALOG
     var message: String? = null
     var buttonClose: String? = null
     var onClose: (MessageFragment) -> Unit = {}
@@ -28,22 +29,22 @@ open class MessageArg {
 
         val faceNotExistedError = MessageArg().apply {
             title = "Bạn chưa đăng ký tài khoản Facepay"
-            message = "Bạn vui lòng thử lại hoặc tải ứng dụng${("Facepay".bold().color("#3082D8"))}\nđể đăng ký tài khoản"
+            message = "Bạn vui lòng thử lại hoặc tải ứng dụng ${Shared.facePayText}<br/>để đăng ký tài khoản"
         }
 
         val wrongPinManyTimes = MessageArg().apply {
             title = "Sai mã PIN"
-            message = "Bạn đã sai mã PIN quá nhiều lần,\nvui lòng kiểm tra lại mã PIN của bạn"
+            message = "Bạn đã sai mã PIN quá nhiều lần,<br/>vui lòng kiểm tra lại mã PIN của bạn"
         }
 
         val systemError = MessageArg().apply {
             title = "Có lỗi xảy ra"
-            message = "Bạn vui lòng thử lại hoặc liên hệ\nnhân viên để được hỗ trợ"
+            message = "Bạn vui lòng thử lại hoặc liên hệ<br/>nhân viên để được hỗ trợ"
         }
 
         val paymentError = MessageArg().apply {
             title = "Thanh toán không thành công"
-            message = "Bạn vui lòng kiểm tra thông tin thẻ thanh toán\nhoặc liên hệ nhân viên để được hỗ trợ"
+            message = "Bạn vui lòng kiểm tra thông tin thẻ thanh toán<br/>hoặc liên hệ nhân viên để được hỗ trợ"
         }
 
         val connectionError = MessageArg().apply {
@@ -53,22 +54,22 @@ open class MessageArg {
 
         val accountSuspendedError = MessageArg().apply {
             title = "Tài khoản của bạn đã bị khóa"
-            message = "Tài khoản Facepay của bạn tạm thời không thể thanh toán, bạn vui lòng kiểm tra lại"
+            message = "Tài khoản ${Shared.facePayText} của bạn tạm thời không thể thanh toán, bạn vui lòng kiểm tra lại"
         }
 
         val facepayDisabledError = MessageArg().apply {
             title = "Bạn đang tắt tính năng thanh toán"
-            message = "Bạn vui lòng mở lại tính năng thanh toán\ntrong tài khoản Facepay"
+            message = "Bạn vui lòng mở lại tính năng thanh toán<br/>trong tài khoản ${Shared.facePayText}"
         }
 
         val noBankAccountError = MessageArg().apply {
             title = "Bạn chưa liên kết ngân hàng"
-            message = "Bạn vui lòng liên kết tài khoản ngân hàng\nđể thanh toán Facepay"
+            message = "Bạn vui lòng liên kết tài khoản ngân hàng<br/>để thanh toán ${Shared.facePayText}"
         }
 
         val paymentLimitError = MessageArg().apply {
             title = "Vượt quá hạn mức"
-            message = "Bạn vui lòng kiểm tra lại cài đặt\nhạn mức giao dịch của tài khoản"
+            message = "Bạn vui lòng kiểm tra lại cài đặt<br/>hạn mức giao dịch của tài khoản"
         }
 
         val insufficient = MessageArg().apply {
@@ -96,7 +97,7 @@ open class MessageArg {
 
                 ErrCode.FACE_NOT_FOUND -> MessageArg().apply {
                     title = "Tài khoản không tồn tại"
-                    message = "Bạn vui lòng đăng ký tài khoản Facepay trước khi thực hiện thanh toán"
+                    message = "Bạn vui lòng đăng ký tài khoản ${Shared.facePayText} trước khi thực hiện thanh toán"
                 }
 
                 ErrCode.USER_IS_OWNER -> MessageArg().apply {

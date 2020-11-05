@@ -106,7 +106,7 @@ object SystemUrl {
     const val BASE_URL_COLLECT = "http://weezi.biz:8580/"
 
     //  qc, beta
-    private const val DOMAIN = "dev.facepay.vn"
+    private const val DOMAIN = "qc.facepay.vn"
     var API_URL = "https://${DOMAIN}/v1/"
     var VIDEO_URL = "https://${DOMAIN}/"
     var SOCKET_URL = "wss://${DOMAIN}/ws/transaction?token="

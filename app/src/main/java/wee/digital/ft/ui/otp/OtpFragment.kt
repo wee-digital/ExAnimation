@@ -9,7 +9,6 @@ import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.ft.R
 import wee.digital.ft.shared.Config
-import wee.digital.ft.shared.Event
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainDialog
@@ -40,13 +39,13 @@ class OtpFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
 
-        sharedVM.startTimeout(Timeout.OTP)
+        sharedVM.startTimeout(Timeout.OTP, MessageArg.timedOutError)
         sharedVM.otpForm.observe {
-            it ?: throw Event.otpFormError
-            loadOtpWebView(it)
-        }
-        otpVM.retryMessageLiveData.observe {
-            onRetryMessage(it)
+            if (it.isNullOrEmpty()) {
+                dismissAllowingStateLoss()
+            } else {
+                loadOtpWebView(it)
+            }
         }
         otpVM.errorMessageLiveData.observe {
             onErrorMessage(it)
@@ -69,7 +68,7 @@ class OtpFragment : MainDialog() {
      * load webView Otp
      */
     @SuppressLint("SetJavaScriptEnabled")
-    private fun loadOtpWebView(otpFormUrl: String) {
+    fun loadOtpWebView(otpFormUrl: String) {
         otpWebView.loadDataWithBaseURL(
                 "https://dps-staging.napas.com.vn/api/restjs/resources/js/napas.hostedform.min.js",
                 """$otpFormUrl""",
@@ -89,7 +88,7 @@ class OtpFragment : MainDialog() {
 
     private fun onRetryMessage(it: MessageArg) {
         dismissAllowingStateLoss()
-        sharedVM.startTimeout(Timeout.OTP)
+        sharedVM.startTimeout(Timeout.OTP, MessageArg.timedOutError)
         sharedVM.confirm.value = ConfirmArg().apply {
             title = it.title
             message = it.message
@@ -131,19 +130,27 @@ class OtpFragment : MainDialog() {
             super.onPageStarted(view, url, favicon)
             try {
                 val listUrl = url?.split("=") ?: return
-                if (listUrl.size < 2) return
-                when (listUrl[0]) {
+
+                if (listUrl.size < 2) {
+                    return
+                }
+                val url = listUrl.first()
+                log.d(url)
+                sharedVM.stopTimeout()
+                when (url) {
                     "${Napas.STATIC_URL}/payment-fail?reason" -> {
                         val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
-                        sharedVM.stopTimeout()
                         otpVM.onTransactionFailed(reason)
                     }
                     "${Napas.STATIC_URL}/payment-success?facepayRef" -> {
-                        sharedVM.stopTimeout()
                         onTransactionSuccess()
                     }
+                    /*else -> {
+                        otpVM.onTransactionFailed()
+                    }*/
                 }
             } catch (e: Exception) {
+                log.e(e.message)
             }
         }
     }

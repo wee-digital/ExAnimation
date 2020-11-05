@@ -58,7 +58,9 @@ class MainActivity : BaseActivity() {
         }
         sharedVM.syncDeviceInfo()
         sharedVM.direction.observe {
-            navigate(it) { setLaunchSingleTop() }
+            navigate(it) {
+                setLaunchSingleTop()
+            }
         }
         sharedVM.message.observe {
             it ?: return@observe
@@ -154,6 +156,7 @@ class MainActivity : BaseActivity() {
     private fun onPaymentArgChanged(it: PaymentArg?) {
         when (it) {
             null -> {
+                sharedVM.clearData()
                 /* App.recordVideo?.onDoneVideo(object : MyVideo.MyVideoCallBack {
                      override fun onResult(path: String) {
                          mainVM.pushVideo(path, sharedVM.payment.value.toString())
@@ -165,7 +168,6 @@ class MainActivity : BaseActivity() {
                 if (sharedVM.isSplashing) return
                 sharedVM.isSplashing = true
                 startCamera()
-                sharedVM.onPaymentCancel()
                 navigate(Main.splash) {
                     setNoneAnim()
                     setLaunchSingleTop()

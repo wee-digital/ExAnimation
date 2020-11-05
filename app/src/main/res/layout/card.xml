@@ -47,8 +47,10 @@
             android:paddingEnd="@dimen/margin2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardTextViewTitle"
+            app:layout_constraintVertical_bias="0.0"
             tools:itemCount="5"
             tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/card_item"
             tools:spanCount="2" />
 

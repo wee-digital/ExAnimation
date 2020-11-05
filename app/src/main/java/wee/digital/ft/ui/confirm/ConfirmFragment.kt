@@ -17,12 +17,10 @@ class ConfirmFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         sharedVM.confirm.observe {
-            it?.also {
+            if (it!=null){
                 confirmView.onBindArg(it)
-                return@observe
-            }
-            dismissAllowingStateLoss()
-            sharedVM.onPaymentCancel()
+            }else{
+            dismissAllowingStateLoss()}
         }
     }
 

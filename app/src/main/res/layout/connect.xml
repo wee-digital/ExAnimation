@@ -28,7 +28,7 @@
         android:layout_marginTop="@dimen/marginShadow"
         android:src="@mipmap/img_logo"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"
-        app:layout_constraintDimensionRatio="@string/logoRatio"
+        app:layout_constraintDimensionRatio="w,600:122"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

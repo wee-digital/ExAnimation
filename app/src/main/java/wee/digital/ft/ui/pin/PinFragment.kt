@@ -4,7 +4,6 @@ import android.view.View
 import kotlinx.android.synthetic.main.pin.*
 import wee.digital.ft.R
 import wee.digital.ft.repository.dto.PaymentResponse
-import wee.digital.ft.shared.Config
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainDialog
@@ -38,7 +37,7 @@ class PinFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
-        sharedVM.startTimeout(Timeout.PIN_VERIFY)
+        sharedVM.startTimeout(Timeout.PIN_VERIFY, MessageArg.timedOutError)
         pinVM.pinVerifySuccess.observe {
             onPinVerifySuccess(it)
         }
@@ -111,7 +110,7 @@ class PinFragment : MainDialog() {
     private fun onRestRetriesPinChanged(restRetries: Int) {
         pinProgressLayout.clear()
         sharedVM.hideProgress()
-        sharedVM.startTimeout(Timeout.PIN_VERIFY)
+        sharedVM.startTimeout(Timeout.PIN_VERIFY, MessageArg.timedOutError)
         pinView.onBindErrorText(string(R.string.pin_retry_msg).format(restRetries))
     }
 

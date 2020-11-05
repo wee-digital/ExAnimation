@@ -7,6 +7,7 @@ import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainDialog
 import wee.digital.ft.ui.base.viewModel
+import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.progress.ProgressArg
 
 class CardFragment : MainDialog() {
@@ -32,7 +33,7 @@ class CardFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
-        sharedVM.startTimeout(Timeout.CARD_SELECT)
+        sharedVM.startTimeout(Timeout.CARD_SELECT, MessageArg.timedOutError)
         sharedVM.cardList.observe {
             if (it != null) {
                 adapter.set(it)

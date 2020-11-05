@@ -1,11 +1,15 @@
 package wee.digital.ft.ui.face
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.util.AttributeSet
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.transition.ChangeBounds
-import kotlinx.android.synthetic.main.face.*
+import kotlinx.android.synthetic.main.face.view.*
 import wee.digital.ft.R
 import wee.digital.ft.app.App
 import wee.digital.ft.camera.DataCollect
@@ -19,9 +23,11 @@ import wee.digital.library.extension.loadGif
 import java.util.concurrent.atomic.AtomicInteger
 
 
-class FaceView(private val v: FaceFragment) :
+class FaceView : ConstraintLayout,
         RealSenseControl.Listener,
         Detection.DetectionCallBack {
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     companion object {
         const val ANIM_DURATION = 400L
@@ -52,9 +58,9 @@ class FaceView(private val v: FaceFragment) :
         if (!hasFace && nonFaceCount.decrementAndGet() > 0) return
         hasFace = false
         try {
-            v.faceImageViewAnim.post {
-                viewTransition.beginTransition(v.viewContent) {
-                    setAlpha(v.faceImageViewAnim.id, 0f)
+            faceView?.post {
+                viewTransition.beginTransition(faceView) {
+                    setAlpha(faceImageViewAnim.id, 0f)
                 }
             }
         } catch (ignore: Exception) {
@@ -67,10 +73,10 @@ class FaceView(private val v: FaceFragment) :
         if (hasFace) return
         hasFace = true
         try {
-            v.faceImageViewAnim.post {
-                v.faceImageViewAnim.loadGif(R.mipmap.img_progress)
-                viewTransition.beginTransition(v.viewContent) {
-                    setAlpha(v.faceImageViewAnim.id, 1f)
+            faceView.post {
+                faceImageViewAnim.loadGif(R.mipmap.img_progress)
+                viewTransition.beginTransition(faceView) {
+                    setAlpha(faceImageViewAnim.id, 1f)
                 }
             }
         } catch (ignore: Exception) {
@@ -80,7 +86,7 @@ class FaceView(private val v: FaceFragment) :
     override fun faceEligible(bm: ByteArray, portrait: Bitmap, frameFullFace: ByteArray, faceData: FacePointData, dataCollect: DataCollect) {
         hasFaceReg = false
         hasStream = false
-        v.faceImageViewCamera.setImageBitmap(portrait)
+        faceImageViewCamera.setImageBitmap(portrait)
         onFaceEligible(bm, faceData, dataCollect)
     }
 
@@ -103,43 +109,40 @@ class FaceView(private val v: FaceFragment) :
 
     private val imageLiveData = MutableLiveData<Bitmap>()
 
-    private fun onConfigFaceReg() {
-        mDetection = Detection(v.requireActivity()).also {
+
+    private fun animateImageScale(scale: Float) {
+        faceImageViewCamera.apply {
+            animate().scaleX(scale).scaleY(scale).duration = ANIM_DURATION
+        }
+        faceImageViewAnim.apply {
+            animate().scaleX(scale).scaleY(scale).duration = ANIM_DURATION
+        }
+    }
+
+    fun onViewInit(fragment: Fragment) {
+        faceImageViewAnim.load(R.mipmap.img_progress)
+        fragment.observerCameraListener(this)
+        imageLiveData.observe(fragment.viewLifecycleOwner, Observer {
+            faceImageViewCamera?.setImageBitmap(it)
+        })
+        mDetection = Detection(fragment.requireActivity()).also {
             it.initCallBack(this)
         }
     }
 
-    private fun animateImageScale(scale: Float) {
-        v.faceImageViewCamera.apply {
-            animate().scaleX(scale).scaleY(scale).duration = ANIM_DURATION
-        }
-        v.faceImageViewAnim.apply {
-            animate().scaleX(scale).scaleY(scale).duration = ANIM_DURATION
-        }
-    }
-
-    fun onViewInit() {
-        v.faceImageViewAnim.load(R.mipmap.img_progress)
-        v.observerCameraListener(this)
-        imageLiveData.observe(v.viewLifecycleOwner, Observer {
-            v.faceImageViewCamera?.setImageBitmap(it)
-        })
-        onConfigFaceReg()
-    }
-
     fun animateOnFaceCaptured() {
 
-        val view = v.faceImageViewCamera
+        val view = faceImageViewCamera
         val viewId = view.id
         val scale = 0.525f
 
-        viewTransition.beginTransition(v.viewContent, {
-            setAlpha(v.faceTextViewTitle1.id, 0f)
-            setAlpha(v.faceTextViewTitle2.id, 0f)
-            setAlpha(v.faceTextViewTitle3.id, 0f)
+        viewTransition.beginTransition(this, {
+            setAlpha(faceTextViewTitle1.id, 0f)
+            setAlpha(faceTextViewTitle2.id, 0f)
+            setAlpha(faceTextViewTitle3.id, 0f)
             setVerticalBias(viewId, 0.06f)
             connect(viewId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
-            connect(viewId, ConstraintSet.BOTTOM, v.guidelineFace.id, ConstraintSet.BOTTOM)
+            connect(viewId, ConstraintSet.BOTTOM, guidelineFace.id, ConstraintSet.BOTTOM)
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
             connect(viewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
             animateImageScale(scale)
@@ -150,20 +153,20 @@ class FaceView(private val v: FaceFragment) :
 
     fun animateOnStartFaceReg() {
         hasStream = true
-        val view = v.faceImageViewCamera
+        val view = faceImageViewCamera
         val viewId = view.id
         val scale = 1f
-        viewTransition.beginTransition(v.viewContent, {
+        viewTransition.beginTransition(this, {
             clear(viewId, ConstraintSet.BOTTOM)
             setVerticalBias(viewId, 0f)
-            connect(viewId, ConstraintSet.TOP, v.faceGuidelineCameraTop.id, ConstraintSet.TOP)
+            connect(viewId, ConstraintSet.TOP, faceGuidelineCameraTop.id, ConstraintSet.TOP)
             connect(viewId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
             connect(viewId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
             animateImageScale(scale)
         }, {
-            setAlpha(v.faceTextViewTitle1.id, 1f)
-            setAlpha(v.faceTextViewTitle2.id, 1f)
-            setAlpha(v.faceTextViewTitle3.id, 1f)
+            setAlpha(faceTextViewTitle1.id, 1f)
+            setAlpha(faceTextViewTitle2.id, 1f)
+            setAlpha(faceTextViewTitle3.id, 1f)
         }, {
             view.setBackgroundResource(R.drawable.drw_face)
             view.postDelayed({

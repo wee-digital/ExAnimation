@@ -19,6 +19,7 @@ import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.payment.PaymentArg
 import wee.digital.ft.ui.pin.PinArg
 import wee.digital.ft.ui.progress.ProgressArg
+import wee.digital.library.extension.post
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -27,7 +28,7 @@ class SharedVM : ViewModel() {
     var isSplashing = false
 
     val direction by lazy {
-        EventLiveData<NavDirections>()
+        MutableLiveData<NavDirections>()
     }
 
     val deviceInfo = MutableLiveData<DeviceInfo?>()
@@ -60,7 +61,8 @@ class SharedVM : ViewModel() {
         deviceInfo.postValue(BaseData.ins.getDeviceInfoPref())
     }
 
-    fun onPaymentCancel() {
+
+    fun clearData() {
         cardError.value = null
         cardList.value = null
         otpForm.value = null
@@ -71,6 +73,11 @@ class SharedVM : ViewModel() {
         face.value = null
         progress.value = null
         qrCode.value = null
+        timeoutSecond.value = -1
+    }
+
+    fun onPaymentCancel() {
+        clearData()
         payment.value = null
         direction.postValue(Main.adv)
     }
@@ -79,38 +86,36 @@ class SharedVM : ViewModel() {
 
     fun startTimeout(messageArg: MessageArg) {
         hideProgress()
-        message.value = messageArg
+        message.postValue(messageArg)
         startTimeout(Timeout.ALERT_DIALOG) {
-            message.value = null
+            onPaymentCancel()
         }
     }
 
-    fun startTimeout(intervalInSecond: Int, messageArg: MessageArg = MessageArg.timedOutError) {
+    fun startTimeout(intervalInSecond: Int, messageArg: MessageArg) {
         hideProgress()
-        message.value = messageArg
         startTimeout(intervalInSecond) {
-            message.value = null
+            message.postValue(messageArg)
+            post(200) {
+                startTimeout(Timeout.ALERT_DIALOG) {
+                    onPaymentCancel()
+                }
+            }
         }
     }
 
     fun startTimeout(intervalInSecond: Int, confirmArg: ConfirmArg) {
         hideProgress()
-        confirm.value = confirmArg
+        stopTimeout()
+        confirm.postValue(confirmArg)
         startTimeout(intervalInSecond) {
-            confirm.value = null
+            post(200) {
+                onPaymentCancel()
+            }
         }
     }
 
-    fun showProgress(progressArg: ProgressArg) {
-        stopTimeout()
-        progress.postValue(progressArg)
-    }
-
-    fun hideProgress() {
-        progress.postValue(null)
-    }
-
-    private fun startTimeout(intervalInSecond: Int, block: () -> Unit) {
+    fun startTimeout(intervalInSecond: Int, block: () -> Unit) {
         val waitingCounter = AtomicInteger(intervalInSecond + 1)
         disposable?.dispose()
         disposable = Observable
@@ -129,6 +134,16 @@ class SharedVM : ViewModel() {
                     }
                 }, {})
     }
+
+    fun showProgress(progressArg: ProgressArg) {
+        stopTimeout()
+        progress.postValue(progressArg)
+    }
+
+    fun hideProgress() {
+        progress.postValue(null)
+    }
+
 
     fun stopTimeout() {
         disposable?.dispose()

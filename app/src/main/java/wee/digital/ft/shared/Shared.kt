@@ -2,8 +2,12 @@ package wee.digital.ft.shared
 
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonArray
+import wee.digital.library.extension.bold
+import wee.digital.library.extension.color
 
 object Shared {
+
+    val facePayText get() = "Facepay".bold().color("#3082D8")
 
     /**
      * data for flow payment FacePay
