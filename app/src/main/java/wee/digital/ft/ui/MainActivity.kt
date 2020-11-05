@@ -148,7 +148,7 @@ class MainActivity : BaseActivity() {
                 else -> {
                     mainVM.checkDeviceStatus()
                     mainView.onDeviceInfoChanged(it)
-                    sharedVM.direction.postValue(Main.adv)
+                    sharedVM.onPaymentCancel()
                 }
             }
         }
@@ -158,6 +158,8 @@ class MainActivity : BaseActivity() {
         when (it) {
             null -> {
                 sharedVM.clearData()
+                sharedVM.payment.postValue(null)
+                //Shared.paymentProcessing = false
                 /* App.recordVideo?.onDoneVideo(object : MyVideo.MyVideoCallBack {
                      override fun onResult(path: String) {
                          mainVM.pushVideo(path, sharedVM.payment.value.toString())
@@ -165,6 +167,7 @@ class MainActivity : BaseActivity() {
                  })*/
             }
             else -> {
+                //Shared.paymentProcessing = true
                 sharedVM.payment.postValue(it)
                 if (sharedVM.isSplashing) return
                 sharedVM.isSplashing = true

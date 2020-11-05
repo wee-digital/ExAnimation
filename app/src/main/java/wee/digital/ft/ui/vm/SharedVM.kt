@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import wee.digital.ft.repository.base.BaseData
 import wee.digital.ft.repository.model.DeviceInfo
+import wee.digital.ft.shared.Shared
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.base.EventLiveData
@@ -63,6 +64,7 @@ class SharedVM : ViewModel() {
 
 
     fun clearData() {
+        Shared.paymentProcessing = false
         cardError.value = null
         cardList.value = null
         otpForm.value = null
