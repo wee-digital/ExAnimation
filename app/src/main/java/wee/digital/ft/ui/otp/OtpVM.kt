@@ -21,24 +21,6 @@ class OtpVM : BaseViewModel() {
 
     val errorMessageLiveData = EventLiveData<MessageArg>()
 
-    fun onTransactionFailed(data: String? = null) {
-        /*val liveData = if (retryCount.getAndDecrement() > 0) {
-            retryMessageLiveData
-        } else {
-            errorMessageLiveData
-        }*/
-        when (data) {
-            Napas.INSUFFICIENT_FUNDS -> {
-                errorMessageLiveData.postValue(MessageArg.insufficient)
-            }
-            Napas.BELOW_LIMIT, Napas.OUT_OF_LIMIT_BANK -> {
-                errorMessageLiveData.postValue(MessageArg.paymentLimitError)
-            }
-            else -> {
-                errorMessageLiveData.postValue(MessageArg.paymentError)
-            }
-        }
-    }
 
 
     fun fetchCardList(userId: String?) {

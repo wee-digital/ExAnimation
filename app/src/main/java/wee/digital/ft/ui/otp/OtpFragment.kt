@@ -174,7 +174,7 @@ class OtpFragment : MainDialog() {
                 "${Napas.STATIC_URL}/payment-fail?reason" -> {
                     val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
                     log.d("Napas reason - $reason")
-                    otpVM.onTransactionFailed(reason)
+                    onTransactionFailed(reason)
                 }
                 "${Napas.STATIC_URL}/payment-success?facepayRef" -> {
                     onTransactionSuccess()
@@ -182,6 +182,27 @@ class OtpFragment : MainDialog() {
             }
         } catch (e: Exception) {
             log.e(e.message)
+        }
+    }
+
+    private fun onTransactionFailed(data: String?) {
+        log.d(data)
+        when (data) {
+            Napas.INSUFFICIENT_FUNDS -> {
+                otpVM.errorMessageLiveData.postValue(MessageArg.insufficient)
+            }
+            Napas.BELOW_LIMIT, Napas.OUT_OF_LIMIT_BANK -> {
+                otpVM.errorMessageLiveData.postValue(MessageArg.paymentLimitError)
+            }
+            Napas.INVALID_OTP -> {
+                otpVM.errorMessageLiveData.postValue(MessageArg.paymentError)
+            }
+            "CANCEL" -> {
+                sharedVM.onPaymentCancel()
+            }
+            else ->{
+                otpVM.errorMessageLiveData.postValue(MessageArg.paymentError)
+            }
         }
     }
 
