@@ -179,9 +179,6 @@ class OtpFragment : MainDialog() {
                 "${Napas.STATIC_URL}/payment-success?facepayRef" -> {
                     onTransactionSuccess()
                 }
-                else -> {
-                    otpVM.onTransactionFailed()
-                }
             }
         } catch (e: Exception) {
             log.e(e.message)
