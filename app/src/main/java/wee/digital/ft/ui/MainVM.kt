@@ -73,7 +73,6 @@ class MainVM : BaseViewModel() {
 
     fun resetDeviceData() {
         BaseData.ins.resetDeviceInfo()
-        restartApp()
     }
 
     private fun onDeviceStatus(status: Int) {

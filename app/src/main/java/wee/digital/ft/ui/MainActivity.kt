@@ -2,6 +2,7 @@ package wee.digital.ft.ui
 
 import okhttp3.WebSocket
 import wee.digital.ft.R
+import wee.digital.ft.repository.base.BaseData
 import wee.digital.ft.repository.dto.SocketResponse
 import wee.digital.ft.repository.dto.TokenResponse
 import wee.digital.ft.repository.model.DeviceInfo
@@ -131,9 +132,9 @@ class MainActivity : BaseActivity() {
                 if (paying && calledFacePay) return
             }
             SocketEvent.DELETE_CACHE -> {
+                BaseData.ins.resetDeviceInfo()
                 deleteCache()
-                mainVM.resetDeviceData()
-                sharedVM.direction.postValue(Main.connect)
+                sharedVM.syncDeviceInfo()
             }
         }
     }
