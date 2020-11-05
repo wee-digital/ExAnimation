@@ -7,5 +7,7 @@
         <domain includeSubdomains="true">beta.facepay.vn</domain>
         <domain includeSubdomains="true">logs.wee.vn</domain>
         <domain includeSubdomains="true">weezi.biz</domain>
+
+        <domain includeSubdomains="true">dps-staging.napas.com.vn</domain>
     </domain-config>
 </network-security-config>

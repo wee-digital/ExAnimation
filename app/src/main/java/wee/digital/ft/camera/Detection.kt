@@ -207,8 +207,7 @@ class Detection(context: Context) {
 
             return
         }
-        //TODO: REMOVE TRUE
-        if (labelStatusFace(labels) == "real" || true) {
+        if (labelStatusFace(labels) == "real") {
             Log.d("Detection", "get face ok")
             countFaceOk++
             if (countFaceOk > 2) {

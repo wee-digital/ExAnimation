@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.UrlQuerySanitizer
 import android.view.View
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.otp.*
 import wee.digital.ft.R
-import wee.digital.ft.shared.Config
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainDialog
@@ -18,9 +18,14 @@ import wee.digital.ft.ui.confirm.ConfirmArg
 import wee.digital.ft.ui.message.MessageArg
 import wee.digital.ft.ui.progress.ProgressArg
 import wee.digital.library.extension.gone
-import wee.digital.library.extension.post
 
 class OtpFragment : MainDialog() {
+
+    private inner class JavaScriptInterface {
+        @JavascriptInterface
+        fun onResultWebView() {
+        }
+    }
 
     private val otpVM by lazy { viewModel(OtpVM::class) }
 
@@ -30,14 +35,12 @@ class OtpFragment : MainDialog() {
 
     override fun onViewCreated() {
         addClickListener(otpViewClose)
-        otpView.settingWebView()
         otpView.onViewInit(this)
-        otpWebView.webViewClient = OtpWebViewClient()
+        otpView.settingWebView(otpWebView)
+
     }
 
     override fun onLiveDataObserve() {
-
-
         sharedVM.otpForm.observe {
             if (it.isNullOrEmpty()) {
                 dismissAllowingStateLoss()
@@ -73,13 +76,18 @@ class OtpFragment : MainDialog() {
      */
     @SuppressLint("SetJavaScriptEnabled")
     fun loadOtpWebView(otpFormUrl: String) {
-        otpWebView.loadDataWithBaseURL(
-                "https://dps-staging.napas.com.vn/api/restjs/resources/js/napas.hostedform.min.js",
-                """$otpFormUrl""",
-                "text/html",
-                "UTF-8",
-                null
-        )
+        otpWebView?.post {
+            otpWebView.settings.javaScriptEnabled = true
+            otpWebView.addJavascriptInterface(JavaScriptInterface(), "javascript_obj")
+            otpWebView.webViewClient = OtpWebViewClient()
+            otpWebView.loadDataWithBaseURL(
+                    "https://dps-staging.napas.com.vn/api/restjs/resources/js/napas.hostedform.min.js",
+                    """$otpFormUrl""",
+                    "text/html",
+                    "UTF-8",
+                    null
+            )
+        }
     }
 
     private fun clearWebView() {
