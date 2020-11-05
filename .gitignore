@@ -1,5 +1,4 @@
-local.properties
-
+local.*
 *.iml
 *.DS_Store
 *.log
@@ -13,8 +12,7 @@ app/build/
 target/
 dist/
 .idea/
-
 *.properties
 local.properties
-/app/dev/debug/output-metadata.json
-/app/prod/release/output-metadata.json
+/app/dev/
+/app/prod/
