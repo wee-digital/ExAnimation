@@ -1,7 +1,6 @@
 package wee.digital.ft.ui
 
 import okhttp3.WebSocket
-import wee.digital.ft.BuildConfig
 import wee.digital.ft.R
 import wee.digital.ft.repository.dto.SocketResponse
 import wee.digital.ft.repository.dto.TokenResponse

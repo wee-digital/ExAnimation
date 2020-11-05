@@ -10,11 +10,11 @@ class FaceArg {
         userIdList = response.userID
     }
 
-    private constructor(){
+    private constructor() {
         userIdList = listOf("1")
     }
 
-    companion object{
+    companion object {
         val testArg = FaceArg()
     }
 

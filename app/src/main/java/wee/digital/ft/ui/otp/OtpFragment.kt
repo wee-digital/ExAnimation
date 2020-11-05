@@ -30,16 +30,14 @@ class OtpFragment : MainDialog() {
 
     override fun onViewCreated() {
         addClickListener(otpViewClose)
+        otpView.settingWebView()
         otpView.onViewInit(this)
-        if (Config.TESTING) post(2000) {
-            onTransactionSuccess()
-            //otpVM.onTransactionFailed(Napas.INSUFFICIENT_FUNDS)
-        }
+        otpWebView.webViewClient = OtpWebViewClient()
     }
 
     override fun onLiveDataObserve() {
 
-        sharedVM.startTimeout(Timeout.OTP, MessageArg.timedOutError)
+
         sharedVM.otpForm.observe {
             if (it.isNullOrEmpty()) {
                 dismissAllowingStateLoss()
@@ -58,10 +56,16 @@ class OtpFragment : MainDialog() {
     override fun onViewClick(v: View?) {
         when (v) {
             otpViewClose -> {
+                clearWebView()
                 dismissAllowingStateLoss()
                 sharedVM.onPaymentCancel()
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        clearWebView()
     }
 
     /**
@@ -76,7 +80,16 @@ class OtpFragment : MainDialog() {
                 "UTF-8",
                 null
         )
-        otpWebView.webViewClient = OtpWebViewClient()
+    }
+
+    private fun clearWebView() {
+        otpWebView.apply {
+            clearCache(false)
+            clearFormData()
+            clearHistory()
+            clearAnimation()
+            destroy()
+        }
     }
 
     private fun onTransactionSuccess() {
@@ -122,36 +135,48 @@ class OtpFragment : MainDialog() {
             this@OtpFragment.view?.postDelayed({
                 if (otpImageViewProgress?.isShown == true) {
                     otpImageViewProgress?.gone()
+                    sharedVM.startTimeout(Timeout.OTP, MessageArg.timedOutError)
                 }
             }, 2000)
         }
 
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            onWebPageFinish(url)
+        }
+
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            try {
-                val listUrl = url?.split("=") ?: return
+            onWebPageFinish(url)
+        }
+    }
 
-                if (listUrl.size < 2) {
-                    return
-                }
-                val url = listUrl.first()
-                log.d(url)
-                sharedVM.stopTimeout()
-                when (url) {
-                    "${Napas.STATIC_URL}/payment-fail?reason" -> {
-                        val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
-                        otpVM.onTransactionFailed(reason)
-                    }
-                    "${Napas.STATIC_URL}/payment-success?facepayRef" -> {
-                        onTransactionSuccess()
-                    }
-                    /*else -> {
-                        otpVM.onTransactionFailed()
-                    }*/
-                }
-            } catch (e: Exception) {
-                log.e(e.message)
+    private fun onWebPageFinish(url: String?) {
+        try {
+            val listUrl = url?.split("=") ?: return
+            for (i in 0..listUrl.lastIndex) {
+                log.d("Napas url list [$i]- ${listUrl[i]}")
             }
+            if (listUrl.size < 2) {
+                return
+            }
+            val url = listUrl.first()
+            sharedVM.stopTimeout()
+            when (url) {
+                "${Napas.STATIC_URL}/payment-fail?reason" -> {
+                    val reason = UrlQuerySanitizer(url).getValue("reason") ?: ""
+                    log.d("Napas reason - $reason")
+                    otpVM.onTransactionFailed(reason)
+                }
+                "${Napas.STATIC_URL}/payment-success?facepayRef" -> {
+                    onTransactionSuccess()
+                }
+                else -> {
+                    otpVM.onTransactionFailed()
+                }
+            }
+        } catch (e: Exception) {
+            log.e(e.message)
         }
     }
 

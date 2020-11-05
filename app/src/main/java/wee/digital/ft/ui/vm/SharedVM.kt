@@ -73,7 +73,7 @@ class SharedVM : ViewModel() {
         face.value = null
         progress.value = null
         qrCode.value = null
-        timeoutSecond.value = -1
+        stopTimeout()
     }
 
     fun onPaymentCancel() {

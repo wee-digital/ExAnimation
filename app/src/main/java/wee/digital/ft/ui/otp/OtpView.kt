@@ -25,7 +25,6 @@ class OtpView : ConstraintLayout {
     private var isMargin = false
 
     fun onViewInit(fragment: Fragment) {
-        settingWebView()
         fragment.viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
             override fun onResume() {
                 keyboardDisposable = TedRxKeyboardObserver(fragment.requireActivity())
@@ -60,14 +59,13 @@ class OtpView : ConstraintLayout {
         }
     }
 
-    private fun settingWebView() {
+    fun settingWebView() {
         otpImageViewProgress.load(R.drawable.loading)
         otpWebView.layoutParams.height = screenHeight + 320
         otpWebView.setOnTouchListener { v, event -> event.action === MotionEvent.ACTION_MOVE }
         otpWebView.isScrollContainer = false
         otpWebView.isVerticalScrollBarEnabled = false
         otpWebView.isHorizontalScrollBarEnabled = false
-
         otpWebView.settings.javaScriptEnabled = true
         otpWebView.addJavascriptInterface(JavaScriptInterface(), "javascript_obj")
     }

@@ -125,17 +125,17 @@ fun TextView.setHyperText(s: String?) {
     }
 }
 
-fun TextView.gradientHorizontal(@ColorRes color1: Int, @ColorRes color2: Int= color1) {
+fun TextView.gradientHorizontal(@ColorRes colorStart: Int, @ColorRes colorEnd: Int= colorStart) {
     paint.shader = LinearGradient(0f, 0f, this.width.toFloat(), 0f,
-            ContextCompat.getColor(context, color1),
-            ContextCompat.getColor(context, color2),
+            ContextCompat.getColor(context, colorStart),
+            ContextCompat.getColor(context, colorEnd),
             Shader.TileMode.CLAMP)
 }
 
-fun TextView.gradientVertical(@ColorRes color1: Int, @ColorRes color2: Int = color1) {
+fun TextView.gradientVertical(@ColorRes colorStart: Int, @ColorRes colorEnd: Int = colorStart) {
     paint.shader = LinearGradient(0f, 0f, 0f, this.height.toFloat(),
-            ContextCompat.getColor(context, color1),
-            ContextCompat.getColor(context, color2),
+            ContextCompat.getColor(context, colorStart),
+            ContextCompat.getColor(context, colorEnd),
             Shader.TileMode.CLAMP)
 }
 

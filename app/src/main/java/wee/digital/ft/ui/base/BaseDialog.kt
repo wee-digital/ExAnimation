@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import wee.digital.ft.R
-import wee.digital.ft.shared.Config
 import wee.digital.library.extension.hideSystemUI
 import wee.digital.log.Logger
 

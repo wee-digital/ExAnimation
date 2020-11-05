@@ -39,12 +39,12 @@ class SplashView : ConstraintLayout {
                 val height = splashImageViewLogo.height * 2
                 if (splashImageViewLogo.height == height) return@post
                 val logoId = splashImageViewLogo.id
-                viewTransition.beginTransition(this,{
+                viewTransition.beginTransition(this, {
                     constrainHeight(logoId, height)
                     setVerticalBias(logoId, 0.5f)
                     connect(logoId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                     connect(logoId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-                },{
+                }, {
                     onEndTransition()
                 })
             } catch (ignore: Exception) {

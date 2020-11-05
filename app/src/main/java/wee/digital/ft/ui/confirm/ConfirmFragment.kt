@@ -17,10 +17,11 @@ class ConfirmFragment : MainDialog() {
 
     override fun onLiveDataObserve() {
         sharedVM.confirm.observe {
-            if (it!=null){
+            if (it != null) {
                 confirmView.onBindArg(it)
-            }else{
-            dismissAllowingStateLoss()}
+            } else {
+                dismissAllowingStateLoss()
+            }
         }
     }
 

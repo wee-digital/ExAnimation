@@ -5,17 +5,6 @@ import androidx.fragment.app.Fragment
 import wee.digital.ft.app.App
 import wee.digital.ft.camera.RealSenseControl
 
-fun Fragment.observerCameraStream() {
-    viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {
-        override fun onCreated() {
-            startCamera()
-        }
-
-        override fun onDestroy() {
-            stopCamera()
-        }
-    })
-}
 
 fun Fragment.observerCameraListener(listener: RealSenseControl.Listener) {
     viewLifecycleOwner.lifecycle.addObserver(object : SimpleLifecycleObserver() {

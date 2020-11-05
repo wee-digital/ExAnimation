@@ -35,6 +35,10 @@ dependencies {
     implementation deps.lifecycle.extensions
     kapt deps.lifecycle.compiler
 
+    // PAGING
+    implementation deps.paging.runtime
+    implementation deps.paging.rx
+
     // JSON CONVERTER
     implementation deps.google.gson
 

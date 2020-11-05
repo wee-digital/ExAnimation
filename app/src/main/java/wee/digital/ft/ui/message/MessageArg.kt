@@ -42,6 +42,11 @@ open class MessageArg {
             message = "Bạn vui lòng thử lại hoặc liên hệ<br/>nhân viên để được hỗ trợ"
         }
 
+        val paymentCancel = MessageArg().apply {
+            title = "Giao dịch đã huỷ bỏ"
+            message = "Yêu cầu thanh toán của bạn đã bị hủy.<br/>Vui lòng liên hệ với nhân viên để biết thêm thông tin"
+        }
+
         val paymentError = MessageArg().apply {
             title = "Thanh toán không thành công"
             message = "Bạn vui lòng kiểm tra thông tin thẻ thanh toán<br/>hoặc liên hệ nhân viên để được hỗ trợ"
@@ -79,10 +84,10 @@ open class MessageArg {
 
         fun fromCode(code: Int): MessageArg {
             return when (code) {
+                ErrCode.PIN_LIMIT, ErrCode.PIN_WRONG -> wrongPinManyTimes
                 ErrCode.NOT_LINKED_BANK_ACC, ErrCode.BANK_ACC_NOT_FOUND -> noBankAccountError
                 ErrCode.TRANS_EXCEED_LIMIT -> paymentLimitError
                 ErrCode.ACC_FACEPAY_LOCKED, ErrCode.ACC_LOCKED -> facepayDisabledError
-
                 ErrCode.BANK_UNKNOWN_ERROR -> MessageArg().apply {
                     title = "Thanh toán không thành công"
                     message = "Tài khoản ngân hàng liên kết hiện tại không thể thực hiện thanh toán. Bạn Vui lòng thử lại"
@@ -91,26 +96,19 @@ open class MessageArg {
                     title = "Thanh toán không thành công"
                     message = "Không tìm thấy tài khoản ngân hàng đã liên kết"
                 }
-
-
                 ErrCode.INSUFFICIENT_ACC_BALANCE -> insufficient
-
                 ErrCode.FACE_NOT_FOUND -> MessageArg().apply {
                     title = "Tài khoản không tồn tại"
                     message = "Bạn vui lòng đăng ký tài khoản ${Shared.facePayText} trước khi thực hiện thanh toán"
                 }
-
                 ErrCode.USER_IS_OWNER -> MessageArg().apply {
                     title = "Thanh toán không thành công"
                     message = "Chủ shop không thể thanh toán, bạn vui lòng thử lại"
                 }
-
-
                 ErrCode.BILL_PAID -> MessageArg().apply {
                     title = "Thanh toán không thành công"
                     message = "Giao dịch của bạn đã được thanh toán trước đó"
                 }
-
                 else -> MessageArg().apply {
                     title = "Thanh toán không thành công"
                     message = "Phát hiện lỗi, Vui lòng thử lại"

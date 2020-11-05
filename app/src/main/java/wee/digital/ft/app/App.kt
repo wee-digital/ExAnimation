@@ -12,13 +12,13 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import wee.digital.ft.BuildConfig
 import wee.digital.ft.camera.RealSenseControl
-import wee.digital.ft.shared.Shared
 import wee.digital.ft.repository.base.BaseSharedPref
 import wee.digital.ft.repository.network.HttpsTrustManager
 import wee.digital.ft.repository.network.MyApiService
 import wee.digital.ft.repository.network.RestUrl
 import wee.digital.ft.repository.utils.SystemUrl
 import wee.digital.ft.shared.Event
+import wee.digital.ft.shared.Shared
 import wee.digital.library.Library
 import wee.digital.library.extension.SECOND
 import wee.digital.log.LogBook

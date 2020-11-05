@@ -1,6 +1,5 @@
 package wee.digital.ft.ui.vm
 
-import wee.digital.ft.shared.Shared
 import wee.digital.ft.repository.dto.SocketResponse
 import wee.digital.ft.repository.dto.UpdateCancelPaymentDTOReq
 import wee.digital.ft.repository.dto.UpdatePaymentStatusDTOReq
@@ -8,6 +7,7 @@ import wee.digital.ft.repository.model.ClientResponse
 import wee.digital.ft.repository.network.Api
 import wee.digital.ft.repository.payment.PaymentRepository
 import wee.digital.ft.repository.utils.PaymentStatusCode
+import wee.digital.ft.shared.Shared
 import wee.digital.ft.ui.base.BaseViewModel
 import wee.digital.ft.ui.base.EventLiveData
 import wee.digital.ft.ui.payment.PaymentArg

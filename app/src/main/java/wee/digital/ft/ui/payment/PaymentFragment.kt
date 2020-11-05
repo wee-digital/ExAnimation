@@ -6,6 +6,7 @@ import wee.digital.ft.R
 import wee.digital.ft.shared.Timeout
 import wee.digital.ft.ui.Main
 import wee.digital.ft.ui.MainDialog
+import wee.digital.ft.ui.message.MessageArg
 
 class PaymentFragment : MainDialog() {
 
@@ -18,9 +19,7 @@ class PaymentFragment : MainDialog() {
     }
 
     override fun onLiveDataObserve() {
-        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM) {
-            onPaymentDenied()
-        }
+        sharedVM.startTimeout(Timeout.PAYMENT_CONFIRM, MessageArg.timedOutError)
         sharedVM.isSplashing = false
         sharedVM.payment.observe {
             paymentView.onPaymentDataChanged(it)
@@ -39,7 +38,7 @@ class PaymentFragment : MainDialog() {
 
     private fun onPaymentAccept() {
         sharedVM.stopTimeout()
-        dismiss()
+        dismissAllowingStateLoss()
         navigate(Main.face) {
             setLaunchSingleTop()
         }
@@ -47,10 +46,7 @@ class PaymentFragment : MainDialog() {
 
     private fun onPaymentDenied() {
         dismissAllowingStateLoss()
-        sharedVM.apply {
-            stopTimeout()
-            payment.postValue(null)
-        }
+        sharedVM.onPaymentCancel()
     }
 
 }

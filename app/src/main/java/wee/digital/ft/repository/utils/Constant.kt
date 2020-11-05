@@ -1,6 +1,5 @@
 package wee.digital.ft.repository.utils
 
-
 object ErrCode {
     /*code server*/
     const val UNKNOWN = -1
@@ -112,7 +111,7 @@ object SystemUrl {
     var SOCKET_URL = "wss://${DOMAIN}/ws/transaction?token="
 
     var AVATAR_URL = "${API_URL}get/thumbnail?id="
-    var LOGO_SHOP = "https://dev.facepay.vn/v1/shop/avatar?id="
+    var LOGO_SHOP = "https://${DOMAIN}/v1/shop/avatar?id="
 
     var URL_BANK_LOGO_WHITE = "https://${DOMAIN}/v1/images/bank_logo_white/3.0x/"
     var URL_BANK_IC_WHITE = "https://${DOMAIN}/v1/images/bank_iconic_white/"

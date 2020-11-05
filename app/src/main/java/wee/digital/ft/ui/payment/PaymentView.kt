@@ -23,8 +23,8 @@ class PaymentView : ConstraintLayout {
     fun onDeviceInfoChanged(it: DeviceInfo?) {
         it?.apply {
             paymentImageViewStation.load("%s%s".format(SystemUrl.LOGO_SHOP, shopID))
-            paymentTextViewStation.text = fullName
-            paymentTextViewStation2.text = fullName
+            paymentTextViewStation.text = shopName
+            paymentTextViewStation2.text = shopName
         }
     }
 }

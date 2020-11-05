@@ -1,11 +1,7 @@
 package wee.digital.ft.shared
 
-import wee.digital.library.extension.bold
-import wee.digital.library.extension.color
-
 
 object Config {
-
 
 
     const val FACE_RETRY_COUNT = 1

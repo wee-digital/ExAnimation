@@ -27,7 +27,7 @@ class QrVM : BaseViewModel() {
             return
         }
         progressLiveData.postValue(true)
-        post(300){
+        post(300) {
 
             FrameUtil.decryptQRCode(text)?.also {
                 log.d(text.jsonFormat())

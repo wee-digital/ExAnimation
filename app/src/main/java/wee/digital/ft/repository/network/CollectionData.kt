@@ -40,23 +40,23 @@ class CollectionData {
     }
 
     @SuppressLint("CheckResult")
-    fun encryptCollData(dataCollect: DataCollect){
+    fun encryptCollData(dataCollect: DataCollect) {
         EncryptData.instance.encryptCollectData(dataCollect)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.computation())
-                .subscribe (
+                .subscribe(
                         {
-                            Log.e("encryptCollectData","success")
-                            postCollectData(it.headers,it.body)
+                            Log.e("encryptCollectData", "success")
+                            postCollectData(it.headers, it.body)
                         },
                         {
-                            Log.e("encryptCollectData","${it.message}")
+                            Log.e("encryptCollectData", "${it.message}")
                         }
                 )
     }
 
     @SuppressLint("CheckResult")
-    private fun postCollectData(headers: HashMap<String,Any>, data: String) {
+    private fun postCollectData(headers: HashMap<String, Any>, data: String) {
         val apiService = getClient().create(MyApiService::class.java)
         headers["FacePOSCollectData"] = "POS${BaseData.deviceInfo.shopName}_${BaseData.deviceInfo.posName}"
         apiService.postCollData(headers, data)

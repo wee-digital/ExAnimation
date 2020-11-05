@@ -5,6 +5,7 @@ import crypto.Crypto
 import wee.digital.ft.repository.dto.*
 import wee.digital.ft.repository.network.Api
 import wee.digital.ft.repository.payment.PaymentRepository
+import wee.digital.ft.repository.utils.ErrCode
 import wee.digital.ft.shared.Config
 import wee.digital.ft.shared.Event
 import wee.digital.ft.ui.base.BaseViewModel
@@ -61,21 +62,41 @@ class PinVM : BaseViewModel() {
         }
         PaymentRepository.ins.verifyPINCode(dataReq = req, listener = object : Api.ClientListener<PinResponse> {
             override fun onSuccess(response: PinResponse) {
-                pinVerifySuccess.postValue(PinArg(response))
+
+                when (response.code) {
+                    0 -> {
+                        pinVerifySuccess.postValue(PinArg(response))
+                    }
+                    ErrCode.PIN_LIMIT, ErrCode.PIN_WRONG -> {
+                        onVerifyPinFailed()
+                    }
+                    else -> {
+                        payRequestError.postValue(MessageArg.fromCode(response.code))
+                    }
+
+                }
             }
 
             override fun onFailed(code: Int, message: String) {
-                onPinVerifyFailed(MessageArg.wrongPinManyTimes)
+                when (code) {
+                    ErrCode.PIN_LIMIT, ErrCode.PIN_WRONG -> {
+                        onVerifyPinFailed()
+                    }
+                    else -> {
+                        payRequestError.postValue(MessageArg.fromCode(code))
+                    }
+                }
             }
         })
     }
-    private fun onPinVerifyFailed(messageArg: MessageArg){
+
+    private fun onVerifyPinFailed() {
         when {
             restRetriesAtomic.getAndDecrement() > 1 -> {
                 pinVerifyRetries.postValue(restRetriesAtomic.get())
             }
             else -> {
-                pinVerifyFailed.postValue(messageArg)
+                pinVerifyFailed.postValue(MessageArg.wrongPinManyTimes)
             }
         }
     }
@@ -92,7 +113,7 @@ class PinVM : BaseViewModel() {
         )
         PaymentRepository.ins.payment(body, object : Api.ClientListener<PaymentResponse> {
             override fun onSuccess(response: PaymentResponse) {
-               payRequestSuccess.postValue(response)
+                payRequestSuccess.postValue(response)
             }
 
             override fun onFailed(code: Int, message: String) {
