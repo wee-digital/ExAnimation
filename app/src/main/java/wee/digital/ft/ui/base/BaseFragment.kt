@@ -10,14 +10,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import wee.digital.library.extension.hideKeyboard
-import wee.digital.log.Logger
+import wee.digital.library.util.Logger
 
 abstract class BaseFragment : Fragment(), BaseView {
 
     /**
      * [Fragment] override
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(layoutResource(), container, false)
         view.setOnTouchListener { _, _ -> true }
         return view
@@ -38,7 +42,6 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     override fun onPause() {
         super.onPause()
-        view?.clearAnimation()
         log.d("onPause")
     }
 
@@ -63,6 +66,13 @@ abstract class BaseFragment : Fragment(), BaseView {
      */
     fun <T> LiveData<T>.observe(block: (T) -> Unit) {
         observe(viewLifecycleOwner, Observer(block))
+    }
+
+    fun <T> NonNullLiveData<T?>.observe(block: (T) -> Unit) {
+        observe(viewLifecycleOwner, Observer {
+            it ?: return@Observer
+            block(it)
+        })
     }
 
     open fun activity(): BaseActivity {

@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import wee.digital.ft.R
 import wee.digital.library.extension.hideSystemUI
-import wee.digital.log.Logger
+import wee.digital.library.util.Logger
 
 abstract class BaseDialog : DialogFragment(), BaseView {
 
@@ -27,7 +27,17 @@ abstract class BaseDialog : DialogFragment(), BaseView {
         dialog?.window?.attributes?.windowAnimations = R.style.App_DialogAnim
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        log.d("onViewDestroy")
+        dialog?.window?.attributes?.windowAnimations = 0
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(layoutResource(), container, false)
         view.setOnTouchListener { _, _ -> true }
         return view
@@ -38,12 +48,6 @@ abstract class BaseDialog : DialogFragment(), BaseView {
         log.d("onViewCreated")
         onViewCreated()
         onLiveDataObserve()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        log.d("onViewDestroy")
-        dialog?.window?.attributes?.windowAnimations = 0
     }
 
     override fun onStart() {
@@ -65,7 +69,6 @@ abstract class BaseDialog : DialogFragment(), BaseView {
     override fun onPause() {
         super.onPause()
         log.d("onPause")
-        view?.clearAnimation()
     }
 
     /**

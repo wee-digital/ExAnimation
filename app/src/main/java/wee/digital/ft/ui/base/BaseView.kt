@@ -6,7 +6,8 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import wee.digital.ft.R
 import wee.digital.library.extension.ViewClickListener
-import wee.digital.log.Logger
+import wee.digital.library.util.Logger
+
 
 interface BaseView {
 
@@ -29,13 +30,9 @@ interface BaseView {
 
     val nav: NavController
 
-    fun navigate(directions: NavDirections, option: NavOptions) {
-        nav.navigate(directions, option)
-    }
-
     fun navigate(directions: NavDirections, block: (NavOptions.Builder.() -> Unit) = {}) {
         val options = NavOptions.Builder()
-                .setDefaultAnim()
+            .setDefaultAnim()
         options.block()
         nav.navigate(directions, options.build())
     }

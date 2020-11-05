@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import wee.digital.ft.shared.Config
 import wee.digital.library.extension.hideSystemUI
-import wee.digital.log.Logger
+import wee.digital.library.util.Logger
+
 
 abstract class BaseActivity : AppCompatActivity(), BaseView {
 
@@ -23,14 +23,9 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutResource())
-        if (Config.VIEW_ENABLE) {
-            log.d("onViewCreated")
-            onViewCreated()
-        }
-        if (Config.VM_ENABLE) {
-            log.d("onLiveDataObserve")
-            onLiveDataObserve()
-        }
+        log.d("onCreate")
+        onViewCreated()
+        onLiveDataObserve()
     }
 
     /**
@@ -74,6 +69,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         observe(this@BaseActivity, Observer(block))
     }
 
+    fun <T> NonNullLiveData<T?>.observe(block: (T) -> Unit) {
+        observe(this@BaseActivity, Observer {
+            it ?: return@Observer
+            block(it)
+        })
+    }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
