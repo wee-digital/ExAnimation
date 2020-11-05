@@ -13,11 +13,20 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class OtpVM : BaseViewModel() {
 
+    private val retryCount = AtomicInteger(1)
+
     val cardList = EventLiveData<List<CardItem>>()
+
+    val retryMessageLiveData = EventLiveData<MessageArg>()
 
     val errorMessageLiveData = EventLiveData<MessageArg>()
 
     fun onTransactionFailed(data: String? = null) {
+        /*val liveData = if (retryCount.getAndDecrement() > 0) {
+            retryMessageLiveData
+        } else {
+            errorMessageLiveData
+        }*/
         when (data) {
             Napas.INSUFFICIENT_FUNDS -> {
                 errorMessageLiveData.postValue(MessageArg.insufficient)

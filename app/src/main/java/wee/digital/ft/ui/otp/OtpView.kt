@@ -1,11 +1,9 @@
 package wee.digital.ft.ui.otp
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.webkit.JavascriptInterface
-import android.webkit.WebViewClient
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import gun0912.tedkeyboardobserver.TedRxKeyboardObserver
@@ -14,6 +12,7 @@ import kotlinx.android.synthetic.main.otp.view.*
 import wee.digital.ft.R
 import wee.digital.ft.util.SimpleLifecycleObserver
 import wee.digital.ft.util.screenHeight
+import wee.digital.library.extension.hideKeyboard
 import wee.digital.library.extension.load
 import wee.digital.library.extension.post
 
@@ -38,9 +37,10 @@ class OtpView : ConstraintLayout {
                 keyboardDisposable?.dispose()
             }
         })
+        webViewOtp_scroll.setOnScrollChangeListener { _, _, _, _, _ ->
+            fragment.hideKeyboard()
+        }
     }
-
-
 
     private fun checkMarginView(statusKeyboard: Boolean) {
         if (statusKeyboard) {

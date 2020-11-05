@@ -58,6 +58,7 @@ class MainActivity : BaseActivity() {
         }
         sharedVM.syncDeviceInfo()
         sharedVM.direction.observe {
+            mainView.onTimeoutSecondChanged(-1)
             navigate(it) {
                 setLaunchSingleTop()
             }
