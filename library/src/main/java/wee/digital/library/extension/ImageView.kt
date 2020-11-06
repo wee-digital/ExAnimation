@@ -61,7 +61,14 @@ fun ImageView?.load(res: Int) {
             .into(this)
 }
 
-fun ImageView?.loadGif(res: Int) {
+fun ImageView?.load(bitmap: Bitmap?) {
+    this ?: return
+    GlideApp.with(context)
+            .load(bitmap)
+            .into(this)
+}
+
+fun ImageView?.reload(res: Int) {
     this ?: return
     GlideApp.with(context)
             .load(res)
@@ -72,7 +79,7 @@ fun ImageView?.loadGif(res: Int) {
 
 fun ImageView?.clear() {
     this ?: return
-    val bitmap : Bitmap? = null
+    val bitmap: Bitmap? = null
     GlideApp.with(context)
             .load(bitmap)
             .into(this)
@@ -81,4 +88,3 @@ fun ImageView?.clear() {
 fun ImageView.tint(@ColorInt color: Int) {
     this.post { this.setColorFilter(color) }
 }
-

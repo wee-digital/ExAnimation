@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.res.Resources
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.Html
 import android.text.InputFilter
@@ -114,6 +115,22 @@ fun TextView.color(colorStr: String) {
     setTextColor(Color.parseColor(s))
 }
 
+fun TextView.bold() {
+    setTypeface(this.typeface, Typeface.BOLD)
+}
+
+fun TextView.regular() {
+    setTypeface(this.typeface, Typeface.NORMAL)
+}
+
+fun TextView.drawableStart(drawable: Drawable?){
+    this.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+}
+
+fun TextView.drawableEnd(drawable: Drawable?){
+    this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+}
+
 fun TextView.setHyperText(s: String?) {
     post {
         text = when {
@@ -154,25 +171,34 @@ fun View.updateState(state: Int) {
 }
 
 fun View.show() {
-    updateState(View.VISIBLE)
-}
-
-fun View.hide() {
-    updateState(View.INVISIBLE)
-}
-
-fun View.gone() {
-    updateState(View.GONE)
+    post {
+        if (visibility != View.VISIBLE) visibility = View.VISIBLE
+    }
 }
 
 fun View.isShow(show: Boolean?) {
-    if (show == true) this.show()
-    else this.gone()
+    visibility = if (show == true) View.VISIBLE
+    else View.INVISIBLE
+}
+
+fun View.hide() {
+    post {
+        if (visibility != View.INVISIBLE) visibility = View.INVISIBLE
+    }
+}
+
+fun View.isHide(hide: Boolean?) {
+    visibility = if (hide == true) View.INVISIBLE
+    else View.VISIBLE
+}
+
+fun View.gone() {
+    post { if (visibility != View.GONE) visibility = View.GONE }
 }
 
 fun View.isGone(gone: Boolean?) {
-    if (gone == true) this.gone()
-    else this.show()
+    visibility = if (gone == true) View.GONE
+    else View.VISIBLE
 }
 
 fun View.activity(): Activity? {

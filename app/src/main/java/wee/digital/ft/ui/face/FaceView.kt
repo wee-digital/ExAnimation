@@ -19,7 +19,7 @@ import wee.digital.ft.camera.RealSenseControl
 import wee.digital.ft.util.observerCameraListener
 import wee.digital.library.extension.beginTransition
 import wee.digital.library.extension.load
-import wee.digital.library.extension.loadGif
+import wee.digital.library.extension.reload
 import java.util.concurrent.atomic.AtomicInteger
 
 
@@ -74,7 +74,7 @@ class FaceView : ConstraintLayout,
         hasFace = true
         try {
             faceView.post {
-                faceImageViewAnim.loadGif(R.mipmap.img_progress)
+                faceImageViewAnim.reload(R.mipmap.img_progress)
                 viewTransition.beginTransition(faceView) {
                     setAlpha(faceImageViewAnim.id, 1f)
                 }

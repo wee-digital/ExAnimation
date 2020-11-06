@@ -3,4 +3,4 @@ include ':app',
         ':library',
         ':log',
         ':camera'
-rootProject.name = "ExAnimation"
+rootProject.name = "FacepayTerminal"

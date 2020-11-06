@@ -1,5 +1,7 @@
 package wee.digital.library.extension
 
+import android.os.Build
+import android.text.Html
 import android.util.Base64
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -111,6 +113,15 @@ fun String?.bold(): String {
 
 fun String?.notNullOrEmpty(): Boolean {
     return !isNullOrEmpty()
+}
+
+fun String?.unHyper() : String?{
+    this ?: return null
+    return when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(this, 1).toString()
+        else -> @Suppress("DEPRECATION")
+        Html.fromHtml(this).toString()
+    }
 }
 
 fun String?.jsonFormat(): String? {

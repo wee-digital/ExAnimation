@@ -9,7 +9,7 @@ import wee.digital.ft.R
 import wee.digital.library.extension.gradientHorizontal
 import wee.digital.library.extension.hide
 import wee.digital.library.extension.load
-import wee.digital.library.extension.loadGif
+import wee.digital.library.extension.reload
 
 class ProgressView : ConstraintLayout {
 
@@ -26,7 +26,7 @@ class ProgressView : ConstraintLayout {
     fun onBindPaid(it: ProgressArg) {
         onBindDialogSize(it.headerGuideline)
         hide(progressImageView, progressTextViewTitle, progressTextViewMessage)
-        progressImageViewPay.loadGif(R.mipmap.img_face_paid)
+        progressImageViewPay.reload(R.mipmap.img_face_paid)
     }
 
     private fun onBindDialogSize(guidelineId: Int) {
